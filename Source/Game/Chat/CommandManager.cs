@@ -121,14 +121,20 @@ namespace Game.Chat
                 Console.Beep();
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("Cypher>> ");
+            Console.Write("WoWCore >> ");
 
             var handler = new ConsoleHandler();
+
             while (!Global.WorldMgr.IsStopped)
             {
-                handler.ParseCommands(Console.ReadLine());
+                var command = Console.ReadLine();
+
+                // Only handle command if it is not empty
+                if (command.IsEmpty()) continue;
+
+                handler.ParseCommands(command);
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("Cypher>> ");
+                Console.Write("WoWCore >> ");
             }
         }
 

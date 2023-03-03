@@ -54,6 +54,7 @@ namespace Framework.Networking
             try
             {
                 var result = await _stream.ReadAsync(_receiveBuffer, 0, _receiveBuffer.Length);
+
                 if (result == 0)
                 {
                     CloseSocket();
@@ -62,9 +63,9 @@ namespace Framework.Networking
 
                 ReadHandler(_receiveBuffer, result);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Log.outException(ex);
+                Log.outWarn(LogFilter.Network, $"SSLSocket.AsyncRead() BadSSL Exception: {e.Message}");
             }
         }
 
@@ -74,9 +75,9 @@ namespace Framework.Networking
             {
                 await _stream.AuthenticateAsServerAsync(certificate, false, SslProtocols.Tls12, false);
             }
-            catch(Exception ex)
+            catch(Exception e)
             {
-                Log.outException(ex);
+                Log.outWarn(LogFilter.Network, $"SSLSocket.AsyncHandshake() BadSSL Exception: {e.Message}");
                 CloseSocket();
                 return;
             }

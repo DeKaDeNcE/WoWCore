@@ -398,7 +398,7 @@ namespace Game
                 || !TerrainManager.ExistMapAndVMap(1, 10311.3f, 832.463f) || !TerrainManager.ExistMapAndVMap(1, -2917.58f, -257.98f)
                 || (WorldConfig.GetIntValue(WorldCfg.Expansion) != 0 && (!TerrainManager.ExistMapAndVMap(530, 10349.6f, -6357.29f) || !TerrainManager.ExistMapAndVMap(530, -3961.64f, -13931.2f))))
             {
-                Log.outError(LogFilter.ServerLoading, "Unable to load map and vmap data for starting zones - server shutting down!");
+                Log.outFatal(LogFilter.ServerLoading, "Unable to load map and vmap data for starting zones - server shutting down!");
                 Environment.Exit(1);
             }
 

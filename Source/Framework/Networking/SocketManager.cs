@@ -18,11 +18,14 @@ namespace Framework.Networking
             Cypher.Assert(threadCount > 0);
 
             Acceptor = new AsyncAcceptor();
+
             if (!Acceptor.Start(bindIp, port))
             {
                 Log.outError(LogFilter.Network, "StartNetwork failed to Start AsyncAcceptor");
                 return false;
             }
+
+            Log.outInfo(LogFilter.Network, $"Listening on {bindIp}:{port}");
 
             _threadCount = threadCount;
             _threads = new NetworkThread<TSocketType>[GetNetworkThreadCount()];

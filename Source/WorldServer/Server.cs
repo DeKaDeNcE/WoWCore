@@ -28,8 +28,12 @@ namespace WorldServer
 
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
 
+            Log.outBanner();
+
             if (!ConfigMgr.Load(Process.GetCurrentProcess().ProcessName + ".conf"))
                 ExitNow();
+            else
+                Log.Init(true);
 
             if (!StartDB())
                 ExitNow();
@@ -206,7 +210,7 @@ namespace WorldServer
 
         static void ExitNow()
         {
-            Log.outInfo(LogFilter.Server, "Halting process...");
+            Log.outFatal(LogFilter.Server, "Halting process...");
             Thread.Sleep(5000);
             Environment.Exit(Global.WorldMgr.GetExitCode());
         }

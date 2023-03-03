@@ -222,9 +222,9 @@ Updates.CleanDeadRefMaxCount = 3
 #        Description: Logs directory setting.
 #        Important:   LogsDir needs to be quoted, as the string might contain space characters.
 #                     Logs directory must exists, or log file creation will be disabled.
-#        Default:     "Logs" - (Log files will be stored in the current path)
+#        Default:     "./logs" - (Log files will be stored in the current path)
 
-LogsDir = "logs"
+LogsDir = "./logs"
 
 #
 #  Appender config values: Given an appender "name"
@@ -257,8 +257,10 @@ LogsDir = "logs"
 #                         Allows to use one "{0}" to create dynamic files
 #
 
-Appender.Console=1,2,7
-Appender.Bnet=2,2,7,BNetServer.log
+Appender.Console = 1,1,7
+Appender.Bnet = 2,1,7,BNetServer.log
+Appender.SQLErrors = 2,6,7,BNetSQLErrors.log
+Appender.Crash = 2,6,7,BNetCrash.log
 
 #  Logger config values: Given a logger "name"
 #    Logger.name
@@ -278,12 +280,15 @@ Appender.Bnet=2,2,7,BNetServer.log
 #                     (Using spaces as separator).
 #
 
-Logger.Server=3,Console Bnet
-Logger.Realmlist=3,Console Bnet
-Logger.Session=3,Console Bnet
-Logger.Network=3,Console Bnet
-Logger.SqlUpdates=3,Console Bnet
-Logger.ServiceProtobuf=2,Console Bnet
+Logger.Server= 1 ,Console Bnet
+Logger.Realmlist = 1,Console Bnet
+Logger.Session = 1,Console Bnet
+Logger.Network = 1,Console Bnet
+Logger.SqlUpdates = 1,Console Bnet
+Logger.SqlErrors = 6,Console SQLErrors
+Logger.SqlDriver = 1,Console Bnet
+Logger.ServiceProtobuf = 1,Console Bnet
+Logger.Crash = 6,Console Crash
 
 #
 ###################################################################################################

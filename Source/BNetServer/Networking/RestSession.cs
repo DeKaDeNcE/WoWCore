@@ -26,7 +26,16 @@ namespace BNetServer.Networking;
 
         public override async void ReadHandler(byte[] data, int receivedLength)
         {
-            var httpRequest = HttpHelper.ParseRequest(data, receivedLength);
+            HttpHeader httpRequest = null;
+
+            try
+            {
+                httpRequest = HttpHelper.ParseRequest(data, receivedLength);
+            }
+            catch (Exception e)
+            {
+                Log.outWarn(LogFilter.Network, $"RestSession.ReadHandler() BadDATA {data} Exception: {e}");
+            }
 
             if (httpRequest == null)
                 return;
@@ -46,8 +55,18 @@ namespace BNetServer.Networking;
 
         public void HandleLoginRequest(HttpHeader request)
         {
-            LogonData loginForm = Json.CreateObject<LogonData>(request.Content);
+            LogonData loginForm = null;
             LogonResult loginResult = new();
+
+            try
+            {
+                loginForm = Json.CreateObject<LogonData>(request.Content);
+            }
+            catch (Exception e)
+            {
+                Log.outWarn(LogFilter.Network, $"RestSession.HandleLoginRequest() BadJSON {request.Content} Exception: {e}");
+            }
+
             if (loginForm == null)
             {
                 loginResult.AuthenticationState = "LOGIN";

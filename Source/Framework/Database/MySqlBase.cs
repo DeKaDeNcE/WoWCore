@@ -300,17 +300,28 @@ namespace Framework.Database
             process.WaitForExit();
 
             Log.outInfo(LogFilter.SqlUpdates, process.StandardOutput.ReadToEnd());
-            Log.outError(LogFilter.SqlUpdates, process.StandardError.ReadToEnd());
 
-            if (process.ExitCode != 0)
+            if (process.ExitCode == 0)
             {
-                Log.outFatal(LogFilter.SqlUpdates, $"Applying of file \'{path}\' to database \'{GetDatabaseName()}\' failed!" +
-                    " If you are a user, please pull the latest revision from the repository. " +
-                    "Also make sure you have not applied any of the databases with your sql client. " +
-                    "You cannot use auto-update system and import sql files from WoWCore repository with your sql client. " +
-                    "If you are a developer, please fix your sql query.");
+                Log.outWarn(LogFilter.SqlUpdates, process.StandardError.ReadToEnd());
+            }
+            else
+            {
+                Log.outFatal(LogFilter.SqlUpdates, $"{process.StandardError.ReadToEnd()}\n" +
+                    $"Applying of file \'{path}\' to database \'{GetDatabaseName()}\' failed!\n" +
+                    " If you are a user, please pull the latest revision from the repository.\n" +
+                    "Also make sure you have not applied any of the databases with your sql client.\n" +
+                    "You cannot use auto-update system and import sql files from WoWCore repository with your sql client.\n" +
+                    "If you are a developer, please fix your sql query.\n" +
+                    "SQL Update Failed !");
 
-                throw new Exception("update failed");
+                throw new Exception($"{process.StandardError.ReadToEnd()}\n" +
+                    $"Applying of file \'{path}\' to database \'{GetDatabaseName()}\' failed!\n" +
+                    "If you are a user, please pull the latest revision from the repository.\n" +
+                    "Also make sure you have not applied any of the databases with your sql client.\n" +
+                    "You cannot use auto-update system and import sql files from WoWCore repository with your sql client.\n" +
+                    "If you are a developer, please fix your sql query.\n" +
+                    "SQL Update Failed !");
             }
         }
 
@@ -381,7 +392,7 @@ namespace Framework.Database
                     stringBuilder.Append($"{pair.Key} : {pair.Value}");
             }
 
-            Log.outError(LogFilter.Sql, stringBuilder.ToString());
+            Log.outFatal(LogFilter.SqlErrors, stringBuilder.ToString());
 
             switch (code)
             {

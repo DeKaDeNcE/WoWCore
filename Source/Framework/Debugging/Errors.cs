@@ -12,7 +12,7 @@ public class Cypher
         if (!value)
         {
             if (!message.IsEmpty())
-                Log.outFatal(LogFilter.Server, message);
+                throw new Exception(message + " " + memberName);
 
             throw new Exception(memberName);
         }

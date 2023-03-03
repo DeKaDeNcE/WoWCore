@@ -685,7 +685,7 @@ namespace Game.DataStorage
                 }
             }
 
-            Log.outInfo(LogFilter.Server, "Loaded {0} hotfix info entries in {1} ms", count, Time.GetMSTimeDiffToNow(oldMSTime));
+            Log.outInfo(LogFilter.ServerLoading, "Loaded {0} hotfix info entries in {1} ms", count, Time.GetMSTimeDiffToNow(oldMSTime));
         }
 
         public void LoadHotfixBlob(BitSet availableDb2Locales)

@@ -8,6 +8,7 @@ using Framework.Networking;
 using Framework.Configuration;
 using System;
 using System.Timers;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace BNetServer;
@@ -20,8 +21,14 @@ namespace BNetServer;
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
-            if (!ConfigMgr.Load("BNetServer.conf"))
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+
+            Log.outBanner();
+
+            if (!ConfigMgr.Load(Process.GetCurrentProcess().ProcessName + ".conf"))
                 ExitNow();
+            else
+                Log.Init(true);
 
             // Initialize the database
             if (!StartDB())
@@ -31,7 +38,7 @@ namespace BNetServer;
 
             var restSocketServer = new SocketManager<RestSession>();
             int restPort = ConfigMgr.GetDefaultValue("LoginREST.Port", 8081);
-            if (restPort < 0 || restPort > 0xFFFF)
+            if (restPort <= 0 || restPort > 0xFFFF)
             {
                 Log.outError(LogFilter.Network, $"Specified login service port ({restPort}) out of allowed range (1-65535), defaulting to 8081");
                 restPort = 8081;
@@ -50,7 +57,7 @@ namespace BNetServer;
             var sessionSocketServer = new SocketManager<Session>();
             // Start the listening port (acceptor) for auth connections
             int bnPort = ConfigMgr.GetDefaultValue("BattlenetPort", 1119);
-            if (bnPort < 0 || bnPort > 0xFFFF)
+            if (bnPort <= 0 || bnPort > 0xFFFF)
             {
                 Log.outError(LogFilter.Server, $"Specified battle.net port ({bnPort}) out of allowed range (1-65535)");
                 ExitNow();
@@ -80,10 +87,16 @@ namespace BNetServer;
             return true;
         }
 
+        public static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
+        {
+            var ex = e.ExceptionObject as Exception;
+            Log.outException(ex);
+        }
+
         public static void ExitNow()
         {
-            Console.WriteLine("Halting process...");
-            System.Threading.Thread.Sleep(10000);
+            Log.outFatal(LogFilter.Server, "Halting process...");
+            System.Threading.Thread.Sleep(5000);
             Environment.Exit(-1);
         }
 
