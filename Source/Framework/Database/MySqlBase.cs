@@ -300,10 +300,14 @@ namespace Framework.Database
             process.WaitForExit();
 
             Log.outInfo(LogFilter.SqlUpdates, process.StandardOutput.ReadToEnd());
-            Log.outError(LogFilter.SqlUpdates, process.StandardError.ReadToEnd());
 
-            if (process.ExitCode != 0)
+            if (process.ExitCode == 0)
             {
+                Log.outWarn(LogFilter.SqlUpdates, process.StandardError.ReadToEnd());
+            }
+            else
+            {
+                Log.outError(LogFilter.SqlUpdates, process.StandardError.ReadToEnd());
                 Log.outFatal(LogFilter.SqlUpdates, $"Applying of file \'{path}\' to database \'{GetDatabaseName()}\' failed!" +
                     " If you are a user, please pull the latest revision from the repository. " +
                     "Also make sure you have not applied any of the databases with your sql client. " +
@@ -381,7 +385,7 @@ namespace Framework.Database
                     stringBuilder.Append($"{pair.Key} : {pair.Value}");
             }
 
-            Log.outError(LogFilter.Sql, stringBuilder.ToString());
+            Log.outFatal(LogFilter.SqlErrors, stringBuilder.ToString());
 
             switch (code)
             {

@@ -168,6 +168,8 @@ Appender.Server = 2,1,7
 Appender.GM = 2,2,7,gm/gm_{0}.log
 Appender.Errors = 2,4,7,Errors.log
 Appender.DBErrors = 2,4,7,DBErrors.log
+Appender.SQLErrors = 2,6,7,SQLErrors.log
+Appender.Crash = 2,6,7,Crash.log
 
 #  Logger config values: Given a logger "name"
 #    Logger.name
@@ -190,9 +192,11 @@ Appender.DBErrors = 2,4,7,DBErrors.log
 Logger.Server = 3,Console Server
 Logger.ServerLoading = 3,Console Server
 Logger.Commands = 3,Console GM
-Logger.Sql = 3,Console DBErrors
+Logger.Sql = 3,DBErrors
+Logger.SqlErrors = 6,Console SQLErrors
 Logger.SqlUpdates = 3,Console Server
 Logger.Network = 3,Console Server
+Logger.Crash = 6,Console Crash
 
 #Logger.Achievement=3,Console Server
 #Logger.AreaTrigger=3,Console Server
