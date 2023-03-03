@@ -76,7 +76,8 @@ namespace Framework.Networking
             }
             catch(Exception ex)
             {
-                Log.outException(ex);
+                //Log.outException(ex);
+                Log.outWarn(LogFilter.Network, $"Exception: {ex}");
                 CloseSocket();
                 return;
             }

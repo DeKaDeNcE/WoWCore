@@ -71,8 +71,10 @@ namespace Framework.Networking
                         AsyncAccept<T>();
                 }
             }
-            catch (ObjectDisposedException)
-            { }
+            catch (ObjectDisposedException ex)
+            {
+                Log.outException(ex);
+            }
         }
 
         public void Close()

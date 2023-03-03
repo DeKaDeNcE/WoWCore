@@ -13,13 +13,13 @@ class ConsoleAppender : Appender
     {
         _consoleColor = new[]
         {
-            ConsoleColor.White,
-            ConsoleColor.White,
             ConsoleColor.Gray,
-            ConsoleColor.Green,
-            ConsoleColor.Yellow,
-            ConsoleColor.Red,
-            ConsoleColor.Blue
+            ConsoleColor.Gray,
+            ConsoleColor.White,
+            ConsoleColor.DarkGreen,
+            ConsoleColor.DarkYellow,
+            ConsoleColor.DarkRed,
+            ConsoleColor.Red
         };
     }
 
@@ -49,16 +49,16 @@ class FileAppender : Appender, IDisposable
 
         if (_dynamicName)
         {
-            Directory.CreateDirectory(logDir + "/" + _fileName.Substring(0, _fileName.IndexOf('/') + 1));
+            Directory.CreateDirectory(logDir + Path.DirectorySeparatorChar + _fileName.Substring(0, _fileName.IndexOf(Path.DirectorySeparatorChar) + 1));
             return;
         }
 
-        _logStream = OpenFile(_fileName, FileMode.Create);
+        _logStream = OpenFile(_fileName, FileMode.Append);
     }
 
     FileStream OpenFile(string filename, FileMode mode)
     {
-        return new FileStream(_logDir + "/" + filename, mode, FileAccess.Write, FileShare.ReadWrite);
+        return new FileStream(_logDir + Path.DirectorySeparatorChar + filename, mode, FileAccess.Write, FileShare.ReadWrite);
     }
 
     public override void _write(LogMessage message)

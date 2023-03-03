@@ -14,50 +14,7 @@ public class Log
 {
     static Log()
     {
-        m_logsDir = AppContext.BaseDirectory + ConfigMgr.GetDefaultValue("LogsDir", "");
-        lowestLogLevel = LogLevel.Fatal;
-
-        foreach (var appenderName in ConfigMgr.GetKeysByString("Appender."))
-        {
-            CreateAppenderFromConfig(appenderName);
-        }
-
-        foreach (var loggerName in ConfigMgr.GetKeysByString("Logger."))
-        {
-            CreateLoggerFromConfig(loggerName);
-        }
-
-        // Bad config configuration, creating default config
-        if (!loggers.ContainsKey(LogFilter.Server))
-        {
-            Console.WriteLine("Wrong Loggers configuration. Review your Logger config section.\nCreating default loggers [Server (Info)] to console\n");
-
-            loggers.Clear();
-            appenders.Clear();
-
-            byte id = NextAppenderId();
-
-            var appender = new ConsoleAppender(id, "Console", LogLevel.Debug, AppenderFlags.None);
-            appenders[id] = appender;
-
-            var serverLogger = new Logger("Server", LogLevel.Error);
-            serverLogger.addAppender(id, appender);
-            loggers[LogFilter.Server] = serverLogger;
-        }
-
-        outInfo(LogFilter.Server, " \r\n");
-        outInfo(LogFilter.Server, " \r\n");
-        outInfo(LogFilter.Server, @"  ██╗    ██╗ ██████╗ ██╗    ██╗ ██████╗ ██████╗ ██████╗ ███████╗");
-        outInfo(LogFilter.Server, @"  ██║    ██║██╔═══██╗██║    ██║██╔════╝██╔═══██╗██╔══██╗██╔════╝");
-        outInfo(LogFilter.Server, @"  ██║ █╗ ██║██║   ██║██║ █╗ ██║██║     ██║   ██║██████╔╝█████╗  ");
-        outInfo(LogFilter.Server, @"  ██║███╗██║██║   ██║██║███╗██║██║     ██║   ██║██╔══██╗██╔══╝  ");
-        outInfo(LogFilter.Server, @"  ╚███╔███╔╝╚██████╔╝╚███╔███╔╝╚██████╗╚██████╔╝██║  ██║███████╗");
-        outInfo(LogFilter.Server, @"   ╚══╝╚══╝  ╚═════╝  ╚══╝╚══╝  ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝");
-        outInfo(LogFilter.Server, @"                                           Powered by CypherCore");
-        outInfo(LogFilter.Server, " \r\n");
-        outInfo(LogFilter.Server, @"             https://github.com/DeKaDeNcE/WoWCore               ");
-        outInfo(LogFilter.Server, @"           https://github.com/CypherCore/CypherCore             ");
-        outInfo(LogFilter.Server, " \r\n");
+        Init();
     }
 
     static bool ShouldLog(LogFilter type, LogLevel level)
@@ -72,6 +29,91 @@ public class Log
 
         LogLevel logLevel = logger.getLogLevel();
         return logLevel != LogLevel.Disabled && logLevel <= level;
+    }
+
+    public static void Init(bool hasConfig = false)
+    {
+        if (hasConfig)
+        {
+            m_logsDir = AppContext.BaseDirectory + ConfigMgr.GetDefaultValue("LogsDir", "");
+            loggers.Clear();
+            appenders.Clear();
+
+            try
+            {
+                foreach (var appenderName in ConfigMgr.GetKeysByString("Appender."))
+                {
+                    CreateAppenderFromConfig(appenderName);
+                }
+
+                foreach (var loggerName in ConfigMgr.GetKeysByString("Logger."))
+                {
+                    CreateLoggerFromConfig(loggerName);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MinimalSetup();
+                outException(ex);
+                outFatal(LogFilter.Server, "Halting process...");
+                System.Threading.Thread.Sleep(5000);
+                Environment.Exit(-1);
+            }
+
+            // Bad config configuration, creating default config
+            if (!loggers.ContainsKey(LogFilter.Server) || !loggers.ContainsKey(LogFilter.Crash))
+            {
+                MinimalSetup();
+                outWarn(LogFilter.Server, "Wrong Loggers configuration, please review your Logger config section.");
+                outWarn(LogFilter.Server, "Creating default loggers, output set to Console.");
+            }
+        }
+        else
+        {
+            MinimalSetup();
+        }
+    }
+
+    static void MinimalSetup()
+    {
+        loggers.Clear();
+        appenders.Clear();
+
+        byte id = NextAppenderId();
+
+        var consoleAppender = new ConsoleAppender(id, "Console", LogLevel.Trace, AppenderFlags.PrefixTimestamp | AppenderFlags.PrefixLogFilterType | AppenderFlags.PrefixLogLevel);
+        appenders[id] = consoleAppender;
+
+        var serverLogger = new Logger("Server", LogLevel.Trace);
+        serverLogger.addAppender(id, consoleAppender);
+        loggers[LogFilter.Server] = serverLogger;
+
+        id++;
+
+        var crashAppender = new ConsoleAppender(id, "Crash", LogLevel.Fatal, AppenderFlags.PrefixTimestamp | AppenderFlags.PrefixLogFilterType | AppenderFlags.PrefixLogLevel);
+        appenders[id] = crashAppender;
+
+        var crashLogger = new Logger("Crash", LogLevel.Fatal);
+        crashLogger.addAppender(id, crashAppender);
+        loggers[LogFilter.Crash] = crashLogger;
+    }
+
+    public static void outBanner()
+    {
+        outInfo(LogFilter.Server, " ");
+        outInfo(LogFilter.Server, " ");
+        outInfo(LogFilter.Server, "  ██╗    ██╗ ██████╗ ██╗    ██╗ ██████╗ ██████╗ ██████╗ ███████╗");
+        outInfo(LogFilter.Server, "  ██║    ██║██╔═══██╗██║    ██║██╔════╝██╔═══██╗██╔══██╗██╔════╝");
+        outInfo(LogFilter.Server, "  ██║ █╗ ██║██║   ██║██║ █╗ ██║██║     ██║   ██║██████╔╝█████╗  ");
+        outInfo(LogFilter.Server, "  ██║███╗██║██║   ██║██║███╗██║██║     ██║   ██║██╔══██╗██╔══╝  ");
+        outInfo(LogFilter.Server, "  ╚███╔███╔╝╚██████╔╝╚███╔███╔╝╚██████╗╚██████╔╝██║  ██║███████╗");
+        outInfo(LogFilter.Server, "   ╚══╝╚══╝  ╚═════╝  ╚══╝╚══╝  ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝");
+        outInfo(LogFilter.Server, "                                           Powered by CypherCore");
+        outInfo(LogFilter.Server, " ");
+        outInfo(LogFilter.Server, "             https://github.com/DeKaDeNcE/WoWCore               ");
+        outInfo(LogFilter.Server, "           https://github.com/CypherCore/CypherCore             ");
+        outInfo(LogFilter.Server, " ");
     }
 
     public static void outLog(LogFilter type, LogLevel level, string text, params object[] args)
@@ -115,12 +157,12 @@ public class Log
         outMessage(type, LogLevel.Error, text, args);
     }
 
-    public static void outException(Exception ex, [CallerMemberName]string memberName = "")
+    public static void outException(Exception ex, string extraData = "", [CallerMemberName]string memberName = "")
     {
-        if (!ShouldLog(LogFilter.Server, LogLevel.Fatal))
+        if (!ShouldLog(LogFilter.Crash, LogLevel.Fatal))
             return;
 
-        outMessage(LogFilter.Server, LogLevel.Fatal, "CallingMember: {0} ExceptionMessage: {1}", memberName, ex.Message);
+        outMessage(LogFilter.Crash, LogLevel.Fatal, $"{memberName} in {extraData} Exception: {ex}");
     }
 
     public static void outFatal(LogFilter type, string text, params object[] args)
@@ -173,7 +215,7 @@ public class Log
 
         if (tokens.Length < 2)
         {
-            Console.WriteLine("Log.CreateAppenderFromConfig: Wrong configuration for appender {0}. Config line: {1}", name, options);
+            outWarn(LogFilter.Server, $"Wrong configuration for Appender {name} Config Line: {options}");
             return;
         }
 
@@ -183,7 +225,7 @@ public class Log
 
         if (level > LogLevel.Fatal)
         {
-            Console.WriteLine("Log.CreateAppenderFromConfig: Wrong Log Level {0} for appender {1}\n", level, name);
+            outWarn(LogFilter.Server, $"Wrong Log Level {level} for Appender {name}");
             return;
         }
 
@@ -206,7 +248,7 @@ public class Log
                     {
                         if (name != "Server")
                         {
-                            Console.WriteLine("Log.CreateAppenderFromConfig: Missing file name for appender {0}", name);
+                            outWarn(LogFilter.Server, $"Missing filename for Appender {name}");
                             return;
                         }
 
@@ -224,7 +266,7 @@ public class Log
                     break;
                 }
             default:
-                Console.WriteLine("Log.CreateAppenderFromConfig: Unknown type {0} for appender {1}", type, name);
+                outWarn(LogFilter.Server, $"Unknown type {type} for Appender {name}");
                 break;
         }
     }
@@ -239,7 +281,7 @@ public class Log
         string options = ConfigMgr.GetDefaultValue(appenderName, "");
         if (string.IsNullOrEmpty(options))
         {
-            Console.WriteLine("Log.CreateLoggerFromConfig: Missing config option Logger.{0}", name);
+            outWarn(LogFilter.Server, $"Missing config option Logger {name}");
             return;
         }
         var tokens = new StringArray(options, ',');
@@ -247,14 +289,14 @@ public class Log
         LogFilter type = name.ToEnum<LogFilter>();
         if (loggers.ContainsKey(type))
         {
-            Console.WriteLine("Error while configuring Logger {0}. Already defined", name);
+            outWarn(LogFilter.Server, $"Error while configuring Logger {name}, it is already defined.");
             return;
         }
 
         LogLevel level = (LogLevel)uint.Parse(tokens[0]);
         if (level > LogLevel.Fatal)
         {
-            Console.WriteLine("Log.CreateLoggerFromConfig: Wrong Log Level {0} for logger {1}", type, name);
+            outWarn(LogFilter.Server, $"Wrong Log Level {type} for Logger {name}");
             return;
         }
 
@@ -270,7 +312,7 @@ public class Log
             var str = ss[i++];
             Appender appender = GetAppenderByName(str);
             if (appender == null)
-                Console.WriteLine("Error while configuring Appender {0} in Logger {1}. Appender does not exist", str, name);
+                outWarn(LogFilter.Server, $"Error while configuring Appender {str} in Logger {name}, Appender does not exists.");
             else
                 logger.addAppender(appender.getId(), appender);
         }
@@ -349,10 +391,10 @@ public class Log
 
     static Dictionary<byte, Appender> appenders = new();
     static Dictionary<LogFilter, Logger> loggers = new();
-    static string m_logsDir;
-    static byte AppenderId;
+    static string m_logsDir = "";
+    static byte AppenderId = 0;
 
-    static LogLevel lowestLogLevel;
+    static LogLevel lowestLogLevel = LogLevel.Trace;
 }
 
 enum AppenderType
@@ -400,6 +442,7 @@ public enum LogFilter
     ChatLog,
     ChatSystem,
     Cheat,
+    Crash,
     Commands,
     CommandsRA,
     Condition,
@@ -440,6 +483,7 @@ public enum LogFilter
     Sql,
     SqlDev,
     SqlDriver,
+    SqlErrors,
     SqlUpdates,
     Transport,
     Unit,

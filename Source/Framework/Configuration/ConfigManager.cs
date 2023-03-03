@@ -18,7 +18,7 @@ namespace Framework.Configuration
             string path = AppContext.BaseDirectory + fileName;
             if (!File.Exists(path))
             {
-                Console.WriteLine("{0} doesn't exist!", fileName);
+                Log.outFatal(LogFilter.Server, $"{fileName} doesn't exist! Rename and modify {fileName}.dist to {fileName}");
                 return false;
             }
 
