@@ -764,7 +764,7 @@ namespace Game.DataStorage
             }
 
             ArtifactKnowledgeMultiplierGameTable = ReadGameTable<GtArtifactKnowledgeMultiplierRecord>("ArtifactKnowledgeMultiplier.txt");
-            ArtifactLevelXPGameTable = ReadGameTable<GtArtifactLevelXPRecord>("artifactLevelXP.txt");
+            ArtifactLevelXPGameTable = ReadGameTable<GtArtifactLevelXPRecord>("ArtifactLevelXP.txt");
             BarberShopCostBaseGameTable = ReadGameTable<GtBarberShopCostBaseRecord>("BarberShopCostBase.txt");
             BaseMPGameTable = ReadGameTable<GtBaseMPRecord>("BaseMp.txt");
             BattlePetXPGameTable = ReadGameTable<GtBattlePetXPRecord>("BattlePetXP.txt");
