@@ -77,7 +77,7 @@ namespace Game.DataStorage
             AzeriteTierUnlockSetStorage = ReadDB2<AzeriteTierUnlockSetRecord>("AzeriteTierUnlockSet.db2", HotfixStatements.SEL_AZERITE_TIER_UNLOCK_SET);
             AzeriteUnlockMappingStorage = ReadDB2<AzeriteUnlockMappingRecord>("AzeriteUnlockMapping.db2", HotfixStatements.SEL_AZERITE_UNLOCK_MAPPING);
             BankBagSlotPricesStorage = ReadDB2<BankBagSlotPricesRecord>("BankBagSlotPrices.db2", HotfixStatements.SEL_BANK_BAG_SLOT_PRICES);
-            BannedAddOnsStorage = ReadDB2<BannedAddonsRecord>("BannedAddons.db2", HotfixStatements.SEL_BANNED_ADDONS);
+            BannedAddonsStorage = ReadDB2<BannedAddonsRecord>("BannedAddons.db2", HotfixStatements.SEL_BANNED_ADDONS);
             BarberShopStyleStorage = ReadDB2<BarberShopStyleRecord>("BarberShopStyle.db2", HotfixStatements.SEL_BARBER_SHOP_STYLE, HotfixStatements.SEL_BARBER_SHOP_STYLE_LOCALE);
             BattlePetBreedQualityStorage = ReadDB2<BattlePetBreedQualityRecord>("BattlePetBreedQuality.db2", HotfixStatements.SEL_BATTLE_PET_BREED_QUALITY);
             BattlePetBreedStateStorage = ReadDB2<BattlePetBreedStateRecord>("BattlePetBreedState.db2", HotfixStatements.SEL_BATTLE_PET_BREED_STATE);
@@ -418,16 +418,324 @@ namespace Game.DataStorage
                     OldContinentsNodesMask[field] |= submask;
             }
 
-            // Check loaded DB2 files proper version
-            if (!AreaTableStorage.ContainsKey(14720) ||               // last area added in 10.0.7 (48520)
-                !CharTitlesStorage.ContainsKey(762) ||                // last char title added in 10.0.7 (48520)
-                !GemPropertiesStorage.ContainsKey(4059) ||            // last gem property added in 10.0.7 (48520)
-                !ItemStorage.ContainsKey(205244) ||                   // last item added in 10.0.7 (48520)
-                !ItemExtendedCostStorage.ContainsKey(8043) ||         // last item extended cost added in 10.0.7 (48520)
-                !MapStorage.ContainsKey(2616) ||                      // last map added in 10.0.7 (48520)
-                !SpellNameStorage.ContainsKey(409033))                // last spell added in 10.0.7 (48520)
+            // Check loaded DB2 files proper version 10.0.7.49343 or higher
+            if (!AchievementStorage.ContainsKey(17546) ||
+                !AchievementCategoryStorage.ContainsKey(15478) ||
+                !AdventureJournalStorage.ContainsKey(657) ||
+                !AdventureMapPOIStorage.ContainsKey(184) ||
+                !AnimationDataStorage.ContainsKey(1757) ||
+                !AnimKitStorage.ContainsKey(27017) ||
+                !AreaGroupMemberStorage.ContainsKey(30991) ||
+                !AreaTableStorage.ContainsKey(14720) ||
+                !AreaTriggerStorage.ContainsKey(10527) ||
+                !ArmorLocationStorage.ContainsKey(23) ||
+                !ArtifactStorage.ContainsKey(225) ||
+                !ArtifactAppearanceStorage.ContainsKey(993) ||
+                !ArtifactAppearanceSetStorage.ContainsKey(245) ||
+                !ArtifactPowerStorage.ContainsKey(3693) ||
+                !ArtifactPowerLinkStorage.ContainsKey(5139) ||
+                !ArtifactPowerPickerStorage.ContainsKey(1) ||
+                !ArtifactPowerRankStorage.ContainsKey(13886) ||
+                !ArtifactTierStorage.ContainsKey(2) ||
+                !ArtifactUnlockStorage.ContainsKey(47) ||
+                !AuctionHouseStorage.ContainsKey(7) ||
+                !AzeriteEmpoweredItemStorage.ContainsKey(2229) ||
+                !AzeriteEssenceStorage.ContainsKey(37) ||
+                !AzeriteEssencePowerStorage.ContainsKey(144) ||
+                !AzeriteItemStorage.ContainsKey(2) ||
+                !AzeriteItemMilestonePowerStorage.ContainsKey(120) ||
+                !AzeriteKnowledgeMultiplierStorage.ContainsKey(30) ||
+                !AzeriteLevelInfoStorage.ContainsKey(129) ||
+                !AzeritePowerStorage.ContainsKey(582) ||
+                !AzeritePowerSetMemberStorage.ContainsKey(42792) ||
+                !AzeriteTierUnlockStorage.ContainsKey(2094) ||
+                !AzeriteTierUnlockSetStorage.ContainsKey(278) ||
+                !AzeriteUnlockMappingStorage.ContainsKey(97) ||
+                !BankBagSlotPricesStorage.ContainsKey(12) ||
+                !BannedAddonsStorage.ContainsKey(650) ||
+                !BarberShopStyleStorage.ContainsKey(7688) ||
+                !BattlePetBreedQualityStorage.ContainsKey(12) ||
+                !BattlePetBreedStateStorage.ContainsKey(419) ||
+                !BattlePetSpeciesStorage.ContainsKey(3476) ||
+                !BattlePetSpeciesStateStorage.ContainsKey(12572) ||
+                !BattlemasterListStorage.ContainsKey(1096) ||
+                !BroadcastTextStorage.ContainsKey(239690) ||
+                !BroadcastTextDurationStorage.ContainsKey(270691) ||
+                !CfgRegionsStorage.ContainsKey(1217) ||
+                !CharTitlesStorage.ContainsKey(762) ||
+                !CharacterLoadoutStorage.ContainsKey(1676) ||
+                !CharacterLoadoutItemStorage.ContainsKey(21981) ||
+                !ChatChannelsStorage.ContainsKey(42) ||
+                !ChrClassUIDisplayStorage.ContainsKey(120) ||
+                !ChrClassesStorage.ContainsKey(14) ||
+                !ChrClassesXPowerTypesStorage.ContainsKey(200) ||
+                !ChrCustomizationChoiceStorage.ContainsKey(34719) ||
+                !ChrCustomizationDisplayInfoStorage.ContainsKey(194) ||
+                !ChrCustomizationElementStorage.ContainsKey(123985) ||
+                !ChrCustomizationOptionStorage.ContainsKey(2964) ||
+                !ChrCustomizationReqStorage.ContainsKey(3154) ||
+                !ChrCustomizationReqChoiceStorage.ContainsKey(6677) ||
+                !ChrModelStorage.ContainsKey(129) ||
+                !ChrRaceXChrModelStorage.ContainsKey(239) ||
+                !ChrRacesStorage.ContainsKey(77) ||
+                !ChrSpecializationStorage.ContainsKey(1468) ||
+                !CinematicCameraStorage.ContainsKey(358) ||
+                !CinematicSequencesStorage.ContainsKey(289) ||
+                !ContentTuningStorage.ContainsKey(2683) ||
+                !ContentTuningXExpectedStorage.ContainsKey(877) ||
+                !ConversationLineStorage.ContainsKey(56735) ||
+                !CorruptionEffectsStorage.ContainsKey(10) ||
+                !CreatureDisplayInfoStorage.ContainsKey(112513) ||
+                !CreatureDisplayInfoExtraStorage.ContainsKey(153997) ||
+                !CreatureFamilyStorage.ContainsKey(303) ||
+                !CreatureModelDataStorage.ContainsKey(13943) ||
+                !CreatureTypeStorage.ContainsKey(15) ||
+                !CriteriaStorage.ContainsKey(59182) ||
+                !CriteriaTreeStorage.ContainsKey(144852) ||
+                !CurrencyContainerStorage.ContainsKey(197) ||
+                !CurrencyTypesStorage.ContainsKey(2244) ||
+                !CurveStorage.ContainsKey(65597) ||
+                !CurvePointStorage.ContainsKey(183131) ||
+                !DestructibleModelDataStorage.ContainsKey(378) ||
+                !DifficultyStorage.ContainsKey(192) ||
+                !DungeonEncounterStorage.ContainsKey(2653) ||
+                !DurabilityCostsStorage.ContainsKey(1300) ||
+                !DurabilityQualityStorage.ContainsKey(18) ||
+                !EmotesStorage.ContainsKey(1010) ||
+                !EmotesTextStorage.ContainsKey(627) ||
+                !EmotesTextSoundStorage.ContainsKey(3461) ||
+                !ExpectedStatStorage.ContainsKey(546) ||
+                !ExpectedStatModStorage.ContainsKey(232) ||
+                !FactionStorage.ContainsKey(2555) ||
+                !FactionTemplateStorage.ContainsKey(3355) ||
+                !FriendshipRepReactionStorage.ContainsKey(1328) ||
+                !FriendshipReputationStorage.ContainsKey(400) ||
+                !GameObjectArtKitStorage.ContainsKey(315) ||
+                !GameObjectDisplayInfoStorage.ContainsKey(81372) ||
+                !GameObjectsStorage.ContainsKey(386627) ||
+                !GarrAbilityStorage.ContainsKey(1274) ||
+                !GarrBuildingStorage.ContainsKey(209) ||
+                !GarrBuildingPlotInstStorage.ContainsKey(709) ||
+                !GarrClassSpecStorage.ContainsKey(398) ||
+                !GarrFollowerStorage.ContainsKey(1347) ||
+                !GarrFollowerXAbilityStorage.ContainsKey(5049) ||
+                !GarrMissionStorage.ContainsKey(2346) ||
+                !GarrPlotStorage.ContainsKey(56) ||
+                !GarrPlotBuildingStorage.ContainsKey(258) ||
+                !GarrPlotInstanceStorage.ContainsKey(98) ||
+                !GarrSiteLevelStorage.ContainsKey(980) ||
+                !GarrSiteLevelPlotInstStorage.ContainsKey(3325) ||
+                !GarrTalentTreeStorage.ContainsKey(493) ||
+                !GemPropertiesStorage.ContainsKey(4059) ||
+                !GlobalCurveStorage.ContainsKey(25) ||
+                !GlyphBindableSpellStorage.ContainsKey(461) ||
+                !GlyphPropertiesStorage.ContainsKey(1427) ||
+                !GlyphRequiredSpecStorage.ContainsKey(540) ||
+                !GossipNPCOptionStorage.ContainsKey(43078) ||
+                !GuildColorBackgroundStorage.ContainsKey(50) ||
+                !GuildColorBorderStorage.ContainsKey(16) ||
+                !GuildColorEmblemStorage.ContainsKey(16) ||
+                !GuildPerkSpellsStorage.ContainsKey(16) ||
+                !HeirloomStorage.ContainsKey(916) ||
+                !HolidaysStorage.ContainsKey(1358) ||
+                !ImportPriceArmorStorage.ContainsKey(27) ||
+                !ImportPriceQualityStorage.ContainsKey(9) ||
+                !ImportPriceShieldStorage.ContainsKey(2) ||
+                !ImportPriceWeaponStorage.ContainsKey(5) ||
+                !ItemAppearanceStorage.ContainsKey(80381) ||
+                !ItemArmorQualityStorage.ContainsKey(1300) ||
+                !ItemArmorShieldStorage.ContainsKey(1300) ||
+                !ItemArmorTotalStorage.ContainsKey(1300) ||
+                !ItemBonusStorage.ContainsKey(20594) ||
+                !ItemBonusListLevelDeltaStorage.ContainsKey(3329) ||
+                !ItemBonusTreeNodeStorage.ContainsKey(16720) ||
+                !ItemChildEquipmentStorage.ContainsKey(63) ||
+                !ItemClassStorage.ContainsKey(145) ||
+                !ItemCurrencyCostStorage.ContainsKey(70296) ||
+                !ItemDamageAmmoStorage.ContainsKey(1000) ||
+                !ItemDamageOneHandStorage.ContainsKey(1300) ||
+                !ItemDamageOneHandCasterStorage.ContainsKey(1300) ||
+                !ItemDamageTwoHandStorage.ContainsKey(1300) ||
+                !ItemDamageTwoHandCasterStorage.ContainsKey(1300) ||
+                !ItemDisenchantLootStorage.ContainsKey(316) ||
+                !ItemEffectStorage.ContainsKey(174478) ||
+                !ItemStorage.ContainsKey(205289) ||
+                !ItemExtendedCostStorage.ContainsKey(8079) ||
+                !ItemLevelSelectorStorage.ContainsKey(1623) ||
+                !ItemLevelSelectorQualityStorage.ContainsKey(618) ||
+                !ItemLevelSelectorQualitySetStorage.ContainsKey(128) ||
+                !ItemLimitCategoryStorage.ContainsKey(596) ||
+                !ItemLimitCategoryConditionStorage.ContainsKey(11) ||
+                !ItemModifiedAppearanceStorage.ContainsKey(185916) ||
+                !ItemModifiedAppearanceExtraStorage.ContainsKey(185654) ||
+                !ItemNameDescriptionStorage.ContainsKey(14009) ||
+                !ItemPriceBaseStorage.ContainsKey(1300) ||
+                !ItemSearchNameStorage.ContainsKey(204882) ||
+                !ItemSetStorage.ContainsKey(1538) ||
+                !ItemSetSpellStorage.ContainsKey(5744) ||
+                !ItemSparseStorage.ContainsKey(205289) ||
+                !ItemSpecStorage.ContainsKey(41588) ||
+                !ItemSpecOverrideStorage.ContainsKey(139494) ||
+                !ItemXBonusTreeStorage.ContainsKey(281963) ||
+                !ItemXItemEffectStorage.ContainsKey(110614) ||
+                !JournalEncounterStorage.ContainsKey(2518) ||
+                !JournalEncounterSectionStorage.ContainsKey(26135) ||
+                !JournalInstanceStorage.ContainsKey(1206) ||
+                !JournalTierStorage.ContainsKey(505) ||
+                !KeystoneAffixStorage.ContainsKey(133) ||
+                !LanguageWordsStorage.ContainsKey(3421) ||
+                !LanguagesStorage.ContainsKey(303) ||
+                !LFGDungeonsStorage.ContainsKey(2390) ||
+                !LightStorage.ContainsKey(12333) ||
+                !LiquidTypeStorage.ContainsKey(1200) ||
+                !LockStorage.ContainsKey(3586) ||
+                !MailTemplateStorage.ContainsKey(607) ||
+                !MapStorage.ContainsKey(2616) ||
+                !MapChallengeModeStorage.ContainsKey(406) ||
+                !MapDifficultyStorage.ContainsKey(5193) ||
+                !MapDifficultyXConditionStorage.ContainsKey(2877) ||
+                !MawPowerStorage.ContainsKey(1782) ||
+                !ModifierTreeStorage.ContainsKey(225632) ||
+                !MountCapabilityStorage.ContainsKey(485) ||
+                !MountStorage.ContainsKey(1698) ||
+                !MountTypeXCapabilityStorage.ContainsKey(1461) ||
+                !MountXDisplayStorage.ContainsKey(1727) ||
+                !MovieStorage.ContainsKey(974) ||
+                !NameGenStorage.ContainsKey(24083) ||
+                !NamesProfanityStorage.ContainsKey(33146) ||
+                !NamesReservedStorage.ContainsKey(43153) ||
+                !NamesReservedLocaleStorage.ContainsKey(3) ||
+                !NumTalentsAtLevelStorage.ContainsKey(123) ||
+                !OverrideSpellDataStorage.ContainsKey(2479) ||
+                !ParagonReputationStorage.ContainsKey(186) ||
+                !PhaseStorage.ContainsKey(20783) ||
+                !PhaseXPhaseGroupStorage.ContainsKey(4499) ||
+                !PlayerConditionStorage.ContainsKey(110252) ||
+                !PowerDisplayStorage.ContainsKey(518) ||
+                !PowerTypeStorage.ContainsKey(130) ||
+                !PrestigeLevelInfoStorage.ContainsKey(26) ||
+                !PvpDifficultyStorage.ContainsKey(1651) ||
+                !PvpItemStorage.ContainsKey(4020) ||
+                !PvpTalentStorage.ContainsKey(5573) ||
+                !PvpTalentCategoryStorage.ContainsKey(3) ||
+                !PvpTalentSlotUnlockStorage.ContainsKey(4) ||
+                !PvpTierStorage.ContainsKey(312) ||
+                !QuestFactionRewardStorage.ContainsKey(2) ||
+                !QuestInfoStorage.ContainsKey(281) ||
+                !QuestLineXQuestStorage.ContainsKey(39633) ||
+                !QuestMoneyRewardStorage.ContainsKey(130) ||
+                !QuestPackageItemStorage.ContainsKey(44174) ||
+                !QuestSortStorage.ContainsKey(620) ||
+                !QuestV2Storage.ContainsKey(76159) ||
+                !QuestXPStorage.ContainsKey(130) ||
+                !RandPropPointsStorage.ContainsKey(1300) ||
+                !RewardPackStorage.ContainsKey(809) ||
+                !RewardPackXCurrencyTypeStorage.ContainsKey(38) ||
+                !RewardPackXItemStorage.ContainsKey(245) ||
+                !ScenarioStorage.ContainsKey(2191) ||
+                !ScenarioStepStorage.ContainsKey(5526) ||
+                !SceneScriptStorage.ContainsKey(45193) ||
+                !SceneScriptGlobalTextStorage.ContainsKey(43989) ||
+                !SceneScriptPackageStorage.ContainsKey(3893) ||
+                !SceneScriptTextStorage.ContainsKey(45193) ||
+                !SkillLineStorage.ContainsKey(2855) ||
+                !SkillLineAbilityStorage.ContainsKey(48470) ||
+                !SkillLineXTraitTreeStorage.ContainsKey(72) ||
+                !SkillRaceClassInfoStorage.ContainsKey(2444) ||
+                !SoulbindConduitRankStorage.ContainsKey(4359) ||
+                !SoundKitStorage.ContainsKey(225294) ||
+                !SpecializationSpellsStorage.ContainsKey(6905) ||
+                !SpecSetMemberStorage.ContainsKey(359) ||
+                !SpellNameStorage.ContainsKey(412817) ||
+                !SpellAuraOptionsStorage.ContainsKey(224170) ||
+                !SpellAuraRestrictionsStorage.ContainsKey(20058) ||
+                !SpellCastTimesStorage.ContainsKey(569) ||
+                !SpellCastingRequirementsStorage.ContainsKey(221850) ||
+                !SpellCategoriesStorage.ContainsKey(150917) ||
+                !SpellCategoryStorage.ContainsKey(2132) ||
+                !SpellClassOptionsStorage.ContainsKey(71656) ||
+                !SpellCooldownsStorage.ContainsKey(84879) ||
+                !SpellDurationStorage.ContainsKey(1265) ||
+                !SpellEffectStorage.ContainsKey(1080500) ||
+                !SpellEquippedItemsStorage.ContainsKey(251506) ||
+                !SpellFocusObjectStorage.ContainsKey(2185) ||
+                !SpellInterruptsStorage.ContainsKey(197107) ||
+                !SpellItemEnchantmentStorage.ContainsKey(6786) ||
+                !SpellKeyboundOverrideStorage.ContainsKey(238) ||
+                !SpellLabelStorage.ContainsKey(110624) ||
+                !SpellLearnSpellStorage.ContainsKey(1537) ||
+                !SpellLevelsStorage.ContainsKey(139763) ||
+                !SpellMiscStorage.ContainsKey(703094) ||
+                !SpellPowerStorage.ContainsKey(304791) ||
+                !SpellPowerDifficultyStorage.ContainsKey(232631) ||
+                !SpellProcsPerMinuteStorage.ContainsKey(447) ||
+                !SpellProcsPerMinuteModStorage.ContainsKey(1267) ||
+                !SpellRadiusStorage.ContainsKey(467) ||
+                !SpellRangeStorage.ContainsKey(503) ||
+                !SpellReagentsStorage.ContainsKey(31666) ||
+                !SpellReagentsCurrencyStorage.ContainsKey(2061) ||
+                !SpellScalingStorage.ContainsKey(14065) ||
+                !SpellShapeshiftStorage.ContainsKey(51119) ||
+                !SpellShapeshiftFormStorage.ContainsKey(64) ||
+                !SpellTargetRestrictionsStorage.ContainsKey(317515) ||
+                !SpellTotemsStorage.ContainsKey(17086) ||
+                !SpellVisualStorage.ContainsKey(128862) ||
+                !SpellVisualEffectNameStorage.ContainsKey(42301) ||
+                !SpellVisualMissileStorage.ContainsKey(20995) ||
+                !SpellVisualKitStorage.ContainsKey(179748) ||
+                !SpellXSpellVisualStorage.ContainsKey(402291) ||
+                !SummonPropertiesStorage.ContainsKey(5645) ||
+                !TactKeyStorage.ContainsKey(7603) ||
+                !TalentStorage.ContainsKey(23681) ||
+                !TaxiNodesStorage.ContainsKey(2862) ||
+                !TaxiPathStorage.ContainsKey(9337) ||
+                !TaxiPathNodeStorage.ContainsKey(145182) ||
+                !TotemCategoryStorage.ContainsKey(362) ||
+                !ToyStorage.ContainsKey(1313) ||
+                !TraitCondStorage.ContainsKey(23151) ||
+                !TraitCostStorage.ContainsKey(3260) ||
+                !TraitCurrencyStorage.ContainsKey(2904) ||
+                !TraitCurrencySourceStorage.ContainsKey(33836) ||
+                !TraitDefinitionStorage.ContainsKey(120685) ||
+                !TraitDefinitionEffectPointsStorage.ContainsKey(22269) ||
+                !TraitEdgeStorage.ContainsKey(111797) ||
+                !TraitNodeStorage.ContainsKey(93357) ||
+                !TraitNodeEntryStorage.ContainsKey(115673) ||
+                !TraitNodeEntryXTraitCostStorage.ContainsKey(17009) ||
+                !TraitNodeGroupStorage.ContainsKey(9090) ||
+                !TraitNodeGroupXTraitCondStorage.ContainsKey(7259) ||
+                !TraitNodeGroupXTraitCostStorage.ContainsKey(961) ||
+                !TraitNodeGroupXTraitNodeStorage.ContainsKey(232060) ||
+                !TraitNodeXTraitCondStorage.ContainsKey(15662) ||
+                !TraitNodeXTraitCostStorage.ContainsKey(12) ||
+                !TraitNodeXTraitNodeEntryStorage.ContainsKey(113081) ||
+                !TraitTreeStorage.ContainsKey(868) ||
+                !TraitTreeLoadoutStorage.ContainsKey(302) ||
+                !TraitTreeLoadoutEntryStorage.ContainsKey(16621) ||
+                !TraitTreeXTraitCurrencyStorage.ContainsKey(3338) ||
+                !TransmogHolidayStorage.ContainsKey(188699) ||
+                !TransmogIllusionStorage.ContainsKey(83) ||
+                !TransmogSetStorage.ContainsKey(2857) ||
+                !TransmogSetGroupStorage.ContainsKey(209) ||
+                !TransmogSetItemStorage.ContainsKey(54630) ||
+                !TransportAnimationStorage.ContainsKey(380606) ||
+                !TransportRotationStorage.ContainsKey(187007) ||
+                !UiMapStorage.ContainsKey(2162) ||
+                !UiMapAssignmentStorage.ContainsKey(67076) ||
+                !UiMapLinkStorage.ContainsKey(142) ||
+                !UiMapXMapArtStorage.ContainsKey(3085) ||
+                !UISplashScreenStorage.ContainsKey(56) ||
+                !UnitConditionStorage.ContainsKey(6898) ||
+                !UnitPowerBarStorage.ContainsKey(653) ||
+                !VehicleStorage.ContainsKey(8141) ||
+                !VehicleSeatStorage.ContainsKey(23558) ||
+                !WMOAreaTableStorage.ContainsKey(118604) ||
+                !WorldEffectStorage.ContainsKey(22737) ||
+                !WorldMapOverlayStorage.ContainsKey(4814) ||
+                !WorldStateExpressionStorage.ContainsKey(39822)
+            )
             {
-                Log.outFatal(LogFilter.ServerLoading, "You have _outdated_ DB2 files. Please extract correct versions from current using client.");
+                Log.outFatal(LogFilter.ServerLoading, "You have _outdated_ DB2 files. Please extract correct versions from client build 10.0.7.49343 or higher.");
                 Environment.Exit(1);
             }
 
@@ -501,7 +809,7 @@ namespace Game.DataStorage
         public static DB6Storage<AzeriteTierUnlockSetRecord> AzeriteTierUnlockSetStorage;
         public static DB6Storage<AzeriteUnlockMappingRecord> AzeriteUnlockMappingStorage;
         public static DB6Storage<BankBagSlotPricesRecord> BankBagSlotPricesStorage;
-        public static DB6Storage<BannedAddonsRecord> BannedAddOnsStorage;
+        public static DB6Storage<BannedAddonsRecord> BannedAddonsStorage;
         public static DB6Storage<BarberShopStyleRecord> BarberShopStyleStorage;
         public static DB6Storage<BattlePetBreedQualityRecord> BattlePetBreedQualityStorage;
         public static DB6Storage<BattlePetBreedStateRecord> BattlePetBreedStateStorage;
