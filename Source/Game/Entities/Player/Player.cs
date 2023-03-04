@@ -5283,6 +5283,8 @@ namespace Game.Entities
 
             CastSpell(this, 836, true);                             // LOGINEFFECT
 
+            SetPlayerLocalFlag(PlayerLocalFlags.AccountSecured);    // Unlock Bag Slots TODO: Implement toggle from config
+
             // set some aura effects that send packet to player client after add player to map
             // SendMessageToSet not send it to player not it map, only for aura that not changed anything at re-apply
             // same auras state lost at far teleport, send it one more time in this case also

@@ -143,7 +143,7 @@ namespace Framework.Constants
         public const byte ChildEquipmentEnd = 211;
 
         public const byte Bag0 = 255;
-        public const byte DefaultSize = 16;
+        public const byte DefaultSize = 16 + 4; // Unlock Bag Slots TODO: Implement toggle from config
     }
 
     enum EquipableSpellSlots
