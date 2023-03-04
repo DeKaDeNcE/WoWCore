@@ -155,7 +155,7 @@ namespace Game.DataStorage
                         {
                             NumRecords = reader.ReadInt32(),
                             MinId = reader.ReadInt32(),
-                            MaxId = reader.ReadInt32()
+                            MaxId = reader.ReadInt32()    // TODO: possible bug computing MaxId when Records Ids are not sequential
                         };
 
                         refData.Entries = new Dictionary<int, int>();

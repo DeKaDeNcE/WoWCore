@@ -55,6 +55,14 @@ namespace Game.DataStorage
 
             foreach (var b in reader.Records)
                 Add((uint)b.Key, b.Value.As<T>());
+
+            Log.outInfo(LogFilter.ServerLoading, $"Loading {Path.GetFileName(fullFileName)}");
+
+            /*if (_header.MaxId != 0)
+            {
+                var max = reader.Records.Keys.Max();
+                Log.outInfo(LogFilter.ServerLoading, $"!{Path.GetFileName(fullFileName).Replace(".db2", "Storage")}.ContainsKey({max}) ||");
+            }*/
         }
 
         public void LoadHotfixData(BitSet availableDb2Locales, HotfixStatements preparedStatement, HotfixStatements preparedStatementLocale)
