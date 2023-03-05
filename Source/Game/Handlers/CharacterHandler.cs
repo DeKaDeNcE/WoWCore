@@ -810,6 +810,10 @@ namespace Game
             motd.Text = Global.WorldMgr.GetMotd();
             SendPacket(motd);
 
+            pCurrChar.SendSysMessage("Running WoWCore Revision " + Global.GetCommitRevision() + " Hash " + Global.GetCommitHash());
+            pCurrChar.SendSysMessage("Build Date " + Global.GetCommitDate());
+            pCurrChar.SendSysMessage("Uptime " + Time.secsToTimeString(GameTime.GetUptime()));
+
             SendSetTimeZoneInformation();
 
             // Send PVPSeason

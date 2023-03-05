@@ -45,6 +45,9 @@ namespace Game.Chat
             string uptime = Time.secsToTimeString(GameTime.GetUptime());
             uint updateTime = Global.WorldMgr.GetWorldUpdateTime().GetLastUpdateTime();
 
+            handler.SendSysMessage("Running WoWCore Revision " + Global.GetCommitRevision() + " Hash " + Global.GetCommitHash());
+            handler.SendSysMessage("Build Date " + Global.GetCommitDate());
+
             handler.SendSysMessage(CypherStrings.ConnectedPlayers, playersNum, maxPlayersNum);
             handler.SendSysMessage(CypherStrings.ConnectedUsers, activeClientsNum, maxActiveClientsNum, queuedClientsNum, maxQueuedClientsNum);
             handler.SendSysMessage(CypherStrings.Uptime, uptime);
