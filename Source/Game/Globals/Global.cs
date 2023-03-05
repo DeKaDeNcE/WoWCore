@@ -28,7 +28,7 @@ using Game.BattleGrounds;
 using Game.SupportSystem;
 using Game.DungeonFinding;
 
-public static class Global
+public static partial class Global
 {
     //Main
     public static ObjectAccessor ObjAccessor => ObjectAccessor.Instance;
