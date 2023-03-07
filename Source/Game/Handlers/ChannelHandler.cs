@@ -16,9 +16,14 @@ namespace Game
 {
     public partial class WorldSession
     {
+        const uint MaxChannelNameLength = 31;
+        const uint MaxChannelPassLength = 127;
+
         [WorldPacketHandler(ClientOpcodes.ChatJoinChannel)]
         void HandleJoinChannel(JoinChannel packet)
         {
+            Log.outDebug(LogFilter.ChatSystem, $"CMSG_JOIN_CHANNEL {GetPlayerInfo()} ChatChannelId: {packet.ChatChannelId}, CreateVoiceSession: {packet.CreateVoiceSession}, Internal: {packet.Internal}, ChannelName: {packet.ChannelName}, Password: {packet.Password}");
+
             AreaTableRecord zone = CliDB.AreaTableStorage.LookupByKey(GetPlayer().GetZoneId());
             if (packet.ChatChannelId != 0)
             {
@@ -42,7 +47,7 @@ namespace Game
             }
             else
             { // custom channel
-                if (packet.ChannelName.IsEmpty() || Char.IsDigit(packet.ChannelName[0]))
+                if (string.IsNullOrEmpty(packet.ChannelName) || Char.IsDigit(packet.ChannelName[0]))
                 {
                     ChannelNotify channelNotify = new();
                     channelNotify.Type = ChatNotify.InvalidNameNotice;
@@ -51,9 +56,19 @@ namespace Game
                     return;
                 }
 
-                if (packet.Password.Length > 127)
+                if (packet.ChannelName.Length > MaxChannelNameLength)
                 {
-                    Log.outError(LogFilter.Network, $"Player {GetPlayer().GetGUID()} tried to create a channel with a password more than {127} characters long - blocked");
+                    ChannelNotify channelNotify = new();
+                    channelNotify.Type = ChatNotify.InvalidNameNotice;
+                    channelNotify.Channel = packet.ChannelName;
+                    SendPacket(channelNotify);
+                    Log.outError(LogFilter.Network, $"Player {GetPlayer().GetGUID()} tried to create a channel with a name more than {MaxChannelNameLength} characters long - blocked");
+                    return;
+                }
+
+                if (packet.Password.Length > MaxChannelPassLength)
+                {
+                    Log.outError(LogFilter.Network, $"Player {GetPlayer().GetGUID()} tried to create a channel with a password more than {MaxChannelPassLength} characters long - blocked");
                     return;
                 }
                 if (!DisallowHyperlinksAndMaybeKick(packet.ChannelName))
@@ -77,6 +92,8 @@ namespace Game
         [WorldPacketHandler(ClientOpcodes.ChatLeaveChannel)]
         void HandleLeaveChannel(LeaveChannel packet)
         {
+            Log.outDebug(LogFilter.ChatSystem, $"CMSG_LEAVE_CHANNEL {GetPlayerInfo()} ChannelName: {packet.ChannelName}, ZoneChannelID: {packet.ZoneChannelID}");
+
             if (string.IsNullOrEmpty(packet.ChannelName) && packet.ZoneChannelID == 0)
                 return;
 
@@ -110,6 +127,8 @@ namespace Game
         [WorldPacketHandler(ClientOpcodes.ChatChannelOwner)]
         void HandleChannelCommand(ChannelCommand packet)
         {
+            Log.outDebug(LogFilter.ChatSystem, $"{Enum.GetName(typeof(ClientOpcodes), packet.GetOpcode())} {GetPlayerInfo()} ChannelName: {packet.ChannelName}");
+
             Channel channel = ChannelManager.GetChannelForPlayerByNamePart(packet.ChannelName, GetPlayer());
             if (channel == null)
                 return;
@@ -143,9 +162,9 @@ namespace Game
         [WorldPacketHandler(ClientOpcodes.ChatChannelUnsilenceAll)]
         void HandleChannelPlayerCommand(ChannelPlayerCommand packet)
         {
-            if (packet.Name.Length >= 49)
+            if (packet.Name.Length >= MaxChannelNameLength)
             {
-                Log.outDebug(LogFilter.ChatSystem, "{0} {1} ChannelName: {2}, Name: {3}, Name too long.", packet.GetOpcode(), GetPlayerInfo(), packet.ChannelName, packet.Name);
+                Log.outDebug(LogFilter.ChatSystem, $"{Enum.GetName(typeof(ClientOpcodes), packet.GetOpcode())} {GetPlayerInfo()} ChannelName: {packet.ChannelName}, Name: {packet.Name}, Name too long.");
                 return;
             }
 
@@ -191,14 +210,13 @@ namespace Game
         [WorldPacketHandler(ClientOpcodes.ChatChannelPassword)]
         void HandleChannelPassword(ChannelPassword packet)
         {
-            if (packet.Password.Length > 31)
+            if (packet.Password.Length > MaxChannelPassLength)
             {
-                Log.outDebug(LogFilter.ChatSystem, "{0} {1} ChannelName: {2}, Password: {3}, Password too long.",
-                packet.GetOpcode(), GetPlayerInfo(), packet.ChannelName, packet.Password);
+                Log.outDebug(LogFilter.ChatSystem, $"{Enum.GetName(typeof(ClientOpcodes), packet.GetOpcode())} {GetPlayerInfo()} ChannelName: {packet.ChannelName}, Password: {packet.Password}, Password too long.");
                 return;
             }
 
-            Log.outDebug(LogFilter.ChatSystem, "{0} {1} ChannelName: {2}, Password: {3}", packet.GetOpcode(), GetPlayerInfo(), packet.ChannelName, packet.Password);
+            Log.outDebug(LogFilter.ChatSystem, $"{Enum.GetName(typeof(ClientOpcodes), packet.GetOpcode())} {GetPlayerInfo()} ChannelName: {packet.ChannelName}, Password: {packet.Password}");
 
             Channel channel = ChannelManager.GetChannelForPlayerByNamePart(packet.ChannelName, GetPlayer());
             if (channel != null)
