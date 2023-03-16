@@ -3,6 +3,7 @@
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ public class Log
     {
         if (hasConfig)
         {
-            m_logsDir = AppContext.BaseDirectory + ConfigMgr.GetDefaultValue("LogsDir", "");
+            m_logsDir = AppContext.BaseDirectory + ConfigMgr.GetDefaultValue("LogsDir", "./logs");
             loggers.Clear();
             appenders.Clear();
 
@@ -257,7 +258,7 @@ public class Log
                     else
                         filename = tokens[3];
 
-                    appenders[id] = new FileAppender(id, name, level, filename, m_logsDir, flags);
+                    appenders[id] = new FileAppender(id, name, level, filename.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar), m_logsDir.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar), flags);
                     break;
                 }
             case AppenderType.DB:
@@ -391,7 +392,7 @@ public class Log
 
     static Dictionary<byte, Appender> appenders = new();
     static Dictionary<LogFilter, Logger> loggers = new();
-    static string m_logsDir = "";
+    static string m_logsDir = "./logs";
     static byte AppenderId = 0;
 
     static LogLevel lowestLogLevel = LogLevel.Trace;

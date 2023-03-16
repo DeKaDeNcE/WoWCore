@@ -3,10 +3,11 @@
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using Framework.Realm;
 using Framework.Database;
 using Framework.Constants;
@@ -419,7 +420,7 @@ namespace Game
 
             Log.outInfo(LogFilter.ServerLoading, "Initialize DataStorage...");
             // Load DB2s
-            m_availableDbcLocaleMask = CliDB.LoadStores(_dataPath, m_defaultDbcLocale);
+            m_availableDbcLocaleMask = CliDB.LoadStores(GetDataPath(), m_defaultDbcLocale);
             if (m_availableDbcLocaleMask == null || !m_availableDbcLocaleMask[(int)m_defaultDbcLocale])
             {
                 Log.outFatal(LogFilter.ServerLoading, $"Unable to load db2 files for {m_defaultDbcLocale} locale specified in DBC.Locale config!");
@@ -443,10 +444,10 @@ namespace Game
             Global.DB2Mgr.LoadHotfixOptionalData(m_availableDbcLocaleMask);
 
             //- Load M2 fly by cameras
-            M2Storage.LoadM2Cameras(_dataPath);
+            M2Storage.LoadM2Cameras(GetDataPath());
 
             //- Load GameTables
-            CliDB.LoadGameTables(_dataPath);
+            CliDB.LoadGameTables(GetDataPath());
 
             //Load weighted graph on taxi nodes path
             TaxiPathGraph.Initialize();
@@ -1228,16 +1229,16 @@ namespace Game
             string dataPath = ConfigMgr.GetDefaultValue("DataDir", "./");
             if (reload)
             {
-                if (dataPath != _dataPath)
-                    Log.outError(LogFilter.ServerLoading, "DataDir option can't be changed at worldserver.conf reload, using current value ({0}).", _dataPath);
+                if (dataPath != GetDataPath())
+                    Log.outError(LogFilter.ServerLoading, $"DataDir option can't be changed at worldserver.conf reload, using current value ({GetDataPath()}).");
             }
             else
             {
-                _dataPath = dataPath;
-                Log.outInfo(LogFilter.ServerLoading, "Using DataDir {0}", _dataPath);
+                SetDataPath(dataPath);
+                Log.outInfo(LogFilter.ServerLoading, $"Using DataDir {GetDataPath()}");
             }
 
-            Log.outInfo(LogFilter.ServerLoading, @"WORLD: MMap data directory is: {0}\mmaps", _dataPath);
+            Log.outInfo(LogFilter.ServerLoading, $"MMap data directory is: {GetDataPath()}{Path.DirectorySeparatorChar}mmaps");
 
             bool EnableIndoor = ConfigMgr.GetDefaultValue("vmap.EnableIndoorCheck", true);
             bool EnableLOS = ConfigMgr.GetDefaultValue("vmap.EnableLOS", true);
@@ -1250,7 +1251,7 @@ namespace Game
             Global.VMapMgr.SetEnableHeightCalc(EnableHeight);
 
             Log.outInfo(LogFilter.ServerLoading, "VMap support included. LineOfSight: {0}, getHeight: {1}, indoorCheck: {2}", EnableLOS, EnableHeight, EnableIndoor);
-            Log.outInfo(LogFilter.ServerLoading, @"VMap data directory is: {0}\vmaps", GetDataPath());
+            Log.outInfo(LogFilter.ServerLoading, $"VMap data directory is: {GetDataPath()}{Path.DirectorySeparatorChar}vmaps");
         }
 
         public void SetForcedWarModeFactionBalanceState(int team, int reward = 0)
@@ -2374,7 +2375,7 @@ namespace Game
         /// Get the path where data (dbc, maps) are stored on disk
         public string GetDataPath() { return _dataPath; }
 
-        public void SetDataPath(string path) { _dataPath = path; }
+        public void SetDataPath(string path) { _dataPath = path.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar); }
 
         public long GetNextDailyQuestsResetTime() { return m_NextDailyQuestReset; }
         public void SetNextDailyQuestsResetTime(long time) { m_NextDailyQuestReset = time; }

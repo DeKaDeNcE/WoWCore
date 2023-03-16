@@ -16,11 +16,11 @@ public class PacketLog
 
     static PacketLog()
     {
-        string logsDir = AppContext.BaseDirectory + ConfigMgr.GetDefaultValue("LogsDir", "");
+        string logsDir = AppContext.BaseDirectory + ConfigMgr.GetDefaultValue("LogsDir", "./logs");
         string logname = ConfigMgr.GetDefaultValue("PacketLogFile", "");
         if (!string.IsNullOrEmpty(logname))
         {
-            FullPath = logsDir + @"\" + logname;
+            FullPath = logsDir.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar + logname;
             using var writer = new BinaryWriter(File.Open(FullPath, FileMode.Create));
             writer.Write(Encoding.ASCII.GetBytes("PKT"));
             writer.Write((ushort)769);
