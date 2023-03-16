@@ -21,8 +21,8 @@ namespace Framework.Database
 
         public bool Populate()
         {
-            SQLResult result = _database.Query("SHOW TABLES");
-            if (!result.IsEmpty() && !result.IsEmpty())
+            SQLResult result = _database.Query("SHOW FULL TABLES WHERE Table_Type = 'BASE TABLE'");
+            if (result != null && !result.IsEmpty())
                 return true;
 
             Log.outInfo(LogFilter.SqlUpdates, $"Database {_database.GetDatabaseName()} is empty, auto populating it...");
