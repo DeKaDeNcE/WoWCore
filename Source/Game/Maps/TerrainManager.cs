@@ -199,7 +199,7 @@ namespace Game.Maps
                 if (log)
                 {
                     Log.outError(LogFilter.Maps, $"Map file '{fileName}' does not exist!");
-                    Log.outError(LogFilter.Maps, $"Please place MAP-files (*.map) in the appropriate directory ({Global.WorldMgr.GetDataPath() + "/maps/"}), or correct the DataDir setting in your worldserver.conf file.");
+                    Log.outError(LogFilter.Maps, $"Please place MAP-files (*.map) in the appropriate directory ({Global.WorldMgr.GetDataPath() + Path.DirectorySeparatorChar + "maps" + Path.DirectorySeparatorChar}), or correct the DataDir setting in your worldserver.conf file.");
                 }
             }
             else
@@ -229,19 +229,19 @@ namespace Game.Maps
                     case LoadResult.Success:
                         break;
                     case LoadResult.FileNotFound:
-                        Log.outError(LogFilter.Maps, $"VMap file '{Global.WorldMgr.GetDataPath() + "/vmaps/" + name}' does not exist");
-                        Log.outError(LogFilter.Maps, $"Please place VMAP files (*.vmtree and *.vmtile) in the vmap directory ({Global.WorldMgr.GetDataPath() + "/vmaps/"}), or correct the DataDir setting in your worldserver.conf file.");
+                        Log.outError(LogFilter.Maps, $"VMap file '{Global.WorldMgr.GetDataPath() + Path.DirectorySeparatorChar + "vmaps" + Path.DirectorySeparatorChar + name}' does not exist");
+                        Log.outError(LogFilter.Maps, $"Please place VMAP files (*.vmtree and *.vmtile) in the vmap directory ({Global.WorldMgr.GetDataPath() + Path.DirectorySeparatorChar + "vmaps" + Path.DirectorySeparatorChar}), or correct the DataDir setting in your worldserver.conf file.");
                         return false;
                     case LoadResult.VersionMismatch:
-                        Log.outError(LogFilter.Maps, $"VMap file '{Global.WorldMgr.GetDataPath() + "/vmaps/" + name}' couldn't be loaded");
+                        Log.outError(LogFilter.Maps, $"VMap file '{Global.WorldMgr.GetDataPath() + Path.DirectorySeparatorChar + "vmaps" + Path.DirectorySeparatorChar + name}' couldn't be loaded");
                         Log.outError(LogFilter.Maps, "This is because the version of the VMap file and the version of this module are different, please re-extract the maps with the tools compiled with this module.");
                         return false;
                     case LoadResult.ReadFromFileFailed:
-                        Log.outError(LogFilter.Maps, $"VMap file '{Global.WorldMgr.GetDataPath() + "/vmaps/" + name}' couldn't be loaded");
+                        Log.outError(LogFilter.Maps, $"VMap file '{Global.WorldMgr.GetDataPath() + Path.DirectorySeparatorChar + "vmaps" + Path.DirectorySeparatorChar + name}' couldn't be loaded");
                         Log.outError(LogFilter.Maps, "This is because VMAP files are corrupted, please re-extract the maps with the tools compiled with this module.");
                         return false;
                     case LoadResult.DisabledInConfig:
-                        Log.outError(LogFilter.Maps, $"VMap file '{Global.WorldMgr.GetDataPath() + "/vmaps/" + name}' couldn't be loaded");
+                        Log.outError(LogFilter.Maps, $"VMap file '{Global.WorldMgr.GetDataPath() + Path.DirectorySeparatorChar + "vmaps" + Path.DirectorySeparatorChar + name}' couldn't be loaded");
                         Log.outError(LogFilter.Maps, "This is because VMAP is disabled in config file.");
                         return false;
                 }

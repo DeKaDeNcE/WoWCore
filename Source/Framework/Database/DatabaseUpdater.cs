@@ -37,10 +37,10 @@ namespace Framework.Database
                 case "CharacterDatabase":
                     fileName = @"/sql/base/characters_database.sql";
                     break;
-                case "WorldDatabase":
+                case "HotfixDatabase":
                     fileName = @"/sql/base/hotfixes_database.sql";
                     break;
-                case "HotfixDatabase":
+                case "WorldDatabase":
                     fileName = @"/sql/base/world_database.sql";
                     break;
             }
@@ -240,7 +240,7 @@ namespace Framework.Database
 
         string GetSourceDirectory()
         {
-            return ConfigMgr.GetDefaultValue("Updates.SourcePath", "../../../");
+            return ConfigMgr.GetDefaultValue("Updates.SourcePath", "../../../").Replace('\\', '/');
         }
 
         uint ApplyTimedFile(string path)
@@ -331,7 +331,7 @@ namespace Framework.Database
 
             do
             {
-                string path = result.Read<string>(0);
+                string path = result.Read<string>(0).Replace('\\', '/');
                 if (path[0] == '$')
                     path = GetSourceDirectory() + path.Substring(1);
 
@@ -386,7 +386,7 @@ namespace Framework.Database
                 }
                 catch (Exception ex)
                 {
-                    Log.outFatal(LogFilter.SqlUpdates, $"DBUpdater: {directory} Exception: {ex}");
+                    Log.outFatal(LogFilter.SqlErrors, $"DBUpdater: {directory} Exception: {ex}");
                 }
 
                 string[] files = Directory.GetFiles(directory, "*.sql").OrderBy(p => p).ToArray();
@@ -429,13 +429,13 @@ namespace Framework.Database
     {
         public FileEntry(string _path, State _state)
         {
-            path = _path.Replace(@"\", @"/");
+            path = _path.Replace('\\', '/');
             state = _state;
         }
 
         public string GetFileName()
         {
-            return Path.GetFileName(path);
+            return Path.GetFileName(path).Replace('\\', '/');
         }
 
         public string path;

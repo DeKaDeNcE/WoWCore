@@ -755,7 +755,7 @@ namespace Game.DataStorage
         {
             uint oldMSTime = Time.GetMSTime();
 
-            string gtPath = dataPath + "/gt/";
+            string gtPath = dataPath + Path.DirectorySeparatorChar + "gt" + Path.DirectorySeparatorChar;
 
             uint loadedFileCount = 0;
             GameTable<T> ReadGameTable<T>(string fileName) where T : new()
