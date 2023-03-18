@@ -4681,7 +4681,7 @@ namespace Game.Entities
         {
             // Only allow to toggle on when in stormwind/orgrimmar, and to toggle off in any rested place.
             // Also disallow when in combat
-            if ((enabled == IsWarModeDesired()) || IsInCombat() || !HasPlayerFlag(PlayerFlags.Resting))
+            if (enabled == IsWarModeDesired() || IsInCombat() || (!HasPlayerFlag(PlayerFlags.Resting) && !IsInSanctuary()))
                 return;
 
             if (enabled && !CanEnableWarModeInArea())
@@ -4715,28 +4715,28 @@ namespace Game.Entities
 
         public bool CanEnableWarModeInArea()
         {
-            var zone = CliDB.AreaTableStorage.LookupByKey(GetZoneId());
-            if (zone == null || !IsFriendlyArea(zone))
-                return false;
-
             var area = CliDB.AreaTableStorage.LookupByKey(GetAreaId());
+
             if (area == null)
-                area = zone;
+                area = CliDB.AreaTableStorage.LookupByKey(GetZoneId());
+
+            if (!IsFriendlyArea(area) && (!IsInSanctuary() || !area.IsSanctuary()))
+                return false;
 
             do
             {
-                if ((area.Flags[1] & (uint)AreaFlags2.CanEnableWarMode) != 0)
+                if (area.CanEnableWarMode())
                     return true;
 
                 area = CliDB.AreaTableStorage.LookupByKey(area.ParentAreaID);
             } while (area != null);
 
-            return false;
+            return IsTeamAlliance() ? GetAreaId() != (uint)AreaIds.StormwindCity && GetAreaId() != (uint)AreaIds.Valdrakken : GetAreaId() != (uint)AreaIds.Orgrimmar && GetAreaId() != (uint)AreaIds.Valdrakken;
         }
 
         void UpdateWarModeAuras()
         {
-            uint auraInside = 282559;
+            uint auraInside = PlayerConst.WarmodeEnlistedSpellInside;
             uint auraOutside = PlayerConst.WarmodeEnlistedSpellOutside;
 
             if (IsWarModeDesired())
@@ -4766,8 +4766,8 @@ namespace Game.Entities
             }
         }
 
-        bool IsWarModeDesired() { return HasPlayerFlag(PlayerFlags.WarModeDesired); }
-        bool IsWarModeActive() { return HasPlayerFlag(PlayerFlags.WarModeActive); }
+        public bool IsWarModeDesired() { return HasPlayerFlag(PlayerFlags.WarModeDesired); }
+        public bool IsWarModeActive() { return HasPlayerFlag(PlayerFlags.WarModeActive); }
         public bool IsWarModeLocalActive() { return HasPlayerLocalFlag(PlayerLocalFlags.WarMode); }
 
         // Used in triggers for check "Only to targets that grant experience or honor" req
@@ -4816,6 +4816,8 @@ namespace Game.Entities
         }
         public Team GetTeam() { return m_team; }
         public int GetTeamId() { return m_team == Team.Alliance ? TeamId.Alliance : TeamId.Horde; }
+        public bool IsTeamAlliance() { return m_team == Team.Alliance; }
+        public bool IsTeamHorde() { return m_team == Team.Horde; }
 
         public Team GetEffectiveTeam() { return HasPlayerFlagEx(PlayerFlagsEx.MercenaryMode) ? (GetTeam() == Team.Alliance ? Team.Horde : Team.Alliance) : GetTeam(); }
         public int GetEffectiveTeamId() { return GetEffectiveTeam() == Team.Alliance ? TeamId.Alliance : TeamId.Horde; }
