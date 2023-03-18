@@ -385,7 +385,7 @@ namespace Game.Entities
         public bool InBattlegroundQueue(bool ignoreArena = false)
         {
             for (byte i = 0; i < SharedConst.MaxPlayerBGQueues; ++i)
-                if (m_bgBattlegroundQueueID[i].bgQueueTypeId != default && (!ignoreArena || m_bgBattlegroundQueueID[i].bgQueueTypeId.BattlemasterListId != (ushort)BattlegroundTypeId.AA))
+                if (m_bgBattlegroundQueueID[i].bgQueueTypeId != default && (!ignoreArena || m_bgBattlegroundQueueID[i].bgQueueTypeId.BattlemasterListId != (ushort)BattlegroundTypeId.AllArenas))
                     return true;
             return false;
         }

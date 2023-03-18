@@ -58,6 +58,7 @@ namespace Framework.Constants
         public const uint SpellIdHeartEssenceActionBarOverride = 298554;
 
         //Warmode
+        public const uint WarmodeEnlistedSpellInside = 282559;
         public const uint WarmodeEnlistedSpellOutside = 269083;
 
         public const uint SpellExperienceEliminated = 206662;
@@ -123,6 +124,7 @@ namespace Framework.Constants
         NotEnoughCurrency = 25,
     }
 
+    [Flags]
     public enum RestFlag
     {
         Tavern = 0x01,
@@ -130,6 +132,7 @@ namespace Framework.Constants
         FactionArea = 0x04
     }
 
+    [Flags]
     public enum ChatFlags
     {
         None = 0x00,
@@ -275,6 +278,7 @@ namespace Framework.Constants
         NotEligible = 3
     }
 
+    [Flags]
     public enum PlayerDelayedOperations
     {
         SavePlayer = 0x01,
@@ -294,6 +298,7 @@ namespace Framework.Constants
         Max = 3
     }
 
+    [Flags]
     public enum CorpseFlags
     {
         None = 0x00,
@@ -314,6 +319,7 @@ namespace Framework.Constants
         Deleted = 3
     }
 
+    [Flags]
     public enum ActionButtonType
     {
         Spell = 0x00,
@@ -327,6 +333,7 @@ namespace Framework.Constants
         Item = 0x80
     }
 
+    [Flags]
     public enum TeleportToOptions
     {
         GMMode = 0x01,
@@ -350,6 +357,7 @@ namespace Framework.Constants
         FallToVoid = 6                                 // custom case for fall without durability loss
     }
 
+    [Flags]
     public enum PlayerUnderwaterState
     {
         None = 0x00,
@@ -367,6 +375,7 @@ namespace Framework.Constants
         public const int Miss = 1500;     // cooldown applied on runes when the spell misses
     }
 
+    [Flags]
     public enum PlayerFlags : uint
     {
         GroupLeader = 0x01,
@@ -403,6 +412,7 @@ namespace Framework.Constants
         CommentatorCamera = 0x80000000
     }
 
+    [Flags]
     public enum PlayerFlagsEx
     {
         ReagentBankUnlocked = 0x01,
@@ -414,6 +424,7 @@ namespace Framework.Constants
         UnlockedAoeLoot = 0x0200
     }
 
+    [Flags]
     public enum CharacterFlags : uint
     {
         None = 0x00000000,
@@ -451,6 +462,7 @@ namespace Framework.Constants
         Unk32 = 0x80000000
     }
 
+    [Flags]
     public enum PlayerLocalFlags
     {
         ControllingPet = 0x01, // Displays "You have an active summon already" when trying to tame new pet
@@ -470,6 +482,7 @@ namespace Framework.Constants
         WeeklyRewardAvailable = 0x40000
     }
 
+    [Flags]
     public enum PlayerFieldByte2Flags
     {
         None = 0x00,
@@ -499,6 +512,7 @@ namespace Framework.Constants
         RAFLinked = 6
     }
 
+    [Flags]
     public enum CharacterCustomizeFlags
     {
         None = 0x00,
@@ -507,12 +521,14 @@ namespace Framework.Constants
         Race = 0x100000        // Name, Gender, Race, Etc...
     }
 
+    [Flags]
     public enum CharacterFlags3 : uint
     {
         LockedByRevokedVasTransaction = 0x100000,
         LockedByRevokedCharacterUpgrade = 0x80000000,
     }
 
+    [Flags]
     public enum CharacterFlags4
     {
         TrialBoost = 0x80,
@@ -528,6 +544,7 @@ namespace Framework.Constants
         Underwear = 4,
     }
 
+    [Flags]
     public enum AtLoginFlags
     {
         None = 0x00,
@@ -551,6 +568,7 @@ namespace Framework.Constants
         Count = (End - Start)
     }
 
+    [Flags]
     public enum PlayerTitle : ulong
     {
         Disabled = 0x0000000000000000,
@@ -684,6 +702,7 @@ namespace Framework.Constants
         MapIncomingTransferNotAllowed = 15
     }
 
+    [Flags]
     public enum PlayerCommandStates
     {
         None = 0x00,
@@ -708,6 +727,7 @@ namespace Framework.Constants
         NoKill = 1
     }
 
+    [Flags]
     public enum HeirloomPlayerFlags
     {
         None = 0x00,
@@ -719,6 +739,7 @@ namespace Framework.Constants
         UpgradeLevel6 = 0x20,
     }
 
+    [Flags]
     public enum HeirloomItemFlags
     {
         None = 0x00,
@@ -747,6 +768,7 @@ namespace Framework.Constants
         InPvpMatch = 10
     }
 
+    [Flags]
     public enum TutorialsFlag
     {
         None = 0x00,
