@@ -148,6 +148,11 @@ namespace Game.DataStorage
             return false;
         }
 
+        public bool CanEnableWarMode()
+        {
+            return HasFlag2(AreaFlags2.CanEnableWarMode);
+        }
+
         public bool HasFlag(AreaFlags flag) { return Flags[0].HasAnyFlag((uint)flag); }
 
         public bool HasFlag2(AreaFlags2 flag) { return Flags[1].HasAnyFlag((uint)flag); }
