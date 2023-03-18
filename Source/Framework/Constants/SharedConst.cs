@@ -3085,17 +3085,6 @@ namespace Framework.Constants;
         EnabledWithAutoIgnore    = 2
     }
 
-    public enum AreaId
-    {
-        Wintergrasp = 4197,
-        TheSunkenRing = 4538,
-        TheBrokenTemplate = 4539,
-        WintergraspFortress = 4575,
-        TheChilledQuagmire = 4589,
-        WestparkWorkshop = 4611,
-        EastparkWorkshop = 4612,
-    }
-
     public enum WorldStates
     {
         CurrentPvpSeasonId                       = 3191,

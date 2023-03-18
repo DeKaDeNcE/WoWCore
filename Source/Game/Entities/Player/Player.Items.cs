@@ -6169,11 +6169,11 @@ namespace Game.Entities
             Battleground bg = GetBattleground();
             if (bg != null)
             {
-                if (bg.GetTypeID(true) == BattlegroundTypeId.AV)
+                if (bg.GetTypeID(true) == BattlegroundTypeId.AlteracValley)
                     bones.loot.FillLoot(1, LootStorage.Creature, this, true);
             }
             // For wintergrasp Quests
-            else if (GetZoneId() == (uint)AreaId.Wintergrasp)
+            else if (GetZoneId() == (uint)AreaIds.Wintergrasp)
                 bones.loot.FillLoot(1, LootStorage.Creature, this, true);
 
             // It may need a better formula

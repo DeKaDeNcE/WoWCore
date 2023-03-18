@@ -94,7 +94,7 @@ namespace Game.BattleGrounds
                     Log.outDebug(LogFilter.Arena, "BattlegroundMgr: UPDATING ARENA QUEUES");
                     foreach (ArenaTypes teamSize in new[] { ArenaTypes.Team2v2, ArenaTypes.Team3v3, ArenaTypes.Team5v5 })
                     {
-                        BattlegroundQueueTypeId ratedArenaQueueId = BGQueueTypeId((ushort)BattlegroundTypeId.AA, BattlegroundQueueIdType.Arena, true, teamSize);
+                        BattlegroundQueueTypeId ratedArenaQueueId = BGQueueTypeId((ushort)BattlegroundTypeId.AllArenas, BattlegroundQueueIdType.Arena, true, teamSize);
                         for (var bracket = BattlegroundBracketId.First; bracket < BattlegroundBracketId.Max; ++bracket)
                             GetBattlegroundQueue(ratedArenaQueueId).BattlegroundQueueUpdate(diff, bracket, 0);
                     }
@@ -180,7 +180,7 @@ namespace Game.BattleGrounds
             if (instanceId == 0)
                 return null;
 
-            if (bgTypeId != BattlegroundTypeId.None || bgTypeId == BattlegroundTypeId.RB || bgTypeId == BattlegroundTypeId.RandomEpic)
+            if (bgTypeId != BattlegroundTypeId.None || bgTypeId == BattlegroundTypeId.RandomBattleground || bgTypeId == BattlegroundTypeId.RandomEpicBattleground)
             {
                 var data = bgDataStore.LookupByKey(bgTypeId);
                 return data.m_Battlegrounds.LookupByKey(instanceId);
@@ -243,7 +243,7 @@ namespace Game.BattleGrounds
                 return null;
             }
 
-            if (bgTypeId == BattlegroundTypeId.RB || bgTypeId == BattlegroundTypeId.AA || bgTypeId == BattlegroundTypeId.RandomEpic)
+            if (bgTypeId == BattlegroundTypeId.RandomBattleground || bgTypeId == BattlegroundTypeId.AllArenas || bgTypeId == BattlegroundTypeId.RandomEpicBattleground)
                 return null;
 
             // create a copy of the BG template
@@ -274,56 +274,56 @@ namespace Game.BattleGrounds
                 // Create the BG
                 switch (bgTemplate.Id)
                 {
-                    //case BattlegroundTypeId.AV:
+                    //case BattlegroundTypeId.AlteracValley:
                     // bg = new BattlegroundAV(bgTemplate);
                     //break;
-                    case BattlegroundTypeId.WS:
+                    case BattlegroundTypeId.ClassicWarsongGulch:
                         bg = new BgWarsongGluch(bgTemplate);
                         break;
-                    case BattlegroundTypeId.AB:
-                    case BattlegroundTypeId.DomAb:
+                    case BattlegroundTypeId.ClassicArathiBasin:
+                    case BattlegroundTypeId.ArathiBasin2:
                         bg = new BgArathiBasin(bgTemplate);
                         break;
-                    case BattlegroundTypeId.NA:
+                    case BattlegroundTypeId.NagrandArenaold:
                         bg = new NagrandArena(bgTemplate);
                         break;
-                    case BattlegroundTypeId.BE:
+                    case BattlegroundTypeId.zzOldBladesEdgeArena:
                         bg = new BladesEdgeArena(bgTemplate);
                         break;
-                    case BattlegroundTypeId.EY:
+                    case BattlegroundTypeId.EyeoftheStorm:
                         bg = new BgEyeofStorm(bgTemplate);
                         break;
-                    case BattlegroundTypeId.RL:
+                    case BattlegroundTypeId.RuinsofLordaeron:
                         bg = new RuinsofLordaeronArena(bgTemplate);
                         break;
-                    case BattlegroundTypeId.SA:
+                    case BattlegroundTypeId.StrandoftheAncients:
                         bg = new BgStrandOfAncients(bgTemplate);
                         break;
-                    case BattlegroundTypeId.DS:
+                    case BattlegroundTypeId.DalaranSewers:
                         bg = new DalaranSewersArena(bgTemplate);
                         break;
-                    case BattlegroundTypeId.RV:
+                    case BattlegroundTypeId.TheRingofValor:
                         bg = new RingofValorArena(bgTemplate);
                         break;
-                    //case BattlegroundTypeId.IC:
+                    //case BattlegroundTypeId.IsleofConquest:
                     //bg = new BattlegroundIC(bgTemplate);
                     //break;
-                    case BattlegroundTypeId.AA:
+                    case BattlegroundTypeId.AllArenas:
                         bg = new Battleground(bgTemplate);
                         break;
-                    case BattlegroundTypeId.RB:
+                    case BattlegroundTypeId.RandomBattleground:
                         bg = new Battleground(bgTemplate);
                         bg.SetRandom(true);
                         break;
                     /*
-                case BattlegroundTypeId.TP:
+                case BattlegroundTypeId.TwinPeaks:
                     bg = new BattlegroundTP(bgTemplate);
                     break;
-                case BattlegroundTypeId.BFG:
+                case BattlegroundTypeId.TheBattleforGilneas:
                     bg = new BattlegroundBFG(bgTemplate);
                     break;
                     */
-                    case BattlegroundTypeId.RandomEpic:
+                    case BattlegroundTypeId.RandomEpicBattleground:
                         bg = new Battleground(bgTemplate);
                         bg.SetRandom(true);
                         break;
@@ -376,7 +376,7 @@ namespace Game.BattleGrounds
                 bgTemplate.ScriptId = Global.ObjectMgr.GetScriptId(result.Read<string>(5));
                 bgTemplate.BattlemasterEntry = bl;
 
-                if (bgTemplate.Id != BattlegroundTypeId.AA && bgTemplate.Id != BattlegroundTypeId.RB && bgTemplate.Id != BattlegroundTypeId.RandomEpic)
+                if (bgTemplate.Id != BattlegroundTypeId.AlteracValley && bgTemplate.Id != BattlegroundTypeId.RandomBattleground && bgTemplate.Id != BattlegroundTypeId.RandomEpicBattleground)
                 {
                     uint startId = result.Read<uint>(1);
                     WorldSafeLocsEntry start = Global.ObjectMgr.GetWorldSafeLoc(startId);
@@ -455,8 +455,8 @@ namespace Game.BattleGrounds
 
         bool IsArenaType(BattlegroundTypeId bgTypeId)
         {
-            return bgTypeId == BattlegroundTypeId.AA || bgTypeId == BattlegroundTypeId.BE || bgTypeId == BattlegroundTypeId.NA
-                || bgTypeId == BattlegroundTypeId.DS || bgTypeId == BattlegroundTypeId.RV || bgTypeId == BattlegroundTypeId.RL;
+            return bgTypeId == BattlegroundTypeId.AllArenas || bgTypeId == BattlegroundTypeId.zzOldBladesEdgeArena || bgTypeId == BattlegroundTypeId.NagrandArenaold
+                || bgTypeId == BattlegroundTypeId.DalaranSewers || bgTypeId == BattlegroundTypeId.TheRingofValor || bgTypeId == BattlegroundTypeId.RuinsofLordaeron;
         }
 
         public BattlegroundQueueTypeId BGQueueTypeId(ushort battlemasterListId, BattlegroundQueueIdType type, bool rated, ArenaTypes teamSize)
@@ -478,7 +478,7 @@ namespace Game.BattleGrounds
 
         public void ResetHolidays()
         {
-            for (var i = BattlegroundTypeId.AV; i < BattlegroundTypeId.Max; i++)
+            for (var i = BattlegroundTypeId.AlteracValley; i < BattlegroundTypeId.Max; i++)
             {
                 Battleground bg = GetBattlegroundTemplate(i);
                 if (bg != null)
@@ -625,21 +625,21 @@ namespace Game.BattleGrounds
         {
             switch (bgTypeId)
             {
-                case BattlegroundTypeId.AV:
+                case BattlegroundTypeId.AlteracValley:
                     return HolidayIds.CallToArmsAv;
-                case BattlegroundTypeId.EY:
+                case BattlegroundTypeId.EyeoftheStorm:
                     return HolidayIds.CallToArmsEs;
-                case BattlegroundTypeId.WS:
+                case BattlegroundTypeId.ClassicWarsongGulch:
                     return HolidayIds.CallToArmsWg;
-                case BattlegroundTypeId.SA:
+                case BattlegroundTypeId.StrandoftheAncients:
                     return HolidayIds.CallToArmsSa;
-                case BattlegroundTypeId.AB:
+                case BattlegroundTypeId.ClassicArathiBasin:
                     return HolidayIds.CallToArmsAb;
-                case BattlegroundTypeId.IC:
+                case BattlegroundTypeId.IsleofConquest:
                     return HolidayIds.CallToArmsIc;
-                case BattlegroundTypeId.TP:
+                case BattlegroundTypeId.TwinPeaks:
                     return HolidayIds.CallToArmsTp;
-                case BattlegroundTypeId.BFG:
+                case BattlegroundTypeId.TheBattleforGilneas:
                     return HolidayIds.CallToArmsBg;
                 default:
                     return HolidayIds.None;
@@ -651,21 +651,21 @@ namespace Game.BattleGrounds
             switch (holiday)
             {
                 case HolidayIds.CallToArmsAv:
-                    return BattlegroundTypeId.AV;
+                    return BattlegroundTypeId.AlteracValley;
                 case HolidayIds.CallToArmsEs:
-                    return BattlegroundTypeId.EY;
+                    return BattlegroundTypeId.EyeoftheStorm;
                 case HolidayIds.CallToArmsWg:
-                    return BattlegroundTypeId.WS;
+                    return BattlegroundTypeId.ClassicWarsongGulch;
                 case HolidayIds.CallToArmsSa:
-                    return BattlegroundTypeId.SA;
+                    return BattlegroundTypeId.StrandoftheAncients;
                 case HolidayIds.CallToArmsAb:
-                    return BattlegroundTypeId.AB;
+                    return BattlegroundTypeId.ClassicArathiBasin;
                 case HolidayIds.CallToArmsIc:
-                    return BattlegroundTypeId.IC;
+                    return BattlegroundTypeId.IsleofConquest;
                 case HolidayIds.CallToArmsTp:
-                    return BattlegroundTypeId.TP;
+                    return BattlegroundTypeId.TwinPeaks;
                 case HolidayIds.CallToArmsBg:
-                    return BattlegroundTypeId.BFG;
+                    return BattlegroundTypeId.TheBattleforGilneas;
                 default:
                     return BattlegroundTypeId.None;
             }
