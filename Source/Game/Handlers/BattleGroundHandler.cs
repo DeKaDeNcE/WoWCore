@@ -130,9 +130,9 @@ namespace Game
                     return;
                 }
 
-                bool isInRandomBgQueue = _player.InBattlegroundQueueForBattlegroundQueueType(Global.BattlegroundMgr.BGQueueTypeId((ushort)BattlegroundTypeId.RB, BattlegroundQueueIdType.Battleground, false, 0))
-                    || _player.InBattlegroundQueueForBattlegroundQueueType(Global.BattlegroundMgr.BGQueueTypeId((ushort)BattlegroundTypeId.RandomEpic, BattlegroundQueueIdType.Battleground, false, 0));
-                if (bgTypeId != BattlegroundTypeId.RB && bgTypeId != BattlegroundTypeId.RandomEpic && isInRandomBgQueue)
+                bool isInRandomBgQueue = _player.InBattlegroundQueueForBattlegroundQueueType(Global.BattlegroundMgr.BGQueueTypeId((ushort)BattlegroundTypeId.RandomBattleground, BattlegroundQueueIdType.Battleground, false, 0))
+                    || _player.InBattlegroundQueueForBattlegroundQueueType(Global.BattlegroundMgr.BGQueueTypeId((ushort)BattlegroundTypeId.RandomEpicBattleground, BattlegroundQueueIdType.Battleground, false, 0));
+                if (bgTypeId != BattlegroundTypeId.RandomBattleground && bgTypeId != BattlegroundTypeId.RandomEpicBattleground && isInRandomBgQueue)
                 {
                     // player is already in random queue
                     Global.BattlegroundMgr.BuildBattlegroundStatusFailed(out battlefieldStatusFailed, bgQueueTypeId, GetPlayer(), 0, GroupJoinBattlegroundResult.InRandomBg);
@@ -140,7 +140,7 @@ namespace Game
                     return;
                 }
 
-                if (_player.InBattlegroundQueue(true) && !isInRandomBgQueue && (bgTypeId == BattlegroundTypeId.RB || bgTypeId == BattlegroundTypeId.RandomEpic))
+                if (_player.InBattlegroundQueue(true) && !isInRandomBgQueue && (bgTypeId == BattlegroundTypeId.RandomBattleground || bgTypeId == BattlegroundTypeId.RandomEpicBattleground))
                 {
                     // player is already in queue, can't start random queue
                     Global.BattlegroundMgr.BuildBattlegroundStatusFailed(out battlefieldStatusFailed, bgQueueTypeId, GetPlayer(), 0, GroupJoinBattlegroundResult.InNonRandomBg);
@@ -290,7 +290,7 @@ namespace Game
             BattlegroundTypeId bgTypeId = (BattlegroundTypeId)bgQueueTypeId.BattlemasterListId;
             // BGTemplateId returns Battleground_AA when it is arena queue.
             // Do instance id search as there is no AA bg instances.
-            Battleground bg = Global.BattlegroundMgr.GetBattleground(ginfo.IsInvitedToBGInstanceGUID, bgTypeId == BattlegroundTypeId.AA ? BattlegroundTypeId.None : bgTypeId);
+            Battleground bg = Global.BattlegroundMgr.GetBattleground(ginfo.IsInvitedToBGInstanceGUID, bgTypeId == BattlegroundTypeId.AllArenas ? BattlegroundTypeId.None : bgTypeId);
             if (!bg)
             {
                 if (battlefieldPort.AcceptedInvite)
@@ -490,14 +490,14 @@ namespace Game
             ArenaTypes arenatype = (ArenaTypes)ArenaTeam.GetTypeBySlot(packet.TeamSizeIndex);
 
             //check existence
-            Battleground bg = Global.BattlegroundMgr.GetBattlegroundTemplate(BattlegroundTypeId.AA);
+            Battleground bg = Global.BattlegroundMgr.GetBattlegroundTemplate(BattlegroundTypeId.AllArenas);
             if (!bg)
             {
                 Log.outError(LogFilter.Network, "Battleground: template bg (all arenas) not found");
                 return;
             }
 
-            if (Global.DisableMgr.IsDisabledFor(DisableType.Battleground, (uint)BattlegroundTypeId.AA, null))
+            if (Global.DisableMgr.IsDisabledFor(DisableType.Battleground, (uint)BattlegroundTypeId.AllArenas, null))
             {
                 GetPlayer().SendSysMessage(CypherStrings.ArenaDisabled);
                 return;

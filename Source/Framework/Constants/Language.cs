@@ -4,6 +4,7 @@
 
 namespace Framework.Constants
 {
+    // Languages.db2 (10.0.5.48317)
     public enum Language
     {
         Universal = 0,
@@ -18,13 +19,13 @@ namespace Framework.Constants
         Draconic = 11,
         Kalimag = 12,
         Gnomish = 13,
-        Troll = 14,
-        Gutterspeak = 33,
+        Zandali = 14,
+        Forsaken = 33,
         Draenei = 35,
         Zombie = 36,
         GnomishBinary = 37,
         GoblinBinary = 38,
-        Worgen = 39,
+        Gilnean = 39,
         Goblin = 40,
         PandarenNeutral = 42,
         PandarenAlliance = 43,
@@ -143,7 +144,7 @@ namespace Framework.Constants
         GoinfoAddon = 85,
         GoinfoModel = 86,
         UnknownError = 87,
-    TwoFACommandsNotSetup = 88,
+        TwoFACommandsNotSetup = 88,
         TwoFAAlreadySetup = 89,
         TwoFAInvalidToken = 90,
         TwoFASecretSuggestion = 91,

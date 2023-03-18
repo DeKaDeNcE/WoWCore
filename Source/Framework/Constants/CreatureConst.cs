@@ -80,6 +80,7 @@ namespace Framework.Constants
         Allowed = (0xFFFFFFFF & ~Disallowed)
     }
 
+    [Flags]
     public enum UnitFlags2 : uint
     {
         FeignDeath = 0x01,
@@ -128,6 +129,7 @@ namespace Framework.Constants
         Allowed = (0xFFFFFFFF & ~Disallowed)
     }
 
+    [Flags]
     public enum UnitFlags3 : uint
     {
         Unk0 = 0x01,
@@ -174,6 +176,7 @@ namespace Framework.Constants
         Allowed = (0xffffffff & ~Disallowed) // Skip
     }
 
+    [Flags]
     public enum NPCFlags : uint
     {
         None = 0x00,
@@ -211,6 +214,7 @@ namespace Framework.Constants
         BlackMarket = 0x80000000,     // Black Market
     }
 
+    [Flags]
     public enum NPCFlags2
     {
         None = 0x00,
@@ -554,6 +558,7 @@ namespace Framework.Constants
         DBAllowed = (0xFFFFFFFF & ~(AllUnused | DungeonBoss))
     }
 
+    // CreatureType.db2 (10.0.5.48526)
     public enum CreatureType
     {
         Beast = 1,
@@ -577,6 +582,7 @@ namespace Framework.Constants
         MaskMechanicalOrElemental = (1 << (Mechanical - 1)) | (1 << (Elemental - 1))
     }
 
+    // CreatureFamily.db2 (10.0.5.48526)
     public enum CreatureFamily
     {
         None = 0,
@@ -600,7 +606,7 @@ namespace Framework.Constants
         Imp = 23,
         Bat = 24,
         Hyena = 25,
-        BirdOfPrey = 26,
+        BirdofPrey = 26,
         WindSerpent = 27,
         RemoteControl = 28,
         Felguard = 29,
@@ -627,25 +633,25 @@ namespace Framework.Constants
         Beetle = 53,
         ShaleBeast = 55,
         Zombie = 56,
-        QaTest = 57,
+        QATESTFAMILY = 57,
         Hydra = 68,
-        Felimp = 100,
+        FelImp = 100,
         Voidlord = 101,
-        Shivara = 102,
+        Shivarra = 102,
         Observer = 103,
         Wrathguard = 104,
         Infernal = 108,
-        Fireelemental = 116,
-        Earthelemental = 117,
-        Crane = 125,
-        Waterstrider = 126,
+        FireElemental = 116,
+        EarthElemental = 117,
+        Waterfowl = 125,
+        WaterStrider = 126,
         Rodent = 127,
         StoneHound = 128,
         Gruffhorn = 129,
         Basilisk = 130,
         Direhorn = 138,
-        Stormelemental = 145,
-        Torrorguard = 147,
+        StormElemental = 145,
+        Terrorguard = 147,
         Abyssal = 148,
         Riverbeast = 150,
         Stag = 151,
@@ -662,7 +668,8 @@ namespace Framework.Constants
         Camel = 298,
         Courser = 299,
         Mammoth = 300,
-        Incubus = 302
+        Incubus = 302,
+        LesserDragonkin = 303,
     }
 
     public enum InhabitType

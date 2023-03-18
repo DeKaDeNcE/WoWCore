@@ -971,23 +971,23 @@ namespace Game.Entities
                 player.PlayerTalkClass.ClearMenus();
                 switch (bgTypeId)
                 {
-                    case BattlegroundTypeId.AV:
+                    case BattlegroundTypeId.AlteracValley:
                         player.PlayerTalkClass.SendGossipMenu(7616, GetGUID());
                         break;
-                    case BattlegroundTypeId.WS:
+                    case BattlegroundTypeId.ClassicWarsongGulch:
                         player.PlayerTalkClass.SendGossipMenu(7599, GetGUID());
                         break;
-                    case BattlegroundTypeId.AB:
+                    case BattlegroundTypeId.ClassicArathiBasin:
                         player.PlayerTalkClass.SendGossipMenu(7642, GetGUID());
                         break;
-                    case BattlegroundTypeId.EY:
-                    case BattlegroundTypeId.NA:
-                    case BattlegroundTypeId.BE:
-                    case BattlegroundTypeId.AA:
-                    case BattlegroundTypeId.RL:
-                    case BattlegroundTypeId.SA:
-                    case BattlegroundTypeId.DS:
-                    case BattlegroundTypeId.RV:
+                    case BattlegroundTypeId.EyeoftheStorm:
+                    case BattlegroundTypeId.NagrandArenaold:
+                    case BattlegroundTypeId.zzOldBladesEdgeArena:
+                    case BattlegroundTypeId.AllArenas:
+                    case BattlegroundTypeId.RuinsofLordaeron:
+                    case BattlegroundTypeId.StrandoftheAncients:
+                    case BattlegroundTypeId.DalaranSewers:
+                    case BattlegroundTypeId.TheRingofValor:
                         player.PlayerTalkClass.SendGossipMenu(10024, GetGUID());
                         break;
                     default: break;

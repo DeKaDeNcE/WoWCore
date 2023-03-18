@@ -166,12 +166,14 @@ namespace Framework.Constants
         Max
     }
 
+    [Flags]
     public enum ModelIgnoreFlags
     {
         Nothing = 0x00,
         M2 = 0x01
     }
 
+    [Flags]
     public enum LineOfSightChecks
     {
         Vmap = 0x1, // check static floor layout data
@@ -225,12 +227,14 @@ namespace Framework.Constants
         All = ActivateSpawn | BlockSpawn | AllianceOnly | HordeOnly
     }
 
+    [Flags]
     public enum AreaHeaderFlags : ushort
     {
         None = 0x0000,
         NoArea = 0x0001
     }
 
+    [Flags]
     public enum HeightHeaderFlags : uint
     {
         None = 0x0000,
@@ -240,6 +244,7 @@ namespace Framework.Constants
         HasFlightBounds = 0x0008
     }
 
+    [Flags]
     public enum LiquidHeaderFlags : byte
     {
         None = 0x0000,
@@ -247,6 +252,7 @@ namespace Framework.Constants
         NoHeight = 0x0002
     }
 
+    [Flags]
     public enum LiquidHeaderTypeFlags : byte
     {
         NoWater = 0x00,

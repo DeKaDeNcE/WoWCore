@@ -69,11 +69,12 @@ namespace Framework.Constants
         Max = 4
     }
 
+    // QuestInfo.db2 (10.0.5.48317)
     public enum QuestInfos
     {
         Group = 1,
         Class = 21,
-        Pvp = 41,
+        PvP = 41,
         Raid = 62,
         Dungeon = 81,
         WorldEvent = 82,
@@ -90,7 +91,7 @@ namespace Framework.Constants
         EpicWorldQuest = 110,
         EliteWorldQuest = 111,
         EpicEliteWorldQuest = 112,
-        PvpWorldQuest = 113,
+        PvPWorldQuest = 113,
         FirstAidWorldQuest = 114,
         BattlePetWorldQuest = 115,
         BlacksmithingWorldQuest = 116,
@@ -105,7 +106,7 @@ namespace Framework.Constants
         JewelcraftingWorldQuest = 125,
         InscriptionWorldQuest = 126,
         EmissaryQuest = 128,
-        ArcheologyWorldQuest = 129,
+        ArchaeologyWorldQuest = 129,
         FishingWorldQuest = 130,
         CookingWorldQuest = 131,
         RareWorldQuest = 135,
@@ -122,11 +123,11 @@ namespace Framework.Constants
         WarfrontBarrens = 147,
         Pickpocketing = 148,
         MagniWorldQuestAzerite = 151,
-        TortollanWorldQuest = 152,
+        TortollanWorldQuest8_0 = 152,
         WarfrontContribution = 153,
         IslandQuest = 254,
-        WarMode = 255,
-        PvpConquest = 256,
+        WarModePvP = 255,
+        PvPConquest = 256,
         FactionAssaultWorldQuest = 259,
         FactionAssaultEliteWorldQuest = 260,
         IslandWeeklyQuest = 261,
@@ -139,7 +140,8 @@ namespace Framework.Constants
         ThreatEmissaryQuest = 270,
         CallingQuest = 271,
         VenthyrPartyQuest = 272,
-        MawSoulSpawnTracker = 273
+        MawSoulSpawnTracker = 273,
+        PvPEliteWorldQuest = 278
     }
 
     public enum QuestSort
