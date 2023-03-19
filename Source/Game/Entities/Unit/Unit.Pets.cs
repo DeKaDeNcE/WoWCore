@@ -592,12 +592,17 @@ namespace Game.Entities
 
                 if (IsPlayer())
                 {
-                    Cypher.Assert(GetCharmedGUID() == charm.GetGUID(), $"Player {GetName()} is trying to uncharm unit {charm.GetEntry()}, but it has another charmed unit {GetCharmedGUID()}");
+                    //Cypher.Assert(GetCharmedGUID() == charm.GetGUID(), $"Player {GetName()} is trying to uncharm unit {charm.GetEntry()}, but it has another charmed unit {GetCharmedGUID()}");
+                    if (GetCharmedGUID() == charm.GetGUID())
+                        Log.outDebug(LogFilter.Server, $"Player {GetName()} is trying to uncharm unit {charm.GetEntry()}, but it has another charmed unit {GetCharmedGUID()}");
                     SetUpdateFieldValue(m_values.ModifyValue(m_unitData).ModifyValue(m_unitData.Charm), ObjectGuid.Empty);
                     m_charmed = null;
                 }
 
-                Cypher.Assert(charm.GetCharmerGUID() == GetGUID(), $"Unit {charm.GetEntry()} is being uncharmed, but it has another charmer {charm.GetCharmerGUID()}");
+                //Cypher.Assert(charm.GetCharmerGUID() == GetGUID(), $"Unit {charm.GetEntry()} is being uncharmed, but it has another charmer {charm.GetCharmerGUID()}");
+                if (charm.GetCharmerGUID() == GetGUID())
+                    Log.outDebug(LogFilter.Server, $"Unit {charm.GetEntry()} is being uncharmed, but it has another charmer {charm.GetCharmerGUID()}");
+
                 charm.SetUpdateFieldValue(charm.m_values.ModifyValue(m_unitData).ModifyValue(m_unitData.CharmedBy), ObjectGuid.Empty);
                 charm.m_charmer = null;
 
