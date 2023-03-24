@@ -3759,7 +3759,7 @@ namespace Game
                     }
                 }
 
-                if (data.terrainSwapMap != -1)
+                if (data.terrainSwapMap > -1)
                 {
                     MapRecord terrainSwapEntry = CliDB.MapStorage.LookupByKey(data.terrainSwapMap);
                     if (terrainSwapEntry == null)
@@ -4541,7 +4541,7 @@ namespace Game
                 }
 
                 data.terrainSwapMap = result.Read<int>(20);
-                if (data.terrainSwapMap != -1)
+                if (data.terrainSwapMap > -1)
                 {
                     MapRecord terrainSwapEntry = CliDB.MapStorage.LookupByKey(data.terrainSwapMap);
                     if (terrainSwapEntry == null)
