@@ -858,9 +858,9 @@ namespace Game.Scripting
         {
             ForEach<PlayerScript>(p => p.OnSpellCast(player, spell, skipCheck));
         }
-        public void OnPlayerLogin(Player player)
+        public void OnPlayerLogin(Player player, bool firstLogin)
         {
-            ForEach<PlayerScript>(p => p.OnLogin(player));
+            ForEach<PlayerScript>(p => p.OnLogin(player, firstLogin));
         }
         public void OnPlayerLogout(Player player)
         {
@@ -870,6 +870,12 @@ namespace Game.Scripting
         {
             ForEach<PlayerScript>(p => p.OnCreate(player));
         }
+
+        public void OnPlayerUpdate(Player player, uint diff)
+        {
+            ForEach<PlayerScript>(p => p.OnUpdate(player, diff));
+        }
+
         public void OnPlayerDelete(ObjectGuid guid, uint accountId)
         {
             ForEach<PlayerScript>(p => p.OnDelete(guid, accountId));
