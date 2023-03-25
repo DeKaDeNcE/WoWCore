@@ -64,7 +64,7 @@ namespace Game.Scripting;
         public static void CloseGossipMenuFor(Player player) { player.PlayerTalkClass.SendCloseGossip(); }
     }
 
-    class GenericSpellScriptLoader<S> : SpellScriptLoader where S : SpellScript
+    public class GenericSpellScriptLoader<S> : SpellScriptLoader where S : SpellScript
     {
         public object[] _args;
 
@@ -73,7 +73,7 @@ namespace Game.Scripting;
         public override SpellScript GetSpellScript() => (S)Activator.CreateInstance(typeof(S), _args);
     }
 
-    class GenericAuraScriptLoader<A> : AuraScriptLoader where A : AuraScript
+    public class GenericAuraScriptLoader<A> : AuraScriptLoader where A : AuraScript
     {
         public object[] _args;
 
@@ -573,13 +573,16 @@ namespace Game.Scripting;
         public virtual void OnSpellCast(Player player, Spell spell, bool skipCheck) { }
 
         // Called when a player logs in.
-        public virtual void OnLogin(Player player) { }
+        public virtual void OnLogin(Player player, bool firstLogin) { }
 
         // Called when a player logs out.
         public virtual void OnLogout(Player player) { }
 
         // Called when a player is created.
         public virtual void OnCreate(Player player) { }
+
+        // Called when a player is updated.
+        public virtual void OnUpdate(Player player, uint diff) { }
 
         // Called when a player is deleted.
         public virtual void OnDelete(ObjectGuid guid, uint accountId) { }

@@ -83,7 +83,7 @@ namespace Game.Entities
             return PlaySceneByTemplate(sceneTemplate, position);
         }
 
-        void CancelScene(uint sceneInstanceID, bool removeFromMap = true)
+        public void CancelScene(uint sceneInstanceID, bool removeFromMap = true)
         {
             if (removeFromMap)
                 RemoveSceneInstanceId(sceneInstanceID);
@@ -151,12 +151,25 @@ namespace Game.Entities
                 CancelScene(sceneInstanceID, false);
         }
 
-        bool HasScene(uint sceneInstanceID, uint sceneScriptPackageId = 0)
+        public bool HasScene(uint sceneId)
         {
-            var sceneTempalte = _scenesByInstance.LookupByKey(sceneInstanceID);
+            var sceneTemplate = _scenesByInstance.LookupByKey(sceneId);
+            if (sceneTemplate != null)
+                return true;
 
-            if (sceneTempalte != null)
-                return sceneScriptPackageId == 0 || sceneScriptPackageId == sceneTempalte.ScenePackageId;
+            foreach (var pair in _scenesByInstance)
+                if (pair.Value.SceneId == sceneId || pair.Value.ScenePackageId == sceneId)
+                    return true;
+
+            return false;
+        }
+
+        public bool HasScene(uint sceneInstanceID, uint sceneScriptPackageId = 0)
+        {
+            var sceneTemplate = _scenesByInstance.LookupByKey(sceneInstanceID);
+
+            if (sceneTemplate != null)
+                return sceneScriptPackageId == 0 || sceneScriptPackageId == sceneTemplate.ScenePackageId;
 
             return false;
         }
@@ -234,7 +247,7 @@ namespace Game.Entities
 
         Player GetPlayer() { return _player; }
 
-        void RecreateScene(uint sceneScriptPackageId, SceneFlags playbackflags, Position position = null)
+        public void RecreateScene(uint sceneScriptPackageId, SceneFlags playbackflags, Position position = null)
         {
             CancelSceneByPackageId(sceneScriptPackageId);
             PlaySceneByPackageId(sceneScriptPackageId, playbackflags, position);

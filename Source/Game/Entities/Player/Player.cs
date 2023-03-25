@@ -626,6 +626,8 @@ namespace Game.Entities
             //because we don't want player's ghost teleported from graveyard
             if (IsHasDelayedTeleport() && IsAlive())
                 TeleportTo(teleportDest, m_teleport_options);
+
+            Global.ScriptMgr.OnPlayerUpdate(this, diff);
         }
 
         public override void SetDeathState(DeathState s)
