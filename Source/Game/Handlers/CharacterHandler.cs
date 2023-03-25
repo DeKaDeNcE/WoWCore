@@ -987,7 +987,9 @@ namespace Game
                 SendNotification(CypherStrings.ResetTalents);
             }
 
-            if (pCurrChar.HasAtLoginFlag(AtLoginFlags.FirstLogin))
+            bool firstLogin = pCurrChar.HasAtLoginFlag(AtLoginFlags.FirstLogin);
+
+            if (firstLogin)
             {
                 pCurrChar.RemoveAtLoginFlag(AtLoginFlags.FirstLogin);
 
@@ -1091,7 +1093,7 @@ namespace Game
             // Handle Login-Achievements (should be handled after loading)
             _player.UpdateCriteria(CriteriaType.Login, 1);
 
-            Global.ScriptMgr.OnPlayerLogin(pCurrChar);
+            Global.ScriptMgr.OnPlayerLogin(pCurrChar, firstLogin);
         }
 
         public void AbortLogin(LoginFailureReason reason)

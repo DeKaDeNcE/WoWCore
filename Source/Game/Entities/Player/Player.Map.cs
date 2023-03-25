@@ -90,7 +90,7 @@ namespace Game.Entities
             SendPacket(raidGroupOnly);
         }
 
-        void UpdateArea(uint newArea)
+        public void UpdateArea(uint newArea)
         {
             // FFA_PVP flags are area and not zone id dependent
             // so apply them accordingly
@@ -149,7 +149,7 @@ namespace Game.Entities
 
             GetMap().UpdatePlayerZoneStats(oldZone, newZone);
 
-            // call leave script hooks immedately (before updating flags)
+            // call leave script hooks immediately (before updating flags)
             if (oldZone != newZone)
             {
                 Global.OutdoorPvPMgr.HandlePlayerLeaveZone(this, oldZone);
@@ -206,7 +206,7 @@ namespace Game.Entities
 
             UpdateZoneDependentAuras(newZone);
 
-            // call enter script hooks after everyting else has processed
+            // call enter script hooks after everything else has processed
             Global.ScriptMgr.OnPlayerUpdateZone(this, newZone, newArea);
             if (oldZone != newZone)
             {
