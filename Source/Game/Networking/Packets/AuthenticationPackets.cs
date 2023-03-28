@@ -1,15 +1,16 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using Framework.IO;
 using Framework.Constants;
 using Framework.Cryptography;
 using Framework.Cryptography.Ed25519;
-using Framework.IO;
 using Game.DataStorage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
 
 namespace Game.Networking.Packets
 {
@@ -22,7 +23,7 @@ namespace Game.Networking.Packets
             Serial = _worldPacket.ReadUInt32();
             Latency = _worldPacket.ReadUInt32();
         }
-        
+
         public uint Serial;
         public uint Latency;
     }
@@ -178,7 +179,7 @@ namespace Game.Networking.Packets
             }
 
             if (WaitInfo.HasValue)
-                WaitInfo.Value.Write(_worldPacket);            
+                WaitInfo.Value.Write(_worldPacket);
         }
 
         public AuthSuccessInfo SuccessInfo; // contains the packet data in case that it has account information (It is never set when WaitInfo is set), otherwise its contents are undefined.

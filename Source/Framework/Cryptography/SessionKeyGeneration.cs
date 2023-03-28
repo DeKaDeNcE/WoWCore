@@ -1,4 +1,5 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System.Security.Cryptography;
@@ -48,7 +49,7 @@ namespace Framework.Cryptography
             taken = 0;
         }
 
-        SHA256 sh;        
+        SHA256 sh;
         uint taken;
         byte[] o0 = new byte[32];
         byte[] o1 = new byte[32];

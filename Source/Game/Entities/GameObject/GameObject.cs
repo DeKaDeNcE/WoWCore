@@ -1,23 +1,24 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Framework.GameMath;
-using Game.AI;
-using Game.BattleGrounds;
-using Game.Collision;
-using Game.DataStorage;
-using Game.Groups;
-using Game.Loots;
-using Game.Maps;
-using Game.Networking;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.GameMath;
+using Framework.Constants;
+using Game.AI;
+using Game.Maps;
+using Game.Loots;
+using Game.Spells;
+using Game.Groups;
+using Game.Collision;
+using Game.DataStorage;
+using Game.BattleGrounds;
+using Game.Networking;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {
@@ -594,7 +595,7 @@ namespace Game.Entities
                             }
 
                             // Type 0 despawns after being triggered, type 1 does not.
-                            // @todo This is activation radius. Casting radius must be selected from spell 
+                            // @todo This is activation radius. Casting radius must be selected from spell
                             float radius;
                             if (goInfo.Trap.radius == 0f)
                             {
@@ -3014,7 +3015,7 @@ namespace Game.Entities
             setStateLocal.State = (byte)state;
             viewer.SendPacket(setStateLocal);
         }
-        
+
         public void SetDisplayId(uint displayid)
         {
             SetUpdateFieldValue(m_values.ModifyValue(m_gameObjectData).ModifyValue(m_gameObjectData.DisplayID), displayid);
@@ -3105,7 +3106,7 @@ namespace Game.Entities
 
             return m_personalLoot.LookupByKey(player.GetGUID());
         }
-        
+
         public void SetLinkedTrap(GameObject linkedTrap) { m_linkedTrap = linkedTrap.GetGUID(); }
 
         public GameObject GetLinkedTrap()
@@ -3499,7 +3500,7 @@ namespace Game.Entities
 
             return true;
         }
-        
+
         PerPlayerState GetOrCreatePerPlayerStates(ObjectGuid guid)
         {
             if (m_perPlayerState == null)
@@ -3510,7 +3511,7 @@ namespace Game.Entities
 
             return m_perPlayerState[guid];
         }
-        
+
         public override ushort GetAIAnimKitId() { return _animKitId; }
 
         public uint GetWorldEffectID() { return _worldEffectID; }
@@ -3618,9 +3619,9 @@ namespace Game.Entities
 
         List<ObjectGuid> GetTapList() { return m_tapList; }
         void SetTapList(List<ObjectGuid> tapList) { m_tapList = tapList; }
-        
+
         bool HasLootRecipient() { return !m_tapList.Empty(); }
-        
+
         public override uint GetLevelForTarget(WorldObject target)
         {
             Unit owner = GetOwner();

@@ -1,12 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Entities;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Spells;
+using Game.Entities;
 
 namespace Game.Scripting
 {
@@ -186,7 +187,7 @@ namespace Game.Scripting
 
             SpellOnResistAbsorbCalculateFnType _onCalculateResistAbsorbHandlerScript;
         }
-        
+
         public class EffectHandler : EffectHook
         {
             public EffectHandler(SpellEffectFnType pEffectHandlerScript, uint effIndex, SpellEffectName effName) : base(effIndex)
@@ -446,7 +447,7 @@ namespace Game.Scripting
                 || m_currentScriptState == (byte)SpellScriptHookType.AfterCast
                 || m_currentScriptState == (byte)SpellScriptHookType.CalcCritChance;
         }
-        
+
         public bool IsInTargetHook()
         {
             switch ((SpellScriptHookType)m_currentScriptState)
@@ -476,7 +477,7 @@ namespace Game.Scripting
             }
             return false;
         }
-        
+
         public bool IsInHitPhase()
         {
             return (m_currentScriptState >= (byte)SpellScriptHookType.EffectHit && m_currentScriptState < (byte)SpellScriptHookType.AfterHit + 1);
@@ -654,7 +655,7 @@ namespace Game.Scripting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>target of current effect if it was Creature otherwise null</returns>
         public Creature GetHitCreature()
@@ -671,7 +672,7 @@ namespace Game.Scripting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>target of current effect if it was Player otherwise null</returns>
         public Player GetHitPlayer()
@@ -688,7 +689,7 @@ namespace Game.Scripting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>target of current effect if it was Item otherwise null</returns>
         public Item GetHitItem()
@@ -702,7 +703,7 @@ namespace Game.Scripting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>target of current effect if it was GameObject otherwise null</returns>
         public GameObject GetHitGObj()
@@ -716,7 +717,7 @@ namespace Game.Scripting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>target of current effect if it was Corpse otherwise nullptr</returns>
         public Corpse GetHitCorpse()
@@ -728,9 +729,9 @@ namespace Game.Scripting
             }
             return m_spell.corpseTarget;
         }
-        
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>destination of current effect</returns>
         public WorldLocation GetHitDest()
@@ -788,7 +789,7 @@ namespace Game.Scripting
         public Spell GetSpell() { return m_spell; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>true if spell critically hits current HitUnit</returns>
         public bool IsHitCrit()
@@ -881,7 +882,7 @@ namespace Game.Scripting
             return m_spell.effectInfo;
         }
 
-        // method avalible only in EffectHandler method
+        // method available only in EffectHandler method
         public int GetEffectValue()
         {
             if (!IsInEffectHook())
@@ -924,7 +925,7 @@ namespace Game.Scripting
 
             m_spell.variance = variance;
         }
-        
+
         // returns: cast item if present.
         public Item GetCastItem() { return m_spell.m_CastItem; }
 
@@ -1291,7 +1292,7 @@ namespace Game.Scripting
         }
         public class EnterLeaveCombatHandler
         {
-            public EnterLeaveCombatHandler(AuraEnterLeaveCombatFnType handlerScript) 
+            public EnterLeaveCombatHandler(AuraEnterLeaveCombatFnType handlerScript)
             {
                 _handlerScript = handlerScript;
             }
@@ -1302,7 +1303,7 @@ namespace Game.Scripting
 
             AuraEnterLeaveCombatFnType _handlerScript;
         }
-        
+
         public AuraScript()
         {
             m_aura = null;
@@ -1655,7 +1656,7 @@ namespace Game.Scripting
 
         // returns guid of object which casted the aura (m_originalCaster of the Spell class)
         public ObjectGuid GetCasterGUID() { return m_aura.GetCasterGUID(); }
-        // returns unit which casted the aura or null if not avalible (caster logged out for example)
+        // returns unit which casted the aura or null if not available (caster logged out for example)
         public Unit GetCaster()
         {
             WorldObject caster = m_aura.GetCaster();
@@ -1732,7 +1733,7 @@ namespace Game.Scripting
         }
 
         // AuraScript interface - functions which are redirecting to AuraApplication class
-        // Do not call these in hooks in which AuraApplication is not avalible, otherwise result will differ from expected (the functions will return null)
+        // Do not call these in hooks in which AuraApplication is not available, otherwise result will differ from expected (the functions will return null)
 
         // returns currently processed target of an aura
         // Return value does not need to be null-checked, the only situation this will (always)

@@ -1,13 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.Achievements;
-using Game.DataStorage;
-using Game.Maps;
 using System;
 using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Maps;
+using Game.DataStorage;
+using Game.Achievements;
+
 namespace Game.Scenarios
 {
     public class ScenarioManager : Singleton<ScenarioManager>
@@ -37,7 +39,7 @@ namespace Game.Scenarios
             var scenarioData = _scenarioData.LookupByKey(scenarioID);
             if (scenarioData == null)
             {
-                Log.outError(LogFilter.Scenario, "Table `scenarios` contained data linking scenario (Id: {0}) to map (Id: {1}), difficulty (Id: {2}) but no scenario data was found related to that scenario Id.", 
+                Log.outError(LogFilter.Scenario, "Table `scenarios` contained data linking scenario (Id: {0}) to map (Id: {1}), difficulty (Id: {2}) but no scenario data was found related to that scenario Id.",
                     scenarioID, map.GetId(), map.GetDifficultyID());
                 return null;
             }

@@ -1,23 +1,24 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Framework.Dynamic;
-using Game.BattleGrounds;
-using Game.Collision;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Networking;
-using Game.Networking.Packets;
-using Game.Scenarios;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Collections;
+using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Groups;
+using Game.Entities;
+using Game.Collision;
+using Game.Scenarios;
+using Game.DataStorage;
+using Game.BattleGrounds;
+using Game.Networking;
+using Game.Networking.Packets;
 
 namespace Game.Maps
 {
@@ -4916,7 +4917,7 @@ namespace Game.Maps
         }
 
         public Group GetOwningGroup() { return i_owningGroupRef.GetTarget(); }
-        
+
         public void TrySetOwningGroup(Group group)
         {
             if (!i_owningGroupRef.IsValid())
@@ -4997,7 +4998,7 @@ namespace Game.Maps
                 SQLTransaction trans = new();
 
                 if (entries.IsInstanceIdBound())
-                    Global.InstanceLockMgr.UpdateSharedInstanceLock(trans, new InstanceLockUpdateEvent(GetInstanceId(), i_data.GetSaveData(), 
+                    Global.InstanceLockMgr.UpdateSharedInstanceLock(trans, new InstanceLockUpdateEvent(GetInstanceId(), i_data.GetSaveData(),
                         instanceCompletedEncounters, updateSaveDataEvent.DungeonEncounter, i_data.GetEntranceLocationForCompletedEncounters(instanceCompletedEncounters)));
 
                 foreach (var player in GetPlayers())
@@ -5033,7 +5034,7 @@ namespace Game.Maps
                 DB.Characters.CommitTransaction(trans);
             }
         }
-        
+
         public void UpdateInstanceLock(UpdateAdditionalSaveDataEvent updateSaveDataEvent)
         {
             if (i_instanceLock != null)
@@ -5224,7 +5225,7 @@ namespace Game.Maps
             MapDifficultyXConditionId = mapDifficultyXConditionId;
         }
     }
-    
+
     public struct ScriptAction
     {
         public ObjectGuid ownerGUID;

@@ -1,21 +1,22 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.Chat;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Guilds;
-using Game.Maps;
-using Game.Networking;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Chat;
+using Game.Maps;
+using Game.Groups;
+using Game.Guilds;
+using Game.Spells;
+using Game.Entities;
+using Game.DataStorage;
+using Game.Networking;
+using Game.Networking.Packets;
 
 namespace Game.BattleGrounds
 {
@@ -152,7 +153,7 @@ namespace Game.BattleGrounds
             if (m_ValidStartPositionTimer >= BattlegroundConst.CheckPlayerPositionInverval)
             {
                 m_ValidStartPositionTimer = 0;
-                
+
                 foreach (var guid in GetPlayers().Keys)
                 {
                     Player player = Global.ObjAccessor.FindPlayer(guid);
@@ -524,7 +525,7 @@ namespace Game.BattleGrounds
         {
             return _battlegroundTemplate.MaxStartDistSq;
         }
-        
+
         public void SendPacketToAll(ServerPacket packet)
         {
             foreach (var pair in m_Players)
@@ -797,7 +798,7 @@ namespace Game.BattleGrounds
         {
             return _battlegroundTemplate.ScriptId;
         }
-        
+
         public uint GetBonusHonorFromKill(uint kills)
         {
             //variable kills means how many honorable kills you scored (so we need kills * honor_for_one_kill)
@@ -832,7 +833,7 @@ namespace Game.BattleGrounds
 
             Player player = Global.ObjAccessor.FindPlayer(guid);
             if (player)
-            { 
+            {
                 // should remove spirit of redemption
                 if (player.HasAuraType(AuraType.SpiritOfRedemption))
                     player.RemoveAurasByType(AuraType.ModShapeshift);
@@ -1254,7 +1255,7 @@ namespace Game.BattleGrounds
         {
             return !IsArena();
         }
-        
+
         public bool HasFreeSlots()
         {
             return GetPlayersSize() < GetMaxPlayers();
@@ -1644,7 +1645,7 @@ namespace Game.BattleGrounds
         {
             _playerPositions.RemoveAll(playerPosition => playerPosition.Guid == guid);
         }
-        
+
         void EndNow()
         {
             RemoveFromBGFreeSlotQueue();
@@ -1772,7 +1773,7 @@ namespace Game.BattleGrounds
 
             return false;
         }
-        
+
         void PlayerAddedToBGCheckIfBGIsRunning(Player player)
         {
             if (GetStatus() != BattlegroundStatus.WaitLeave)

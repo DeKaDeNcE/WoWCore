@@ -1,13 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Framework.IO;
-using Game.Entities;
-using Game.Maps;
 using System;
 using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Maps;
+using Game.Entities;
 
 namespace Game.Chat.Commands
 {
@@ -577,7 +577,7 @@ namespace Game.Chat.Commands
 
                 if (!target)
                 {
-                    handler.SendSysMessage(CypherStrings.SelectCreature);    
+                    handler.SendSysMessage(CypherStrings.SelectCreature);
                     return false;
                 }
 
@@ -600,7 +600,7 @@ namespace Game.Chat.Commands
                 // Check if the user did specify a visual waypoint
                 if (!target || target.GetEntry() != 1)
                 {
-                    handler.SendSysMessage(CypherStrings.WaypointVpSelect);    
+                    handler.SendSysMessage(CypherStrings.WaypointVpSelect);
                     return false;
                 }
 
@@ -643,7 +643,7 @@ namespace Game.Chat.Commands
 
                 if (result.IsEmpty())
                 {
-                    handler.SendSysMessage("|cffff33ffPath no found.|r");    
+                    handler.SendSysMessage("|cffff33ffPath no found.|r");
                     return false;
                 }
 
@@ -745,7 +745,7 @@ namespace Game.Chat.Commands
 
                 if (result.IsEmpty())
                 {
-                    handler.SendSysMessage(CypherStrings.WaypointNotfound, pathId);    
+                    handler.SendSysMessage(CypherStrings.WaypointNotfound, pathId);
                     return false;
                 }
 
@@ -799,7 +799,7 @@ namespace Game.Chat.Commands
 
                 if (result.IsEmpty())
                 {
-                    handler.SendSysMessage(CypherStrings.WaypointNotfoundlast, pathId);    
+                    handler.SendSysMessage(CypherStrings.WaypointNotfoundlast, pathId);
                     return false;
                 }
 
@@ -852,7 +852,7 @@ namespace Game.Chat.Commands
 
                 if (result.IsEmpty())
                 {
-                    handler.SendSysMessage(CypherStrings.WaypointVpNotfound);    
+                    handler.SendSysMessage(CypherStrings.WaypointVpNotfound);
                     return false;
                 }
                 bool hasError = false;

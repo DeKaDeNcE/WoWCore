@@ -1,19 +1,20 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Framework.Dynamic;
-using Game.AI;
-using Game.DataStorage;
-using Game.Groups;
-using Game.Loots;
-using Game.Maps;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Database;
+using Framework.Constants;
+using Game.AI;
+using Game.Maps;
+using Game.Loots;
+using Game.Groups;
+using Game.Spells;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {
@@ -1150,7 +1151,7 @@ namespace Game.Entities
         {
             _gossipMenuId = gossipMenuId;
         }
-        
+
         public uint GetTrainerId()
         {
             if (_trainerId.HasValue)
@@ -1202,7 +1203,7 @@ namespace Game.Entities
         }
 
         public bool IsTapListNotClearedOnEvade() { return m_dontClearTapListOnEvade; }
-        
+
         public void SetTappedBy(Unit unit, bool withGroup = true)
         {
             // set the player whose group should receive the right
@@ -1285,7 +1286,7 @@ namespace Game.Entities
         public bool CanHaveLoot() { return !_staticFlags.HasFlag(CreatureStaticFlags.NoLoot); }
 
         public void SetCanHaveLoot(bool canHaveLoot) { _staticFlags.ApplyFlag(CreatureStaticFlags.NoLoot, !canHaveLoot); }
-        
+
         public void SaveToDB()
         {
             // this should only be used when the creature has already been loaded
@@ -1679,7 +1680,7 @@ namespace Game.Entities
         }
 
         public bool IsTemplateRooted() { return _staticFlags.HasFlag(CreatureStaticFlags.Sessile); }
-        
+
         public void SetTemplateRooted(bool rooted)
         {
             _staticFlags.ApplyFlag(CreatureStaticFlags.Sessile, rooted);
@@ -3238,7 +3239,7 @@ namespace Game.Entities
         public bool CanMelee() { return !_staticFlags.HasFlag(CreatureStaticFlags.NoMelee); }
 
         public void SetCanMelee(bool canMelee) { _staticFlags.ApplyFlag(CreatureStaticFlags.NoMelee, !canMelee); }
-        
+
         public sbyte GetOriginalEquipmentId() { return m_originalEquipmentId; }
         public byte GetCurrentEquipmentId() { return m_equipmentId; }
         public void SetCurrentEquipmentId(byte id) { m_equipmentId = id; }
@@ -3387,7 +3388,7 @@ namespace Game.Entities
 
         bool CanRegenerateHealth() { return !_staticFlags.HasFlag(CreatureStaticFlags5.NoHealthRegen) && _regenerateHealth; }
         public void SetRegenerateHealth(bool value) { _staticFlags.ApplyFlag(CreatureStaticFlags5.NoHealthRegen, !value); }
-        
+
         public void SetHomePosition(float x, float y, float z, float o)
         {
             m_homePosition.Relocate(x, y, z, o);

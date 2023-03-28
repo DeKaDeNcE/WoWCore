@@ -1,20 +1,21 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Database;
+using Framework.Constants;
 using Game.AI;
+using Game.Misc;
+using Game.Maps;
+using Game.Mails;
+using Game.Groups;
+using Game.Spells;
 using Game.Conditions;
 using Game.DataStorage;
-using Game.Groups;
-using Game.Mails;
-using Game.Maps;
-using Game.Misc;
 using Game.Networking.Packets;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Game.Entities
 {
@@ -1205,7 +1206,7 @@ namespace Game.Entities
                     case TypeId.Unit:
                     case TypeId.Player:
                     {
-                        //For AutoSubmition was added plr case there as it almost same exclute AI script cases.
+                        //For AutoSubmission was added plr case there as it almost same exclude AI script cases.
                         // Send next quest
                         Quest nextQuest = GetNextQuest(questGiver.GetGUID(), quest);
                         if (nextQuest != null)

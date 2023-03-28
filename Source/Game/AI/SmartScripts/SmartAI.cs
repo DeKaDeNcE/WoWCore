@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Entities;
-using Game.Groups;
-using Game.Maps;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Maps;
+using Game.Groups;
+using Game.Spells;
+using Game.Entities;
 
 namespace Game.AI
 {
@@ -336,7 +337,7 @@ namespace Game.AI
 
             if (!hasVictim)
                 return;
-            
+
             DoMeleeAttackIfReady();
         }
 
@@ -582,7 +583,7 @@ namespace Game.AI
                 if (me.GetMotionMaster().GetCurrentMovementGeneratorType(MovementSlot.Default) != MovementGeneratorType.Waypoint)
                     if (me.GetWaypointPath() != 0)
                         me.GetMotionMaster().MovePath(me.GetWaypointPath(), true);
-                
+
                 me.ResumeMovement();
             }
             else if (formation.IsFormed())
@@ -647,7 +648,7 @@ namespace Game.AI
         {
             GetScript().ProcessEventsFor(SmartEvents.SpellHit, caster.ToUnit(), 0, 0, false, spellInfo, caster.ToGameObject());
         }
-        
+
         public override void SpellHitTarget(WorldObject target, SpellInfo spellInfo)
         {
             GetScript().ProcessEventsFor(SmartEvents.SpellHitTarget, target.ToUnit(), 0, 0, false, spellInfo, target.ToGameObject());
@@ -667,7 +668,7 @@ namespace Game.AI
         {
             GetScript().ProcessEventsFor(SmartEvents.OnSpellStart, null, 0, 0, false, spellInfo);
         }
-        
+
         public override void DamageTaken(Unit attacker, ref uint damage, DamageEffectType damageType, SpellInfo spellInfo = null)
         {
             GetScript().ProcessEventsFor(SmartEvents.Damaged, attacker, damage);
@@ -1161,7 +1162,7 @@ namespace Game.AI
         }
 
         public override void SetData(uint id, uint value) { SetData(id, value, null); }
-        
+
         public void SetData(uint id, uint value, Unit invoker)
         {
             GetScript().ProcessEventsFor(SmartEvents.DataSet, invoker, id, value);

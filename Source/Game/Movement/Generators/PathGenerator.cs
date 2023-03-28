@@ -1,11 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Entities;
-using Game.Maps;
 using System;
 using System.Numerics;
+using Framework.Constants;
+using Game.Maps;
+using Game.Entities;
 
 namespace Game.Movement
 {
@@ -1090,7 +1091,7 @@ namespace Game.Movement
         MinValue = MagmaSlime,
         AllMask = 0x3F // max allowed value
         // areas 1-60 will be used for destructible areas (currently skipped in vmaps, WMO with flag 1)
-        // ground is the highest value to make recast choose ground over water when merging surfaces very close to each other (shallow water would be walkable) 
+        // ground is the highest value to make recast choose ground over water when merging surfaces very close to each other (shallow water would be walkable)
     }
 
     public enum NavTerrainFlag

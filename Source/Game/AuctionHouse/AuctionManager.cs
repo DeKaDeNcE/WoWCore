@@ -1,18 +1,19 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Framework.IO;
-using Game.BattlePets;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Mails;
-using Game.Networking.Packets;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Framework.IO;
+using Framework.Database;
+using Framework.Constants;
+using Game.Mails;
+using Game.Entities;
+using Game.BattlePets;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game
 {
@@ -1496,7 +1497,7 @@ namespace Game
 
                 int itemIndex = 0;
                 while (itemIndex < auction.Items.Count)
-                {  
+                {
                     MailDraft mail = new(Global.AuctionHouseMgr.BuildItemAuctionMailSubject(AuctionMailType.Expired, auction), "");
 
                     for (int i = 0; i < SharedConst.MaxMailItems && itemIndex < auction.Items.Count; ++i, ++itemIndex)
@@ -1585,7 +1586,7 @@ namespace Game
                 TotalPrice += unitPrice * item.GetCount();
             }
         }
-        
+
         AuctionHouseRecord _auctionHouse;
 
         SortedList<uint, AuctionPosting> _itemsByAuctionId = new(); // ordered for replicate
@@ -1985,8 +1986,8 @@ namespace Game
         {
             public FilterType SubclassMask;
             public ulong[] InvTypes = new ulong[ItemConst.MaxItemSubclassTotal];
-        } 
-        
+        }
+
         public enum FilterType : uint
         {
             SkipClass = 0,

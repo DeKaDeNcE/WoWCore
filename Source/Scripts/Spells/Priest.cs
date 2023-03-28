@@ -1,18 +1,19 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.AI;
-using Game.Entities;
-using Game.Maps;
-using Game.Movement;
-using Game.Scripting;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.AI;
+using Game.Maps;
+using Game.Spells;
+using Game.Movement;
+using Game.Entities;
+using Game.Scripting;
 
 namespace Scripts.Spells.Priest
 {
@@ -434,7 +435,7 @@ namespace Scripts.Spells.Priest
                 });
         }
     }
-    
+
     [Script] // 47788 - Guardian Spirit
     class spell_pri_guardian_spirit : AuraScript
     {
@@ -496,7 +497,7 @@ namespace Scripts.Spells.Priest
             }
         }
     }
-    
+
     [Script] // 63733 - Holy Words
     class spell_pri_holy_words : AuraScript
     {
@@ -793,7 +794,7 @@ namespace Scripts.Spells.Priest
             OnEffectLaunchTarget.Add(new EffectHandler(HandleLaunchTarget, 0, SpellEffectName.Heal));
         }
     }
-    
+
     [Script] // 194509 - Power Word: Radiance
     class spell_pri_power_word_radiance : SpellScript
     {
@@ -992,7 +993,7 @@ namespace Scripts.Spells.Priest
             OnEffectLaunch.Add(new EffectHandler(RestoreMana, 1, SpellEffectName.Dummy));
         }
     }
-    
+
     [Script] // 33076 - Prayer of Mending
     class spell_pri_prayer_of_mending : SpellScript
     {
@@ -1186,7 +1187,7 @@ namespace Scripts.Spells.Priest
             OnEffectRemove.Add(new EffectApplyHandler(HandleOnRemove, 0, AuraType.Dummy, AuraEffectHandleModes.Real));
         }
     }
-    
+
     [Script] // 20711 - Spirit of Redemption
     class spell_pri_spirit_of_redemption : AuraScript
     {
@@ -1288,7 +1289,7 @@ namespace Scripts.Spells.Priest
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 1, AuraType.Dummy));
         }
     }
-    
+
     [Script] // 28809 - Greater Heal
     class spell_pri_t3_4p_bonus : AuraScript
     {
@@ -1393,7 +1394,7 @@ namespace Scripts.Spells.Priest
             DoCheckEffectProc.Add(new CheckEffectProcHandler(CheckProc, 0, AuraType.ProcTriggerSpell));
         }
     }
-    
+
     [Script] // 15286 - Vampiric Embrace
     class spell_pri_vampiric_embrace : AuraScript
     {

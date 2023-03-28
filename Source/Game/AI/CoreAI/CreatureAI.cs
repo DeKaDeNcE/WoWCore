@@ -1,16 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.Combat;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Maps;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.Maps;
+using Game.Combat;
+using Game.Spells;
+using Game.Entities;
+using Game.DataStorage;
 
 namespace Game.AI
 {
@@ -297,7 +298,7 @@ namespace Game.AI
 
             if (!me.IsTapListNotClearedOnEvade())
                 me.SetTappedBy(null);
-            
+
             me.ResetPlayerDamageReq();
             me.SetLastDamagedTime(0);
             me.SetCannotReachTarget(false);
@@ -538,7 +539,7 @@ namespace Game.AI
         public virtual void OnQuestReward(Player player, Quest quest, LootItemType type, uint opt) { }
 
         /// == Waypoints system =============================
-        /// 
+        ///
         public virtual void WaypointStarted(uint nodeId, uint pathId) { }
 
         public virtual void WaypointReached(uint nodeId, uint pathId) { }

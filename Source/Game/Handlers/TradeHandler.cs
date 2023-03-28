@@ -1,13 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+using System.Collections.Generic;
 using Framework.Database;
+using Framework.Constants;
+using Game.Spells;
 using Game.Entities;
 using Game.Networking;
 using Game.Networking.Packets;
-using Game.Spells;
-using System.Collections.Generic;
 
 namespace Game
 {
@@ -127,7 +128,7 @@ namespace Game
                                 trader.GetName(), trader.GetSession().GetAccountId(), hisItems[i].GetTemplate().GetName(), hisItems[i].GetEntry(), hisItems[i].GetCount(),
                                 GetPlayer().GetName(), GetPlayer().GetSession().GetAccountId());
                         }
-                        
+
 
                         // adjust time (depends on /played)
                         if (hisItems[i].IsBOPTradeable())
@@ -453,7 +454,7 @@ namespace Game
                 // execute trade: 2. store
                 MoveItems(myItems, hisItems);
 
-                // logging money                
+                // logging money
                 if (HasPermission(RBACPermissions.LogGmTrade))
                 {
                     if (my_trade.GetMoney() > 0)
@@ -468,7 +469,7 @@ namespace Game
                             trader.GetName(), trader.GetSession().GetAccountId(), his_trade.GetMoney(), GetPlayer().GetName(), GetPlayer().GetSession().GetAccountId());
                     }
                 }
-                
+
 
                 // update money
                 GetPlayer().ModifyMoney(-(long)my_trade.GetMoney());
@@ -638,7 +639,7 @@ namespace Game
                 return;
             }
 
-            if ((pOther.GetTeam() != GetPlayer().GetTeam() || 
+            if ((pOther.GetTeam() != GetPlayer().GetTeam() ||
                 pOther.HasPlayerFlagEx(PlayerFlagsEx.MercenaryMode) ||
                 GetPlayer().HasPlayerFlagEx(PlayerFlagsEx.MercenaryMode)) &&
                 (!WorldConfig.GetBoolValue(WorldCfg.AllowTwoSideTrade) &&

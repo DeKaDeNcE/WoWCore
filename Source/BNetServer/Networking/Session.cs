@@ -1,17 +1,18 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Bgs.Protocol;
-using Framework.Constants;
-using Framework.Database;
-using Framework.IO;
-using Framework.Networking;
-using Framework.Realm;
-using Google.Protobuf;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Collections.Generic;
+using Framework.IO;
+using Framework.Realm;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Networking;
+using Google.Protobuf;
+using Bgs.Protocol;
 
 namespace BNetServer.Networking
 {
@@ -51,7 +52,7 @@ namespace BNetServer.Networking
             stmt.AddValue(0, ipAddress);
             stmt.AddValue(1, BitConverter.ToUInt32(GetRemoteIpEndPoint().Address.GetAddressBytes(), 0));
 
-            queryProcessor.AddCallback(DB.Login.AsyncQuery(stmt).WithCallback(async result =>            
+            queryProcessor.AddCallback(DB.Login.AsyncQuery(stmt).WithCallback(async result =>
             {
                 if (!result.IsEmpty())
                 {
@@ -103,7 +104,7 @@ namespace BNetServer.Networking
                 header.MergeFrom(data, readPos, headerLength);
                 readPos += headerLength;
 
-                var stream = new CodedInputStream(data, readPos, (int)header.Size);                
+                var stream = new CodedInputStream(data, readPos, (int)header.Size);
                 readPos += (int)header.Size;
 
                 if (header.ServiceId != 0xFE && header.ServiceHash != 0)
@@ -206,7 +207,7 @@ namespace BNetServer.Networking
     }
 
     public class AccountInfo
-    {   
+    {
         public uint Id;
         public string Login;
         public bool IsLockedToIP;

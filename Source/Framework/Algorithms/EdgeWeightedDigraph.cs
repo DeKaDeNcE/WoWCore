@@ -1,9 +1,10 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
-using System.Collections.Generic;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Framework.Collections
 {
@@ -108,7 +109,7 @@ namespace Framework.Collections
     }
 
     /// <summary>
-    /// The DirectedEdge class represents a weighted edge in an edge-weighted directed graph. 
+    /// The DirectedEdge class represents a weighted edge in an edge-weighted directed graph.
     /// </summary>
     /// <seealso href="http://algs4.cs.princeton.edu/44sp/DirectedEdge.java.html">DirectedEdge class from Princeton University's Java Algorithms</seealso>
     public class DirectedEdge

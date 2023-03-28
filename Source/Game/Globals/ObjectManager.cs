@@ -1,25 +1,26 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Framework.Database;
-using Framework.IO;
-using Game.Conditions;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Loots;
-using Game.Mails;
-using Game.Maps;
-using Game.Misc;
-using Game.Movement;
-using Game.Scripting;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Framework.IO;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Collections;
+using Game.Misc;
+using Game.Maps;
+using Game.Loots;
+using Game.Mails;
+using Game.Spells;
+using Game.Movement;
+using Game.Entities;
+using Game.Scripting;
+using Game.Conditions;
+using Game.DataStorage;
 
 namespace Game
 {
@@ -5458,7 +5459,7 @@ namespace Game
 
             _accessRequirementStorage.Clear();
 
-            //                                          0      1           2          3          4           5      6             7             8                      9     
+            //                                          0      1           2          3          4           5      6             7             8                      9
             SQLResult result = DB.World.Query("SELECT mapid, difficulty, level_min, level_max, item, item2, quest_done_A, quest_done_H, completed_achievement, quest_failed_text FROM access_requirement");
             if (result.IsEmpty())
             {
@@ -6420,7 +6421,7 @@ namespace Game
                 for (var i = 0; i < (int)Race.Max; ++i)
                     raceStatModifiers[i] = new short[(int)Stats.Max];
 
-                //                                         0     1    2    3    4 
+                //                                         0     1    2    3    4
                 SQLResult result = DB.World.Query("SELECT race, str, agi, sta, inte FROM player_racestats");
                 if (result.IsEmpty())
                 {
@@ -8270,7 +8271,7 @@ namespace Game
             for (var i = 0; i < 2; ++i)
                 _questGreetingStorage[i] = new Dictionary<uint, QuestGreeting>();
 
-            //                                         0   1          2                3     
+            //                                         0   1          2                3
             SQLResult result = DB.World.Query("SELECT ID, type, GreetEmoteType, GreetEmoteDelay, Greeting FROM quest_greeting");
             if (result.IsEmpty())
             {
@@ -10464,7 +10465,7 @@ namespace Game
 
             return 0;
         }
-        
+
         public uint GetMaxLevelForExpansion(Expansion expansion)
         {
             switch (expansion)

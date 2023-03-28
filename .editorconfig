@@ -1,0 +1,18 @@
+# editorconfig.org
+
+root = true
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+insert_final_newline = false
+trim_trailing_whitespace = true
+file_header_template = Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.\nCopyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.\nLicensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
+
+[*.yml]
+indent_size = 2
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false

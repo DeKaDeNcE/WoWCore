@@ -1,28 +1,29 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.BattleFields;
-using Game.BattleGrounds;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Maps;
-using Game.Networking.Packets;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.Maps;
+using Game.Entities;
+using Game.DataStorage;
+using Game.BattleFields;
+using Game.BattleGrounds;
+using Game.Networking.Packets;
 
 namespace Game.Spells
 {
     public class AuraEffect
     {
-        public AuraEffect(Aura baseAura, SpellEffectInfo spellEfffectInfo, int? baseAmount, Unit caster)
+        public AuraEffect(Aura baseAura, SpellEffectInfo spellEffectInfo, int? baseAmount, Unit caster)
         {
             auraBase = baseAura;
             m_spellInfo = baseAura.GetSpellInfo();
-            _effectInfo = spellEfffectInfo;
+            _effectInfo = spellEffectInfo;
             m_baseAmount = baseAmount.HasValue ? baseAmount.Value : _effectInfo.CalcBaseValue(caster, baseAura.GetAuraType() == AuraObjectType.Unit ? baseAura.GetOwner().ToUnit() : null, baseAura.GetCastItemId(), baseAura.GetCastItemLevel());
             m_canBeRecalculated = true;
             m_isPeriodic = false;
@@ -2477,7 +2478,7 @@ namespace Game.Spells
                 if (!apply && !target.IsFlying())
                     target.GetMotionMaster().MoveFall();
         }
-        
+
         [AuraEffectHandler(AuraType.ModStunDisableGravity)]
         void HandleAuraModStunAndDisableGravity(AuraApplication aurApp, AuraEffectHandleModes mode, bool apply)
         {
@@ -4702,7 +4703,7 @@ namespace Game.Spells
                 if (apply)
                 {
                     CastSpellExtraArgs args = new(this);
-                    if (GetAmount() != 0) // If amount avalible cast with basepoints (Crypt Fever for example)
+                    if (GetAmount() != 0) // If amount available cast with basepoints (Crypt Fever for example)
                         args.AddSpellMod(SpellValueMod.BasePoint0, GetAmount());
 
                     caster.CastSpell(target, triggeredSpellId, args);
@@ -4796,7 +4797,7 @@ namespace Game.Spells
             uint casterType = (uint)GetMiscValue();
             if (casterType > 0)
                 caster = GetCaster();
-            
+
             caster?.CastSpell(aurApp.GetTarget(), GetSpellEffectInfo().TriggerSpell, new CastSpellExtraArgs(this));
         }
 

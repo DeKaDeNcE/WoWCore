@@ -1,15 +1,16 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Dynamic;
-using Game.DataStorage;
+using Framework.Constants;
+using Game.Spells;
 using Game.Entities;
 using Game.Scripting;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Game.DataStorage;
 
 namespace Scripts.Spells.Rogue
 {
@@ -260,7 +261,7 @@ namespace Scripts.Spells.Rogue
             OnEffectHitTarget.Add(new EffectHandler(CalculateDamage, 0, SpellEffectName.SchoolDamage));
         }
     }
-    
+
     [Script] // 193358 - Grand Melee
     class spell_rog_grand_melee : AuraScript
     {
@@ -324,7 +325,7 @@ namespace Scripts.Spells.Rogue
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 0, AuraType.Dummy));
         }
     }
-    
+
     [Script] // 51690 - Killing Spree
     class spell_rog_killing_spree_SpellScript : SpellScript
     {
@@ -445,7 +446,7 @@ namespace Scripts.Spells.Rogue
             OnCheckCast.Add(new CheckCastHandler(CheckCast));
         }
     }
-    
+
     [Script] // 79096 - Restless Blades
     class spell_rog_restless_blades : AuraScript
     {
@@ -933,7 +934,7 @@ namespace Scripts.Spells.Rogue
             AfterEffectRemove.Add(new EffectApplyHandler(HandleEffectRemove, 0, AuraType.Dummy, AuraEffectHandleModes.Real));
         }
     }
-    
+
     [Script] // 196819 - Eviscerate
     class spell_rog_eviscerate_SpellScript : SpellScript
     {

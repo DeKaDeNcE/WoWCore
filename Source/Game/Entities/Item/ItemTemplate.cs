@@ -1,11 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.DataStorage;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Framework.Constants;
+using Game.DataStorage;
 
 namespace Game.Entities
 {
@@ -40,7 +41,7 @@ namespace Game.Entities
         public bool HasFlag(ItemFlags3 flag) { return (ExtendedData.Flags[2] & (int)flag) != 0; }
         public bool HasFlag(ItemFlags4 flag) { return (ExtendedData.Flags[3] & (int)flag) != 0; }
         public bool HasFlag(ItemFlagsCustom customFlag) { return (FlagsCu & customFlag) != 0; }
-        
+
         public bool CanChangeEquipStateInCombat()
         {
             switch (GetInventoryType())
@@ -331,7 +332,7 @@ namespace Game.Entities
         public bool IsWeapon() { return GetClass() == ItemClass.Weapon; }
 
         public bool IsArmor() { return GetClass() == ItemClass.Armor; }
-        
+
         public bool IsRangedWeapon()
         {
             return IsWeapon() && (GetSubClass() == (uint)ItemSubClassWeapon.Bow ||

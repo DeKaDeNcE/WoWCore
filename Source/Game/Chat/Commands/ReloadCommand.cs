@@ -1,12 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
 using Framework.IO;
-using Game.Entities;
+using Framework.Database;
+using Framework.Constants;
 using Game.Loots;
 using Game.Spells;
+using Game.Entities;
 
 namespace Game.Chat
 {
@@ -845,7 +846,7 @@ namespace Game.Chat
             handler.SendGlobalGMSysMessage("Spell scripts reloaded.");
             return true;
         }
-        
+
         [Command("spell_target_position", RBACPermissions.CommandReloadSpellTargetPosition, true)]
         static bool HandleReloadSpellTargetPositionCommand(CommandHandler handler)
         {

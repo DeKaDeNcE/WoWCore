@@ -1,9 +1,10 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
 using Framework.Constants;
 using Game.Entities;
-using System;
 
 namespace Game.Movement
 {
@@ -64,7 +65,7 @@ namespace Game.Movement
         {
             RemoveFlag(MovementGeneratorFlags.InitializationPending | MovementGeneratorFlags.Deactivated);
             AddFlag(MovementGeneratorFlags.Initialized);
-            
+
             owner.StopMoving();
 
             /*
@@ -106,7 +107,7 @@ namespace Game.Movement
             {
                 AddFlag(MovementGeneratorFlags.InformEnabled);
                 return false;
-            } 
+            }
 
             return true;
         }
@@ -163,7 +164,7 @@ namespace Game.Movement
             init.Launch();
         }
 
-        public override void Reset(Unit owner) 
+        public override void Reset(Unit owner)
         {
             RemoveFlag(MovementGeneratorFlags.Deactivated);
             Initialize(owner);

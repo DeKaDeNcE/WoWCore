@@ -1,19 +1,20 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Dynamic;
+using Framework.Constants;
 using Game;
 using Game.AI;
-using Game.Entities;
 using Game.Maps;
+using Game.Spells;
+using Game.Entities;
 using Game.Movement;
 using Game.Scripting;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
+
 
 namespace Scripts.World.NpcSpecial
 {
@@ -144,7 +145,7 @@ namespace Scripts.World.NpcSpecial
         //Torchtossingtarget
         public const uint TargetIndicator = 45723;
 
-        //Garments    
+        //Garments
         public const uint LesserHealR2 = 2052;
         public const uint FortitudeR1 = 1243;
 

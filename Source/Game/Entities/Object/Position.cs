@@ -1,11 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Game.DataStorage;
-using Game.Maps;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
+using System.Collections.Generic;
+using Game.Maps;
+using Game.DataStorage;
 
 namespace Game.Entities
 {
@@ -99,7 +100,7 @@ namespace Game.Entities
         {
             return NormalizeOrientation(absAngle - Orientation);
         }
-        
+
         public float GetRelativeAngle(Position pos)
         {
             return ToRelativeAngle(GetAbsoluteAngle(pos));
@@ -227,7 +228,7 @@ namespace Game.Entities
         {
             return NormalizeOrientation(relAngle + Orientation);
         }
-        
+
         public bool IsInDist(float x, float y, float z, float dist)
         {
             return GetExactDistSq(x, y, z) < dist * dist;
@@ -362,7 +363,7 @@ namespace Game.Entities
             _mapId = mapId;
             Relocate(pos);
         }
-        
+
         public void WorldRelocate(WorldLocation loc)
         {
             _mapId = loc._mapId;
@@ -402,7 +403,7 @@ namespace Game.Entities
             var mapEntry = CliDB.MapStorage.LookupByKey(_mapId);
             return $"MapID: {_mapId} Map name: '{(mapEntry != null ? mapEntry.MapName[Global.WorldMgr.GetDefaultDbcLocale()] : "<not found>")}' {base.ToString()}";
         }
-        
+
         public override string ToString()
         {
             return $"X: {posX} Y: {posY} Z: {posZ} O: {Orientation} MapId: {_mapId}";

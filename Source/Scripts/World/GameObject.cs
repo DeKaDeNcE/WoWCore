@@ -1,13 +1,14 @@
-// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.AI;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Scripting;
 using System;
 using System.Collections.Generic;
+using Framework.Constants;
+using Game.AI;
+using Game.Entities;
+using Game.Scripting;
+using Game.DataStorage;
 
 namespace Scripts.World.GameObjects
 {
@@ -184,7 +185,7 @@ namespace Scripts.World.GameObjects
     {
         //BrewfestMusic
         public const uint EventBrewfestdwarf01 = 11810; // 1.35 Min
-        public const uint EventBrewfestdwarf02 = 11812; // 1.55 Min 
+        public const uint EventBrewfestdwarf02 = 11812; // 1.55 Min
         public const uint EventBrewfestdwarf03 = 11813; // 0.23 Min
         public const uint EventBrewfestgoblin01 = 11811; // 1.08 Min
         public const uint EventBrewfestgoblin02 = 11814; // 1.33 Min
@@ -748,7 +749,7 @@ namespace Scripts.World.GameObjects
 
     [Script]
     class go_bells : GameObjectAI
-    {   
+    {
         uint _soundId;
 
         public go_bells(GameObject go) : base(go) { }
@@ -770,7 +771,7 @@ namespace Scripts.World.GameObjects
                             _soundId = SoundIds.BellTollHorde;  // undead bell sound
                             break;
                         default:
-                            _soundId = SoundIds.BellTollTribal; // orc drum sound 
+                            _soundId = SoundIds.BellTollTribal; // orc drum sound
                             break;
                     }
                     break;
@@ -824,4 +825,3 @@ namespace Scripts.World.GameObjects
         }
     }
 }
-

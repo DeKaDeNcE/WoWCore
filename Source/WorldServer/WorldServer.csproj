@@ -1,20 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\..\default.props" />
-  <PropertyGroup>
-	<OutputType>Exe</OutputType>
-    <ApplicationIcon>Blue.ico</ApplicationIcon>
-    <StartupObject>WorldServer.Server</StartupObject>
-  </PropertyGroup>
+    <Import Project="..\..\default.props" />
 
-  <ItemGroup>
-	<ProjectReference Include="..\Game\Game.csproj" />
-	<ProjectReference Include="..\Scripts\Scripts.csproj" />
-  </ItemGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <ApplicationIcon>WorldServer.ico</ApplicationIcon>
+        <StartupObject>WorldServer.Server</StartupObject>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Update="WorldServer.conf.dist">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Game\Game.csproj" />
+        <ProjectReference Include="..\Scripts\Scripts.csproj" />
+    </ItemGroup>
 
+    <ItemGroup>
+        <None Update="WorldServer.conf.dist">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
 </Project>

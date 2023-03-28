@@ -1,19 +1,20 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Chat;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Maps;
-using Game.Misc;
-using Game.Movement;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Chat;
+using Game.Misc;
+using Game.Maps;
+using Game.Spells;
+using Game.Groups;
+using Game.Entities;
+using Game.Movement;
+using Game.DataStorage;
 
 namespace Game.AI
 {
@@ -4094,7 +4095,7 @@ namespace Game.AI
             Cell.VisitGridObjects(_me, searcher, range);
             return searcher.GetTarget();
         }
-        
+
         void DoFindFriendlyCC(List<Creature> creatures, float range)
         {
             if (_me == null)
@@ -4194,7 +4195,7 @@ namespace Game.AI
         }
 
         public bool HasAnyEventWithFlag(SmartEventFlags flag) { return _allEventFlags.HasAnyFlag(flag); }
-        
+
         public bool IsUnit(WorldObject obj) { return obj != null && (obj.IsTypeId(TypeId.Unit) || obj.IsTypeId(TypeId.Player)); }
 
         public bool IsPlayer(WorldObject obj) { return obj != null && obj.IsTypeId(TypeId.Player); }

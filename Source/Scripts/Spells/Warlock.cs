@@ -1,13 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.Entities;
-using Game.Scripting;
-using Game.Spells;
 using System;
 using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.Spells;
+using Game.Entities;
+using Game.Scripting;
 
 namespace Scripts.Spells.Warlock
 {
@@ -94,7 +95,7 @@ namespace Scripts.Spells.Warlock
             OnCalcCritChance.Add(new OnCalcCritChanceHandler(CalcCritChance));
         }
     }
-    
+
     [Script] // 77220 - Mastery: Chaotic Energies
     class spell_warl_chaotic_energies : AuraScript
     {
@@ -260,7 +261,7 @@ namespace Scripts.Spells.Warlock
             AfterEffectRemove.Add(new EffectApplyHandler(HandleRemove, 0, AuraType.PeriodicDamage, AuraEffectHandleModes.Real));
         }
     }
-    
+
     [Script] // 48181 - Haunt
     class spell_warl_haunt : SpellScript
     {
@@ -364,7 +365,7 @@ namespace Scripts.Spells.Warlock
             OnEffectHitTarget.Add(new EffectHandler(HandleOnEffectHit, 0, SpellEffectName.SchoolDamage));
         }
     }
-    
+
     [Script] // 6358 - Seduction (Special Ability)
     class spell_warl_seduction : SpellScript
     {
@@ -425,7 +426,7 @@ namespace Scripts.Spells.Warlock
 
             amount = caster.SpellBaseDamageBonusDone(GetSpellInfo().GetSchoolMask()) * GetEffectInfo(0).CalcValue(caster) / 100;
         }
-        
+
         void HandleProc(AuraEffect aurEff, ProcEventInfo eventInfo)
         {
             PreventDefaultAction();
@@ -518,7 +519,7 @@ namespace Scripts.Spells.Warlock
             AfterCast.Add(new CastHandler(HandleAfterCast));
         }
     }
-    
+
     [Script] // 86121 - Soul Swap
     class spell_warl_soul_swap : SpellScript
     {

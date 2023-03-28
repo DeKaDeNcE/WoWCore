@@ -1,16 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Constants;
 using Game.AI;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Networking.Packets;
 using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Game.Groups;
+using Game.Entities;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game.Maps
 {
@@ -695,7 +696,7 @@ namespace Game.Maps
 
             return null;
         }
-        
+
         public virtual bool CheckAchievementCriteriaMeet(uint criteria_id, Player source, Unit target = null, uint miscvalue1 = 0)
         {
             Log.outError(LogFilter.Server, "Achievement system call CheckAchievementCriteriaMeet but instance script for map {0} not have implementation for achievement criteria {1}",
@@ -722,7 +723,7 @@ namespace Game.Maps
 
             return false;
         }
-        
+
         public void SetEntranceLocation(uint worldSafeLocationId)
         {
             _entranceId = worldSafeLocationId;
@@ -1139,7 +1140,7 @@ namespace Game.Maps
             _instance = instance;
             _name = name;
             _value = value;
-            
+
             _instance.RegisterPersistentScriptValue(this);
         }
 

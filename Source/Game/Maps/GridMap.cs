@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.GameMath;
-using Game.Collision;
-using Game.DataStorage;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.GameMath;
+using Framework.Constants;
+using Game.Collision;
+using Game.DataStorage;
 
 namespace Game.Maps
 {
@@ -463,7 +464,7 @@ namespace Game.Maps
 
             return (_holes[cellRow * 16 * 8 + cellCol * 8 + holeRow] & (1 << holeCol)) != 0;
         }
-        
+
         public float GetMinHeight(float x, float y)
         {
             if (_minHeightPlanes == null)

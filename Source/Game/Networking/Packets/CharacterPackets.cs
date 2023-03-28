@@ -1,14 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Framework.Dynamic;
-using Framework.IO;
-using Game.Entities;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.IO;
+using Framework.Database;
+using Framework.Constants;
+using Game.Entities;
 
 namespace Game.Networking.Packets
 {
@@ -325,7 +325,7 @@ namespace Game.Networking.Packets
     }
 
     class CheckCharacterNameAvailability : ClientPacket
-    {     
+    {
         public uint SequenceIndex;
         public string Name;
 
@@ -355,7 +355,7 @@ namespace Game.Networking.Packets
             _worldPacket.WriteUInt32((uint)Result);
         }
     }
-    
+
     public class CreateCharacter : ClientPacket
     {
         public CreateCharacter(WorldPacket packet) : base(packet) { }
@@ -855,9 +855,9 @@ namespace Game.Networking.Packets
         }
     }
 
-    public class AlterApperance : ClientPacket
+    public class AlterAppearance : ClientPacket
     {
-        public AlterApperance(WorldPacket packet) : base(packet) { }
+        public AlterAppearance(WorldPacket packet) : base(packet) { }
 
         public override void Read()
         {

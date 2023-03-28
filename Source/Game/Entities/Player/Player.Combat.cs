@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.DataStorage;
-using Game.Groups;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
 using System.Collections.Generic;
+using Framework.Constants;
 using Game.Maps;
+using Game.Groups;
+using Game.Spells;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {
@@ -198,7 +199,7 @@ namespace Game.Entities
 
             return bonusValue;
         }
-        
+
         public float GetExpertiseDodgeOrParryReduction(WeaponAttackType attType)
         {
             float baseExpertise = 7.5f;
@@ -344,7 +345,7 @@ namespace Game.Entities
 
             return Math.Min(blockArmor / (blockArmor + armorConstant), 0.85f);
         }
-        
+
         public void SetCanParry(bool value)
         {
             if (m_canParry == value)
@@ -580,7 +581,7 @@ namespace Game.Entities
                 }
             }
         }
-        
+
         public void UpdateContestedPvP(uint diff)
         {
             if (m_contestedPvPTimer == 0 || IsInCombat())
@@ -605,7 +606,7 @@ namespace Game.Entities
                 pvpInfo.EndTimer = 0;
                 RemovePlayerFlag(PlayerFlags.PVPTimer);
             }
-            
+
             UpdatePvP(false);
         }
 

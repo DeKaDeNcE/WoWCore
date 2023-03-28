@@ -1,4 +1,5 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
@@ -10,11 +11,11 @@ namespace Framework.Collections
     /// <inheritdoc/>
     /// <summary>
     /// Circular buffer.
-    /// 
+    ///
     /// When writing to a full buffer:
     /// PushBack -> removes this[0] / Front()
     /// PushFront -> removes this[Size-1] / Back()
-    /// 
+    ///
     /// this implementation is inspired by
     /// http://www.boost.org/doc/libs/1_53_0/libs/circular_buffer/doc/circular_buffer.html
     /// because I liked their interface.
@@ -40,7 +41,7 @@ namespace Framework.Collections
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CircularBuffer{T}"/> class.
-        /// 
+        ///
         /// </summary>
         /// <param name='capacity'>
         /// Buffer capacity. Must be positive.
@@ -52,7 +53,7 @@ namespace Framework.Collections
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CircularBuffer{T}"/> class.
-        /// 
+        ///
         /// </summary>
         /// <param name='capacity'>
         /// Buffer capacity. Must be positive.
@@ -184,8 +185,8 @@ namespace Framework.Collections
         /// <summary>
         /// Pushes a new element to the back of the buffer. Back()/this[Size-1]
         /// will now return this element.
-        /// 
-        /// When the buffer is full, the element at Front()/this[0] will be 
+        ///
+        /// When the buffer is full, the element at Front()/this[0] will be
         /// popped to allow for this new element to fit.
         /// </summary>
         /// <param name="item">Item to push to the back of the buffer</param>
@@ -208,8 +209,8 @@ namespace Framework.Collections
         /// <summary>
         /// Pushes a new element to the front of the buffer. Front()/this[0]
         /// will now return this element.
-        /// 
-        /// When the buffer is full, the element at Back()/this[Size-1] will be 
+        ///
+        /// When the buffer is full, the element at Back()/this[Size-1] will be
         /// popped to allow for this new element to fit.
         /// </summary>
         /// <param name="item">Item to push to the front of the buffer</param>
@@ -230,7 +231,7 @@ namespace Framework.Collections
         }
 
         /// <summary>
-        /// Removes the element at the back of the buffer. Decreasing the 
+        /// Removes the element at the back of the buffer. Decreasing the
         /// Buffer size by 1.
         /// </summary>
         public void PopBack()
@@ -242,7 +243,7 @@ namespace Framework.Collections
         }
 
         /// <summary>
-        /// Removes the element at the front of the buffer. Decreasing the 
+        /// Removes the element at the front of the buffer. Decreasing the
         /// Buffer size by 1.
         /// </summary>
         public void PopFront()
@@ -255,7 +256,7 @@ namespace Framework.Collections
 
         /// <summary>
         /// Copies the buffer contents to an array, according to the logical
-        /// contents of the buffer (i.e. independent of the internal 
+        /// contents of the buffer (i.e. independent of the internal
         /// order/contents)
         /// </summary>
         /// <returns>A new array with a copy of the buffer contents.</returns>
@@ -280,7 +281,7 @@ namespace Framework.Collections
         ///
         /// Fast: does not copy the array elements.
         /// Useful for methods like <c>Send(IList&lt;ArraySegment&lt;Byte&gt;&gt;)</c>.
-        /// 
+        ///
         /// <remarks>Segments may be empty.</remarks>
         /// </summary>
         /// <returns>An IList with 2 segments corresponding to the buffer content.</returns>
@@ -362,13 +363,13 @@ namespace Framework.Collections
             return _start + (index < (Capacity - _start) ? index : index - Capacity);
         }
 
-        // doing ArrayOne and ArrayTwo methods returning ArraySegment<T> as seen here: 
+        // doing ArrayOne and ArrayTwo methods returning ArraySegment<T> as seen here:
         // http://www.boost.org/doc/libs/1_37_0/libs/circular_buffer/doc/circular_buffer.html#classboost_1_1circular__buffer_1957cccdcb0c4ef7d80a34a990065818d
         // http://www.boost.org/doc/libs/1_37_0/libs/circular_buffer/doc/circular_buffer.html#classboost_1_1circular__buffer_1f5081a54afbc2dfc1a7fb20329df7d5b
         // should help a lot with the code.
 
         #region Array items easy access.
-        // The array is composed by at most two non-contiguous segments, 
+        // The array is composed by at most two non-contiguous segments,
         // the next two methods allow easy access to those.
 
         private ArraySegment<T> ArrayOne()

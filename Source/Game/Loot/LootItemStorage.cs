@@ -1,13 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Framework.Database;
-using Game.Entities;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Text;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Collections;
+using Game.Entities;
 
 namespace Game.Loots
 {
@@ -68,7 +69,7 @@ namespace Game.Loots
                 do
                 {
                     ulong key = result.Read<ulong>(0);
-                    if (!_lootItemStorage.ContainsKey(key))  
+                    if (!_lootItemStorage.ContainsKey(key))
                          _lootItemStorage.TryAdd(key, new StoredLootContainer(key));
 
                     StoredLootContainer storedContainer = _lootItemStorage[key];
@@ -170,7 +171,7 @@ namespace Game.Loots
             // Saves the money and item loot associated with an openable item to the DB
             if (loot.IsLooted()) // no money and no loot
                 return;
-            
+
             if (_lootItemStorage.ContainsKey(containerId))
             {
                 Log.outError(LogFilter.Misc, $"Trying to store item loot by player: {player.GetGUID()} for container id: {containerId} that is already in storage!");

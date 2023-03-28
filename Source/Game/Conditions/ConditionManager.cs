@@ -1,19 +1,20 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.IO;
+using Framework.Database;
+using Framework.Constants;
+using Game.Maps;
+using Game.Loots;
+using Game.Spells;
+using Game.Groups;
+using Game.Entities;
 using Game.Conditions;
 using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Loots;
-using Game.Maps;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Game
 {
@@ -209,7 +210,7 @@ namespace Game
             ConditionSourceInfo conditionSource = new(map);
             return IsObjectMeetingNotGroupedConditions(sourceType, entry, conditionSource);
         }
-        
+
         public bool HasConditionsForNotGroupedEntry(ConditionSourceType sourceType, uint entry)
         {
             if (sourceType > ConditionSourceType.None && sourceType < ConditionSourceType.Max)
@@ -302,7 +303,7 @@ namespace Game
         {
             return spellsUsedInSpellClickConditions.Contains(spellId);
         }
-        
+
         public List<Condition> GetConditionsForAreaTrigger(uint areaTriggerId, bool isServerSide)
         {
             return areaTriggerConditionContainerStorage.LookupByKey(Tuple.Create(areaTriggerId, isServerSide));
@@ -333,17 +334,17 @@ namespace Game
             }
             return true;
         }
-        
+
         public void LoadConditions(bool isReload = false)
         {
             uint oldMSTime = Time.GetMSTime();
 
             Clean();
 
-            //must clear all custom handled cases (groupped types) before reload
+            //must clear all custom handled cases (grouped types) before reload
             if (isReload)
             {
-                Log.outInfo(LogFilter.Server, "Reseting Loot Conditions...");
+                Log.outInfo(LogFilter.Server, "Resetting Loot Conditions...");
                 LootStorage.Creature.ResetConditions();
                 LootStorage.Fishing.ResetConditions();
                 LootStorage.Gameobject.ResetConditions();
@@ -2764,7 +2765,7 @@ namespace Game
             {
                 if (condition.Variable[i] == 0)
                     break;
-                
+
                 int unitValue = GetUnitConditionVariable(unit, otherUnit, (UnitConditionVariable)condition.Variable[i], condition.Value[i]);
                 bool meets = false;
                 switch ((UnitConditionOp)condition.Op[i])
@@ -2802,7 +2803,7 @@ namespace Game
 
             return !condition.GetFlags().HasFlag(UnitConditionFlags.LogicOr);
         }
-        
+
         static int EvalSingleValue(ByteBuffer buffer, Player player)
         {
             WorldStateExpressionValueType valueType = (WorldStateExpressionValueType)buffer.ReadUInt8();
@@ -2891,7 +2892,7 @@ namespace Game
                         return 1;
 
                     //todo fix me
-                    // init with predetermined seed                      
+                    // init with predetermined seed
                     //std::mt19937 mt(arg2? arg2 : 1);
                     //value = mt() % arg1 + 1;
                     return 0;

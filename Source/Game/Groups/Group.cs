@@ -1,19 +1,18 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.BattleFields;
-using Game.BattleGrounds;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Loots;
-using Game.Maps;
-using Game.Networking;
-using Game.Networking.Packets;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Framework.Database;
+using Framework.Constants;
+using Game.Maps;
+using Game.Entities;
+using Game.DataStorage;
+using Game.BattleFields;
+using Game.BattleGrounds;
+using Game.Networking;
+using Game.Networking.Packets;
 
 namespace Game.Groups
 {
@@ -1884,7 +1883,7 @@ namespace Game.Groups
         {
             m_recentInstances[mapId] = Tuple.Create(instanceOwner, instanceId);
         }
-        
+
         List<MemberSlot> m_memberSlots = new();
         GroupRefManager m_memberMgr = new();
         List<Player> m_invitees = new();

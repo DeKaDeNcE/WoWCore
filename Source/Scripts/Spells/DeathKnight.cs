@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Entities;
-using Game.Networking.Packets;
-using Game.Scripting;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Spells;
+using Game.Entities;
+using Game.Scripting;
+using Game.Networking.Packets;
 
 namespace Scripts.Spells.DeathKnight
 {
@@ -491,7 +492,7 @@ namespace Scripts.Spells.DeathKnight
             OnEffectUpdatePeriodic.Add(new EffectUpdatePeriodicHandler(Update, 0, AuraType.PeriodicDummy));
         }
     }
-    
+
     [Script] // 85948 - Festering Strike
     class spell_dk_festering_strike : SpellScript
     {
@@ -596,7 +597,7 @@ namespace Scripts.Spells.DeathKnight
             OnEffectHitTarget.Add(new EffectHandler(HandleFrostFever, 0, SpellEffectName.SchoolDamage));
         }
     }
-    
+
     [Script] // 206940 - Mark of Blood
     class spell_dk_mark_of_blood : AuraScript
     {
@@ -767,7 +768,7 @@ namespace Scripts.Spells.DeathKnight
             DoCheckEffectProc.Add(new CheckEffectProcHandler(CheckProc, 0, AuraType.ProcTriggerSpell));
         }
     }
-    
+
     [Script] // 55233 - Vampiric Blood
     class spell_dk_vampiric_blood : AuraScript
     {

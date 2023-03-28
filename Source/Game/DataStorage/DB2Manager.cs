@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.Networking;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Networking;
 
 namespace Game.DataStorage
 {
@@ -2006,7 +2007,7 @@ namespace Game.DataStorage
         {
             return _skillRaceClassInfoBySkill.LookupByKey(skill);
         }
-        
+
         public SoulbindConduitRankRecord GetSoulbindConduitRank(int soulbindConduitId, int rank)
         {
             return _soulbindConduitRanks.LookupByKey(Tuple.Create(soulbindConduitId, rank));
@@ -2036,7 +2037,7 @@ namespace Game.DataStorage
         {
             return _spellVisualMissilesBySet.LookupByKey(spellVisualMissileSetId);
         }
-        
+
         public List<TalentRecord> GetTalentsByPosition(Class class_, uint tier, uint column)
         {
             return _talentsByPosition[(int)class_][tier][column];
@@ -2662,7 +2663,7 @@ namespace Game.DataStorage
             UniqueID = data.ReadUInt32();
         }
     }
-    
+
     public class HotfixOptionalData
     {
         public uint Key;

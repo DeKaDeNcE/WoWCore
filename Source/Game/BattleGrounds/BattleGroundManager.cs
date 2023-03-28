@@ -1,15 +1,16 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.Arenas;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Networking.Packets;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Arenas;
+using Game.Entities;
+using Game.DataStorage;
+using Game.Networking.Packets;
 using Game.BattleGrounds.Zones;
 
 namespace Game.BattleGrounds
@@ -282,7 +283,7 @@ namespace Game.BattleGrounds
                     case BattlegroundTypeId.AB:
                     case BattlegroundTypeId.DomAb:
                         bg = new BgArathiBasin(bgTemplate);
-                        break;                        
+                        break;
                     case BattlegroundTypeId.NA:
                         bg = new NagrandArena(bgTemplate);
                         break;
@@ -300,7 +301,7 @@ namespace Game.BattleGrounds
                         break;
                     case BattlegroundTypeId.DS:
                         bg = new DalaranSewersArena(bgTemplate);
-                        break;                        
+                        break;
                     case BattlegroundTypeId.RV:
                         bg = new RingofValorArena(bgTemplate);
                         break;
@@ -747,7 +748,7 @@ namespace Game.BattleGrounds
             bgDataStore[bgTypeId].m_Battlegrounds.Remove(instanceId);
         }
 
-        public BattlegroundQueue GetBattlegroundQueue(BattlegroundQueueTypeId bgQueueTypeId) 
+        public BattlegroundQueue GetBattlegroundQueue(BattlegroundQueueTypeId bgQueueTypeId)
         {
             if (!m_BattlegroundQueues.ContainsKey(bgQueueTypeId))
                 m_BattlegroundQueues[bgQueueTypeId] = new BattlegroundQueue(bgQueueTypeId);

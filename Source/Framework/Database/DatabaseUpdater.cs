@@ -1,13 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Configuration;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using Framework.Configuration;
 
 namespace Framework.Database
 {
@@ -37,16 +38,16 @@ namespace Framework.Database
                     fileName = @"/sql/base/characters_database.sql";
                     break;
                 case "WorldDatabase":
-                    fileName = @"/sql/TDB_full_world_1005.23041_2023_04_02.sql";
+                    fileName = @"/sql/base/hotfixes_database.sql";
                     break;
                 case "HotfixDatabase":
-                    fileName = @"/sql/TDB_full_hotfixes_1005.23041_2023_04_02.sql";
+                    fileName = @"/sql/base/world_database.sql";
                     break;
             }
 
             if (!File.Exists(path + fileName))
             {
-                Log.outError(LogFilter.SqlUpdates, $"File \"{path + fileName}\" is missing, download it from \"https://github.com/TrinityCore/TrinityCore/releases\"" +
+                Log.outError(LogFilter.SqlUpdates, $"File \"{path + fileName}\" is missing, download it and extract it from \"https://github.com/DeKaDeNcE/WoWCore/tree/master/sql/base\"" +
                     " and place it in your sql directory.");
                 return false;
             }
@@ -74,7 +75,7 @@ namespace Framework.Database
 
             if (!Directory.Exists(sourceDirectory))
             {
-                Log.outError(LogFilter.SqlUpdates, $"DBUpdater: The given source directory {sourceDirectory} does not exist, change the path to the directory where your sql directory exists (for example c:\\source\\cyphercore). Shutting down.");
+                Log.outError(LogFilter.SqlUpdates, $"DBUpdater: The given source directory {sourceDirectory} does not exist, change the path to the directory where your sql directory exists (for example C:\\Source\\WoWCore). Shutting down.");
                 return false;
             }
 
@@ -258,7 +259,7 @@ namespace Framework.Database
         {
             _database.ApplyFile(path);
         }
-        
+
         void Apply(string query)
         {
             _database.Execute(query);

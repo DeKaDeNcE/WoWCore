@@ -1,13 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.Entities;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Spells;
+using Game.Entities;
+
 
 namespace Game.Networking.Packets
 {
@@ -287,7 +288,7 @@ namespace Game.Networking.Packets
 
     public class SupercededSpells : ServerPacket
     {
-        public SupercededSpells() : base(ServerOpcodes.SupercededSpells, ConnectionType.Instance) { }
+        public SupercededSpells() : base(ServerOpcodes.SupersededSpells, ConnectionType.Instance) { }
 
         public override void Write()
         {
@@ -370,8 +371,8 @@ namespace Game.Networking.Packets
         public int SpellID;
         public SpellCastResult Reason;
         public int FailedArg1 = -1;
-        public int FailedArg2 = -1; 
-        
+        public int FailedArg2 = -1;
+
         public CastFailedBase(ServerOpcodes opcode, ConnectionType connectionType) : base(opcode, connectionType) { }
 
         public override void Write()
@@ -767,7 +768,7 @@ namespace Game.Networking.Packets
             _worldPacket.WriteInt32(Delay);
         }
     }
-    
+
     public class CancelCast : ClientPacket
     {
         public CancelCast(WorldPacket packet) : base(packet) { }
@@ -1168,7 +1169,7 @@ namespace Game.Networking.Packets
 
         public ushort OverrideID;
     }
-    
+
     //Structs
     public struct SpellLogPowerData
     {
@@ -1333,14 +1334,14 @@ namespace Game.Networking.Packets
         }
 
         public void Write(WorldPacket data)
-        {   
+        {
             data.WriteFloat(PlayerItemLevel);
             data.WriteFloat(TargetItemLevel);
             data.WriteInt16(PlayerLevelDelta);
             data.WriteUInt16(ScalingHealthItemLevelCurveID);
             data.WriteUInt8(TargetLevel);
             data.WriteUInt8(Expansion);
-            data.WriteInt8(TargetScalingLevelDelta); 
+            data.WriteInt8(TargetScalingLevelDelta);
             data.WriteUInt32((uint)Flags);
             data.WriteUInt32(PlayerContentTuningID);
             data.WriteUInt32(TargetContentTuningID);
@@ -1363,7 +1364,7 @@ namespace Game.Networking.Packets
         public int Unused927;
 
         public enum ContentTuningType
-        {        
+        {
             CreatureToPlayerDamage = 1,
             PlayerToCreatureDamage = 2,
             CreatureToCreatureDamage = 4,
@@ -1632,7 +1633,7 @@ namespace Game.Networking.Packets
     }
 
     public class SpellCastRequest
-    {   
+    {
         public ObjectGuid CastID;
         public uint SpellID;
         public SpellCastVisual Visual;
@@ -1831,7 +1832,7 @@ namespace Game.Networking.Packets
 
             Immunities.Write(data);
             Predict.Write(data);
- 
+
             data.WriteBits(HitTargets.Count, 16);
             data.WriteBits(MissTargets.Count, 16);
             data.WriteBits(HitStatus.Count, 16);

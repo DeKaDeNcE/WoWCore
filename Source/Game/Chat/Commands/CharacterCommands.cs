@@ -1,15 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Framework.IO;
-using Game.Cache;
-using Game.DataStorage;
-using Game.Entities;
 using System;
-using System.Collections.Generic;
 using System.Text;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Cache;
+using Game.Entities;
+using Game.DataStorage;
 
 namespace Game.Chat
 {
@@ -72,7 +72,7 @@ namespace Game.Chat
                 player = PlayerIdentifier.FromTarget(handler);
             if (player == null)
                 return false;
-            
+
             // check online security
             if (handler.HasLowerSecurity(null, player.GetGUID()))
                 return false;
@@ -515,7 +515,7 @@ namespace Game.Chat
                     HandleCharacterDeletedRestoreHelper(delInfo, handler);
                     return true;
                 }
-                
+
                 handler.SendSysMessage(CypherStrings.CharacterDeletedErrRename);
                 return false;
             }
@@ -699,7 +699,7 @@ namespace Game.Chat
                 stmt.AddValue(1, player.GetGUID().GetCounter());
                 DB.Characters.Execute(stmt);
             }
-            
+
             if (handler.GetSession() == null || handler.GetSession().GetPlayer() != target)      // including chr == NULL
                 handler.SendSysMessage(CypherStrings.YouChangeLvl, handler.PlayerLink(player.GetName()), newlevel);
 

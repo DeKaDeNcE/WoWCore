@@ -1,4 +1,5 @@
-// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using Framework.Constants;
@@ -189,7 +190,7 @@ namespace Scripts.EasternKingdoms.Karazhan.Moroes
             {
                 List<uint> AddList = MiscConst.Adds.ToList();
                 AddList.RandomResize(4);
-                
+
                 for (var i = 0; i < 4; ++i)
                 {
                     Creature creature = me.SummonCreature(AddList[i], MiscConst.Locations[i], TempSummonType.CorpseTimedDespawn, TimeSpan.FromSeconds(10));

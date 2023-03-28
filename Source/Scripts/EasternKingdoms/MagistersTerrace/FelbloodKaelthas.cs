@@ -1,4 +1,5 @@
-// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using Framework.Constants;
@@ -51,7 +52,7 @@ namespace Scripts.EasternKingdoms.MagistersTerrace.FelbloodKaelthas
         public const uint EmotePoint = 48349;
         public const uint EmoteRoar = 48350;
         public const uint ClearFlight = 44232;
-        public const uint QuiteSuicide = 3617; // Serverside public const uint 
+        public const uint QuiteSuicide = 3617; // Serverside public const uint
 
         // Flame Strike
         public const uint FlameStrikeDummy = 44191;
@@ -61,7 +62,7 @@ namespace Scripts.EasternKingdoms.MagistersTerrace.FelbloodKaelthas
         public const uint Rebirth = 44196;
         public const uint Burn = 44197;
         public const uint EmberBlast = 44199;
-        public const uint SummonPhoenixEgg = 44195; // Serverside public const uint 
+        public const uint SummonPhoenixEgg = 44195; // Serverside public const uint
         public const uint FullHeal = 17683;
     }
 
@@ -455,4 +456,3 @@ namespace Scripts.EasternKingdoms.MagistersTerrace.FelbloodKaelthas
         }
     }
 }
-

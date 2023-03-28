@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 
 namespace System
@@ -29,7 +30,7 @@ namespace System
             else
                 return byteArray.Aggregate("", (current, b) => current + b.ToString("X2"));
         }
-        
+
         public static byte[] ToByteArray(this string str)
         {
             str = str.Replace(" ", String.Empty);
@@ -233,7 +234,7 @@ namespace System
             float invSqrt = 1.0f / MathF.Sqrt(lenSquared);
             return new Vector3(vector.X * invSqrt, vector.Y * invSqrt, vector.Z * invSqrt);
         }
-        
+
         public static Vector3 directionOrZero(this Vector3 vector)
         {
             float mag = vector.LengthSquared();
@@ -282,7 +283,7 @@ namespace System
                 x = 0.0f;
             }
         }
-        
+
         public static Matrix4x4 fromEulerAnglesZYX(float fYAngle, float fPAngle, float fRAngle)
         {
             float fCos = MathF.Cos(fYAngle);
@@ -318,7 +319,7 @@ namespace System
         public static string ConvertFormatSyntax(this string str)
         {
             string pattern = @"(%\W*\d*[a-zA-Z]*)";
-            
+
             int count = 0;
             string result = Regex.Replace(str, pattern, m => string.Concat("{", count++, "}"));
 

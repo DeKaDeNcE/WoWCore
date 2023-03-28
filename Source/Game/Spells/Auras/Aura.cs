@@ -1,16 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Maps;
-using Game.Networking.Packets;
-using Game.Scripting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.Maps;
+using Game.Entities;
+using Game.Scripting;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game.Spells
 {
@@ -300,7 +301,7 @@ namespace Game.Spells
         {
             return $"Base: {(GetBase() != null ? GetBase().GetDebugInfo() : "NULL")}\nTarget: {(GetTarget() != null ? GetTarget().GetDebugInfo() : "NULL")}";
         }
-        
+
         public Unit GetTarget() { return _target; }
         public Aura GetBase() { return _base; }
 
@@ -577,7 +578,7 @@ namespace Game.Spells
                             }
                         }
                     }
-                    
+
                 }
 
                 if (!addUnit)
@@ -1015,7 +1016,7 @@ namespace Game.Spells
                 && !m_spellInfo.HasAttribute(SpellAttr2.AllowWhileNotShapeshiftedCasterForm)
                 && !m_spellInfo.HasAttribute(SpellAttr0.NotShapeshifted);
         }
-        
+
         public bool CanBeSaved()
         {
             if (IsPassive())
@@ -2136,7 +2137,7 @@ namespace Game.Spells
                 loadedScript._FinishScriptCall();
             }
         }
-        
+
         public void CallScriptEffectAbsorbHandlers(AuraEffect aurEff, AuraApplication aurApp, DamageInfo dmgInfo, ref uint absorbAmount, ref bool defaultPrevented)
         {
             foreach (var auraScript in m_loadedScripts)
@@ -2192,7 +2193,7 @@ namespace Game.Spells
                 auraScript._FinishScriptCall();
             }
         }
-        
+
         public void CallScriptEffectManaShieldHandlers(AuraEffect aurEff, AuraApplication aurApp, DamageInfo dmgInfo, ref uint absorbAmount, ref bool defaultPrevented)
         {
             foreach (var auraScript in m_loadedScripts)
@@ -2247,7 +2248,7 @@ namespace Game.Spells
                 loadedScript._FinishScriptCall();
             }
         }
-        
+
         public bool CallScriptCheckProcHandlers(AuraApplication aurApp, ProcEventInfo eventInfo)
         {
             bool result = true;
@@ -2389,7 +2390,7 @@ namespace Game.Spells
             Cypher.Assert(GetAuraType() == AuraObjectType.DynObj);
             return m_owner.ToDynamicObject();
         }
-        
+
         public void SetCastItemGUID(ObjectGuid guid)
         {
             m_castItemGuid = guid;

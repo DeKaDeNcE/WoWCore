@@ -1,8 +1,9 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using System.Security.Cryptography;
 using System;
+using System.Security.Cryptography;
 
 namespace Game
 {
@@ -51,5 +52,4 @@ namespace Game
         byte[] o1 = new byte[20];
         byte[] o2 = new byte[20];
     }
-
 }

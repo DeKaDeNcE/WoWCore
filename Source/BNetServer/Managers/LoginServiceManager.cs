@@ -1,18 +1,19 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using BNetServer.Networking;
-using Framework.Configuration;
-using Framework.Constants;
-using Framework.Web;
-using Google.Protobuf;
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
+using System.Linq.Expressions;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Security.Cryptography.X509Certificates;
+using Framework.Web;
+using Framework.Constants;
+using Framework.Configuration;
+using BNetServer.Networking;
+using Google.Protobuf;
 
 namespace BNetServer
 {
@@ -24,7 +25,7 @@ namespace BNetServer
         IPEndPoint localAddress;
         X509Certificate2 certificate;
 
-        LoginServiceManager() 
+        LoginServiceManager()
         {
             serviceHandlers = new ConcurrentDictionary<(uint ServiceHash, uint MethodId), BnetServiceHandler>();
             formInputs = new FormInputs();
@@ -57,7 +58,7 @@ namespace BNetServer
 
             localAddress = new IPEndPoint(address, port);
 
-            // set up form inputs 
+            // set up form inputs
             formInputs.Type = "LOGIN_FORM";
 
             var input = new FormInput();

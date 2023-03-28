@@ -1,12 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.Entities;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Entities;
 
 namespace Game.Networking.Packets
 {
@@ -222,7 +222,7 @@ namespace Game.Networking.Packets
         {
             public uint Type;
             public uint Quantity;
-            public uint? WeeklyQuantity;       // Currency count obtained this Week.  
+            public uint? WeeklyQuantity;       // Currency count obtained this Week.
             public uint? MaxWeeklyQuantity;    // Weekly Currency cap.
             public uint? TrackedQuantity;
             public int? MaxQuantity;
@@ -473,7 +473,7 @@ namespace Game.Networking.Packets
 
     public class PreRessurect : ServerPacket
     {
-        public PreRessurect() : base(ServerOpcodes.PreRessurect) { }
+        public PreRessurect() : base(ServerOpcodes.PreResurrect) { }
 
         public override void Write()
         {
@@ -781,7 +781,7 @@ namespace Game.Networking.Packets
 
         public EnableBarberShop() : base(ServerOpcodes.EnableBarberShop) { }
 
-        public override void Write() 
+        public override void Write()
         {
             _worldPacket.WriteUInt8(CustomizationScope);
         }
@@ -1142,7 +1142,7 @@ namespace Game.Networking.Packets
 
        public bool Enable;
     }
-    
+
     class AccountHeirloomUpdate : ServerPacket
     {
         public AccountHeirloomUpdate() : base(ServerOpcodes.AccountHeirloomUpdate, ConnectionType.Instance) { }
@@ -1341,7 +1341,7 @@ namespace Game.Networking.Packets
             _worldPacket.FlushBits();
         }
     }
-    
+
     class DisplayGameError : ServerPacket
     {
         public DisplayGameError(GameError error) : base(ServerOpcodes.DisplayGameError)
@@ -1425,7 +1425,7 @@ namespace Game.Networking.Packets
 
         public ObjectGuid SourceGuid;
     }
-    
+
     //Structs
     struct PhaseShiftDataPhase
     {

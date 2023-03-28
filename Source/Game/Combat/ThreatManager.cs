@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Constants;
 using Game.AI;
+using Game.Spells;
 using Game.Entities;
 using Game.Networking.Packets;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Game.Combat
 {
@@ -955,10 +956,10 @@ namespace Game.Combat
         public bool IsTaunting() { return _taunted >= TauntState.Taunt; }
         public bool IsDetaunted() { return _taunted == TauntState.Detaunt; }
 
-        public void SetThreat(float amount) 
-        { 
+        public void SetThreat(float amount)
+        {
             _baseAmount = amount;
-            ListNotifyChanged(); 
+            ListNotifyChanged();
         }
 
         public void ModifyThreatByPercent(int percent)

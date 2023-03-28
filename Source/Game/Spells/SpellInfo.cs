@@ -1,17 +1,18 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.BattleGrounds;
-using Game.Conditions;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Maps;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.Maps;
+using Game.Entities;
+using Game.Conditions;
+using Game.DataStorage;
+using Game.BattleGrounds;
 
 namespace Game.Spells
 {
@@ -670,7 +671,7 @@ namespace Game.Spells
             if (auraSpellInfo == null || auraSpellInfo.HasAttribute(SpellAttr0.NoImmunities))
                 return false;
 
-            // these spells pierce all avalible spells (Resurrection Sickness for example)
+            // these spells pierce all available spells (Resurrection Sickness for example)
             if (HasAttribute(SpellAttr0.NoImmunities))
                 return true;
 
@@ -2652,7 +2653,7 @@ namespace Game.Spells
 
             return mechanicImmunityMask;
         }
-        
+
         public float GetMinRange(bool positive = false)
         {
             if (RangeEntry == null)
@@ -3636,7 +3637,7 @@ namespace Game.Spells
                                 if (_isPositiveTarget(spellTriggeredEffect) && !_isPositiveEffectImpl(spellTriggeredProto, spellTriggeredEffect, visited))
                                     return false;
                             }
-                        }                        
+                        }
                         break;
                     case AuraType.PeriodicTriggerSpell:
                     case AuraType.ModStun:
@@ -5227,4 +5228,3 @@ namespace Game.Spells
         public List<SpellEffectName> SpellEffectImmune = new();
     }
 }
-

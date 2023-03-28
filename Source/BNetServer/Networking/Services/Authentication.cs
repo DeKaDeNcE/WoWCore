@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Bgs.Protocol;
-using Bgs.Protocol.Authentication.V1;
-using Bgs.Protocol.Challenge.V1;
-using Framework.Constants;
-using Framework.Database;
-using Framework.Realm;
-using Google.Protobuf;
 using System;
+using Framework.Realm;
+using Framework.Database;
+using Framework.Constants;
+using Google.Protobuf;
+using Bgs.Protocol;
+using Bgs.Protocol.Challenge.V1;
+using Bgs.Protocol.Authentication.V1;
 
 namespace BNetServer.Networking
 {

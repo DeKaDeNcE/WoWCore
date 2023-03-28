@@ -1,12 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.GameMath;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.GameMath;
+using Framework.Constants;
 
 namespace Game.Collision
 {
@@ -172,7 +173,7 @@ namespace Game.Collision
             }
             return false;
         }
-        
+
         public bool UpdatePosition()
         {
             if (iModel == null)
@@ -212,7 +213,7 @@ namespace Game.Collision
         bool IsCollisionEnabled() { return _collisionEnabled; }
         public bool IsMapObject() { return isWmo; }
         public byte GetNameSetId() { return owner.GetNameSetId(); }
-        
+
         public static bool LoadGameObjectModelList()
         {
             uint oldMSTime = Time.GetMSTime();
@@ -281,4 +282,3 @@ namespace Game.Collision
         public bool isWmo;
     }
 }
-    

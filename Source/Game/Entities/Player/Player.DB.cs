@@ -1,24 +1,25 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Framework.Database;
-using Game.Arenas;
-using Game.BattleGrounds;
-using Game.Cache;
-using Game.DataStorage;
-using Game.Garrisons;
-using Game.Groups;
-using Game.Guilds;
-using Game.Mails;
-using Game.Maps;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Collections;
+using Game.Maps;
+using Game.Cache;
+using Game.Mails;
+using Game.Arenas;
+using Game.Groups;
+using Game.Guilds;
+using Game.Spells;
+using Game.Garrisons;
+using Game.DataStorage;
+using Game.BattleGrounds;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {
@@ -2036,7 +2037,7 @@ namespace Game.Entities
         void _SaveActions(SQLTransaction trans)
         {
             int traitConfigId = 0;
-            
+
             TraitConfig traitConfig = GetTraitConfig((int)(uint)m_activePlayerData.ActiveCombatTraitConfigID);
             if (traitConfig != null)
             {
@@ -2419,7 +2420,7 @@ namespace Game.Entities
 
             m_traitConfigStates.Clear();
         }
-        
+
         public void _SaveMail(SQLTransaction trans)
         {
             PreparedStatement stmt;
@@ -3084,7 +3085,7 @@ namespace Game.Entities
                             transport = transportOnMap;
                     }
                 }
-                
+
                 if (transport)
                 {
                     float x = trans_x;
@@ -3202,7 +3203,7 @@ namespace Game.Entities
             else if (map.IsDungeon()) // if map is dungeon...
             {
                 TransferAbortParams denyReason = map.CannotEnter(this); // ... and can't enter map, then look for entry point.
-                if (denyReason != null) 
+                if (denyReason != null)
                 {
                     SendTransferAborted(map.GetId(), denyReason.Reason, denyReason.Arg, denyReason.MapDifficultyXConditionId);
                     areaTrigger = Global.ObjectMgr.GetGoBackTrigger(mapId);

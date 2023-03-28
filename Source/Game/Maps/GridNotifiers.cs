@@ -1,15 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Bgs.Protocol.Notification.V1;
+using System;
+using System.Collections.Generic;
 using Framework.Constants;
 using Game.Chat;
+using Game.Spells;
 using Game.Entities;
 using Game.Networking;
 using Game.Networking.Packets;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
 
 namespace Game.Maps
 {
@@ -2961,7 +2961,7 @@ namespace Game.Maps
             i_range = i_obj.GetDistance(o);
         }
     }
-    
+
     public class AnyDeadUnitObjectInRangeCheck<T> : ICheck<T> where T : WorldObject
     {
         public AnyDeadUnitObjectInRangeCheck(WorldObject searchObj, float range)

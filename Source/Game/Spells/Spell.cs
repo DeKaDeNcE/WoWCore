@@ -1,23 +1,24 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Framework.Dynamic;
+using Framework.Constants;
 using Game.AI;
-using Game.BattleFields;
-using Game.BattleGrounds;
+using Game.Maps;
+using Game.Loots;
+using Game.Entities;
+using Game.Movement;
+using Game.Scripting;
 using Game.Conditions;
 using Game.DataStorage;
-using Game.Entities;
-using Game.Loots;
-using Game.Maps;
-using Game.Movement;
+using Game.BattleFields;
+using Game.BattleGrounds;
 using Game.Networking.Packets;
-using Game.Scripting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace Game.Spells
 {
@@ -483,7 +484,7 @@ namespace Game.Spells
                     {
                         WorldObject target = Global.ObjAccessor.GetUnit(m_caster, channelTarget);
                         CallScriptObjectTargetSelectHandlers(ref target, spellEffectInfo.EffectIndex, targetType);
-                        // unit target may be no longer avalible - teleported out of map for example
+                        // unit target may be no longer available - teleported out of map for example
                         Unit unitTarget = target ? target.ToUnit() : null;
                         if (unitTarget)
                             AddUnitTarget(unitTarget, 1u << (int)spellEffectInfo.EffectIndex);
@@ -1838,7 +1839,7 @@ namespace Game.Spells
                 float hitDelay = m_spellInfo.LaunchDelay;
                 WorldObject missileSource = m_caster;
                 if (m_spellInfo.HasAttribute(SpellAttr4.BouncyChainMissiles))
-                {                    
+                {
                     var previousTargetInfo = m_UniqueTargetInfo.FindLast(target => (target.EffectMask & effectMask) != 0);
                     if (previousTargetInfo != null)
                     {
@@ -7048,7 +7049,7 @@ namespace Game.Spells
 
                     if (target.GetGUID() != corpse.GetOwnerGUID())
                         return false;
-                    
+
                     if (!corpse.HasCorpseDynamicFlag(CorpseDynFlags.Lootable))
                         return false;
 
@@ -8056,7 +8057,7 @@ namespace Game.Spells
     [StructLayout(LayoutKind.Explicit)]
     public struct SpellMisc
     {
-        // Alternate names for this value 
+        // Alternate names for this value
         [FieldOffset(0)]
         public uint TalentId;
 
@@ -9102,7 +9103,7 @@ namespace Game.Spells
 
         Spell m_Spell;
     }
-    
+
     class ProcReflectDelayed : BasicEvent
     {
         public ProcReflectDelayed(Unit owner, ObjectGuid casterGuid)

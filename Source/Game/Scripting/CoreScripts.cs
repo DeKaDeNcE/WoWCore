@@ -1,21 +1,22 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.AI;
-using Game.BattleFields;
-using Game.BattleGrounds;
-using Game.Chat;
-using Game.Conditions;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Guilds;
-using Game.Maps;
-using Game.PvP;
-using Game.Spells;
 using System;
 using System.Collections.Generic;
+using Framework.Constants;
+using Game.AI;
+using Game.PvP;
+using Game.Chat;
+using Game.Maps;
+using Game.Guilds;
+using Game.Groups;
+using Game.Spells;
+using Game.Entities;
+using Game.Conditions;
+using Game.DataStorage;
+using Game.BattleFields;
+using Game.BattleGrounds;
 
 namespace Game.Scripting
 {
@@ -425,7 +426,7 @@ namespace Game.Scripting
 
         public virtual BattleField GetBattlefield(Map map) { return null; }
     }
-    
+
     public class BattlegroundScript : ScriptObject
     {
         public BattlegroundScript(string name) : base(name)
@@ -572,7 +573,7 @@ namespace Game.Scripting
         // Called when an achievement is completed.
         public virtual void OnCompleted(Player player, AchievementRecord achievement) { }
     }
-    
+
     public class AchievementCriteriaScript : ScriptObject
     {
         public AchievementCriteriaScript(string name) : base(name)

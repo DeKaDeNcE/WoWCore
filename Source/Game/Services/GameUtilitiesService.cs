@@ -1,13 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Bgs.Protocol.GameUtilities.V1;
-using Framework.Constants;
+using System.Collections.Generic;
 using Framework.Web;
+using Framework.Constants;
 using Framework.Serialization;
 using Game.Services;
 using Google.Protobuf;
-using System.Collections.Generic;
+using Bgs.Protocol.GameUtilities.V1;
 
 namespace Game
 {

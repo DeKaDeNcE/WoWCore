@@ -1,11 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Entities;
-using Game.Maps;
 using System;
 using System.Numerics;
+using Framework.Constants;
+using Game.Maps;
+using Game.Entities;
 
 namespace Game.Movement
 {
@@ -23,10 +24,10 @@ namespace Game.Movement
         public int Last() { return index_hi; }
 
         public bool IsCyclic() { return _cyclic;}
-        
+
         #region Evaluate
-        public void Evaluate_Percent(int Idx, float u, out Vector3 c) 
-        {            
+        public void Evaluate_Percent(int Idx, float u, out Vector3 c)
+        {
             switch (m_mode)
             {
                 case EvaluationMode.Linear:
@@ -188,7 +189,7 @@ namespace Game.Movement
             C_Evaluate_Derivative(span[index..], t, s_Bezier3Coeffs, out result);
         }
         #endregion
-        
+
         #region SegLength
         public float SegLength(int i)
         {
