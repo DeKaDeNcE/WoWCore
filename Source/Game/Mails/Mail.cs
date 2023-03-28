@@ -1,10 +1,11 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.BlackMarket;
-using Game.Entities;
 using System.Collections.Generic;
+using Framework.Constants;
+using Game.Entities;
+using Game.BlackMarket;
 
 namespace Game.Mails
 {
@@ -68,7 +69,7 @@ namespace Game.Mails
         public MailReceiver(Player receiver)
         {
             m_receiver = receiver;
-            m_receiver_lowguid = receiver.GetGUID().GetCounter();            
+            m_receiver_lowguid = receiver.GetGUID().GetCounter();
         }
 
         public MailReceiver(Player receiver, ulong receiver_lowguid)
@@ -132,7 +133,7 @@ namespace Game.Mails
         {
             m_messageType = MailMessageType.Calendar;
             m_senderId = (uint)sender.EventId;
-            m_stationery = MailStationery.Default; 
+            m_stationery = MailStationery.Default;
         }
 
         public MailSender(AuctionHouseObject sender)

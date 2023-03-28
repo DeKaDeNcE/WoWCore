@@ -1,19 +1,19 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.AI;
-using Game.DataStorage;
-using Game.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.AI;
+using Game.Entities;
+using Game.DataStorage;
 
 namespace Game.Movement
 {
-    class MovementGeneratorComparator : IComparer<MovementGenerator>
+    public class MovementGeneratorComparator : IComparer<MovementGenerator>
     {
         public int Compare(MovementGenerator a, MovementGenerator b)
         {
@@ -43,7 +43,7 @@ namespace Game.Movement
         }
     }
 
-    class DelayedAction
+    public class DelayedAction
     {
         Action Action;
         Func<bool> Validator;
@@ -73,7 +73,7 @@ namespace Game.Movement
     public class MotionMaster
     {
         public const double gravity = 19.29110527038574;
-        public const float SPEED_CHARGE = 42.0f;
+        public const float SpeedCharge = 42.0f;
         static IdleMovementGenerator staticIdleMovement = new();
         static uint splineId;
 
@@ -252,8 +252,6 @@ namespace Game.Movement
                             movement = itr;
                     }
                     break;
-                default:
-                    break;
             }
 
             return movement;
@@ -278,8 +276,6 @@ namespace Game.Movement
                         var itr = _generators.FirstOrDefault(filter);
                         value = itr != null;
                     }
-                    break;
-                default:
                     break;
             }
 
@@ -325,7 +321,7 @@ namespace Game.Movement
             ResolveDelayedActions();
         }
 
-        void Add(MovementGenerator movement, MovementSlot slot = MovementSlot.Active)
+        public void Add(MovementGenerator movement, MovementSlot slot = MovementSlot.Active)
         {
             if (movement == null)
                 return;
@@ -366,8 +362,6 @@ namespace Game.Movement
                             Remove(movement, GetCurrentMovementGenerator() == movement, false);
                     }
                     break;
-                default:
-                    break;
             }
         }
 
@@ -398,8 +392,6 @@ namespace Game.Movement
                         if (itr != null)
                             Remove(itr, GetCurrentMovementGenerator() == itr, false);
                     }
-                    break;
-                default:
                     break;
             }
         }
@@ -437,8 +429,6 @@ namespace Game.Movement
                     break;
                 case MovementSlot.Active:
                     DirectClear();
-                    break;
-                default:
                     break;
             }
         }
@@ -682,7 +672,7 @@ namespace Game.Movement
             Add(new GenericMovementGenerator(initializer, MovementGeneratorType.Effect, id));
         }
 
-        public void MoveCharge(float x, float y, float z, float speed = SPEED_CHARGE, uint id = EventId.Charge, bool generatePath = false, Unit target = null, SpellEffectExtraData spellEffectExtraData = null)
+        public void MoveCharge(float x, float y, float z, float speed = SpeedCharge, uint id = EventId.Charge, bool generatePath = false, Unit target = null, SpellEffectExtraData spellEffectExtraData = null)
         {
             /*
             if (_slot[(int)MovementSlot.Controlled] != null && _slot[(int)MovementSlot.Controlled].GetMovementGeneratorType() != MovementGeneratorType.Distract)
@@ -696,11 +686,11 @@ namespace Game.Movement
             Add(movement);
         }
 
-        public void MoveCharge(PathGenerator path, float speed = SPEED_CHARGE, Unit target = null, SpellEffectExtraData spellEffectExtraData = null)
+        public void MoveCharge(PathGenerator path, float speed = SpeedCharge, Unit target = null, SpellEffectExtraData spellEffectExtraData = null)
         {
             Vector3 dest = path.GetActualEndPosition();
 
-            MoveCharge(dest.X, dest.Y, dest.Z, SPEED_CHARGE, EventId.ChargePrepath);
+            MoveCharge(dest.X, dest.Y, dest.Z, SpeedCharge, EventId.ChargePrepath);
 
             // If this is ever changed to not happen immediately then all spell effect handlers that use this must be updated
 
@@ -913,12 +903,12 @@ namespace Game.Movement
             MoveAlongSplineChain(pointId, chain, walk);
         }
 
-        void MoveAlongSplineChain(uint pointId, List<SplineChainLink> chain, bool walk)
+        public void MoveAlongSplineChain(uint pointId, List<SplineChainLink> chain, bool walk)
         {
             Add(new SplineChainMovementGenerator(pointId, chain, walk));
         }
 
-        void ResumeSplineChain(SplineChainResumeInfo info)
+        public void ResumeSplineChain(SplineChainResumeInfo info)
         {
             if (info.Empty())
             {
@@ -1087,8 +1077,8 @@ namespace Game.Movement
 
             speedZ = (float)Math.Sqrt(2 * gravity * height);
         }
-        
-        void ResolveDelayedActions()
+
+        public void ResolveDelayedActions()
         {
             while (_delayedActions.Count != 0)
             {
@@ -1097,19 +1087,19 @@ namespace Game.Movement
             }
         }
 
-        void Remove(MovementGenerator movement, bool active, bool movementInform)
+        public void Remove(MovementGenerator movement, bool active, bool movementInform)
         {
             _generators.Remove(movement);
             Delete(movement, active, movementInform);
         }
 
-        void Pop(bool active, bool movementInform)
+        public void Pop(bool active, bool movementInform)
         {
             if (!_generators.Empty())
                 Remove(_generators.FirstOrDefault(), active, movementInform);
         }
 
-        void DirectInitialize()
+        public void DirectInitialize()
         {
             // Clear ALL movement generators (including default)
             DirectClearDefault();
@@ -1117,7 +1107,7 @@ namespace Game.Movement
             InitializeDefault();
         }
 
-        void DirectClear()
+        public void DirectClear()
         {
             // First delete Top
             if (!_generators.Empty())
@@ -1131,13 +1121,13 @@ namespace Game.Movement
             ClearBaseUnitStates();
         }
 
-        void DirectClearDefault()
+        public void DirectClearDefault()
         {
             if (_defaultGenerator != null)
                 DeleteDefault(_generators.Empty(), false);
         }
 
-        void DirectClear(Func<MovementGenerator, bool> filter)
+        public void DirectClear(Func<MovementGenerator, bool> filter)
         {
             if (_generators.Empty())
                 return;
@@ -1153,7 +1143,7 @@ namespace Game.Movement
             }
         }
 
-        void DirectAdd(MovementGenerator movement, MovementSlot slot = MovementSlot.Active)
+        public void DirectAdd(MovementGenerator movement, MovementSlot slot = MovementSlot.Active)
         {
             /*
             IMovementGenerator curr = _slot[(int)slot];
@@ -1218,25 +1208,23 @@ namespace Game.Movement
                     _generators.Add(movement);
                     AddBaseUnitState(movement);
                     break;
-                default:
-                    break;
             }
         }
 
-        void Delete(MovementGenerator movement, bool active, bool movementInform)
+        public void Delete(MovementGenerator movement, bool active, bool movementInform)
         {
             movement.Finalize(_owner, active, movementInform);
             ClearBaseUnitState(movement);
         }
 
-        void DeleteDefault(bool active, bool movementInform)
+        public void DeleteDefault(bool active, bool movementInform)
         {
             _defaultGenerator.Finalize(_owner, active, movementInform);
             _defaultGenerator = GetIdleMovementGenerator();
             AddFlag(MotionMasterFlags.StaticInitializationPending);
         }
 
-        void AddBaseUnitState(MovementGenerator movement)
+        public void AddBaseUnitState(MovementGenerator movement)
         {
             if (movement == null || movement.BaseUnitState == 0)
                 return;
@@ -1245,7 +1233,7 @@ namespace Game.Movement
             _owner.AddUnitState(movement.BaseUnitState);
         }
 
-        void ClearBaseUnitState(MovementGenerator movement)
+        public void ClearBaseUnitState(MovementGenerator movement)
         {
             if (movement == null || movement.BaseUnitState == 0)
                 return;
@@ -1255,7 +1243,7 @@ namespace Game.Movement
                 _owner.ClearUnitState(movement.BaseUnitState);
         }
 
-        void ClearBaseUnitStates()
+        public void ClearBaseUnitStates()
         {
             uint unitState = 0;
             foreach (var itr in _baseUnitStatesMap)
@@ -1265,9 +1253,9 @@ namespace Game.Movement
             _baseUnitStatesMap.Clear();
         }
 
-        void AddFlag(MotionMasterFlags flag) { _flags |= flag; }
-        bool HasFlag(MotionMasterFlags flag) { return (_flags & flag) != 0; }
-        void RemoveFlag(MotionMasterFlags flag) { _flags &= ~flag; }
+        public void AddFlag(MotionMasterFlags flag) { _flags |= flag; }
+        public bool HasFlag(MotionMasterFlags flag) { return (_flags & flag) != 0; }
+        public void RemoveFlag(MotionMasterFlags flag) { _flags &= ~flag; }
 
         public static MovementGenerator GetIdleMovementGenerator()
         {

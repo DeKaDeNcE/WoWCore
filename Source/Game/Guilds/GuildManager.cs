@@ -1,13 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Guilds;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Guilds;
+using Game.Entities;
+using Game.DataStorage;
 
 namespace Game
 {
@@ -324,7 +325,7 @@ namespace Game
 
                 // Delete orphaned guild bank tab entries before loading the valid ones
                 DB.Characters.DirectExecute("DELETE gbt FROM guild_bank_tab gbt LEFT JOIN guild g ON gbt.guildId = g.guildId WHERE g.guildId IS NULL");
-                
+
                 //                                              0        1      2        3        4
                 SQLResult result = DB.Characters.Query("SELECT guildid, TabId, TabName, TabIcon, TabText FROM guild_bank_tab ORDER BY guildid ASC, TabId ASC");
                 if (result.IsEmpty())

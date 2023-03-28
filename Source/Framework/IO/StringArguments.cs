@@ -1,4 +1,5 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
@@ -50,7 +51,7 @@ namespace Framework.IO
             bool value;
             if (bool.TryParse(Current, out value))
                 return value;
-            
+
             if ((Current == "1") || Current.Equals("y", StringComparison.OrdinalIgnoreCase) || Current.Equals("on", StringComparison.OrdinalIgnoreCase) || Current.Equals("yes", StringComparison.OrdinalIgnoreCase) || Current.Equals("true", StringComparison.OrdinalIgnoreCase))
                     return true;
             if ((Current == "0") || Current.Equals("n", StringComparison.OrdinalIgnoreCase) || Current.Equals("off", StringComparison.OrdinalIgnoreCase) || Current.Equals("no", StringComparison.OrdinalIgnoreCase) || Current.Equals("false", StringComparison.OrdinalIgnoreCase))
@@ -205,8 +206,8 @@ namespace Framework.IO
 
         public void AlignToNextChar()
         {
-            while (activeposition < activestring.Length && activestring[activeposition] != ' ')            
-                activeposition++;            
+            while (activeposition < activestring.Length && activestring[activeposition] != ' ')
+                activeposition++;
         }
 
         public char this[int index]

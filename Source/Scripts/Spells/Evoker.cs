@@ -1,15 +1,24 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Entities;
-using Game.Scripting;
-using Game.Spells;
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
 using System;
 using System.Collections.Generic;
+using Framework.Constants;
+using Game.Spells;
+using Game.Entities;
+using Game.Scripting;
 
-namespace Scripts.Spells.Evoker
-{
+namespace Scripts.Spells.Evoker;
+
     struct SpellIds
     {
         public const uint EnergizingFlame = 400006;
@@ -53,7 +62,7 @@ namespace Scripts.Spells.Evoker
             if (!caster.IsFalling())
                 return SpellCastResult.NotOnGround;
 
-            return SpellCastResult.SpellCastOk;
+            return SpellCastResult.SpellCastOK;
         }
 
         void HandleCast()
@@ -133,4 +142,3 @@ namespace Scripts.Spells.Evoker
             OnEffectHitTarget.Add(new EffectHandler(HandleDamage, 0, SpellEffectName.Dummy));
         }
     }
-}

@@ -1,4 +1,5 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 namespace Framework.Database
@@ -248,7 +249,7 @@ namespace Framework.Database
             PrepareStatement(CharStatements.DEL_GUILD_RANKS, "DELETE FROM guild_rank WHERE guildid = ?");
             PrepareStatement(CharStatements.DEL_GUILD_RANK, "DELETE FROM guild_rank WHERE guildid = ? AND rid = ?");
             PrepareStatement(CharStatements.INS_GUILD_BANK_TAB, "INSERT INTO guild_bank_tab (guildid, TabId) VALUES (?, ?)");
-            PrepareStatement(CharStatements.DEL_GUILD_BANK_TAB, "DELETE FROM guild_bank_tab WHERE guildid = ? AND TabId = ?"); 
+            PrepareStatement(CharStatements.DEL_GUILD_BANK_TAB, "DELETE FROM guild_bank_tab WHERE guildid = ? AND TabId = ?");
             PrepareStatement(CharStatements.DEL_GUILD_BANK_TABS, "DELETE FROM guild_bank_tab WHERE guildid = ?");
 
             PrepareStatement(CharStatements.INS_GUILD_BANK_ITEM, "INSERT INTO guild_bank_item (guildid, TabId, SlotId, item_guid) VALUES (?, ?, ?, ?)");
@@ -312,7 +313,7 @@ namespace Framework.Database
 
             // Equipmentsets
             PrepareStatement(CharStatements.UPD_EQUIP_SET, "UPDATE character_equipmentsets SET name=?, iconname=?, ignore_mask=?, AssignedSpecIndex=?, item0=?, item1=?, item2=?, item3=?, " +
-                "item4=?, item5=?, item6=?, item7=?, item8=?, item9=?, item10=?, item11=?, item12=?, item13=?, item14=?, item15=?, item16=?, " + 
+                "item4=?, item5=?, item6=?, item7=?, item8=?, item9=?, item10=?, item11=?, item12=?, item13=?, item14=?, item15=?, item16=?, " +
                 "item17=?, item18=? WHERE guid=? AND setguid=? AND setindex=?");
             PrepareStatement(CharStatements.INS_EQUIP_SET, "INSERT INTO character_equipmentsets (guid, setguid, setindex, name, iconname, ignore_mask, AssignedSpecIndex, item0, item1, item2, item3, " +
                 "item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16, item17, item18) " +

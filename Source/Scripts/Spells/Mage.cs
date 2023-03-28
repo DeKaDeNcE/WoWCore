@@ -1,20 +1,28 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Maps;
-using Game.Scripting;
-using Game.Spells;
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
 using System;
 using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Constants;
 using Game.AI;
+using Game.Spells;
+using Game.Groups;
+using Game.Entities;
+using Game.Scripting;
+using Game.DataStorage;
 
-namespace Scripts.Spells.Mage
-{
+namespace Scripts.Spells.Mage;
+
     struct SpellIds
     {
         public const uint AlterTimeAura = 110909;
@@ -318,7 +326,7 @@ namespace Scripts.Spells.Mage
             OnEffectHitTarget.Add(new EffectHandler(HandleSlow, 0, SpellEffectName.SchoolDamage));
         }
     }
-    
+
     [Script] // 198063 - Burning Determination
     class spell_mage_burning_determination : AuraScript
     {
@@ -478,7 +486,7 @@ namespace Scripts.Spells.Mage
             OnEffectHit.Add(new EffectHandler(HandleEffectHitTarget, 0, SpellEffectName.Dummy));
         }
     }
-    
+
     [Script] // 120 - Cone of Cold
     class spell_mage_cone_of_cold : SpellScript
     {
@@ -646,7 +654,7 @@ namespace Scripts.Spells.Mage
             OnHit.Add(new HitHandler(HandleChilled));
         }
     }
-    
+
     [Script] // 11426 - Ice Barrier
     class spell_mage_ice_barrier : AuraScript
     {
@@ -1049,7 +1057,7 @@ namespace Scripts.Spells.Mage
             AfterEffectRemove.Add(new EffectApplyHandler(OnRemove, 1, AuraType.PeriodicDamage, AuraEffectHandleModes.Real));
         }
     }
-    
+
     [Script] // 136511 - Ring of Frost
     class spell_mage_ring_of_frost : AuraScript
     {
@@ -1106,7 +1114,7 @@ namespace Scripts.Spells.Mage
         ObjectGuid _ringOfFrostGUID;
     }
 
-    [Script] // 82691 - Ring of Frost (freeze efect)
+    [Script] // 82691 - Ring of Frost (freeze effect)
     class spell_mage_ring_of_frost_freeze : SpellScript
     {
         public override bool Validate(SpellInfo spellInfo)
@@ -1238,4 +1246,3 @@ namespace Scripts.Spells.Mage
             AfterHit.Add(new HitHandler(HandleImprovedFreeze));
         }
     }
-}

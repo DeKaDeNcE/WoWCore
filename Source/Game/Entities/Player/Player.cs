@@ -1,30 +1,31 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Dynamic;
-using Game.Achievements;
+using Framework.Database;
+using Framework.Constants;
 using Game.AI;
-using Game.Arenas;
-using Game.BattleFields;
-using Game.BattleGrounds;
-using Game.BattlePets;
 using Game.Chat;
-using Game.DataStorage;
-using Game.Garrisons;
-using Game.Groups;
-using Game.Guilds;
+using Game.Misc;
+using Game.Maps;
 using Game.Loots;
 using Game.Mails;
-using Game.Maps;
-using Game.Misc;
+using Game.Arenas;
+using Game.Groups;
+using Game.Guilds;
+using Game.Spells;
+using Game.Garrisons;
+using Game.BattlePets;
+using Game.DataStorage;
+using Game.BattleFields;
+using Game.Achievements;
+using Game.BattleGrounds;
 using Game.Networking;
 using Game.Networking.Packets;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 using static Global;
 
@@ -326,6 +327,7 @@ namespace Game.Entities
 
             return true;
         }
+
         public override void Update(uint diff)
         {
             if (!IsInWorld)
@@ -433,7 +435,7 @@ namespace Game.Entities
                             }
                         }
                         //120 degrees of radiant range, if player is not in boundary radius
-                        else if (!IsWithinBoundaryRadius(victim) && !HasInArc(2 * MathFunctions.PI / 3, victim))
+                        else if (!IsWithinBoundaryRadius(victim) && !HasInArc(2 * MathF.PI / 3, victim))
                         {
                             SetAttackTimer(WeaponAttackType.BaseAttack, 100);
                             if (m_swingErrorMsg != 2)               // send single time (client auto repeat)
@@ -461,7 +463,7 @@ namespace Game.Entities
                     {
                         if (!IsWithinMeleeRange(victim))
                             SetAttackTimer(WeaponAttackType.OffAttack, 100);
-                        else if (!IsWithinBoundaryRadius(victim) && !HasInArc(2 * MathFunctions.PI / 3, victim))
+                        else if (!IsWithinBoundaryRadius(victim) && !HasInArc(2 * MathF.PI / 3, victim))
                             SetAttackTimer(WeaponAttackType.BaseAttack, 100);
                         else
                         {
@@ -2651,7 +2653,7 @@ namespace Game.Entities
                         PlayerInteractionType.MailInfo, PlayerInteractionType.None, PlayerInteractionType.LFGDungeon,
                         PlayerInteractionType.ArtifactForge, PlayerInteractionType.None, PlayerInteractionType.SpecializationMaster,
                         PlayerInteractionType.None, PlayerInteractionType.None, PlayerInteractionType.GarrArchitect,
-                        PlayerInteractionType.GarrMission, PlayerInteractionType.ShipmentCrafter, PlayerInteractionType.GarrTradeskill,
+                        PlayerInteractionType.GarrMission, PlayerInteractionType.ShipmentCrafter, PlayerInteractionType.GarrTradeSkill,
                         PlayerInteractionType.GarrRecruitment, PlayerInteractionType.AdventureMap, PlayerInteractionType.GarrTalent,
                         PlayerInteractionType.ContributionCollector, PlayerInteractionType.Transmogrifier, PlayerInteractionType.AzeriteRespec,
                         PlayerInteractionType.IslandQueue, PlayerInteractionType.ItemInteraction, PlayerInteractionType.WorldMap,
@@ -2736,8 +2738,6 @@ namespace Game.Entities
                 }
                 case TypeId.GameObject:
                     return source.ToGameObject().GetGoInfo().GetGossipMenuId();
-                default:
-                    break;
             }
 
             return 0;
@@ -3555,8 +3555,6 @@ namespace Game.Entities
                 case PowerType.LunarPower:
                     SetPower(PowerType.LunarPower, 0);
                     break;
-                default:
-                    break;
             }
         }
 
@@ -3714,7 +3712,7 @@ namespace Game.Entities
 
         public void BuildPlayerRepop()
         {
-            PreRessurect packet = new();
+            PreResurrect packet = new();
             packet.PlayerGUID = GetGUID();
             SendPacket(packet);
 
@@ -4051,9 +4049,9 @@ namespace Game.Entities
         }
 
         ObjectGuid GetSpiritHealerGUID() { return _areaSpiritHealerGUID; }
-        
+
         public bool CanAcceptAreaSpiritHealFrom(Unit spiritHealer) { return spiritHealer.GetGUID() == _areaSpiritHealerGUID; }
-        
+
         public void SetAreaSpiritHealer(Creature creature)
         {
             if (!creature)
@@ -4087,7 +4085,7 @@ namespace Game.Entities
             areaSpiritHealerTime.TimeLeft = (uint)timeLeft;
             SendPacket(areaSpiritHealerTime);
         }
-        
+
         public void KillPlayer()
         {
             if (IsFlying() && GetTransport() == null)
@@ -4268,7 +4266,7 @@ namespace Game.Entities
             if (pvp)
             {
                 if (!WorldConfig.GetBoolValue(WorldCfg.DeathCorpseReclaimDelayPvp))
-                    return PlayerConst.copseReclaimDelay[0];
+                    return PlayerConst.CorpseReclaimDelay[0];
             }
             else if (!WorldConfig.GetBoolValue(WorldCfg.DeathCorpseReclaimDelayPve))
                 return 0;
@@ -4277,7 +4275,7 @@ namespace Game.Entities
             // 0..2 full period
             // should be ceil(x)-1 but not floor(x)
             ulong count = (ulong)((now < m_deathExpireTime - 1) ? (m_deathExpireTime - 1 - now) / PlayerConst.DeathExpireStep : 0);
-            return PlayerConst.copseReclaimDelay[count];
+            return PlayerConst.CorpseReclaimDelay[count];
         }
         void UpdateCorpseReclaimDelay()
         {
@@ -4323,7 +4321,7 @@ namespace Game.Entities
                         count = PlayerConst.MaxDeathCount - 1;
                 }
 
-                long expected_time = corpse.GetGhostTime() + PlayerConst.copseReclaimDelay[count];
+                long expected_time = corpse.GetGhostTime() + PlayerConst.CorpseReclaimDelay[count];
                 long now = GameTime.GetGameTime();
 
                 if (now >= expected_time)
@@ -4812,8 +4810,8 @@ namespace Game.Entities
 
         void UpdateWarModeAuras()
         {
-            uint auraInside = 282559;
-            uint auraOutside = PlayerConst.WarmodeEnlistedSpellOutside;
+            uint auraInside = PlayerConst.WarModeEnlistedSpellInside;
+            uint auraOutside = PlayerConst.WarModeEnlistedSpellOutside;
 
             if (IsWarModeDesired())
             {
@@ -4844,8 +4842,8 @@ namespace Game.Entities
             }
         }
 
-        bool IsWarModeDesired() { return HasPlayerFlag(PlayerFlags.WarModeDesired); }
-        bool IsWarModeActive() { return HasPlayerFlag(PlayerFlags.WarModeActive); }
+        public bool IsWarModeDesired() { return HasPlayerFlag(PlayerFlags.WarModeDesired); }
+        public bool IsWarModeActive() { return HasPlayerFlag(PlayerFlags.WarModeActive); }
         public bool IsWarModeLocalActive() { return HasPlayerLocalFlag(PlayerLocalFlags.WarMode); }
 
         // Used in triggers for check "Only to targets that grant experience or honor" req
@@ -5815,8 +5813,6 @@ namespace Game.Entities
                     case TypeId.Conversation:
                         UpdateVisibilityOf(target.ToConversation(), udata, newVisibleUnits);
                         break;
-                    default:
-                        break;
                 }
             }
 
@@ -6238,11 +6234,11 @@ namespace Game.Entities
 
             ChatPkt data = new();
             data.Initialize(ChatMsg.Emote, Language.Universal, this, this, text);
-            SendMessageToSetInRange(data, WorldConfig.GetFloatValue(WorldCfg.ListenRangeTextemote), true, !GetSession().HasPermission(RBACPermissions.TwoSideInteractionChat), true);
+            SendMessageToSetInRange(data, WorldConfig.GetFloatValue(WorldCfg.ListenRangeTextEmote), true, !GetSession().HasPermission(RBACPermissions.TwoSideInteractionChat), true);
         }
         public override void TextEmote(uint textId, WorldObject target = null, bool isBossEmote = false)
         {
-            Talk(textId, ChatMsg.Emote, WorldConfig.GetFloatValue(WorldCfg.ListenRangeTextemote), target);
+            Talk(textId, ChatMsg.Emote, WorldConfig.GetFloatValue(WorldCfg.ListenRangeTextEmote), target);
         }
         public void WhisperAddon(string text, string prefix, bool isLogged, Player receiver)
         {
@@ -6526,8 +6522,6 @@ namespace Game.Entities
                             if (GetClass() == Class.Shaman)
                                 amount += enchantmentEntry.EffectScalingPoints[i] * item.GetTemplate().GetDelay() / 1000.0f;
                             break;
-                        default:
-                            break;
                     }
                 }
             }
@@ -6550,8 +6544,6 @@ namespace Game.Entities
                     break;
                 case BaseModGroup.OffhandCritPercentage:
                     UpdateCritPercentage(WeaponAttackType.OffAttack);
-                    break;
-                default:
                     break;
             }
         }

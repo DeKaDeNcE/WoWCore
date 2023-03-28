@@ -1,11 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
 using Framework.Collections;
 
-namespace Framework.Algorithms
-{
+namespace Framework.Algorithms;
+
     public class DepthFirstSearch
     {
         private bool[] marked;    // marked[v] = is there an s-v path?
@@ -21,7 +22,6 @@ namespace Framework.Algorithms
         public DepthFirstSearch(EdgeWeightedDigraph G, uint s, Action<uint> action)
         {
             marked = new bool[G.NumberOfVertices];
-            //validateVertex(s);
             dfs(G, s, action);
         }
 
@@ -46,19 +46,11 @@ namespace Framework.Algorithms
          * @return {@code true} if there is a path, {@code false} otherwise
          * @throws IllegalArgumentException unless {@code 0 <= v < V}
          */
-        public bool Marked(int v)
-        {
-            //validateVertex(v);
-            return marked[v];
-        }
+        public bool Marked(int v) => marked[v];
 
         /**
          * Returns the number of vertices connected to the source vertex {@code s}.
          * @return the number of vertices connected to the source vertex {@code s}
          */
-        public int Count()
-        {
-            return count;
-        }
+        public int Count() => count;
     }
-}

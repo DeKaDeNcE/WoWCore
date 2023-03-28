@@ -1,21 +1,22 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.Chat;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Guilds;
-using Game.Maps;
-using Game.Networking;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Chat;
+using Game.Maps;
+using Game.Groups;
+using Game.Guilds;
+using Game.Spells;
+using Game.Entities;
+using Game.DataStorage;
+using Game.Networking;
+using Game.Networking.Packets;
 
 namespace Game.BattleGrounds
 {
@@ -126,8 +127,6 @@ namespace Game.BattleGrounds
                 case BattlegroundStatus.WaitLeave:
                     _ProcessLeave(diff);
                     break;
-                default:
-                    break;
             }
 
             // Update start time and reset stats timer
@@ -151,7 +150,7 @@ namespace Game.BattleGrounds
             if (m_ValidStartPositionTimer >= BattlegroundConst.CheckPlayerPositionInverval)
             {
                 m_ValidStartPositionTimer = 0;
-                
+
                 foreach (var guid in GetPlayers().Keys)
                 {
                     Player player = Global.ObjAccessor.FindPlayer(guid);
@@ -475,7 +474,7 @@ namespace Game.BattleGrounds
         {
             return _battlegroundTemplate.MaxStartDistSq;
         }
-        
+
         public void SendPacketToAll(ServerPacket packet)
         {
             foreach (var pair in m_Players)
@@ -748,7 +747,7 @@ namespace Game.BattleGrounds
         {
             return _battlegroundTemplate.ScriptId;
         }
-        
+
         public uint GetBonusHonorFromKill(uint kills)
         {
             //variable kills means how many honorable kills you scored (so we need kills * honor_for_one_kill)
@@ -781,7 +780,7 @@ namespace Game.BattleGrounds
 
             Player player = Global.ObjAccessor.FindPlayer(guid);
             if (player)
-            { 
+            {
                 // should remove spirit of redemption
                 if (player.HasAuraType(AuraType.SpiritOfRedemption))
                     player.RemoveAurasByType(AuraType.ModShapeshift);
@@ -962,8 +961,6 @@ namespace Game.BattleGrounds
                     break;
                 case BattlegroundStatus.WaitLeave:
                     pvpMatchInitialize.State = PVPMatchInitialize.MatchState.Complete;
-                    break;
-                default:
                     break;
             }
 
@@ -1205,7 +1202,7 @@ namespace Game.BattleGrounds
         {
             return !IsArena();
         }
-        
+
         public bool HasFreeSlots()
         {
             return GetPlayersSize() < GetMaxPlayers();
@@ -1263,7 +1260,7 @@ namespace Game.BattleGrounds
             // Temporally add safety check for bad spawns and send log (object rotations need to be rechecked in sniff)
             if (rotation0 == 0 && rotation1 == 0 && rotation2 == 0 && rotation3 == 0)
             {
-                Log.outDebug(LogFilter.Battleground, $"Battleground.AddObject: gameoobject [entry: {entry}, object type: {type}] for BG (map: {GetMapId()}) has zeroed rotation fields, " +
+                Log.outDebug(LogFilter.Battleground, $"Battleground.AddObject: gameobject [entry: {entry}, object type: {type}] for BG (map: {GetMapId()}) has zeroed rotation fields, " +
                     "orientation used temporally, but please fix the spawn");
 
                 rotation = Quaternion.CreateFromRotationMatrix(Extensions.fromEulerAnglesZYX(o, 0.0f, 0.0f));
@@ -1534,7 +1531,7 @@ namespace Game.BattleGrounds
         {
             _playerPositions.RemoveAll(playerPosition => playerPosition.Guid == guid);
         }
-        
+
         void EndNow()
         {
             RemoveFromBGFreeSlotQueue();
@@ -1662,7 +1659,7 @@ namespace Game.BattleGrounds
 
             return false;
         }
-        
+
         void PlayerAddedToBGCheckIfBGIsRunning(Player player)
         {
             if (GetStatus() != BattlegroundStatus.WaitLeave)
@@ -1820,8 +1817,6 @@ namespace Game.BattleGrounds
                         return 3;
                     case ArenaTypes.Team5v5: // removed
                         return 5;
-                    default:
-                        break;
                 }
             }
 

@@ -1,16 +1,19 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.BattleGrounds;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Misc;
-using Game.Networking;
-using Game.Networking.Packets;
 using System;
 using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Misc;
+using Game.Entities;
+using Game.DataStorage;
+using Game.BattleGrounds;
+using Game.Networking;
+using Game.Networking.Packets;
+
+// ReSharper disable UnusedMember.Local
 
 namespace Game
 {
@@ -351,7 +354,7 @@ namespace Game
                 stableEntry.CreatureID = pet.CreatureId;
                 stableEntry.DisplayID = pet.DisplayId;
                 stableEntry.ExperienceLevel = pet.Level;
-                stableEntry.PetFlags = PetStableinfo.Active;
+                stableEntry.PetFlags = PetStableInfoStatus.Active;
                 stableEntry.PetName = pet.Name;
 
                 packet.Pets.Add(stableEntry);
@@ -364,13 +367,13 @@ namespace Game
 
                 PetStable.PetInfo pet = petStable.StabledPets[petSlot];
                 PetStableInfo stableEntry;
-                stableEntry.PetSlot = petSlot + (int)PetSaveMode.FirstStableSlot;
-                stableEntry.PetNumber = pet.PetNumber;
-                stableEntry.CreatureID = pet.CreatureId;
-                stableEntry.DisplayID = pet.DisplayId;
+                stableEntry.PetSlot         = petSlot + (int)PetSaveMode.FirstStableSlot;
+                stableEntry.PetNumber       = pet.PetNumber;
+                stableEntry.CreatureID      = pet.CreatureId;
+                stableEntry.DisplayID       = pet.DisplayId;
                 stableEntry.ExperienceLevel = pet.Level;
-                stableEntry.PetFlags = PetStableinfo.Inactive;
-                stableEntry.PetName = pet.Name;
+                stableEntry.PetFlags        = PetStableInfoStatus.Inactive;
+                stableEntry.PetName         = pet.Name;
 
                 packet.Pets.Add(stableEntry);
             }
@@ -530,7 +533,7 @@ namespace Game
                 }
             });
         }
-        
+
         [WorldPacketHandler(ClientOpcodes.RepairItem, Processing = PacketProcessing.Inplace)]
         void HandleRepairItem(RepairItem packet)
         {

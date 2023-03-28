@@ -1,18 +1,19 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Chat;
-using Game.Conditions;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Maps;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Chat;
+using Game.Maps;
+using Game.Spells;
+using Game.Entities;
+using Game.Conditions;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game
 {
@@ -498,7 +499,7 @@ namespace Game
         {
             return AlwaysVisible;
         }
-        
+
         public static void InitDbPhaseShift(PhaseShift phaseShift, PhaseUseFlagsValues phaseUseFlags, uint phaseId, uint phaseGroupId)
         {
             phaseShift.ClearPhases();
@@ -661,7 +662,7 @@ namespace Game
 
             return false;
         }
-        
+
         static void UpdateVisibilityIfNeeded(WorldObject obj, bool updateVisibility, bool changed)
         {
             if (changed && obj.IsInWorld)

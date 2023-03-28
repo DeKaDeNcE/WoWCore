@@ -1,23 +1,24 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Framework.Dynamic;
-using Game.BattleGrounds;
-using Game.Collision;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Networking;
-using Game.Networking.Packets;
-using Game.Scenarios;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Collections;
+using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Groups;
+using Game.Entities;
+using Game.Collision;
+using Game.Scenarios;
+using Game.DataStorage;
+using Game.BattleGrounds;
+using Game.Networking;
+using Game.Networking.Packets;
 
 namespace Game.Maps
 {
@@ -279,8 +280,8 @@ namespace Game.Maps
         void GridMarkNoUnload(uint x, uint y)
         {
             // First make sure this grid is loaded
-            float gX = (((float)x - 0.5f - MapConst.CenterGridId) * MapConst.SizeofGrids) + (MapConst.CenterGridOffset * 2);
-            float gY = (((float)y - 0.5f - MapConst.CenterGridId) * MapConst.SizeofGrids) + (MapConst.CenterGridOffset * 2);
+            float gX = (x - 0.5f - MapConst.CenterGridId) * MapConst.SizeofGrids + MapConst.CenterGridOffset * 2;
+            float gY = (y - 0.5f - MapConst.CenterGridId) * MapConst.SizeofGrids + MapConst.CenterGridOffset * 2;
             Cell cell = new(gX, gY);
             EnsureGridLoaded(cell);
 
@@ -1935,8 +1936,6 @@ namespace Game.Maps
                     foreach (var obj in GetGameObjectBySpawnIdStore().LookupByKey(spawnId))
                         toUnload.Add(obj);
                     break;
-                default:
-                    break;
             }
 
             foreach (WorldObject o in toUnload)
@@ -2175,7 +2174,7 @@ namespace Game.Maps
             if (playerCount == 0)
                 return;
 
-            double adjustFactor = WorldConfig.GetFloatValue(type == SpawnObjectType.GameObject ? WorldCfg.RespawnDynamicRateGameobject : WorldCfg.RespawnDynamicRateCreature) / playerCount;
+            double adjustFactor = WorldConfig.GetFloatValue(type == SpawnObjectType.GameObject ? WorldCfg.RespawnDynamicRateGameObject : WorldCfg.RespawnDynamicRateCreature) / playerCount;
             if (adjustFactor >= 1.0) // nothing to do here
                 return;
 
@@ -2472,8 +2471,6 @@ namespace Game.Maps
                         case TypeId.Unit:
                             SwitchGridContainers(obj.ToCreature(), on);
                             break;
-                        default:
-                            break;
                     }
                 }
             }
@@ -2486,7 +2483,8 @@ namespace Game.Maps
                 {
                     case TypeId.Corpse:
                     {
-                        Corpse corpse = ObjectAccessor.GetCorpse(obj, obj.GetGUID());
+                        var corpse = ObjectAccessor.GetCorpse(obj, obj.GetGUID());
+
                         if (corpse == null)
                             Log.outError(LogFilter.Maps, "Tried to delete corpse/bones {0} that is not in map.", obj.GetGUID().ToString());
                         else
@@ -2598,8 +2596,6 @@ namespace Game.Maps
                         gameObject.GetRespawnPosition(out respawnLocation.posX, out respawnLocation.posY, out respawnLocation.posZ, out _);
                     }
                     break;
-                default:
-                    break;
             }
 
             if (respawnLocation != null)
@@ -2642,8 +2638,6 @@ namespace Game.Maps
                         respawnLocation = new();
                         gameObject.GetRespawnPosition(out respawnLocation.posX, out respawnLocation.posY, out respawnLocation.posZ, out _);
                     }
-                    break;
-                default:
                     break;
             }
 
@@ -2770,8 +2764,6 @@ namespace Game.Maps
                     return GetCreatureRespawnTime(linkedGuid.GetCounter());
                 case HighGuid.GameObject:
                     return GetGORespawnTime(linkedGuid.GetCounter());
-                default:
-                    break;
             }
 
             return 0L;
@@ -4143,8 +4135,7 @@ namespace Game.Maps
                                         sourceUnit.Whisper((uint)step.script.Talk.TextID, receiver, step.script.Talk.ChatType == ChatMsg.RaidBossWhisper);
                                     break;
                                 }
-                                default:
-                                    break; // must be already checked at load
+                                // must be already checked at load
                             }
                         }
                         break;
@@ -4267,7 +4258,7 @@ namespace Game.Maps
                         Player player = _GetScriptPlayerSourceOrTarget(source, target, step.script);
                         if (player)
                         {
-                            if (step.script.KillCredit.Flags.HasAnyFlag(eScriptFlags.KillcreditRewardGroup))
+                            if (step.script.KillCredit.Flags.HasAnyFlag(eScriptFlags.KillCreditRewardGroup))
                                 player.RewardPlayerAndGroupAtEvent(step.script.KillCredit.CreatureEntry, player);
                             else
                                 player.KilledMonsterCredit(step.script.KillCredit.CreatureEntry, ObjectGuid.Empty);
@@ -4369,7 +4360,7 @@ namespace Game.Maps
                     case ScriptCommands.RemoveAura:
                     {
                         // Source (datalong2 != 0) or target (datalong2 == 0) must be Unit.
-                        bool bReverse = step.script.RemoveAura.Flags.HasAnyFlag(eScriptFlags.RemoveauraReverse);
+                        bool bReverse = step.script.RemoveAura.Flags.HasAnyFlag(eScriptFlags.RemoveAuraReverse);
                         Unit unit = _GetScriptUnit(bReverse ? source : target, bReverse, step.script);
                         if (unit)
                             unit.RemoveAurasDueToSpell(step.script.RemoveAura.SpellID);
@@ -4388,23 +4379,23 @@ namespace Game.Maps
                         // source/target cast spell at target/source (script.datalong2: 0: s.t 1: s.s 2: t.t 3: t.s
                         switch (step.script.CastSpell.Flags)
                         {
-                            case eScriptFlags.CastspellSourceToTarget: // source . target
+                            case eScriptFlags.CastSpellSourceToTarget: // source . target
                                 uSource = source;
                                 uTarget = target;
                                 break;
-                            case eScriptFlags.CastspellSourceToSource: // source . source
+                            case eScriptFlags.CastSpellSourceToSource: // source . source
                                 uSource = source;
                                 uTarget = uSource;
                                 break;
-                            case eScriptFlags.CastspellTargetToTarget: // target . target
+                            case eScriptFlags.CastSpellTargetToTarget: // target . target
                                 uSource = target;
                                 uTarget = uSource;
                                 break;
-                            case eScriptFlags.CastspellTargetToSource: // target . source
+                            case eScriptFlags.CastSpellTargetToSource: // target . source
                                 uSource = target;
                                 uTarget = source;
                                 break;
-                            case eScriptFlags.CastspellSearchCreature: // source . creature with entry
+                            case eScriptFlags.CastSpellSearchCreature: // source . creature with entry
                                 uSource = source;
                                 uTarget = uSource?.FindNearestCreature((uint)Math.Abs(step.script.CastSpell.CreatureEntry), step.script.CastSpell.SearchRadius);
                                 break;
@@ -4423,7 +4414,7 @@ namespace Game.Maps
                         }
 
                         bool triggered = ((int)step.script.CastSpell.Flags != 4)
-                            ? step.script.CastSpell.CreatureEntry.HasAnyFlag((int)eScriptFlags.CastspellTriggered)
+                            ? step.script.CastSpell.CreatureEntry.HasAnyFlag((int)eScriptFlags.CastSpellTriggered)
                             : step.script.CastSpell.CreatureEntry < 0;
                         uSource.CastSpell(uTarget, step.script.CastSpell.SpellID, triggered);
                         break;
@@ -4436,7 +4427,7 @@ namespace Game.Maps
                         {
                             // PlaySound.Flags bitmask: 0/1=anyone/target
                             Player player2 = null;
-                            if (step.script.PlaySound.Flags.HasAnyFlag(eScriptFlags.PlaysoundTargetPlayer))
+                            if (step.script.PlaySound.Flags.HasAnyFlag(eScriptFlags.PlaySoundTargetPlayer))
                             {
                                 // Target must be Player.
                                 player2 = _GetScriptPlayer(target, false, step.script);
@@ -4445,7 +4436,7 @@ namespace Game.Maps
                             }
 
                             // PlaySound.Flags bitmask: 0/2=without/with distance dependent
-                            if (step.script.PlaySound.Flags.HasAnyFlag(eScriptFlags.PlaysoundDistanceSound))
+                            if (step.script.PlaySound.Flags.HasAnyFlag(eScriptFlags.PlaySoundDistanceSound))
                                 obj.PlayDistanceSound(step.script.PlaySound.SoundID, player2);
                             else
                                 obj.PlayDirectSound(step.script.PlaySound.SoundID, player2);
@@ -4497,7 +4488,7 @@ namespace Game.Maps
                         }
                         break;
                     }
-                    case ScriptCommands.CallscriptToUnit:
+                    case ScriptCommands.CallScriptToUnit:
                     {
                         if (step.script.CallScript.CreatureEntry == 0)
                         {
@@ -4906,7 +4897,7 @@ namespace Game.Maps
         }
 
         public Group GetOwningGroup() { return i_owningGroupRef.GetTarget(); }
-        
+
         public void TrySetOwningGroup(Group group)
         {
             if (!i_owningGroupRef.IsValid())
@@ -4956,8 +4947,6 @@ namespace Game.Maps
                         }
                         break;
                     }
-                    default:
-                        break;
                 }
 
                 return InstanceResetResult.NotEmpty;
@@ -4987,7 +4976,7 @@ namespace Game.Maps
                 SQLTransaction trans = new();
 
                 if (entries.IsInstanceIdBound())
-                    Global.InstanceLockMgr.UpdateSharedInstanceLock(trans, new InstanceLockUpdateEvent(GetInstanceId(), i_data.GetSaveData(), 
+                    Global.InstanceLockMgr.UpdateSharedInstanceLock(trans, new InstanceLockUpdateEvent(GetInstanceId(), i_data.GetSaveData(),
                         instanceCompletedEncounters, updateSaveDataEvent.DungeonEncounter, i_data.GetEntranceLocationForCompletedEncounters(instanceCompletedEncounters)));
 
                 foreach (var player in GetPlayers())
@@ -5023,7 +5012,7 @@ namespace Game.Maps
                 DB.Characters.CommitTransaction(trans);
             }
         }
-        
+
         public void UpdateInstanceLock(UpdateAdditionalSaveDataEvent updateSaveDataEvent)
         {
             if (i_instanceLock != null)
@@ -5214,7 +5203,7 @@ namespace Game.Maps
             MapDifficultyXConditionId = mapDifficultyXConditionId;
         }
     }
-    
+
     public struct ScriptAction
     {
         public ObjectGuid ownerGUID;

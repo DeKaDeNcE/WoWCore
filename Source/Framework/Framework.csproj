@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-<Import Project="..\..\default.props" />
-<PropertyGroup>
-  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-</PropertyGroup>
+  <Import Project="..\..\default.props" />
+
+  <PropertyGroup>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.21.12" />
-    <PackageReference Include="MySqlConnector" Version="2.2.5" />
+    <PackageReference Include="Google.Protobuf" Version="3.25.1" />
+    <!-- DO NOT UPGRADE MySqlConnector HIGHER THAN 2.2.7, LATER VERSIONS ARE NOT COMPATIBLE WITH CURRENT CODEBASE -->
+    <PackageReference Include="MySqlConnector" Version="2.2.7" />
   </ItemGroup>
-
 </Project>

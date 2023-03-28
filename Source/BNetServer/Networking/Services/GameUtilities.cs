@@ -1,18 +1,22 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Bgs.Protocol;
-using Bgs.Protocol.GameUtilities.V1;
-using Framework.Constants;
-using Framework.Database;
-using Framework.Serialization;
-using Framework.Web;
-using Google.Protobuf;
+// ReSharper disable CheckNamespace
+// ReSharper disable UnusedMember.Local
+
 using System;
 using System.Collections.Generic;
+using Framework.Web;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Serialization;
+using Google.Protobuf;
+using Bgs.Protocol;
+using Bgs.Protocol.GameUtilities.V1;
 
-namespace BNetServer.Networking
-{
+namespace BNetServer.Networking;
+
     public partial class Session
     {
         [Service(OriginalHash.GameUtilitiesService, 1)]
@@ -36,7 +40,7 @@ namespace BNetServer.Networking
             {
                 Bgs.Protocol.Attribute attr = request.Attribute[i];
                 if (attr.Name.Contains("Command_"))
-                { 
+                {
                     command = attr;
                     Params[removeSuffix(attr.Name)] = attr.Value;
                 }
@@ -89,7 +93,7 @@ namespace BNetServer.Networking
             if (gameAccountInfo == null)
                 return BattlenetRpcErrorCode.UtilServerInvalidIdentityArgs;
 
-            if (gameAccountInfo.IsPermanenetlyBanned)
+            if (gameAccountInfo.IsPermanentlyBanned)
                 return BattlenetRpcErrorCode.GameAccountBanned;
             else if (gameAccountInfo.IsBanned)
                 return BattlenetRpcErrorCode.GameAccountSuspended;
@@ -116,10 +120,15 @@ namespace BNetServer.Networking
 
             DB.Login.Execute(stmt);
 
-            var attribute = new Bgs.Protocol.Attribute();
-            attribute.Name = "Param_RealmListTicket";
-            attribute.Value = new Variant();
-            attribute.Value.BlobValue = ByteString.CopyFrom("AuthRealmListTicket", System.Text.Encoding.UTF8);
+            var attribute = new Bgs.Protocol.Attribute
+            {
+                Name = "Param_RealmListTicket",
+                Value = new Variant
+                {
+                    BlobValue = ByteString.CopyFrom("AuthRealmListTicket", System.Text.Encoding.UTF8)
+                }
+            };
+
             response.Attribute.Add(attribute);
 
             return BattlenetRpcErrorCode.Ok;
@@ -137,28 +146,48 @@ namespace BNetServer.Networking
                     if (compressed.Length == 0)
                         return BattlenetRpcErrorCode.UtilServerFailedToSerializeResponse;
 
-                    var attribute = new Bgs.Protocol.Attribute();
-                    attribute.Name = "Param_RealmEntry";
-                    attribute.Value = new Variant();
-                    attribute.Value.BlobValue = ByteString.CopyFrom(compressed);
+                    var attribute = new Bgs.Protocol.Attribute
+                    {
+                        Name = "Param_RealmEntry",
+                        Value = new Variant
+                        {
+                            BlobValue = ByteString.CopyFrom(compressed)
+                        }
+                    };
+
                     response.Attribute.Add(attribute);
 
-                    attribute = new Bgs.Protocol.Attribute();
-                    attribute.Name = "Param_CharacterName";
-                    attribute.Value = new Variant();
-                    attribute.Value.StringValue = lastPlayerChar.CharacterName;
+                    attribute = new Bgs.Protocol.Attribute
+                    {
+                        Name = "Param_CharacterName",
+                        Value = new Variant
+                        {
+                            StringValue = lastPlayerChar.CharacterName
+                        }
+                    };
+
                     response.Attribute.Add(attribute);
 
-                    attribute = new Bgs.Protocol.Attribute();
-                    attribute.Name = "Param_CharacterGUID";
-                    attribute.Value = new Variant();
-                    attribute.Value.BlobValue = ByteString.CopyFrom(BitConverter.GetBytes(lastPlayerChar.CharacterGUID));
+                    attribute = new Bgs.Protocol.Attribute
+                    {
+                        Name = "Param_CharacterGUID",
+                        Value = new Variant
+                        {
+                            BlobValue = ByteString.CopyFrom(BitConverter.GetBytes(lastPlayerChar.CharacterGUID))
+                        }
+                    };
+
                     response.Attribute.Add(attribute);
 
-                    attribute = new Bgs.Protocol.Attribute();
-                    attribute.Name = "Param_LastPlayedTime";
-                    attribute.Value = new Variant();
-                    attribute.Value.IntValue = (int)lastPlayerChar.LastPlayedTime;
+                    attribute = new Bgs.Protocol.Attribute
+                    {
+                        Name = "Param_LastPlayedTime",
+                        Value = new Variant
+                        {
+                            IntValue = (int)lastPlayerChar.LastPlayedTime
+                        }
+                    };
+
                     response.Attribute.Add(attribute);
                 }
 
@@ -182,28 +211,42 @@ namespace BNetServer.Networking
             if (compressed.Length == 0)
                 return BattlenetRpcErrorCode.UtilServerFailedToSerializeResponse;
 
-            var attribute = new Bgs.Protocol.Attribute();
-            attribute.Name = "Param_RealmList";
-            attribute.Value = new Variant();
-            attribute.Value.BlobValue = ByteString.CopyFrom(compressed);
+            var attribute = new Bgs.Protocol.Attribute
+            {
+                Name = "Param_RealmList",
+                Value = new Variant
+                {
+                    BlobValue = ByteString.CopyFrom(compressed)
+                }
+            };
+
             response.Attribute.Add(attribute);
 
             var realmCharacterCounts = new RealmCharacterCountList();
             foreach (var characterCount in gameAccountInfo.CharacterCounts)
             {
-                var countEntry = new RealmCharacterCountEntry();
-                countEntry.WowRealmAddress = (int)characterCount.Key;
-                countEntry.Count = characterCount.Value;
+                var countEntry = new RealmCharacterCountEntry
+                {
+                    WowRealmAddress = (int)characterCount.Key,
+                    Count = characterCount.Value
+                };
+
                 realmCharacterCounts.Counts.Add(countEntry);
             }
 
             compressed = Json.Deflate("JSONRealmCharacterCountList", realmCharacterCounts);
 
-            attribute = new Bgs.Protocol.Attribute();
-            attribute.Name = "Param_CharacterCountList";
-            attribute.Value = new Variant();
-            attribute.Value.BlobValue = ByteString.CopyFrom(compressed);
+            attribute = new Bgs.Protocol.Attribute
+            {
+                Name = "Param_CharacterCountList",
+                Value = new Variant
+                {
+                    BlobValue = ByteString.CopyFrom(compressed)
+                }
+            };
+
             response.Attribute.Add(attribute);
+
             return BattlenetRpcErrorCode.Ok;
         }
 
@@ -216,4 +259,3 @@ namespace BNetServer.Networking
             return BattlenetRpcErrorCode.WowServicesInvalidJoinTicket;
         }
     }
-}

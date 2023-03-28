@@ -1,4 +1,5 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
@@ -13,8 +14,8 @@ namespace Framework.Cryptography
             if (IsInitialized)
                 throw new InvalidOperationException("PacketCrypt already initialized!");
 
-            _serverEncrypt = new AesGcm(key);
-            _clientDecrypt = new AesGcm(key);
+            _serverEncrypt = new AesGcm(key, 12);
+            _clientDecrypt = new AesGcm(key, 12);
 
             IsInitialized = true;
         }

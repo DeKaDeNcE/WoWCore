@@ -1,21 +1,30 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.AI;
-using Game.Entities;
-using Game.Maps;
-using Game.Movement;
-using Game.Scripting;
-using Game.Spells;
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.AI;
+using Game.Maps;
+using Game.Spells;
+using Game.Movement;
+using Game.Entities;
+using Game.Scripting;
 
-namespace Scripts.Spells.Priest
-{
+namespace Scripts.Spells.Priest;
+
     struct SpellIds
     {
         public const uint AngelicFeatherAreatrigger = 158624;
@@ -208,8 +217,7 @@ namespace Scripts.Spells.Priest
 
         public override bool Validate(SpellInfo spellInfo)
         {
-            return ValidateSpellInfo(SpellIds.AtonementHeal, SpellIds.SinsOfTheMany)
-            && ValidateSpellEffect((spellInfo.Id, 1), (SpellIds.SinsOfTheMany, 2));
+            return ValidateSpellInfo(SpellIds.AtonementHeal, SpellIds.SinsOfTheMany) && ValidateSpellEffect((spellInfo.Id, 1), (SpellIds.SinsOfTheMany, 2));
         }
 
         bool CheckProc(ProcEventInfo eventInfo)
@@ -258,7 +266,7 @@ namespace Scripts.Spells.Priest
 
         void UpdateSinsOfTheManyValue()
         {
-            // Note: the damage dimish starts at the 6th application as of 10.0.5.
+            // Note: the damage diminish starts at the 6th application as of 10.0.5
             float[] damageByStack = { 40.0f, 40.0f, 40.0f, 40.0f, 40.0f, 35.0f, 30.0f, 25.0f, 20.0f, 15.0f, 11.0f, 8.0f, 5.0f, 4.0f, 3.0f, 2.5f, 2.0f, 1.5f, 1.25f, 1.0f };
 
             foreach (uint effectIndex in new[] { 0, 1, 2 })
@@ -340,7 +348,7 @@ namespace Scripts.Spells.Priest
             OnObjectAreaTargetSelect.Add(new ObjectAreaTargetSelectHandler(FilterTargets, 0, Targets.UnitDestAreaAlly));
         }
     }
-    
+
     [Script] // 64844 - Divine Hymn
     class spell_pri_divine_hymn : SpellScript
     {
@@ -386,7 +394,7 @@ namespace Scripts.Spells.Priest
             OnEffectHitTarget.Add(new EffectHandler(HandleHitTarget, 2, SpellEffectName.Energize));
         }
     }
-    
+
     // 110744 - Divine Star (Holy)
     [Script] // 122121 - Divine Star (Shadow)
     class areatrigger_pri_divine_star : AreaTriggerAI
@@ -441,6 +449,7 @@ namespace Scripts.Spells.Priest
 
         public override void OnUnitExit(Unit unit)
         {
+            // Note: this ensures any unit receives a second hit if they happen to be inside the AT when Divine Star starts its return path.
             HandleUnitEnterExit(unit);
         }
 
@@ -509,9 +518,7 @@ namespace Scripts.Spells.Priest
     {
         public override bool Validate(SpellInfo spellInfo)
         {
-            return ValidateSpellInfo(SpellIds.Renew, SpellIds.EmpoweredRenewHeal)
-                && ValidateSpellEffect(SpellIds.Renew, 0)
-                && Global.SpellMgr.GetSpellInfo(SpellIds.Renew, Difficulty.None).GetEffect(0).IsAura(AuraType.PeriodicHeal);
+            return ValidateSpellInfo(SpellIds.Renew, SpellIds.EmpoweredRenewHeal) && ValidateSpellEffect(SpellIds.Renew, 0) && Global.SpellMgr.GetSpellInfo(SpellIds.Renew, Difficulty.None).GetEffect(0).IsAura(AuraType.PeriodicHeal);
         }
 
         void HandleProc(AuraEffect aurEff, ProcEventInfo eventInfo)
@@ -532,7 +539,7 @@ namespace Scripts.Spells.Priest
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 0, AuraType.Dummy));
         }
     }
-    
+
     [Script] // 47788 - Guardian Spirit
     class spell_pri_guardian_spirit : AuraScript
     {
@@ -593,7 +600,7 @@ namespace Scripts.Spells.Priest
             OnEffectHitTarget.Add(new EffectHandler(HandleHitTarget, 1, SpellEffectName.Energize));
         }
     }
-    
+
     // 120517 - Halo (Holy)
     [Script] // 120644 - Halo (Shadow)
     class areatrigger_pri_halo : AreaTriggerAI
@@ -639,14 +646,13 @@ namespace Scripts.Spells.Priest
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 0, AuraType.ProcTriggerSpell));
         }
     }
-    
+
     [Script] // 63733 - Holy Words
     class spell_pri_holy_words : AuraScript
     {
         public override bool Validate(SpellInfo spellInfo)
         {
-            return ValidateSpellInfo(SpellIds.Heal, SpellIds.FlashHeal, SpellIds.PrayerOfHealing, SpellIds.Renew, SpellIds.Smite, SpellIds.HolyWordChastise, SpellIds.HolyWordSanctify, SpellIds.HolyWordSerenity)
-                && ValidateSpellEffect((SpellIds.HolyWordSerenity, 1), (SpellIds.HolyWordSanctify, 3), (SpellIds.HolyWordChastise, 1));
+            return ValidateSpellInfo(SpellIds.Heal, SpellIds.FlashHeal, SpellIds.PrayerOfHealing, SpellIds.Renew, SpellIds.Smite, SpellIds.HolyWordChastise, SpellIds.HolyWordSanctify, SpellIds.HolyWordSerenity) && ValidateSpellEffect((SpellIds.HolyWordSerenity, 1), (SpellIds.HolyWordSanctify, 3), (SpellIds.HolyWordChastise, 1));
         }
 
         void HandleProc(AuraEffect aurEff, ProcEventInfo eventInfo)
@@ -812,7 +818,7 @@ namespace Scripts.Spells.Priest
             OnEffectProc.Add(new EffectProcHandler(HandleEffectProc, 0, AuraType.Dummy));
         }
     }
-    
+
     [Script("spell_pri_penance", SpellIds.PenanceChannelDamage, SpellIds.PenanceChannelHealing)] // 47540 - Penance
     [Script("spell_pri_dark_reprimand", SpellIds.DarkReprimandChannelDamage, SpellIds.DarkReprimandChannelHealing)] // 400169 - Dark Reprimand
     class spell_pri_penance : SpellScript
@@ -847,7 +853,8 @@ namespace Scripts.Spells.Priest
                         return SpellCastResult.NotInfront;
                 }
             }
-            return SpellCastResult.SpellCastOk;
+
+            return SpellCastResult.SpellCastOK;
         }
 
         void HandleDummy(uint effIndex)
@@ -981,7 +988,7 @@ namespace Scripts.Spells.Priest
             OnEffectLaunchTarget.Add(new EffectHandler(HandleLaunchTarget, 0, SpellEffectName.Heal));
         }
     }
-    
+
     [Script] // 194509 - Power Word: Radiance
     class spell_pri_power_word_radiance : SpellScript
     {
@@ -1067,7 +1074,7 @@ namespace Scripts.Spells.Priest
                     if (target.HasAura(SpellIds.WeakenedSoul, caster.GetGUID()))
                         return SpellCastResult.BadTargets;
 
-            return SpellCastResult.SpellCastOk;
+            return SpellCastResult.SpellCastOK;
         }
 
         void HandleEffectHit()
@@ -1180,7 +1187,7 @@ namespace Scripts.Spells.Priest
             OnEffectLaunch.Add(new EffectHandler(RestoreMana, 1, SpellEffectName.Dummy));
         }
     }
-    
+
     [Script] // 33076 - Prayer of Mending
     class spell_pri_prayer_of_mending : SpellScript
     {
@@ -1189,8 +1196,7 @@ namespace Scripts.Spells.Priest
 
         public override bool Validate(SpellInfo spellInfo)
         {
-            return ValidateSpellInfo(SpellIds.PrayerOfMendingHeal, SpellIds.PrayerOfMendingAura)
-                && ValidateSpellEffect(SpellIds.PrayerOfMendingHeal, 0);
+            return ValidateSpellInfo(SpellIds.PrayerOfMendingHeal, SpellIds.PrayerOfMendingAura) && ValidateSpellEffect(SpellIds.PrayerOfMendingHeal, 0);
         }
 
         public override bool Load()
@@ -1357,8 +1363,7 @@ namespace Scripts.Spells.Priest
     {
         public override bool Validate(SpellInfo spellInfo)
         {
-            return ValidateSpellInfo(SpellIds.PurgeTheWickedPeriodic, SpellIds.RevelInPurity)
-                && ValidateSpellEffect(SpellIds.RevelInPurity, 1);
+            return ValidateSpellInfo(SpellIds.PurgeTheWickedPeriodic, SpellIds.RevelInPurity) && ValidateSpellEffect(SpellIds.RevelInPurity, 1);
         }
 
         void FilterTargets(List<WorldObject> targets)
@@ -1426,7 +1431,7 @@ namespace Scripts.Spells.Priest
             OnEffectHitTarget.Add(new EffectHandler(HandleDummy, 1, SpellEffectName.Dummy));
         }
     }
-    
+
     [Script] // 47536 - Rapture
     class spell_pri_rapture : SpellScript
     {
@@ -1481,7 +1486,7 @@ namespace Scripts.Spells.Priest
             OnEffectRemove.Add(new EffectApplyHandler(HandleOnRemove, 0, AuraType.Dummy, AuraEffectHandleModes.Real));
         }
     }
-    
+
     [Script] // 20711 - Spirit of Redemption
     class spell_pri_spirit_of_redemption : AuraScript
     {
@@ -1583,7 +1588,7 @@ namespace Scripts.Spells.Priest
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 1, AuraType.Dummy));
         }
     }
-    
+
     [Script] // 28809 - Greater Heal
     class spell_pri_t3_4p_bonus : AuraScript
     {
@@ -1688,7 +1693,7 @@ namespace Scripts.Spells.Priest
             DoCheckEffectProc.Add(new CheckEffectProcHandler(CheckProc, 0, AuraType.ProcTriggerSpell));
         }
     }
-    
+
     [Script] // 15286 - Vampiric Embrace
     class spell_pri_vampiric_embrace : AuraScript
     {
@@ -1786,4 +1791,3 @@ namespace Scripts.Spells.Priest
             OnEffectProc.Add(new EffectProcHandler(HandleEffectProc, 2, AuraType.Dummy));
         }
     }
-}

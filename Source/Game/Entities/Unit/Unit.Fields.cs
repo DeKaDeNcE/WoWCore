@@ -1,16 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Game.AI;
-using Game.Combat;
-using Game.DataStorage;
-using Game.Movement;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
 using System.Collections.Generic;
+using Framework.Constants;
+using Framework.Collections;
+using Game.AI;
+using Game.Combat;
+using Game.Spells;
+using Game.Movement;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {
@@ -72,7 +73,7 @@ namespace Game.Entities
         uint _oldFactionId;         // faction before charm
         bool _isWalkingBeforeCharm; // Are we walking before we were charmed?
 
-        //Spells 
+        //Spells
         protected Dictionary<CurrentSpellTypes, Spell> m_currentSpells = new((int)CurrentSpellTypes.Max);
         MultiMap<uint, uint>[] m_spellImmune = new MultiMap<uint, uint>[(int)SpellImmunity.Max];
         SpellAuraInterruptFlags m_interruptMask;
@@ -95,7 +96,7 @@ namespace Game.Entities
         protected float[][] m_auraPctModifiersGroup = new float[(int)UnitMods.End][];
         uint m_removedAurasCount;
 
-        //General  
+        //General
         public UnitData m_unitData;
 
         DiminishingReturn[] m_Diminishing = new DiminishingReturn[(int)DiminishingGroup.Max];
@@ -350,7 +351,7 @@ namespace Game.Entities
             m_resist += amount;
             m_damage -= amount;
             if (m_damage == 0)
-            { 
+            {
                 m_hitMask |= ProcFlagsHit.FullResist;
                 m_hitMask &= ~(ProcFlagsHit.Normal | ProcFlagsHit.Critical);
             }
@@ -362,7 +363,7 @@ namespace Game.Entities
             m_damage -= amount;
             m_hitMask |= ProcFlagsHit.Block;
             if (m_damage == 0)
-            { 
+            {
                 m_hitMask |= ProcFlagsHit.FullBlock;
                 m_hitMask &= ~(ProcFlagsHit.Normal | ProcFlagsHit.Critical);
             }

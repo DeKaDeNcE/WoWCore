@@ -1,13 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Linq;
+using System.Diagnostics;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Framework.Collections;
 using Framework.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
 
 public class Log
 {
@@ -44,16 +45,19 @@ public class Log
             loggers[LogFilter.Server] = serverLogger;
         }
 
-        outInfo(LogFilter.Server, @" ____                    __                      ");
-        outInfo(LogFilter.Server, @"/\  _`\                 /\ \                     ");
-        outInfo(LogFilter.Server, @"\ \ \/\_\  __  __  _____\ \ \___      __   _ __  ");
-        outInfo(LogFilter.Server, @" \ \ \/_/_/\ \/\ \/\ '__`\ \  _ `\  /'__`\/\`'__\");
-        outInfo(LogFilter.Server, @"  \ \ \L\ \ \ \_\ \ \ \L\ \ \ \ \ \/\  __/\ \ \/ ");
-        outInfo(LogFilter.Server, @"   \ \____/\/`____ \ \ ,__/\ \_\ \_\ \____\\ \_\ ");
-        outInfo(LogFilter.Server, @"    \/___/  `/___/> \ \ \/  \/_/\/_/\/____/ \/_/ ");
-        outInfo(LogFilter.Server, @"               /\___/\ \_\                       ");
-        outInfo(LogFilter.Server, @"               \/__/  \/_/                   Core");
-        outInfo(LogFilter.Server, "https://github.com/CypherCore/CypherCore \r\n");
+        outInfo(LogFilter.Server, " \r\n");
+        outInfo(LogFilter.Server, " \r\n");
+        outInfo(LogFilter.Server, @"  ██╗    ██╗ ██████╗ ██╗    ██╗ ██████╗ ██████╗ ██████╗ ███████╗");
+        outInfo(LogFilter.Server, @"  ██║    ██║██╔═══██╗██║    ██║██╔════╝██╔═══██╗██╔══██╗██╔════╝");
+        outInfo(LogFilter.Server, @"  ██║ █╗ ██║██║   ██║██║ █╗ ██║██║     ██║   ██║██████╔╝█████╗  ");
+        outInfo(LogFilter.Server, @"  ██║███╗██║██║   ██║██║███╗██║██║     ██║   ██║██╔══██╗██╔══╝  ");
+        outInfo(LogFilter.Server, @"  ╚███╔███╔╝╚██████╔╝╚███╔███╔╝╚██████╗╚██████╔╝██║  ██║███████╗");
+        outInfo(LogFilter.Server, @"   ╚══╝╚══╝  ╚═════╝  ╚══╝╚══╝  ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝");
+        outInfo(LogFilter.Server, @"                                           Powered by CypherCore");
+        outInfo(LogFilter.Server, " \r\n");
+        outInfo(LogFilter.Server, @"             https://github.com/DeKaDeNcE/WoWCore               ");
+        outInfo(LogFilter.Server, @"           https://github.com/CypherCore/CypherCore             ");
+        outInfo(LogFilter.Server, " \r\n");
     }
 
     static bool ShouldLog(LogFilter type, LogLevel level)
@@ -240,7 +244,7 @@ public class Log
         }
         var tokens = new StringArray(options, ',');
 
-        LogFilter type = name.ToEnum<LogFilter>();        
+        LogFilter type = name.ToEnum<LogFilter>();
         if (loggers.ContainsKey(type))
         {
             Console.WriteLine("Error while configuring Logger {0}. Already defined", name);

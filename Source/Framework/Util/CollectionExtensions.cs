@@ -1,21 +1,18 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
+
+// ReSharper disable CheckNamespace
 
 using System.Linq;
 
-namespace System.Collections.Generic
-{
+namespace System.Collections.Generic;
+
     public static class CollectionExtensions
     {
-        public static bool Empty<TValue>(this ICollection<TValue> collection)
-        {
-            return collection.Count == 0;
-        }
+        public static bool Empty<TValue>(this ICollection<TValue> collection) => collection.Count == 0;
 
-        public static bool Empty<Tkey, TValue>(this IDictionary<Tkey, TValue> dictionary)
-        {
-            return dictionary.Count == 0;
-        }
+        public static bool Empty<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) => dictionary.Count == 0;
 
         /// <summary>
         /// Returns the entry in this list at the given index, or the default value of the element
@@ -25,10 +22,7 @@ namespace System.Collections.Generic
         /// <param name="list">The list to retrieve from.</param>
         /// <param name="index">The index to try to retrieve at.</param>
         /// <returns>The value, or the default value of the element type.</returns>
-        public static T LookupByIndex<T>(this IList<T> list, int index)
-        {
-            return index >= list.Count ? default : list[index];
-        }
+        public static T LookupByIndex<T>(this IList<T> list, int index) => index >= list.Count ? default : list[index];
 
         /// <summary>
         /// Returns the entry in this dictionary at the given key, or the default value of the key
@@ -41,33 +35,23 @@ namespace System.Collections.Generic
         /// <returns>The value (if any).</returns>
         public static TValue LookupByKey<TKey, TValue>(this IDictionary<TKey, TValue> dict, object key)
         {
-            TValue val;
-            TKey newkey = (TKey)Convert.ChangeType(key, typeof(TKey));
-            return dict.TryGetValue(newkey, out val) ? val : default;
-        }
-        public static TValue LookupByKey<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key)
-        {
-            TValue val;
-            return dict.TryGetValue(key, out val) ? val : default;
-        }
-        public static KeyValuePair<TKey, TValue> Find<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key)
-        {
-            if (!dict.ContainsKey(key))
-                return default;
+            var newkey = (TKey)Convert.ChangeType(key, typeof(TKey));
 
-            return new KeyValuePair<TKey, TValue>(key, dict[key]);
+            return dict.TryGetValue(newkey, out var val) ? val : default;
         }
+
+        public static TValue LookupByKey<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key) => dict.TryGetValue(key, out var val) ? val : default;
+
+        public static KeyValuePair<TKey, TValue> Find<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key) => dict.ContainsKey(key) ? new KeyValuePair<TKey, TValue>(key, dict[key]) : default;
 
         public static bool ContainsKey<TKey, TValue>(this IDictionary<TKey, TValue> dict, object key)
         {
-            TKey newkey = (TKey)Convert.ChangeType(key, typeof(TKey));
+            var newkey = (TKey)Convert.ChangeType(key, typeof(TKey));
+
             return dict.ContainsKey(newkey);
         }
 
-        public static void RemoveAll<T>(this List<T> collection, ICheck<T> check)
-        {
-            collection.RemoveAll(check.Invoke);
-        }
+        public static void RemoveAll<T>(this List<T> collection, ICheck<T> check) { collection.RemoveAll(check.Invoke); }
 
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
         {
@@ -86,19 +70,18 @@ namespace System.Collections.Generic
 
         public static void Resize<T>(this List<T> list, uint size)
         {
-            int cur = list.Count;
+            var cur = list.Count;
+
             if (size < cur)
                 list.RemoveRange((int)size, cur - (int)size);
             else
-            {
                 for (var i = list.Count; i < size; ++i)
                     list.Add(default);
-            }
         }
 
         public static void RandomResize<T>(this IList<T> list, uint size)
         {
-            int listSize = list.Count;
+            var listSize = list.Count;
 
             while (listSize > size)
             {
@@ -112,6 +95,7 @@ namespace System.Collections.Generic
             for (var i = 0; i < list.Count; ++i)
             {
                 var obj = list[i];
+
                 if (!predicate(obj))
                     list.Remove(obj);
             }
@@ -120,52 +104,42 @@ namespace System.Collections.Generic
                 list.Resize(size);
         }
 
-        public static T SelectRandom<T>(this IEnumerable<T> source)
-        {
-            return source.SelectRandom(1).Single();
-        }
 
-        public static IEnumerable<T> SelectRandom<T>(this IEnumerable<T> source, uint count)
-        {
-            return source.Shuffle().Take((int)count);
-        }
+        public static T SelectRandom<T>(this IEnumerable<T> source) => source.SelectRandom(1).Single();
+
+        public static IEnumerable<T> SelectRandom<T>(this IEnumerable<T> source, uint count) => source.Shuffle().Take((int)count);
 
         public static T SelectRandomElementByWeight<T>(this IEnumerable<T> sequence, Func<T, float> weightSelector)
         {
-            float totalWeight = sequence.Sum(weightSelector);
+            var list = sequence.ToList();
+            var totalWeight = list.Sum(weightSelector);
             // The weight we are after...
-            float itemWeightIndex = (float)RandomHelper.NextDouble() * totalWeight;
-            float currentWeightIndex = 0;
+            var itemWeightIndex = (float)RandomHelper.NextDouble() * totalWeight;
+            var currentWeightIndex = 0.0f;
 
-            foreach (var item in from weightedItem in sequence select new { Value = weightedItem, Weight = weightSelector(weightedItem) })
+            foreach (var item in list.Select(weightedItem => new { Value = weightedItem, Weight = weightSelector(weightedItem) }))
             {
                 currentWeightIndex += item.Weight;
 
                 // If we've hit or passed the weight we are after for this item then it's the one we want....
                 if (currentWeightIndex >= itemWeightIndex)
                     return item.Value;
-
             }
 
             return default;
         }
 
-        public static IEnumerable<TSource> Intersect<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second, Func<TSource, TSource, bool> comparer)
-        {
-            return first.Where(x => second.Count(y => comparer(x, y)) == 1);
-        }
+        public static IEnumerable<TSource> Intersect<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second, Func<TSource, TSource, bool> comparer) => first.Where(x => second.Count(y => comparer(x, y)) == 1);
 
         public static uint[] ToBlockRange(this BitSet array)
         {
-            uint[] blockValues = new uint[array.Length / 32 + 1];
+            var blockValues = new uint[array.Length / 32 + 1];
             array.CopyTo(blockValues, 0);
+
             return blockValues;
         }
 
-        public static void Clear(this Array array)
-        {
-            Array.Clear(array, 0, array.Length);
-        }
+        public static void Clear(this Array array) { Array.Clear(array, 0, array.Length); }
 
         public static void EnsureWritableListIndex<T>(this List<T> list, uint index, T defaultValue)
         {
@@ -174,13 +148,6 @@ namespace System.Collections.Generic
         }
     }
 
-    public interface ICheck<in T>
-    {
-        bool Invoke(T obj);
-    }
+    public interface ICheck<in T> { bool Invoke(T obj); }
 
-    public interface IDoWork<in T>
-    {
-        void Invoke(T obj);
-    }
-}
+    public interface IDoWork<in T> { void Invoke(T obj); }

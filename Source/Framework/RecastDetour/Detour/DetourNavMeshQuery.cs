@@ -1,47 +1,66 @@
+// https://github.com/recastnavigation/recastnavigation
+
+//
+// Copyright (c) 2009-2010 Mikko Mononen memon@inside.org
+//
+// This software is provided 'as-is', without any express or implied
+// warranty.  In no event will the authors be held liable for any damages
+// arising from the use of this software.
+// Permission is granted to anyone to use this software for any purpose,
+// including commercial applications, and to alter it and redistribute it
+// freely, subject to the following restrictions:
+// 1. The origin of this software must not be misrepresented; you must not
+//    claim that you wrote the original software. If you use this software
+//    in a product, an acknowledgment in the product documentation would be
+//    appreciated but is not required.
+// 2. Altered source versions must be plainly marked as such, and must not be
+//    misrepresented as being the original software.
+// 3. This notice may not be removed or altered from any source distribution.
+//
+
 // @class dtQueryFilter
 //
 // <b>The Default Implementation</b>
-// 
+//
 // At construction: All area costs default to 1.0.  All flags are included
 // and none are excluded.
-// 
+//
 // If a polygon has both an include and an exclude flag, it will be excluded.
-// 
-// The way filtering works, a navigation mesh polygon must have at least one flag 
+//
+// The way filtering works, a navigation mesh polygon must have at least one flag
 // set to ever be considered by a query. So a polygon with no flags will never
 // be considered.
 //
 // Setting the include flags to 0 will result in all polygons being excluded.
 //
 // <b>Custom Implementations</b>
-// 
+//
 // DT_VIRTUAL_QUERYFILTER must be defined in order to extend this class.
-// 
-// Implement a custom query filter by overriding the virtual passFilter() 
-// and getCost() functions. If this is done, both functions should be as 
-// fast as possible. Use cached local copies of data rather than accessing 
+//
+// Implement a custom query filter by overriding the virtual passFilter()
+// and getCost() functions. If this is done, both functions should be as
+// fast as possible. Use cached local copies of data rather than accessing
 // your own objects where possible.
-// 
-// Custom implementations do not need to adhere to the flags or cost logic 
-// used by the default implementation.  
-// 
+//
+// Custom implementations do not need to adhere to the flags or cost logic
+// used by the default implementation.
+//
 // In order for A* searches to work properly, the cost should be proportional to
-// the travel distance. Implementing a cost modifier less than 1.0 is likely 
+// the travel distance. Implementing a cost modifier less than 1.0 is likely
 // to lead to problems during pathfinding.
 //
 // @see dtNavMeshQuery
-// 
+//
 
 using System;
 using System.Diagnostics;
 using dtPolyRef = System.UInt64;
 using dtStatus = System.UInt32;
-using System.Collections.Generic;
 
 // Define DT_VIRTUAL_QUERYFILTER if you wish to derive a custom filter from dtQueryFilter.
 // On certain platforms indirect or virtual function call is expensive. The default
 // setting is to use non-virtual functions, the actual implementations of the functions
-// are declared as inline for maximum speed. 
+// are declared as inline for maximum speed.
 
 //#define DT_VIRTUAL_QUERYFILTER 1
 
@@ -174,16 +193,16 @@ public static partial class Detour
     // @class dtNavMeshQuery
     /// Provides the ability to perform pathfinding related queries against
     /// a navigation mesh.
-    /// 
-    /// For methods that support undersized buffers, if the buffer is too small 
-    /// to hold the entire result set the return status of the method will include 
+    ///
+    /// For methods that support undersized buffers, if the buffer is too small
+    /// to hold the entire result set the return status of the method will include
     /// the #DT_BUFFER_TOO_SMALL flag.
     ///
     /// Constant member functions can be used by multiple clients without side
     /// effects. (E.g. No change to the closed list. No impact on an in-progress
     /// sliced path query. Etc.)
-    /// 
-    /// Walls and portals: A @e wall is a polygon segment that is 
+    ///
+    /// Walls and portals: A @e wall is a polygon segment that is
     /// considered impassable. A @e portal is a passable segment between polygons.
     /// A portal may be treated as a wall based on the dtQueryFilter used for a query.
     ///
@@ -233,7 +252,7 @@ public static partial class Detour
         {
         }
 
-        // @par 
+        // @par
         ///
         /// Must be the first function called after construction, before other
         /// functions are used.
@@ -305,7 +324,7 @@ public static partial class Detour
         ///  @param[in]		filter			The polygon filter to apply to the query.
         ///  @param[in]		frand			Function returning a random number [0..1).
         ///  @param[out]	randomRef		The reference id of the random location.
-        ///  @param[out]	randomPt		The random location. 
+        ///  @param[out]	randomPt		The random location.
         // @returns The status flags for the query.
         public dtStatus findRandomPoint(dtQueryFilter filter, randomFloatGenerator frand, ref dtPolyRef randomRef, ref float[] randomPt)
         {
@@ -624,7 +643,7 @@ public static partial class Detour
         public dtStatus closestPointOnPoly(dtPolyRef polyRef, float[] pos, float[] closest, ref bool posOverPoly)
         {
             Debug.Assert(m_nav != null);
-            
+
             if (!m_nav.isValidPolyRef(polyRef) ||
                 pos == null || !dtVisfinite(pos) ||
                 closest == null)
@@ -635,7 +654,7 @@ public static partial class Detour
             return DT_SUCCESS;
         }
 
-        /// Returns a point on the boundary closest to the source point if the source point is outside the 
+        /// Returns a point on the boundary closest to the source point if the source point is outside the
         /// polygon's xz-bounds.
         ///  @param[in]		ref			The reference id to the polygon.
         ///  @param[in]		pos			The position to check. [(x, y, z)]
@@ -645,13 +664,13 @@ public static partial class Detour
         ///
         /// Much faster than closestPointOnPoly().
         ///
-        /// If the provided position lies within the polygon's xz-bounds (above or below), 
+        /// If the provided position lies within the polygon's xz-bounds (above or below),
         /// then @p pos and @p closest will be equal.
         ///
         /// The height of @p closest will be the polygon boundary.  The height detail is not used.
-        /// 
+        ///
         // @p pos does not have to be within the bounds of the polybon or the navigation mesh.
-        /// 
+        ///
 		public dtStatus closestPointOnPolyBoundary(dtPolyRef polyRef, float[] pos, float[] closest)
         {
             Debug.Assert(m_nav != null);
@@ -711,9 +730,9 @@ public static partial class Detour
         // @returns The status flags for the query.
         // @par
         ///
-        /// Will return #DT_FAILURE | DT_INVALID_PARAM if the provided position is outside the xz-bounds 
+        /// Will return #DT_FAILURE | DT_INVALID_PARAM if the provided position is outside the xz-bounds
         /// of the polygon.
-        /// 
+        ///
         public dtStatus getPolyHeight(dtPolyRef polyRef, float[] pos, ref float height)
         {
             Debug.Assert(m_nav != null);
@@ -757,10 +776,10 @@ public static partial class Detour
         ///  @param[out]	nearestRef	The reference id of the nearest polygon.
         ///  @param[out]	nearestPt	The nearest point on the polygon. [opt] [(x, y, z)]
         // @returns The status flags for the query.
-        // @par 
+        // @par
         ///
-        // @note If the search box does not intersect any polygons the search will 
-        /// return #DT_SUCCESS, but @p nearestRef will be zero. So if in doubt, check 
+        // @note If the search box does not intersect any polygons the search will
+        /// return #DT_SUCCESS, but @p nearestRef will be zero. So if in doubt, check
         // @p nearestRef before using @p nearestPt.
         ///
         // @warning This function is not suitable for large area searches.  If the search
@@ -926,13 +945,13 @@ public static partial class Detour
         ///  @param[out]	polyCount	The number of polygons in the search result.
         ///  @param[in]		maxPolys	The maximum number of polygons the search result can hold.
         // @returns The status flags for the query.
-        // @par 
+        // @par
         ///
         /// If no polygons are found, the function will return #DT_SUCCESS with a
         // @p polyCount of zero.
         ///
-        /// If @p polys is too small to hold the entire result set, then the array will 
-        /// be filled to capacity. The method of choosing which polygons from the 
+        /// If @p polys is too small to hold the entire result set, then the array will
+        /// be filled to capacity. The method of choosing which polygons from the
         /// full set are included in the partial result set is undefined.
         ///
 		public dtStatus queryPolygons(float[] center, float[] halfExtents, dtQueryFilter filter, dtFindNearestPolyQuery query)
@@ -980,7 +999,7 @@ public static partial class Detour
         ///  @param[in]		startPos	A position within the start polygon. [(x, y, z)]
         ///  @param[in]		endPos		A position within the end polygon. [(x, y, z)]
         ///  @param[in]		filter		The polygon filter to apply to the query.
-        ///  @param[out]	path		An ordered list of polygon references representing the path. (Start to end.) 
+        ///  @param[out]	path		An ordered list of polygon references representing the path. (Start to end.)
         ///  							[(polyRef) * @p pathCount]
         ///  @param[out]	pathCount	The number of polygons returned in the @p path array.
         ///  @param[in]		maxPath		The maximum number of polygons the @p path array can hold. [Limit: >= 1]
@@ -989,10 +1008,10 @@ public static partial class Detour
         /// If the end polygon cannot be reached through the navigation graph,
         /// the last polygon in the path will be the nearest the end polygon.
         ///
-        /// If the path array is to small to hold the full result, it will be filled as 
+        /// If the path array is to small to hold the full result, it will be filled as
         /// far as possible from the start polygon toward the end polygon.
         ///
-        /// The start and end positions are used to calculate traversal costs. 
+        /// The start and end positions are used to calculate traversal costs.
         /// (The y-values impact the result.)
         ///
         public dtStatus findPath(dtPolyRef startRef, dtPolyRef endRef, float[] startPos, float[] endPos, dtQueryFilter filter, dtPolyRef[] path, ref uint pathCount, int maxPath)
@@ -1233,7 +1252,7 @@ public static partial class Detour
         ///	-# Call initSlicedFindPath() to initialize the sliced path query.
         ///	-# Call updateSlicedFindPath() until it returns complete.
         ///	-# Call finalizeSlicedFindPath() to get the path.
-        ///@{ 
+        ///@{
 
         /// Intializes a sliced path query.
         ///  @param[in]		startRef	The refrence id of the start polygon.
@@ -1244,7 +1263,7 @@ public static partial class Detour
         // @returns The status flags for the query.
         // @par
         ///
-        // @warning Calling any non-slice methods before calling finalizeSlicedFindPath() 
+        // @warning Calling any non-slice methods before calling finalizeSlicedFindPath()
         /// or finalizeSlicedFindPathPartial() may result in corrupted data!
         ///
         /// The @p filter pointer is stored and used for the duration of the sliced
@@ -1277,7 +1296,7 @@ public static partial class Detour
             // trade quality with performance?
             if ((options & (int)dtFindPathOptions.DT_FINDPATH_ANY_ANGLE) != 0)
             {
-                // limiting to several times the character radius yields nice results. It is not sensitive 
+                // limiting to several times the character radius yields nice results. It is not sensitive
                 // so it is enough to compute it from the first tile.
                 dtMeshTile tile = m_nav.getTileByRef(startRef);
                 float agentRadius = tile.header.walkableRadius;
@@ -1532,7 +1551,7 @@ public static partial class Detour
         }
 
         /// Finalizes and returns the results of a sliced path query.
-        ///  @param[out]	path		An ordered list of polygon references representing the path. (Start to end.) 
+        ///  @param[out]	path		An ordered list of polygon references representing the path. (Start to end.)
         ///  							[(polyRef) * @p pathCount]
         ///  @param[out]	pathCount	The number of polygons returned in the @p path array.
         ///  @param[in]		maxPath		The max number of polygons the path array can hold. [Limit: >= 1]
@@ -1636,7 +1655,7 @@ public static partial class Detour
         /// polygon on the existing path that was visited during the search.
         ///  @param[in]		existing		An array of polygon references for the existing path.
         ///  @param[in]		existingSize	The number of polygon in the @p existing array.
-        ///  @param[out]	path			An ordered list of polygon references representing the path. (Start to end.) 
+        ///  @param[out]	path			An ordered list of polygon references representing the path. (Start to end.)
         ///  								[(polyRef) * @p pathCount]
         ///  @param[out]	pathCount		The number of polygons returned in the @p path array.
         ///  @param[in]		maxPath			The max number of polygons the @p path array can hold. [Limit: >= 1]
@@ -1845,20 +1864,20 @@ public static partial class Detour
         ///  @param[in]		options				Query options. (see: #dtStraightPathOptions)
         // @returns The status flags for the query.
         // @par
-        /// 
+        ///
         /// This method peforms what is often called 'string pulling'.
         ///
-        /// The start position is clamped to the first polygon in the path, and the 
-        /// end position is clamped to the last. So the start and end positions should 
+        /// The start position is clamped to the first polygon in the path, and the
+        /// end position is clamped to the last. So the start and end positions should
         /// normally be within or very near the first and last polygons respectively.
         ///
-        /// The returned polygon references represent the reference id of the polygon 
-        /// that is entered at the associated path position. The reference id associated 
-        /// with the end point will always be zero.  This allows, for example, matching 
+        /// The returned polygon references represent the reference id of the polygon
+        /// that is entered at the associated path position. The reference id associated
+        /// with the end point will always be zero.  This allows, for example, matching
         /// off-mesh link points to their representative polygons.
         ///
-        /// If the provided result buffers are too small for the entire result set, 
-        /// they will be filled as far as possible from the start toward the end 
+        /// If the provided result buffers are too small for the entire result set,
+        /// they will be filled as far as possible from the start toward the end
         /// position.
         ///
         public dtStatus findStraightPath(float[] startPos, float[] endPos, dtPolyRef[] path, int pathSize, float[] straightPath, byte[] straightPathFlags, dtPolyRef[] straightPathRefs, ref int straightPathCount, int maxStraightPath, int options)
@@ -2095,22 +2114,22 @@ public static partial class Detour
         // @returns The status flags for the query.
         // @par
         ///
-        /// This method is optimized for small delta movement and a small number of 
-        /// polygons. If used for too great a distance, the result set will form an 
+        /// This method is optimized for small delta movement and a small number of
+        /// polygons. If used for too great a distance, the result set will form an
         /// incomplete path.
         ///
-        // @p resultPos will equal the @p endPos if the end is reached. 
+        // @p resultPos will equal the @p endPos if the end is reached.
         /// Otherwise the closest reachable position will be returned.
-        /// 
-        // @p resultPos is not projected onto the surface of the navigation 
+        ///
+        // @p resultPos is not projected onto the surface of the navigation
         /// mesh. Use #getPolyHeight if this is needed.
         ///
-        /// This method treats the end position in the same manner as 
-        /// the #raycast method. (As a 2D point.) See that method's documentation 
+        /// This method treats the end position in the same manner as
+        /// the #raycast method. (As a 2D point.) See that method's documentation
         /// for details.
-        /// 
-        /// If the @p visited array is too small to hold the entire result set, it will 
-        /// be filled as far as possible from the start position toward the end 
+        ///
+        /// If the @p visited array is too small to hold the entire result set, it will
+        /// be filled as far as possible from the start position toward the end
         /// position.
         ///
         public dtStatus moveAlongSurface(dtPolyRef startRef, float[] startPos, float[] endPos, dtQueryFilter filter, float[] resultPos, dtPolyRef[] visited, ref int visitedCount, int maxVisitedSize)
@@ -2440,16 +2459,16 @@ public static partial class Detour
         ///
         /// This method is meant to be used for quick, short distance checks.
         ///
-        /// If the path array is too small to hold the result, it will be filled as 
+        /// If the path array is too small to hold the result, it will be filled as
         /// far as possible from the start postion toward the end position.
         ///
         /// <b>Using the Hit Parameter (t)</b>
-        /// 
-        /// If the hit parameter is a very high value (FLT_MAX), then the ray has hit 
-        /// the end position. In this case the path represents a valid corridor to the 
+        ///
+        /// If the hit parameter is a very high value (FLT_MAX), then the ray has hit
+        /// the end position. In this case the path represents a valid corridor to the
         /// end position and the value of @p hitNormal is undefined.
         ///
-        /// If the hit parameter is zero, then the start position is on the wall that 
+        /// If the hit parameter is zero, then the start position is on the wall that
         /// was hit and the value of @p hitNormal is undefined.
         ///
         /// If 0 < t < 1.0 then the following applies:
@@ -2461,15 +2480,15 @@ public static partial class Detour
         ///
         /// <b>Use Case Restriction</b>
         ///
-        /// The raycast ignores the y-value of the end position. (2D check.) This 
+        /// The raycast ignores the y-value of the end position. (2D check.) This
         /// places significant limits on how it can be used. For example:
         ///
-        /// Consider a scene where there is a main floor with a second floor balcony 
-        /// that hangs over the main floor. So the first floor mesh extends below the 
-        /// balcony mesh. The start position is somewhere on the first floor. The end 
+        /// Consider a scene where there is a main floor with a second floor balcony
+        /// that hangs over the main floor. So the first floor mesh extends below the
+        /// balcony mesh. The start position is somewhere on the first floor. The end
         /// position is on the balcony.
         ///
-        /// The raycast will search toward the end position along the first floor mesh. 
+        /// The raycast will search toward the end position along the first floor mesh.
         /// If it reaches the end position's xz-coordinates it will indicate FLT_MAX
         /// (no wall hit), meaning it reached the end position. This is one example of why
         /// this method is meant for short distance checks.
@@ -2489,10 +2508,10 @@ public static partial class Detour
             return status;
         }
 
-        /// Casts a 'walkability' ray along the surface of the navigation mesh from 
+        /// Casts a 'walkability' ray along the surface of the navigation mesh from
         /// the start position toward the end position.
         ///  @param[in]		startRef	The reference id of the start polygon.
-        ///  @param[in]		startPos	A position within the start polygon representing 
+        ///  @param[in]		startPos	A position within the start polygon representing
         ///  							the start of the ray. [(x, y, z)]
         ///  @param[in]		endPos		The position to cast the ray toward. [(x, y, z)]
         ///  @param[out]	t			The hit parameter. (FLT_MAX if no wall hit.)
@@ -2506,16 +2525,16 @@ public static partial class Detour
         ///
         /// This method is meant to be used for quick, short distance checks.
         ///
-        /// If the path array is too small to hold the result, it will be filled as 
+        /// If the path array is too small to hold the result, it will be filled as
         /// far as possible from the start postion toward the end position.
         ///
         /// <b>Using the Hit Parameter (t)</b>
-        /// 
-        /// If the hit parameter is a very high value (FLT_MAX), then the ray has hit 
-        /// the end position. In this case the path represents a valid corridor to the 
+        ///
+        /// If the hit parameter is a very high value (FLT_MAX), then the ray has hit
+        /// the end position. In this case the path represents a valid corridor to the
         /// end position and the value of @p hitNormal is undefined.
         ///
-        /// If the hit parameter is zero, then the start position is on the wall that 
+        /// If the hit parameter is zero, then the start position is on the wall that
         /// was hit and the value of @p hitNormal is undefined.
         ///
         /// If 0 &lt; t &lt; 1.0 then the following applies:
@@ -2527,15 +2546,15 @@ public static partial class Detour
         ///
         /// <b>Use Case Restriction</b>
         ///
-        /// The raycast ignores the y-value of the end position. (2D check.) This 
+        /// The raycast ignores the y-value of the end position. (2D check.) This
         /// places significant limits on how it can be used. For example:
         ///
-        /// Consider a scene where there is a main floor with a second floor balcony 
-        /// that hangs over the main floor. So the first floor mesh extends below the 
-        /// balcony mesh. The start position is somewhere on the first floor. The end 
+        /// Consider a scene where there is a main floor with a second floor balcony
+        /// that hangs over the main floor. So the first floor mesh extends below the
+        /// balcony mesh. The start position is somewhere on the first floor. The end
         /// position is on the balcony.
         ///
-        /// The raycast will search toward the end position along the first floor mesh. 
+        /// The raycast will search toward the end position along the first floor mesh.
         /// If it reaches the end position's xz-coordinates it will indicate FLT_MAX
         /// (no wall hit), meaning it reached the end position. This is one example of why
         /// this method is meant for short distance checks.
@@ -2774,7 +2793,7 @@ public static partial class Detour
 
         ///@}
         // @name Dijkstra Search Functions
-        // @{ 
+        // @{
 
         /// Finds the polygons along the navigation graph that touch the specified circle.
         ///  @param[in]		startRef		The reference id of the polygon where the search starts.
@@ -2782,7 +2801,7 @@ public static partial class Detour
         ///  @param[in]		radius			The radius of the search circle.
         ///  @param[in]		filter			The polygon filter to apply to the query.
         ///  @param[out]	resultRef		The reference ids of the polygons touched by the circle. [opt]
-        ///  @param[out]	resultParent	The reference ids of the parent polygons for each result. 
+        ///  @param[out]	resultParent	The reference ids of the parent polygons for each result.
         ///  								Zero if a result polygon has no parent. [opt]
         ///  @param[out]	resultCost		The search cost from @p centerPos to the polygon. [opt]
         ///  @param[out]	resultCount		The number of polygons found. [opt]
@@ -2794,29 +2813,29 @@ public static partial class Detour
         ///
         /// The order of the result set is from least to highest cost to reach the polygon.
         ///
-        /// A common use case for this method is to perform Dijkstra searches. 
+        /// A common use case for this method is to perform Dijkstra searches.
         /// Candidate polygons are found by searching the graph beginning at the start polygon.
         ///
-        /// If a polygon is not found via the graph search, even if it intersects the 
+        /// If a polygon is not found via the graph search, even if it intersects the
         /// search circle, it will not be included in the result set. For example:
         ///
         /// polyA is the start polygon.
         /// polyB shares an edge with polyA. (Is adjacent.)
         /// polyC shares an edge with polyB, but not with polyA
-        /// Even if the search circle overlaps polyC, it will not be included in the 
+        /// Even if the search circle overlaps polyC, it will not be included in the
         /// result set unless polyB is also in the set.
-        /// 
-        /// The value of the center point is used as the start position for cost 
-        /// calculations. It is not projected onto the surface of the mesh, so its 
+        ///
+        /// The value of the center point is used as the start position for cost
+        /// calculations. It is not projected onto the surface of the mesh, so its
         /// y-value will effect the costs.
         ///
-        /// Intersection tests occur in 2D. All polygons and the search circle are 
-        /// projected onto the xz-plane. So the y-value of the center point does not 
+        /// Intersection tests occur in 2D. All polygons and the search circle are
+        /// projected onto the xz-plane. So the y-value of the center point does not
         /// effect intersection tests.
         ///
-        /// If the result arrays are to small to hold the entire result set, they will be 
+        /// If the result arrays are to small to hold the entire result set, they will be
         /// filled to capacity.
-        /// 
+        ///
         dtStatus findPolysAroundCircle(dtPolyRef startRef, float[] centerPos, float radius, dtQueryFilter filter, dtPolyRef[] resultRef, dtPolyRef[] resultParent, float[] resultCost, ref int resultCount, int maxResult)
         {
             Debug.Assert(m_nav != null);
@@ -2976,12 +2995,12 @@ public static partial class Detour
 
         /// Finds the polygons along the naviation graph that touch the specified convex polygon.
         ///  @param[in]		startRef		The reference id of the polygon where the search starts.
-        ///  @param[in]		verts			The vertices describing the convex polygon. (CCW) 
+        ///  @param[in]		verts			The vertices describing the convex polygon. (CCW)
         ///  								[(x, y, z) * @p nverts]
         ///  @param[in]		nverts			The number of vertices in the polygon.
         ///  @param[in]		filter			The polygon filter to apply to the query.
         ///  @param[out]	resultRef		The reference ids of the polygons touched by the search polygon. [opt]
-        ///  @param[out]	resultParent	The reference ids of the parent polygons for each result. Zero if a 
+        ///  @param[out]	resultParent	The reference ids of the parent polygons for each result. Zero if a
         ///  								result polygon has no parent. [opt]
         ///  @param[out]	resultCost		The search cost from the centroid point to the polygon. [opt]
         ///  @param[out]	resultCount		The number of polygons found.
@@ -2990,23 +3009,23 @@ public static partial class Detour
         // @par
         ///
         /// The order of the result set is from least to highest cost.
-        /// 
+        ///
         /// At least one result array must be provided.
         ///
-        /// A common use case for this method is to perform Dijkstra searches. 
-        /// Candidate polygons are found by searching the graph beginning at the start 
+        /// A common use case for this method is to perform Dijkstra searches.
+        /// Candidate polygons are found by searching the graph beginning at the start
         /// polygon.
-        /// 
+        ///
         /// The same intersection test restrictions that apply to findPolysAroundCircle()
         /// method apply to this method.
-        /// 
-        /// The 3D centroid of the search polygon is used as the start position for cost 
+        ///
+        /// The 3D centroid of the search polygon is used as the start position for cost
         /// calculations.
-        /// 
-        /// Intersection tests occur in 2D. All polygons are projected onto the 
+        ///
+        /// Intersection tests occur in 2D. All polygons are projected onto the
         /// xz-plane. So the y-values of the vertices do not effect intersection tests.
-        /// 
-        /// If the result arrays are is too small to hold the entire result set, they will 
+        ///
+        /// If the result arrays are is too small to hold the entire result set, they will
         /// be filled to capacity.
         ///
         dtStatus findPolysAroundShape(dtPolyRef startRef, float[] verts, int nverts, dtQueryFilter filter, dtPolyRef[] resultRef, dtPolyRef[] resultParent, float[] resultCost, ref int resultCount, int maxResult)
@@ -3180,33 +3199,33 @@ public static partial class Detour
         ///  @param[in]		radius			The radius of the query circle.
         ///  @param[in]		filter			The polygon filter to apply to the query.
         ///  @param[out]	resultRef		The reference ids of the polygons touched by the circle.
-        ///  @param[out]	resultParent	The reference ids of the parent polygons for each result. 
+        ///  @param[out]	resultParent	The reference ids of the parent polygons for each result.
         ///  								Zero if a result polygon has no parent. [opt]
         ///  @param[out]	resultCount		The number of polygons found.
         ///  @param[in]		maxResult		The maximum number of polygons the result arrays can hold.
         // @returns The status flags for the query.
         // @par
         ///
-        /// This method is optimized for a small search radius and small number of result 
+        /// This method is optimized for a small search radius and small number of result
         /// polygons.
         ///
-        /// Candidate polygons are found by searching the navigation graph beginning at 
+        /// Candidate polygons are found by searching the navigation graph beginning at
         /// the start polygon.
         ///
-        /// The same intersection test restrictions that apply to the findPolysAroundCircle 
+        /// The same intersection test restrictions that apply to the findPolysAroundCircle
         /// mehtod applies to this method.
         ///
-        /// The value of the center point is used as the start point for cost calculations. 
-        /// It is not projected onto the surface of the mesh, so its y-value will effect 
+        /// The value of the center point is used as the start point for cost calculations.
+        /// It is not projected onto the surface of the mesh, so its y-value will effect
         /// the costs.
-        /// 
-        /// Intersection tests occur in 2D. All polygons and the search circle are 
-        /// projected onto the xz-plane. So the y-value of the center point does not 
+        ///
+        /// Intersection tests occur in 2D. All polygons and the search circle are
+        /// projected onto the xz-plane. So the y-value of the center point does not
         /// effect intersection tests.
-        /// 
-        /// If the result arrays are is too small to hold the entire result set, they will 
+        ///
+        /// If the result arrays are is too small to hold the entire result set, they will
         /// be filled to capacity.
-        /// 
+        ///
         dtStatus findLocalNeighbourhood(dtPolyRef startRef, float[] centerPos, float radius, dtQueryFilter filter, dtPolyRef[] resultRef, dtPolyRef[] resultParent, ref int resultCount, int maxResult)
         {
             Debug.Assert(m_nav != null);
@@ -3427,22 +3446,22 @@ public static partial class Detour
         ///  @param[in]		ref				The reference id of the polygon.
         ///  @param[in]		filter			The polygon filter to apply to the query.
         ///  @param[out]	segmentVerts	The segments. [(ax, ay, az, bx, by, bz) * segmentCount]
-        ///  @param[out]	segmentRefs		The reference ids of each segment's neighbor polygon. 
-        ///  								Or zero if the segment is a wall. [opt] [(parentRef) * @p segmentCount] 
+        ///  @param[out]	segmentRefs		The reference ids of each segment's neighbor polygon.
+        ///  								Or zero if the segment is a wall. [opt] [(parentRef) * @p segmentCount]
         ///  @param[out]	segmentCount	The number of segments returned.
         ///  @param[in]		maxSegments		The maximum number of segments the result arrays can hold.
         // @returns The status flags for the query.
         // @par
         ///
-        /// If the @p segmentRefs parameter is provided, then all polygon segments will be returned. 
+        /// If the @p segmentRefs parameter is provided, then all polygon segments will be returned.
         /// Otherwise only the wall segments are returned.
-        /// 
-        /// A segment that is normally a portal will be included in the result set as a 
+        ///
+        /// A segment that is normally a portal will be included in the result set as a
         /// wall if the @p filter results in the neighbor polygon becoomming impassable.
-        /// 
-        /// The @p segmentVerts and @p segmentRefs buffers should normally be sized for the 
+        ///
+        /// The @p segmentVerts and @p segmentRefs buffers should normally be sized for the
         /// maximum segments per polygon of the source navigation mesh.
-        /// 
+        ///
         dtStatus getPolyWallSegments(dtPolyRef polyRef, dtQueryFilter filter, float[] segmentVerts, dtPolyRef[] segmentRefs, ref int segmentCount, int maxSegments)
         {
             Debug.Assert(m_nav != null);
@@ -3599,14 +3618,14 @@ public static partial class Detour
         ///  @param[in]		filter			The polygon filter to apply to the query.
         ///  @param[out]	hitDist			The distance to the nearest wall from @p centerPos.
         ///  @param[out]	hitPos			The nearest position on the wall that was hit. [(x, y, z)]
-        ///  @param[out]	hitNormal		The normalized ray formed from the wall point to the 
+        ///  @param[out]	hitNormal		The normalized ray formed from the wall point to the
         ///  								source point. [(x, y, z)]
         // @returns The status flags for the query.
         // @par
         ///
         // @p hitPos is not adjusted using the height detail data.
         ///
-        // @p hitDist will equal the search radius if there is no wall within the 
+        // @p hitDist will equal the search radius if there is no wall within the
         /// radius. In this case the values of @p hitPos and @p hitNormal are
         /// undefined.
         ///
@@ -3825,14 +3844,14 @@ public static partial class Detour
             return true;
         }
 
-        /// Returns true if the polygon reference is in the closed list. 
+        /// Returns true if the polygon reference is in the closed list.
         ///  @param[in]		ref		The reference id of the polygon to check.
         // @returns True if the polygon is in closed list.
         // @par
         ///
-        /// The closed list is the list of polygons that were fully evaluated during 
+        /// The closed list is the list of polygons that were fully evaluated during
         /// the last navigation graph search. (A* or Dijkstra)
-        /// 
+        ///
         bool isInClosedList(dtPolyRef polyRef)
         {
             if (m_nodePool == null) return false;

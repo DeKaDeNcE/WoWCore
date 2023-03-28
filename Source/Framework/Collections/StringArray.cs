@@ -1,11 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections;
 
-namespace Framework.Collections
-{
+namespace Framework.Collections;
+
     public class StringArray
     {
         public StringArray(int size)
@@ -34,8 +35,8 @@ namespace Framework.Collections
 
         public string this[int index]
         {
-            get { return _str[index]; }
-            set { _str[index] = value; }
+            get => _str[index];
+            set => _str[index] = value;
         }
 
         public IEnumerator GetEnumerator()
@@ -50,6 +51,5 @@ namespace Framework.Collections
 
         public int Length => _str != null ? _str.Length : 0;
 
-        string[] _str;
+        private string[] _str;
     }
-}

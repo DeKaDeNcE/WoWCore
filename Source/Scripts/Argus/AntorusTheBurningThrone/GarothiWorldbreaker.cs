@@ -1,4 +1,5 @@
-// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using Game.Entities;
@@ -99,8 +100,8 @@ namespace Scripts.Argus.AntorusTheBurningThrone.GarothiWorldbreaker
         public const uint DataLastFiredCannon = 0;
 
         public const uint MaxApocalypseDriveCount = 2;
-        public static Position AnnihilationCenterReferencePos = new(-3296.72f, 9767.78f, -60.0f); 
-        
+        public static Position AnnihilationCenterReferencePos = new(-3296.72f, 9767.78f, -60.0f);
+
         public static void PreferNonTankTargetsAndResizeTargets(List<WorldObject> targets, Unit caster)
         {
             if (targets.Empty())
@@ -374,7 +375,7 @@ namespace Scripts.Argus.AntorusTheBurningThrone.GarothiWorldbreaker
                         break;
                 }
             });
-    
+
         if (me.GetVictim() && me.GetVictim().IsWithinMeleeRange(me))
                 DoMeleeAttackIfReady();
             else
@@ -850,4 +851,3 @@ namespace Scripts.Argus.AntorusTheBurningThrone.GarothiWorldbreaker
         bool _keepTank; // true = remove all nontank targets | false = remove current tank
     }
 }
-

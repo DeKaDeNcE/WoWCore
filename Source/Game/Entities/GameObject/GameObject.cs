@@ -1,23 +1,24 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Framework.GameMath;
-using Game.AI;
-using Game.BattleGrounds;
-using Game.Collision;
-using Game.DataStorage;
-using Game.Groups;
-using Game.Loots;
-using Game.Maps;
-using Game.Networking;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.GameMath;
+using Framework.Constants;
+using Game.AI;
+using Game.Maps;
+using Game.Loots;
+using Game.Spells;
+using Game.Groups;
+using Game.Collision;
+using Game.DataStorage;
+using Game.BattleGrounds;
+using Game.Networking;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {
@@ -548,8 +549,6 @@ namespace Game.Entities
                                         // Initialize a new max fish count on respawn
                                         m_goValue.FishingHole.MaxOpens = RandomHelper.URand(GetGoInfo().FishingHole.minRestock, GetGoInfo().FishingHole.maxRestock);
                                         break;
-                                    default:
-                                        break;
                                 }
 
                                 if (!m_spawnedByDefault)        // despawn timer
@@ -594,7 +593,7 @@ namespace Game.Entities
                             }
 
                             // Type 0 despawns after being triggered, type 1 does not.
-                            // @todo This is activation radius. Casting radius must be selected from spell 
+                            // @todo This is activation radius. Casting radius must be selected from spell
                             float radius;
                             if (goInfo.Trap.radius == 0f)
                             {
@@ -761,8 +760,6 @@ namespace Game.Entities
                             }
                             break;
                         }
-                        default:
-                            break;
                     }
                     break;
                 }
@@ -1395,8 +1392,6 @@ namespace Game.Entities
                         return true;
                     break;
                 }
-                default:
-                    break;
             }
             return false;
         }
@@ -2269,7 +2264,7 @@ namespace Game.Entities
 
                     Player player = user.ToPlayer();
 
-                    Loot loot = new Loot(GetMap(), GetGUID(), LootType.Fishinghole, null);
+                    Loot loot = new Loot(GetMap(), GetGUID(), LootType.FishingHole, null);
                     loot.FillLoot(GetGoInfo().GetLootId(), LootStorage.Gameobject, player, true, false, LootModes.Default, ItemBonusMgr.GetContextForPlayer(GetMap().GetMapDifficulty(), player));
                     m_personalLoot[player.GetGUID()] = loot;
 
@@ -2407,8 +2402,6 @@ namespace Game.Entities
                             player.SendPacket(openHeartForge);
                             break;
                         }
-                        default:
-                            break;
                     }
                     break;
                 }
@@ -2433,8 +2426,6 @@ namespace Game.Entities
                             break;
                         case 3:
                             gameObjectUILink.InteractionType = PlayerInteractionType.ItemInteraction;
-                            break;
-                        default:
                             break;
                     }
                     player.SendPacket(gameObjectUILink);
@@ -2482,7 +2473,7 @@ namespace Game.Entities
                     if (m_personalLoot.Count >= info.GatheringNode.MaxNumberofLoots)
                     {
                         SetGoState(GameObjectState.Active);
-                        SetDynamicFlag(GameObjectDynamicLowFlags.NoInterract);
+                        SetDynamicFlag(GameObjectDynamicLowFlags.NoInteract);
                     }
 
                     if (GetLootState() != LootState.Activated)
@@ -3016,7 +3007,7 @@ namespace Game.Entities
             setStateLocal.State = (byte)state;
             viewer.SendPacket(setStateLocal);
         }
-        
+
         public void SetDisplayId(uint displayid)
         {
             SetUpdateFieldValue(m_values.ModifyValue(m_gameObjectData).ModifyValue(m_gameObjectData.DisplayID), displayid);
@@ -3041,8 +3032,6 @@ namespace Game.Entities
                                 return modelData.State2NameSet;
                             case GameObjectDestructibleState.Rebuilding:
                                 return modelData.State3NameSet;
-                            default:
-                                break;
                         }
                     }
                     break;
@@ -3051,8 +3040,6 @@ namespace Game.Entities
                 case GameObjectTypes.PhaseableMo:
                     var flags = (GameObjectFlags)(uint)m_gameObjectData.Flags;
                     return (byte)(((int)flags >> 8) & 0xF);
-                default:
-                    break;
             }
 
             return 0;
@@ -3107,7 +3094,7 @@ namespace Game.Entities
 
             return m_personalLoot.LookupByKey(player.GetGUID());
         }
-        
+
         public void SetLinkedTrap(GameObject linkedTrap) { m_linkedTrap = linkedTrap.GetGUID(); }
 
         public GameObject GetLinkedTrap()
@@ -3220,8 +3207,6 @@ namespace Game.Entities
                     return (GameObjectType.Transport)m_goTypeImpl;
                 case GameObjectTypes.MapObjTransport:
                     return (Transport)this;
-                default:
-                    break;
             }
 
             return null;
@@ -3371,8 +3356,6 @@ namespace Game.Entities
                             GameEvents.Trigger(GetGoInfo().CapturePoint.ContestedEventHorde, player, this);
                         m_goValue.CapturePoint.AssaultTimer = GetGoInfo().CapturePoint.CaptureTime;
                         break;
-                    default:
-                        break;
                 }
             }
             else
@@ -3399,8 +3382,6 @@ namespace Game.Entities
                         if (GetGoInfo().CapturePoint.ContestedEventAlliance != 0)
                             GameEvents.Trigger(GetGoInfo().CapturePoint.ContestedEventAlliance, player, this);
                         m_goValue.CapturePoint.AssaultTimer = GetGoInfo().CapturePoint.CaptureTime;
-                        break;
-                    default:
                         break;
                 }
             }
@@ -3439,8 +3420,6 @@ namespace Game.Entities
                 case BattlegroundCapturePointState.AllianceCaptured:
                     customAnim = 4;
                     spellVisualId = GetGoInfo().CapturePoint.SpellVisual5;
-                    break;
-                default:
                     break;
             }
 
@@ -3501,7 +3480,7 @@ namespace Game.Entities
 
             return true;
         }
-        
+
         PerPlayerState GetOrCreatePerPlayerStates(ObjectGuid guid)
         {
             if (m_perPlayerState == null)
@@ -3512,7 +3491,7 @@ namespace Game.Entities
 
             return m_perPlayerState[guid];
         }
-        
+
         public override ushort GetAIAnimKitId() { return _animKitId; }
 
         public uint GetWorldEffectID() { return _worldEffectID; }
@@ -3620,9 +3599,9 @@ namespace Game.Entities
 
         List<ObjectGuid> GetTapList() { return m_tapList; }
         void SetTapList(List<ObjectGuid> tapList) { m_tapList = tapList; }
-        
+
         bool HasLootRecipient() { return !m_tapList.Empty(); }
-        
+
         public override uint GetLevelForTarget(WorldObject target)
         {
             Unit owner = GetOwner();

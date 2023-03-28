@@ -1,13 +1,16 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+// ReSharper disable UnusedMember.Local
+
+using System.Collections.Generic;
 using Framework.Database;
+using Framework.Constants;
+using Game.Spells;
 using Game.Entities;
 using Game.Networking;
 using Game.Networking.Packets;
-using Game.Spells;
-using System.Collections.Generic;
 
 namespace Game
 {
@@ -127,7 +130,7 @@ namespace Game
                                 trader.GetName(), trader.GetSession().GetAccountId(), hisItems[i].GetTemplate().GetName(), hisItems[i].GetEntry(), hisItems[i].GetCount(),
                                 GetPlayer().GetName(), GetPlayer().GetSession().GetAccountId());
                         }
-                        
+
 
                         // adjust time (depends on /played)
                         if (hisItems[i].IsBOPTradeable())
@@ -347,7 +350,8 @@ namespace Game
                     my_spell.m_targets = my_targets;
 
                     SpellCastResult res = my_spell.CheckCast(true);
-                    if (res != SpellCastResult.SpellCastOk)
+
+                    if (res != SpellCastResult.SpellCastOK)
                     {
                         my_spell.SendCastResult(res);
 
@@ -382,7 +386,8 @@ namespace Game
                     his_spell.m_targets = his_targets;
 
                     SpellCastResult res = his_spell.CheckCast(true);
-                    if (res != SpellCastResult.SpellCastOk)
+
+                    if (res != SpellCastResult.SpellCastOK)
                     {
                         his_spell.SendCastResult(res);
 
@@ -453,7 +458,7 @@ namespace Game
                 // execute trade: 2. store
                 MoveItems(myItems, hisItems);
 
-                // logging money                
+                // logging money
                 if (HasPermission(RBACPermissions.LogGmTrade))
                 {
                     if (my_trade.GetMoney() > 0)
@@ -468,7 +473,7 @@ namespace Game
                             trader.GetName(), trader.GetSession().GetAccountId(), his_trade.GetMoney(), GetPlayer().GetName(), GetPlayer().GetSession().GetAccountId());
                     }
                 }
-                
+
 
                 // update money
                 GetPlayer().ModifyMoney(-(long)my_trade.GetMoney());
@@ -638,7 +643,7 @@ namespace Game
                 return;
             }
 
-            if ((pOther.GetTeam() != GetPlayer().GetTeam() || 
+            if ((pOther.GetTeam() != GetPlayer().GetTeam() ||
                 pOther.HasPlayerFlagEx(PlayerFlagsEx.MercenaryMode) ||
                 GetPlayer().HasPlayerFlagEx(PlayerFlagsEx.MercenaryMode)) &&
                 (!WorldConfig.GetBoolValue(WorldCfg.AllowTwoSideTrade) &&
@@ -723,7 +728,7 @@ namespace Game
             my_trade.UpdateClientStateIndex();
             if (setTradeItem.TradeSlot != (byte)TradeSlots.NonTraded && item.IsBindedNotWith(my_trade.GetTrader()))
             {
-                info.Status = TradeStatus.NotOnTaplist;
+                info.Status = TradeStatus.NotOnTapList;
                 info.TradeSlot = setTradeItem.TradeSlot;
                 SendTradeStatus(info);
                 return;

@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Dynamic;
+using Framework.Constants;
+using Game.Spells;
 using Game.DataStorage;
 using Game.Networking.Packets;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Game.Entities
 {
@@ -788,8 +789,6 @@ namespace Game.Entities
                                     ApplyRatingMod(CombatRating.VersatilityDamageTaken, (int)enchant_amount, apply);
                                     Log.outDebug(LogFilter.Player, "+ {0} VERSATILITY", enchant_amount);
                                     break;
-                                default:
-                                    break;
                             }
                             break;
                         }
@@ -1428,7 +1427,7 @@ namespace Game.Entities
 
             return 0;
         }
-        
+
         int SkillGainChance(uint SkillValue, uint GrayLevel, uint GreenLevel, uint YellowLevel)
         {
             if (SkillValue >= GrayLevel)
@@ -1691,7 +1690,7 @@ namespace Game.Entities
 
             return -1;
         }
-        
+
         int FindEmptyProfessionSlotFor(uint skillId)
         {
             SkillLineRecord skillEntry = CliDB.SkillLineStorage.LookupByKey(skillId);
@@ -1999,7 +1998,7 @@ namespace Game.Entities
             foreach (var pair in GetOwnedAuras())
             {
                 // use m_zoneUpdateId for speed: UpdateArea called from UpdateZone or instead UpdateZone in both cases m_zoneUpdateId up-to-date
-                if (pair.Value.GetSpellInfo().CheckLocation(GetMapId(), m_zoneUpdateId, newArea, this) != SpellCastResult.SpellCastOk)
+                if (pair.Value.GetSpellInfo().CheckLocation(GetMapId(), m_zoneUpdateId, newArea, this) != SpellCastResult.SpellCastOK)
                     RemoveOwnedAura(pair);
             }
 
@@ -2093,8 +2092,6 @@ namespace Game.Entities
                     SetSkill(skillId, 1, skillValue, maxValue);
                     break;
                 }
-                default:
-                    break;
             }
         }
 
@@ -2308,7 +2305,7 @@ namespace Game.Entities
                             if (AddSpell(prev_id, true, false, prevSpell.Dependent, prevSpell.Disabled))
                             {
                                 // downgrade spell ranks in spellbook and action bar
-                                SendSupercededSpell(spellId, prev_id);
+                                SendSupersededSpell(spellId, prev_id);
                                 prev_activate = true;
                             }
                         }
@@ -2527,7 +2524,7 @@ namespace Game.Entities
                     else if (IsInWorld)
                     {
                         if (next_active_spell_id != 0)
-                            SendSupercededSpell(spellId, next_active_spell_id);
+                            SendSupersededSpell(spellId, next_active_spell_id);
                         else
                         {
                             UnlearnedSpells removedSpells = new();
@@ -2613,7 +2610,7 @@ namespace Game.Entities
                                 if (spellInfo.IsHighRankOf(i_spellInfo))
                                 {
                                     if (IsInWorld)                 // not send spell (re-/over-)learn packets at loading
-                                        SendSupercededSpell(_spell.Key, spellId);
+                                        SendSupersededSpell(_spell.Key, spellId);
 
                                     // mark old spell as disable (SMSG_SUPERCEDED_SPELL replace it in client by new)
                                     _spell.Value.Active = false;
@@ -2624,7 +2621,7 @@ namespace Game.Entities
                                 else
                                 {
                                     if (IsInWorld)                 // not send spell (re-/over-)learn packets at loading
-                                        SendSupercededSpell(spellId, _spell.Key);
+                                        SendSupersededSpell(spellId, _spell.Key);
 
                                     // mark new spell as disable (not learned yet for client and will not learned)
                                     newspell.Active = false;
@@ -3029,8 +3026,6 @@ namespace Game.Entities
                     }
                     break;
                 }
-                default:
-                    break;
             }
 
             foreach (SpellModifierByClassMask mod in m_spellMods[(int)op][(int)SpellModType.Flat])
@@ -3148,8 +3143,6 @@ namespace Game.Entities
                     if (spellInfo.GetEffects().Count <= 4)
                         return false;
                     break;
-                default:
-                    break;
             }
 
             return spellInfo.IsAffectedBySpellMod(mod);
@@ -3220,14 +3213,14 @@ namespace Game.Entities
                 SendPacket(pctMods);
         }
 
-        void SendSupercededSpell(uint oldSpell, uint newSpell)
+        void SendSupersededSpell(uint oldSpell, uint newSpell)
         {
-            SupercededSpells supercededSpells = new();
+            SupersededSpells supersededSpells = new();
             LearnedSpellInfo learnedSpellInfo = new();
             learnedSpellInfo.SpellID = newSpell;
             learnedSpellInfo.Superceded = (int)oldSpell;
-            supercededSpells.ClientLearnedSpellData.Add(learnedSpellInfo);
-            SendPacket(supercededSpells);
+            supersededSpells.ClientLearnedSpellData.Add(learnedSpellInfo);
+            SendPacket(supersededSpells);
         }
 
         public void UpdateEquipSpellsAtFormChange()

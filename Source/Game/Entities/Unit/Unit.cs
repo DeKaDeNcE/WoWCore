@@ -1,22 +1,23 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.AI;
-using Game.BattleGrounds;
-using Game.Chat;
-using Game.Combat;
-using Game.DataStorage;
-using Game.Groups;
-using Game.Maps;
-using Game.Movement;
-using Game.Networking;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.AI;
+using Game.Chat;
+using Game.Maps;
+using Game.Groups;
+using Game.Combat;
+using Game.Spells;
+using Game.Movement;
+using Game.DataStorage;
+using Game.BattleGrounds;
+using Game.Networking;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {
@@ -378,7 +379,7 @@ namespace Game.Entities
 
         public virtual void TextEmote(string text, WorldObject target = null, bool isBossEmote = false)
         {
-            Talk(text, isBossEmote ? ChatMsg.RaidBossEmote : ChatMsg.MonsterEmote, Language.Universal, WorldConfig.GetFloatValue(WorldCfg.ListenRangeTextemote), target);
+            Talk(text, isBossEmote ? ChatMsg.RaidBossEmote : ChatMsg.MonsterEmote, Language.Universal, WorldConfig.GetFloatValue(WorldCfg.ListenRangeTextEmote), target);
         }
 
         public virtual void Whisper(string text, Language language, Player target, bool isBossWhisper = false)
@@ -418,7 +419,7 @@ namespace Game.Entities
 
         public virtual void TextEmote(uint textId, WorldObject target = null, bool isBossEmote = false)
         {
-            Talk(textId, isBossEmote ? ChatMsg.RaidBossEmote : ChatMsg.MonsterEmote, WorldConfig.GetFloatValue(WorldCfg.ListenRangeTextemote), target);
+            Talk(textId, isBossEmote ? ChatMsg.RaidBossEmote : ChatMsg.MonsterEmote, WorldConfig.GetFloatValue(WorldCfg.ListenRangeTextEmote), target);
         }
 
         public virtual void Whisper(uint textId, Player target, bool isBossWhisper = false)
@@ -1376,8 +1377,6 @@ namespace Game.Entities
                         return 0;
                     break;
                 }
-                default:
-                    break;
             }
 
             Player thisPlayer = ToPlayer();
@@ -1418,8 +1417,6 @@ namespace Game.Entities
                         case ShapeShiftForm.FlightForm:
                             useRandom = HasAura(344342);
                             break; // Glyph of the Aerial Chameleon
-                        default:
-                            break;
                     }
 
                     if (useRandom)
@@ -1463,8 +1460,6 @@ namespace Game.Entities
                     case ShapeShiftForm.GhostWolf:
                         if (HasAura(58135)) // Glyph of Spectral Wolf
                             return 60247;
-                        break;
-                    default:
                         break;
                 }
             }
@@ -1639,7 +1634,7 @@ namespace Game.Entities
 
             // check "realtime" interrupts
             // don't cancel spells which are affected by a SPELL_AURA_CAST_WHILE_WALKING effect
-            if ((IsMoving() && GetCurrentSpell(CurrentSpellTypes.AutoRepeat).CheckMovement() != SpellCastResult.SpellCastOk) || IsNonMeleeSpellCast(false, false, true, autoRepeatSpellInfo.Id == 75))
+            if ((IsMoving() && GetCurrentSpell(CurrentSpellTypes.AutoRepeat).CheckMovement() != SpellCastResult.SpellCastOK) || IsNonMeleeSpellCast(false, false, true, autoRepeatSpellInfo.Id == 75))
             {
                 // cancel wand shoot
                 if (autoRepeatSpellInfo.Id != 75)
@@ -1652,7 +1647,8 @@ namespace Game.Entities
             {
                 // Check if able to cast
                 SpellCastResult result = m_currentSpells[CurrentSpellTypes.AutoRepeat].CheckCast(true);
-                if (result != SpellCastResult.SpellCastOk)
+
+                if (result != SpellCastResult.SpellCastOK)
                 {
                     if (autoRepeatSpellInfo.Id != 75)
                         InterruptSpell(CurrentSpellTypes.AutoRepeat);
@@ -1897,7 +1893,7 @@ namespace Game.Entities
         public virtual float GetNativeObjectScale() { return 1.0f; }
 
         public float GetDisplayScale() { return m_unitData.DisplayScale; }
-        
+
         public uint GetDisplayId() { return m_unitData.DisplayID; }
 
         public virtual void SetDisplayId(uint displayId, bool setNative = false)
@@ -3128,8 +3124,6 @@ namespace Game.Entities
                         if (newVal > threshold || oldVal < threshold)
                             continue;
                         break;
-                    default:
-                        break;
                 }
 
                 CastSpell(this, triggerSpell, new CastSpellExtraArgs(effect));
@@ -3951,7 +3945,7 @@ namespace Game.Entities
             DoneTotalMod *= GetTotalAuraMultiplierByMiscMask(AuraType.ModDamageDoneVersus, creatureTypeMask);
 
             // bonus against aurastate
-            DoneTotalMod *= GetTotalAuraMultiplier(AuraType.ModDamageDoneVersusAurastate, aurEff =>
+            DoneTotalMod *= GetTotalAuraMultiplier(AuraType.ModDamageDoneVersusAuraState, aurEff =>
             {
                 if (victim.HasAuraState((AuraStateType)aurEff.GetMiscValue()))
                     return true;

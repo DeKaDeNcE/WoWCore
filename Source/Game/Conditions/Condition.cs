@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Maps;
-using Game.Scenarios;
 using System;
-using System.Collections.Generic;
 using System.Text;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Maps;
+using Game.Entities;
+using Game.Scenarios;
+using Game.DataStorage;
 
 namespace Game.Conditions
 {
@@ -434,8 +435,6 @@ namespace Game.Conditions
                     }
                     break;
                 }
-                default:
-                    break;
             }
 
             if (NegativeCondition)
@@ -524,8 +523,6 @@ namespace Game.Conditions
                             break;
                         case TypeId.AreaTrigger:
                             mask |= GridMapTypeMask.AreaTrigger;
-                            break;
-                        default:
                             break;
                     }
                     break;
@@ -648,7 +645,7 @@ namespace Game.Conditions
             mConditionMap = map;
             mLastFailedCondition = null;
         }
-        
+
         public WorldObject[] mConditionTargets = new WorldObject[SharedConst.MaxConditionTargets]; // an array of targets available for conditions
         public Map mConditionMap;
         public Condition mLastFailedCondition;

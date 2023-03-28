@@ -1,16 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.Arenas;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Networking.Packets;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.Groups;
+using Game.Arenas;
+using Game.Entities;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game.BattleGrounds
 {
@@ -133,7 +134,7 @@ namespace Game.BattleGrounds
                                 qHorde += (uint)groupQueueInfo.Players.Count;
 
                         // Show queue status to player only (when joining queue)
-                        if (WorldConfig.GetBoolValue(WorldCfg.BattlegroundQueueAnnouncerPlayeronly))
+                        if (WorldConfig.GetBoolValue(WorldCfg.BattlegroundQueueAnnouncerPlayerOnly))
                         {
                             leader.SendSysMessage(CypherStrings.BgQueueAnnounceSelf, bgName, q_min_level, q_max_level,
                                 qAlliance, (MinPlayers > qAlliance) ? MinPlayers - qAlliance : 0, qHorde, (MinPlayers > qHorde) ? MinPlayers - qHorde : 0);
@@ -450,7 +451,7 @@ namespace Game.BattleGrounds
                 }
             }
 
-            //count of groups in queue - used to stop cycles 
+            //count of groups in queue - used to stop cycles
             int alyIndex = 0;
             {
                 int listIndex = 0;
@@ -950,7 +951,7 @@ namespace Game.BattleGrounds
         }
 
         public BattlegroundQueueTypeId GetQueueId() { return m_queueId; }
-        
+
         BattlegroundQueueTypeId m_queueId;
 
         Dictionary<ObjectGuid, PlayerQueueInfo> m_QueuedPlayers = new();
@@ -1035,7 +1036,7 @@ namespace Game.BattleGrounds
     }
 
     public struct BattlegroundQueueTypeId
-    {  
+    {
         public ushort BattlemasterListId;
         public byte BgType;
         public bool Rated;

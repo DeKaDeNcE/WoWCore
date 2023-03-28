@@ -1,24 +1,25 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.BattleGrounds;
-using Game.BattlePets;
-using Game.Combat;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Garrisons;
-using Game.Groups;
-using Game.Guilds;
-using Game.Loots;
-using Game.Maps;
-using Game.Movement;
-using Game.Networking.Packets;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.Maps;
+using Game.Loots;
+using Game.Combat;
+using Game.Groups;
+using Game.Guilds;
+using Game.Movement;
+using Game.Entities;
+using Game.Garrisons;
+using Game.BattlePets;
+using Game.DataStorage;
+using Game.BattleGrounds;
+using Game.Networking.Packets;
 
 namespace Game.Spells
 {
@@ -1142,8 +1143,6 @@ namespace Game.Spells
                             MathFunctions.AddPct(ref damage, 25);
                     break;
                 }
-                default:
-                    break;
             }
 
             unitCaster.EnergizeBySpell(unitTarget, m_spellInfo, damage, power);
@@ -1263,9 +1262,11 @@ namespace Game.Spells
             int skillValue = 0;
 
             SpellCastResult res = CanOpenLock(effectInfo, lockId, ref skillId, ref reqSkillValue, ref skillValue);
-            if (res != SpellCastResult.SpellCastOk)
+
+            if (res != SpellCastResult.SpellCastOK)
             {
                 SendCastResult(res);
+
                 return;
             }
 
@@ -1763,25 +1764,25 @@ namespace Game.Spells
             if (successList.Empty())
                 return;
 
-            SpellDispellLog spellDispellLog = new();
-            spellDispellLog.IsBreak = false; // TODO: use me
-            spellDispellLog.IsSteal = false;
+            SpellDispelLog spellDispelLog = new();
+            spellDispelLog.IsBreak = false; // TODO: use me
+            spellDispelLog.IsSteal = false;
 
-            spellDispellLog.TargetGUID = unitTarget.GetGUID();
-            spellDispellLog.CasterGUID = m_caster.GetGUID();
-            spellDispellLog.DispelledBySpellID = m_spellInfo.Id;
+            spellDispelLog.TargetGUID = unitTarget.GetGUID();
+            spellDispelLog.CasterGUID = m_caster.GetGUID();
+            spellDispelLog.DispelledBySpellID = m_spellInfo.Id;
 
             foreach (var dispelableAura in successList)
             {
-                var dispellData = new SpellDispellData();
-                dispellData.SpellID = dispelableAura.GetAura().GetId();
-                dispellData.Harmful = false;      // TODO: use me
+                var dispelData = new SpellDispelData();
+                dispelData.SpellID = dispelableAura.GetAura().GetId();
+                dispelData.Harmful = false;      // TODO: use me
 
                 unitTarget.RemoveAurasDueToSpellByDispel(dispelableAura.GetAura().GetId(), m_spellInfo.Id, dispelableAura.GetAura().GetCasterGUID(), m_caster, dispelableAura.GetDispelCharges());
 
-                spellDispellLog.DispellData.Add(dispellData);
+                spellDispelLog.DispelData.Add(dispelData);
             }
-            m_caster.SendMessageToSet(spellDispellLog, true);
+            m_caster.SendMessageToSet(spellDispelLog, true);
 
             CallScriptSuccessfulDispel(effectInfo.EffectIndex);
 
@@ -1847,7 +1848,7 @@ namespace Game.Spells
             else if (creature._loot != null)
             {
                 if (creature._loot.loot_type == LootType.Pickpocketing && creature._loot.IsLooted())
-                    player.SendLootError(creature._loot.GetGUID(), creature.GetGUID(), LootError.AlreadPickPocketed);
+                    player.SendLootError(creature._loot.GetGUID(), creature.GetGUID(), LootError.AlreadyPickPocketed);
 
                 return;
             }
@@ -2415,8 +2416,7 @@ namespace Game.Spells
                     case SpellEffectName.WeaponPercentDamage:
                         MathFunctions.ApplyPct(ref weaponDamagePercentMod, CalculateDamage(spellEffectInfo, unitTarget));
                         break;
-                    default:
-                        break;                                      // not weapon damage effect, just skip
+                    // not weapon damage effect, just skip
                 }
             }
 
@@ -2464,8 +2464,7 @@ namespace Game.Spells
                     case SpellEffectName.WeaponPercentDamage:
                         weaponDamage = (uint)(weaponDamage * weaponDamagePercentMod);
                         break;
-                    default:
-                        break;                                      // not weapon damage effect, just skip
+                    // not weapon damage effect, just skip
                 }
             }
 
@@ -3213,7 +3212,7 @@ namespace Game.Spells
                 unitCaster.GetClosePoint(out x, out y, out z, SharedConst.DefaultPlayerBoundingRadius);
                 o = unitCaster.GetOrientation();
             }
-            
+
             Map map = m_caster.GetMap();
             Position pos = new(x, y, z, o);
             Quaternion rotation = Quaternion.CreateFromRotationMatrix(Extensions.fromEulerAnglesZYX(o, 0.0f, 0.0f));
@@ -3533,7 +3532,7 @@ namespace Game.Spells
                 if (unitCaster.IsPlayer())
                     unitCaster.ToPlayer().SetFallInformation(0, m_caster.GetPositionZ());
 
-                float speed = MathFunctions.fuzzyGt(m_spellInfo.Speed, 0.0f) ? m_spellInfo.Speed : MotionMaster.SPEED_CHARGE;
+                float speed = MathFunctions.fuzzyGt(m_spellInfo.Speed, 0.0f) ? m_spellInfo.Speed : MotionMaster.SpeedCharge;
                 SpellEffectExtraData spellEffectExtraData = null;
                 if (effectInfo.MiscValueB != 0)
                 {
@@ -3594,7 +3593,7 @@ namespace Game.Spells
                 PathGenerator path = new(unitCaster);
                 path.CalculatePath(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), false);
 
-                float speed = MathFunctions.fuzzyGt(m_spellInfo.Speed, 0.0f) ? m_spellInfo.Speed : MotionMaster.SPEED_CHARGE;
+                float speed = MathFunctions.fuzzyGt(m_spellInfo.Speed, 0.0f) ? m_spellInfo.Speed : MotionMaster.SpeedCharge;
 
                 if (MathFunctions.fuzzyGt(m_spellInfo.Speed, 0.0f) && m_spellInfo.HasAttribute(SpellAttr9.SpecialDelayCalculation))
                     speed = path.GetPathLength() / speed;
@@ -4380,25 +4379,25 @@ namespace Game.Spells
             if (successList.Empty())
                 return;
 
-            SpellDispellLog spellDispellLog = new();
-            spellDispellLog.IsBreak = false; // TODO: use me
-            spellDispellLog.IsSteal = true;
+            SpellDispelLog spellDispelLog = new();
+            spellDispelLog.IsBreak = false; // TODO: use me
+            spellDispelLog.IsSteal = true;
 
-            spellDispellLog.TargetGUID = unitTarget.GetGUID();
-            spellDispellLog.CasterGUID = m_caster.GetGUID();
-            spellDispellLog.DispelledBySpellID = m_spellInfo.Id;
+            spellDispelLog.TargetGUID = unitTarget.GetGUID();
+            spellDispelLog.CasterGUID = m_caster.GetGUID();
+            spellDispelLog.DispelledBySpellID = m_spellInfo.Id;
 
             foreach (var (spellId, auraCaster, stolenCharges) in successList)
             {
-                var dispellData = new SpellDispellData();
-                dispellData.SpellID = spellId;
-                dispellData.Harmful = false;      // TODO: use me
+                var dispelData = new SpellDispelData();
+                dispelData.SpellID = spellId;
+                dispelData.Harmful = false;      // TODO: use me
 
                 unitTarget.RemoveAurasDueToSpellBySteal(spellId, auraCaster, m_caster, stolenCharges);
 
-                spellDispellLog.DispellData.Add(dispellData);
+                spellDispelLog.DispelData.Add(dispelData);
             }
-            m_caster.SendMessageToSet(spellDispellLog, true);
+            m_caster.SendMessageToSet(spellDispelLog, true);
 
             m_hitMask |= ProcFlagsHit.Dispel;
         }
@@ -4722,8 +4721,6 @@ namespace Game.Spells
                 case 91604: // Restricted Flight Area
                     player.GetSession().SendNotification(CypherStrings.ZoneNoflyzone);
                     break;
-                default:
-                    break;
             }
 
             uint soundId = (uint)effectInfo.MiscValue;
@@ -4892,7 +4889,7 @@ namespace Game.Spells
             }
         }
 
-        [SpellEffectHandler(SpellEffectName.IncreseCurrencyCap)]
+        [SpellEffectHandler(SpellEffectName.IncreaseCurrencyCap)]
         void EffectIncreaseCurrencyCap()
         {
             if (effectHandleMode != SpellEffectHandleMode.HitTarget)
@@ -5077,7 +5074,7 @@ namespace Game.Spells
                 garrison.LearnBlueprint((uint)effectInfo.MiscValue);
         }
 
-        [SpellEffectHandler(SpellEffectName.RemoveAuraBySApellLabel)]
+        [SpellEffectHandler(SpellEffectName.RemoveAuraBySpellLabel)]
         void EffectRemoveAuraBySpellLabel()
         {
             if (effectHandleMode != SpellEffectHandleMode.HitTarget)
@@ -5215,7 +5212,7 @@ namespace Game.Spells
             playerTarget.GiveXP(xp, null);
         }
 
-        [SpellEffectHandler(SpellEffectName.GiveRestedEcperienceBonus)]
+        [SpellEffectHandler(SpellEffectName.GiveRestedExperienceBonus)]
         void EffectGiveRestedExperience()
         {
             if (effectHandleMode != SpellEffectHandleMode.HitTarget)
@@ -5706,8 +5703,6 @@ namespace Game.Spells
                 case 1:
                     targetAura.SetStackAmount((byte)damage);
                     break;
-                default:
-                    break;
             }
         }
 
@@ -5849,7 +5844,7 @@ namespace Game.Spells
         byte _charges;
     }
 
-    class DelayedSpellTeleportEvent : BasicEvent
+    public class DelayedSpellTeleportEvent : BasicEvent
     {
         Unit _target;
         WorldLocation _targetDest;

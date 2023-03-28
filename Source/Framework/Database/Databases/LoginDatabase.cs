@@ -1,4 +1,5 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 namespace Framework.Database
@@ -125,7 +126,7 @@ namespace Framework.Database
 
             PrepareStatement(LoginStatements.UpdBnetFailedLogins, "UPDATE battlenet_accounts SET failed_logins = failed_logins + 1 WHERE id = ?");
             PrepareStatement(LoginStatements.InsBnetAccountAutoBanned, "INSERT INTO battlenet_account_bans(id, bandate, unbandate, bannedby, banreason) VALUES(?, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()+?, 'Trinity Auth', 'Failed login autoban')");
-            PrepareStatement(LoginStatements.DelBnetExpiredAccountBanned, "DELETE FROM battlenet_account_bans WHERE unbandate<>bandate AND unbandate<=UNIX_TIMESTAMP()");          
+            PrepareStatement(LoginStatements.DelBnetExpiredAccountBanned, "DELETE FROM battlenet_account_bans WHERE unbandate<>bandate AND unbandate<=UNIX_TIMESTAMP()");
             PrepareStatement(LoginStatements.UpdBnetResetFailedLogins, "UPDATE battlenet_accounts SET failed_logins = 0 WHERE id = ?");
 
             PrepareStatement(LoginStatements.SEL_LAST_CHAR_UNDELETE, "SELECT LastCharacterUndelete FROM battlenet_accounts WHERE Id = ?");

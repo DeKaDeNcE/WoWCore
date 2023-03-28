@@ -1,4 +1,5 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using Framework.Constants;
@@ -128,7 +129,7 @@ namespace Game.BattleFields
             new WintergraspGameObjectData(5269.208f, 3013.838f, 408.8276f, -1.76278200f, 0.0f, 0.0f, -0.77162460f, 0.6360782f, 190763, 191575),
 
             new WintergraspGameObjectData(5401.634f, 2853.667f, 418.6748f,  2.63544400f, 0.0f, 0.0f,  0.96814730f, 0.2503814f, 192819, 192819), // return portal inside fortress, neutral
-            
+
             // Vehicle teleporter
             new WintergraspGameObjectData(5314.515f, 2703.687f, 408.5502f, -0.89011660f, 0.0f, 0.0f, -0.43051050f, 0.9025856f, 192951, 192951),
             new WintergraspGameObjectData(5316.252f, 2977.042f, 408.5385f, -0.82030330f, 0.0f, 0.0f, -0.39874840f, 0.9170604f, 192951, 192951)

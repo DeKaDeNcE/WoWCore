@@ -1,16 +1,25 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.Entities;
-using Game.Scripting;
-using Game.Spells;
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
 using System;
 using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.Spells;
+using Game.Entities;
+using Game.Scripting;
 
-namespace Scripts.Spells.Warlock
-{
+namespace Scripts.Spells.Warlock;
+
     struct SpellIds
     {
         public const uint CreateHealthstone = 23517;
@@ -406,7 +415,8 @@ namespace Scripts.Spells.Warlock
 
     // 366323 - Strengthen Pact - Succubus
     // 366325 - Strengthen Pact - Incubus
-    [Script] // 366222 - Summon Sayaad
+    // 366222 - Summon Sayaad
+    [Script]
     class spell_warl_sayaad_precast_disorientation : SpellScript
     {
         public override bool Validate(SpellInfo spellInfo)
@@ -681,7 +691,7 @@ namespace Scripts.Spells.Warlock
             if (swapTarget && currentTarget && swapTarget == currentTarget)
                 return SpellCastResult.BadTargets;
 
-            return SpellCastResult.SpellCastOk;
+            return SpellCastResult.SpellCastOK;
         }
 
         void onEffectHit(uint effIndex)
@@ -898,4 +908,3 @@ namespace Scripts.Spells.Warlock
             OnEffectPeriodic.Add(new EffectPeriodicHandler(HandleDummyTick, 3, AuraType.PeriodicDummy));
         }
     }
-}

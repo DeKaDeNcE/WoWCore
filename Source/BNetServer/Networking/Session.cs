@@ -1,36 +1,39 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Bgs.Protocol;
-using Framework.Constants;
-using Framework.Database;
-using Framework.IO;
-using Framework.Networking;
-using Framework.Realm;
-using Google.Protobuf;
+// ReSharper disable InconsistentNaming
+
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Collections.Generic;
+using Framework.IO;
+using Framework.Realm;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Networking;
+using Google.Protobuf;
+using Bgs.Protocol;
 
-namespace BNetServer.Networking
-{
+namespace BNetServer.Networking;
+
     partial class Session : SSLSocket
     {
-        AccountInfo accountInfo;
-        GameAccountInfo gameAccountInfo;
+        public AccountInfo accountInfo;
+        public GameAccountInfo gameAccountInfo;
 
-        string locale;
-        string os;
-        uint build;
-        string ipCountry;
+        public string locale;
+        public string os;
+        public uint build;
+        public string ipCountry;
 
-        byte[] clientSecret;
-        bool authed;
-        uint requestToken;
+        public byte[] clientSecret;
+        public bool authed;
+        public uint requestToken;
 
-        AsyncCallbackProcessor<QueryCallback> queryProcessor;
-        Dictionary<uint, Action<CodedInputStream>> responseCallbacks;
+        public AsyncCallbackProcessor<QueryCallback> queryProcessor;
+        public Dictionary<uint, Action<CodedInputStream>> responseCallbacks;
 
         public Session(Socket socket) : base(socket)
         {
@@ -51,7 +54,7 @@ namespace BNetServer.Networking
             stmt.AddValue(0, ipAddress);
             stmt.AddValue(1, BitConverter.ToUInt32(GetRemoteIpEndPoint().Address.GetAddressBytes(), 0));
 
-            queryProcessor.AddCallback(DB.Login.AsyncQuery(stmt).WithCallback(async result =>            
+            queryProcessor.AddCallback(DB.Login.AsyncQuery(stmt).WithCallback(async result =>
             {
                 if (!result.IsEmpty())
                 {
@@ -88,7 +91,7 @@ namespace BNetServer.Networking
             return true;
         }
 
-        public async override void ReadHandler(byte[] data, int receivedLength)
+        public override async void ReadHandler(byte[] data, int receivedLength)
         {
             if (!IsOpen())
                 return;
@@ -103,7 +106,7 @@ namespace BNetServer.Networking
                 header.MergeFrom(data, readPos, headerLength);
                 readPos += headerLength;
 
-                var stream = new CodedInputStream(data, readPos, (int)header.Size);                
+                var stream = new CodedInputStream(data, readPos, (int)header.Size);
                 readPos += (int)header.Size;
 
                 if (header.ServiceId != 0xFE && header.ServiceHash != 0)
@@ -133,10 +136,12 @@ namespace BNetServer.Networking
 
         public async void SendResponse(uint token, IMessage response)
         {
-            Header header = new();
-            header.Token = token;
-            header.ServiceId = 0xFE;
-            header.Size = (uint)response.CalculateSize();
+            Header header = new()
+            {
+                Token = token,
+                ServiceId = 0xFE,
+                Size = (uint)response.CalculateSize()
+            };
 
             ByteBuffer buffer = new();
             buffer.WriteBytes(GetHeaderSize(header), 2);
@@ -148,10 +153,12 @@ namespace BNetServer.Networking
 
         public async void SendResponse(uint token, BattlenetRpcErrorCode status)
         {
-            Header header = new();
-            header.Token = token;
-            header.Status = (uint)status;
-            header.ServiceId = 0xFE;
+            Header header = new()
+            {
+                Token = token,
+                Status = (uint)status,
+                ServiceId = 0xFE
+            };
 
             ByteBuffer buffer = new();
             buffer.WriteBytes(GetHeaderSize(header), 2);
@@ -162,12 +169,14 @@ namespace BNetServer.Networking
 
         public async void SendRequest(uint serviceHash, uint methodId, IMessage request)
         {
-            Header header = new();
-            header.ServiceId = 0;
-            header.ServiceHash = serviceHash;
-            header.MethodId = methodId;
-            header.Size = (uint)request.CalculateSize();
-            header.Token = requestToken++;
+            Header header = new()
+            {
+                ServiceId = 0,
+                ServiceHash = serviceHash,
+                MethodId = methodId,
+                Size = (uint)request.CalculateSize(),
+                Token = requestToken++
+            };
 
             ByteBuffer buffer = new();
             buffer.WriteBytes(GetHeaderSize(header), 2);
@@ -206,7 +215,7 @@ namespace BNetServer.Networking
     }
 
     public class AccountInfo
-    {   
+    {
         public uint Id;
         public string Login;
         public bool IsLockedToIP;
@@ -214,7 +223,7 @@ namespace BNetServer.Networking
         public string LastIP;
         public uint LoginTicketExpiry;
         public bool IsBanned;
-        public bool IsPermanenetlyBanned;
+        public bool IsPermanentlyBanned;
 
         public Dictionary<uint, GameAccountInfo> GameAccounts;
 
@@ -227,7 +236,7 @@ namespace BNetServer.Networking
             LastIP = result.Read<string>(4);
             LoginTicketExpiry = result.Read<uint>(5);
             IsBanned = result.Read<ulong>(6) != 0;
-            IsPermanenetlyBanned = result.Read<ulong>(7) != 0;
+            IsPermanentlyBanned = result.Read<ulong>(7) != 0;
 
             GameAccounts = new Dictionary<uint, GameAccountInfo>();
             const int GameAccountFieldsOffset = 8;
@@ -247,7 +256,7 @@ namespace BNetServer.Networking
         public string DisplayName;
         public uint UnbanDate;
         public bool IsBanned;
-        public bool IsPermanenetlyBanned;
+        public bool IsPermanentlyBanned;
         public AccountTypes SecurityLevel;
 
         public Dictionary<uint, byte> CharacterCounts;
@@ -258,8 +267,8 @@ namespace BNetServer.Networking
             Id = fields.Read<uint>(startColumn + 0);
             Name = fields.Read<string>(startColumn + 1);
             UnbanDate = fields.Read<uint>(startColumn + 2);
-            IsPermanenetlyBanned = fields.Read<uint>(startColumn + 3) != 0;
-            IsBanned = IsPermanenetlyBanned || UnbanDate > Time.UnixTime;
+            IsPermanentlyBanned = fields.Read<uint>(startColumn + 3) != 0;
+            IsBanned = IsPermanentlyBanned || UnbanDate > Time.UnixTime;
             SecurityLevel = (AccountTypes)fields.Read<byte>(startColumn + 4);
 
             int hashPos = Name.IndexOf('#');
@@ -280,4 +289,3 @@ namespace BNetServer.Networking
         public ulong CharacterGUID;
         public uint LastPlayedTime;
     }
-}

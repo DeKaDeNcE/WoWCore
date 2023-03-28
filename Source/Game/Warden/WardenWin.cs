@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Cryptography;
-using Framework.IO;
-using Game.Networking.Packets;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.IO;
+using Framework.Constants;
+using Framework.Cryptography;
+using Game.Networking.Packets;
 
 namespace Game
 {
@@ -164,7 +165,7 @@ namespace Game
 
             return (ushort)size;
         }
-        
+
         public override void RequestChecks()
         {
             Log.outDebug(LogFilter.Warden, $"Request data from {_session.GetPlayerName()} (account {_session.GetAccountId()}) - loaded: {_session.GetPlayer() && !_session.PlayerLoading()}");
@@ -294,8 +295,7 @@ namespace Game
                         buff << uint8(wd.Length);
                         break;
                     }*/
-                    default:
-                        break;                                      // Should never happen
+                    // Should never happen
                 }
             }
             buff.WriteUInt8(xorByte);

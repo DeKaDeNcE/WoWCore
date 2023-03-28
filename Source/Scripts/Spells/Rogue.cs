@@ -1,18 +1,28 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Dynamic;
-using Game.DataStorage;
+using Framework.Constants;
+using Game.Spells;
 using Game.Entities;
 using Game.Scripting;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Game.DataStorage;
 
-namespace Scripts.Spells.Rogue
-{
+namespace Scripts.Spells.Rogue;
+
     public struct SpellIds
     {
         public const uint AdrenalineRush = 13750;
@@ -260,7 +270,7 @@ namespace Scripts.Spells.Rogue
             OnEffectHitTarget.Add(new EffectHandler(CalculateDamage, 0, SpellEffectName.SchoolDamage));
         }
     }
-    
+
     [Script] // 193358 - Grand Melee
     class spell_rog_grand_melee : AuraScript
     {
@@ -324,7 +334,7 @@ namespace Scripts.Spells.Rogue
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 0, AuraType.Dummy));
         }
     }
-    
+
     [Script] // 51690 - Killing Spree
     class spell_rog_killing_spree_SpellScript : SpellScript
     {
@@ -437,7 +447,7 @@ namespace Scripts.Spells.Rogue
             if (!GetExplTargetUnit() || !GetCaster().IsValidAttackTarget(GetExplTargetUnit(), GetSpellInfo()))
                 return SpellCastResult.BadTargets;
 
-            return SpellCastResult.SpellCastOk;
+            return SpellCastResult.SpellCastOK;
         }
 
         public override void Register()
@@ -445,7 +455,7 @@ namespace Scripts.Spells.Rogue
             OnCheckCast.Add(new CheckCastHandler(CheckCast));
         }
     }
-    
+
     [Script] // 79096 - Restless Blades
     class spell_rog_restless_blades : AuraScript
     {
@@ -599,7 +609,7 @@ namespace Scripts.Spells.Rogue
 
             int? cost = procInfo.GetProcSpell()?.GetPowerTypeCostAmount(PowerType.ComboPoints);
             if (cost.HasValue)
-                if (RandomHelper.randChance(aurEff.GetSpellEffectInfo().PointsPerResource * (cost.Value)))
+                if (RandomHelper.randChance(aurEff.GetSpellEffectInfo().PointsPerResource * cost.Value))
                     target.ModifyPower(PowerType.ComboPoints, 1);
         }
 
@@ -696,52 +706,54 @@ namespace Scripts.Spells.Rogue
         public override bool Validate(SpellInfo spellInfo)
         {
             return ValidateSpellInfo(SpellIds.MasterOfSubtletyPassive, SpellIds.MasterOfSubtletyDamagePercent, SpellIds.Sanctuary, SpellIds.ShadowFocus, SpellIds.ShadowFocusEffect, SpellIds.StealthStealthAura, SpellIds.StealthShapeshiftAura);
-            }
+        }
 
-            void HandleEffectApply(AuraEffect aurEff, AuraEffectHandleModes mode)
+        void HandleEffectApply(AuraEffect aurEff, AuraEffectHandleModes mode)
+        {
+            Unit target = GetTarget();
+
+            // Master of Subtlety
+            if (target.HasAura(SpellIds.MasterOfSubtletyPassive))
+                target.CastSpell(target, SpellIds.MasterOfSubtletyDamagePercent, new CastSpellExtraArgs(TriggerCastFlags.FullMask));
+
+            // Shadow Focus
+            if (target.HasAura(SpellIds.ShadowFocus))
+                target.CastSpell(target, SpellIds.ShadowFocusEffect, new CastSpellExtraArgs(TriggerCastFlags.FullMask));
+
+            // Premeditation
+            if (target.HasAura(SpellIds.PremeditationPassive))
+                target.CastSpell(target, SpellIds.PremeditationAura, true);
+
+            target.CastSpell(target, SpellIds.Sanctuary, new CastSpellExtraArgs(TriggerCastFlags.FullMask));
+            target.CastSpell(target, SpellIds.StealthStealthAura, new CastSpellExtraArgs(TriggerCastFlags.FullMask));
+            target.CastSpell(target, SpellIds.StealthShapeshiftAura, new CastSpellExtraArgs(TriggerCastFlags.FullMask));
+        }
+
+        void HandleEffectRemove(AuraEffect aurEff, AuraEffectHandleModes mode)
+        {
+            Unit target = GetTarget();
+
+            // Master of Subtlety
+            AuraEffect masterOfSubtletyPassive = GetTarget().GetAuraEffect(SpellIds.MasterOfSubtletyPassive, 0);
+
+            if (masterOfSubtletyPassive != null)
             {
-                Unit target = GetTarget();
+                Aura masterOfSubtletyAura = GetTarget().GetAura(SpellIds.MasterOfSubtletyDamagePercent);
 
-                // Master of Subtlety
-                if (target.HasAura(SpellIds.MasterOfSubtletyPassive))
-                    target.CastSpell(target, SpellIds.MasterOfSubtletyDamagePercent, new CastSpellExtraArgs(TriggerCastFlags.FullMask));
-
-                // Shadow Focus
-                if (target.HasAura(SpellIds.ShadowFocus))
-                    target.CastSpell(target, SpellIds.ShadowFocusEffect, new CastSpellExtraArgs(TriggerCastFlags.FullMask));
-
-                // Premeditation
-                if (target.HasAura(SpellIds.PremeditationPassive))
-                    target.CastSpell(target, SpellIds.PremeditationAura, true);
-
-                target.CastSpell(target, SpellIds.Sanctuary, new CastSpellExtraArgs(TriggerCastFlags.FullMask));
-                target.CastSpell(target, SpellIds.StealthStealthAura, new CastSpellExtraArgs(TriggerCastFlags.FullMask));
-                target.CastSpell(target, SpellIds.StealthShapeshiftAura, new CastSpellExtraArgs(TriggerCastFlags.FullMask));
-            }
-
-            void HandleEffectRemove(AuraEffect aurEff, AuraEffectHandleModes mode)
-            {
-                Unit target = GetTarget();
-
-                // Master of Subtlety
-                AuraEffect masterOfSubtletyPassive = GetTarget().GetAuraEffect(SpellIds.MasterOfSubtletyPassive, 0);
-                if (masterOfSubtletyPassive != null)
+                if (masterOfSubtletyAura != null)
                 {
-                    Aura masterOfSubtletyAura = GetTarget().GetAura(SpellIds.MasterOfSubtletyDamagePercent);
-                    if (masterOfSubtletyAura != null)
-                    {
-                        masterOfSubtletyAura.SetMaxDuration(masterOfSubtletyPassive.GetAmount());
-                        masterOfSubtletyAura.RefreshDuration();
-                    }
+                    masterOfSubtletyAura.SetMaxDuration(masterOfSubtletyPassive.GetAmount());
+                    masterOfSubtletyAura.RefreshDuration();
                 }
-
-                // Premeditation
-                target.RemoveAura(SpellIds.PremeditationAura);
-
-                target.RemoveAurasDueToSpell(SpellIds.ShadowFocusEffect);
-                target.RemoveAurasDueToSpell(SpellIds.StealthStealthAura);
-                target.RemoveAurasDueToSpell(SpellIds.StealthShapeshiftAura);
             }
+
+            // Premeditation
+            target.RemoveAura(SpellIds.PremeditationAura);
+
+            target.RemoveAurasDueToSpell(SpellIds.ShadowFocusEffect);
+            target.RemoveAurasDueToSpell(SpellIds.StealthStealthAura);
+            target.RemoveAurasDueToSpell(SpellIds.StealthShapeshiftAura);
+        }
 
         public override void Register()
         {
@@ -870,7 +882,8 @@ namespace Scripts.Spells.Rogue
         void CheckForStun(AuraEffect aurEff)
         {
             Unit target = GetTarget();
-            if (!target.HasAuraType(AuraType.ModStun))
+
+            if (target != null && !target.HasAuraType(AuraType.ModStun))
             {
                 target.CastSpell(target, SpellIds.TurnTheTablesBuff, new CastSpellExtraArgs(aurEff));
                 PreventDefaultAction();
@@ -948,4 +961,3 @@ namespace Scripts.Spells.Rogue
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 1, AuraType.Dummy));
         }
     }
-}

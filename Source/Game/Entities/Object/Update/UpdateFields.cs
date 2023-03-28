@@ -1,15 +1,16 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+using System;
+using System.Numerics;
+using System.Collections.Generic;
 using Framework.Dynamic;
+using Framework.Constants;
+using Game.Spells;
 using Game.DataStorage;
 using Game.Networking;
 using Game.Networking.Packets;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Numerics;
 
 namespace Game.Entities
 {
@@ -145,9 +146,9 @@ namespace Game.Entities
                         }
                         case GameObjectTypes.CapturePoint:
                             if (!gameObject.CanInteractWithCapturePoint(receiver))
-                                dynFlags |= GameObjectDynamicLowFlags.NoInterract;
+                                dynFlags |= GameObjectDynamicLowFlags.NoInteract;
                             else
-                                dynFlags &= ~GameObjectDynamicLowFlags.NoInterract;
+                                dynFlags &= ~GameObjectDynamicLowFlags.NoInteract;
                             break;
                         case GameObjectTypes.GatheringNode:
                             if (gameObject.ActivateToQuest(receiver))
@@ -155,12 +156,10 @@ namespace Game.Entities
                             if (gameObject.GetGoStateFor(receiver.GetGUID()) == GameObjectState.Active)
                                 dynFlags |= GameObjectDynamicLowFlags.Depleted;
                             break;
-                        default:
-                            break;
                     }
 
                     if (!gameObject.MeetsInteractCondition(receiver))
-                        dynFlags |= GameObjectDynamicLowFlags.NoInterract;
+                        dynFlags |= GameObjectDynamicLowFlags.NoInteract;
 
                     unitDynFlags = ((uint)pathProgress << 16) | (uint)dynFlags;
                 }
@@ -4232,7 +4231,7 @@ namespace Game.Entities
             data.WriteUInt8(Uses);
         }
     }
-    
+
     public class ActivePlayerData : BaseUpdateData<Player>
     {
         public static int ExploredZonesSize;

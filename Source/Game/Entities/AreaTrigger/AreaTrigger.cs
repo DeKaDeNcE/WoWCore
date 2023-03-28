@@ -1,17 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Numerics;
+using System.Collections.Generic;
 using Framework.Constants;
-using Framework.Dynamic;
 using Game.AI;
 using Game.Maps;
+using Game.Spells;
 using Game.Movement;
 using Game.Networking;
 using Game.Networking.Packets;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Numerics;
 
 namespace Game.Entities
 {
@@ -181,8 +181,7 @@ namespace Game.Entities
             ITransport transport = m_movementInfo.transport.guid.IsEmpty() ? caster.GetTransport() : null;
             if (transport != null)
             {
-                float x, y, z, o;
-                pos.GetPosition(out x, out y, out z, out o);
+                pos.GetPosition(out var x, out var y, out var z, out var o);
                 transport.CalculatePassengerOffset(ref x, ref y, ref z, ref o);
                 m_movementInfo.transport.pos.Relocate(x, y, z, o);
 
@@ -268,7 +267,7 @@ namespace Game.Entities
             _maxSearchRadius = _shape.GetMaxSearchRadius();
 
             if (position.PhaseUseFlags != 0 || position.PhaseId != 0 || position.PhaseGroup != 0)
-                PhasingHandler.InitDbPhaseShift(GetPhaseShift(), (PhaseUseFlagsValues)position.PhaseUseFlags, position.PhaseId, position.PhaseGroup);
+                PhasingHandler.InitDbPhaseShift(GetPhaseShift(), position.PhaseUseFlags, position.PhaseId, position.PhaseGroup);
 
             UpdateShape();
 
@@ -372,8 +371,6 @@ namespace Game.Entities
                     break;
                 case AreaTriggerTypes.BoundedPlane:
                     SearchUnitInBoundedPlane(targetList);
-                    break;
-                default:
                     break;
             }
 
@@ -480,10 +477,7 @@ namespace Game.Entities
                 extentsY = _shape.BoxDatas.Extents[1];
             }
 
-            targetList.RemoveAll(unit =>
-            {
-                return !unit.IsWithinBox(boxCenter, extentsX, extentsY, MapConst.MapSize);
-            });
+            targetList.RemoveAll(unit => !unit.IsWithinBox(boxCenter, extentsX, extentsY, MapConst.MapSize));
         }
 
         void HandleUnitEnterExit(List<Unit> newTargetList)
@@ -722,8 +716,6 @@ namespace Game.Entities
                                     if (player != null)
                                         player.TeleportTo(safeLoc.Loc);
                                 }
-                                break;
-                            default:
                                 break;
                         }
                     }
@@ -1002,7 +994,7 @@ namespace Game.Entities
 
             return false;
         }
-        
+
         public override void BuildValuesCreate(WorldPacket data, Player target)
         {
             UpdateFieldFlag flags = GetUpdateFieldFlagsFor(target);

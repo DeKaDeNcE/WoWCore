@@ -1,10 +1,10 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System.Collections.Generic;
 using Framework.Constants;
 using Game.Entities;
-using System;
-using System.Collections.Generic;
 
 namespace Game.Maps
 {
@@ -221,7 +221,7 @@ namespace Game.Maps
         {
             // stop any fights at grid de-activation and remove dynobjects/areatriggers created at cast by creatures
             for (var i = 0; i < objs.Count; ++i)
-            {  
+            {
                 Creature creature = objs[i];
                 creature.RemoveAllDynObjects();
                 creature.RemoveAllAreaTriggers();
@@ -274,7 +274,7 @@ namespace Game.Maps
 
                 obj.SetDestroyedObject(true);
                 obj.CleanupsBeforeDelete();
-            }       
+            }
         }
     }
 

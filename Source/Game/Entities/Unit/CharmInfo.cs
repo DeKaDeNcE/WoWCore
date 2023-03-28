@@ -1,12 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Game.Networking;
-using Game.Spells;
 using System;
 using System.Numerics;
+using Framework.Constants;
+using Framework.Collections;
+using Game.Spells;
+using Game.Networking;
 
 namespace Game.Entities
 {
@@ -433,5 +434,4 @@ namespace Game.Entities
             return ((packedData & 0xFF000000) >> 24);
         }
     }
-
 }

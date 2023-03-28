@@ -1,20 +1,20 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using BNetServer.Networking;
-using Framework.Configuration;
-using Framework.Cryptography;
 using Framework.Database;
 using Framework.Networking;
+using Framework.Configuration;
 using System;
-using System.Globalization;
 using System.Timers;
+using System.Globalization;
 
-namespace BNetServer
-{
-    class Server
+namespace BNetServer;
+
+    public class Server
     {
-        static void Main()
+        public static void Main()
         {
             //Set Culture
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
@@ -68,7 +68,7 @@ namespace BNetServer
             _banExpiryCheckTimer.Start();
         }
 
-        static bool StartDB()
+        public static bool StartDB()
         {
             DatabaseLoader loader = new(DatabaseTypeFlags.None);
             loader.AddDatabase(DB.Login, "Login");
@@ -80,20 +80,19 @@ namespace BNetServer
             return true;
         }
 
-        static void ExitNow()
+        public static void ExitNow()
         {
             Console.WriteLine("Halting process...");
             System.Threading.Thread.Sleep(10000);
             Environment.Exit(-1);
         }
 
-        static void BanExpiryCheckTimer_Elapsed(object sender, ElapsedEventArgs e)
+        public static void BanExpiryCheckTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             DB.Login.Execute(LoginDatabase.GetPreparedStatement(LoginStatements.DelExpiredIpBans));
             DB.Login.Execute(LoginDatabase.GetPreparedStatement(LoginStatements.UpdExpiredAccountBans));
             DB.Login.Execute(LoginDatabase.GetPreparedStatement(LoginStatements.DelBnetExpiredAccountBanned));
         }
 
-        static Timer _banExpiryCheckTimer;
+        public static Timer _banExpiryCheckTimer;
     }
-}

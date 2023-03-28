@@ -1,12 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.Entities;
-using Game.Spells;
 using System;
 using System.Collections.Generic;
+using Framework.Constants;
+using Game.Spells;
+using Game.Entities;
 
 namespace Game.Networking.Packets
 {
@@ -314,9 +314,9 @@ namespace Game.Networking.Packets
         public uint SpellID;
     }
 
-    class SpellDispellLog : ServerPacket
+    class SpellDispelLog : ServerPacket
     {
-        public SpellDispellLog() : base(ServerOpcodes.SpellDispellLog, ConnectionType.Instance) { }
+        public SpellDispelLog() : base(ServerOpcodes.SpellDispelLog, ConnectionType.Instance) { }
 
         public override void Write()
         {
@@ -326,8 +326,8 @@ namespace Game.Networking.Packets
             _worldPacket.WritePackedGuid(CasterGUID);
             _worldPacket.WriteUInt32(DispelledBySpellID);
 
-            _worldPacket.WriteInt32(DispellData.Count);
-            foreach (var data in DispellData)
+            _worldPacket.WriteInt32(DispelData.Count);
+            foreach (var data in DispelData)
             {
                 _worldPacket.WriteUInt32(data.SpellID);
                 _worldPacket.WriteBit(data.Harmful);
@@ -342,7 +342,7 @@ namespace Game.Networking.Packets
             }
         }
 
-        public List<SpellDispellData> DispellData = new();
+        public List<SpellDispelData> DispelData = new();
         public ObjectGuid CasterGUID;
         public ObjectGuid TargetGUID;
         public uint DispelledBySpellID;
@@ -641,7 +641,7 @@ namespace Game.Networking.Packets
         public int OriginalHeal;
         public ContentTuningParams ContentTuning;
     }
-    
+
     //Structs
     public struct SpellLogEffectPowerDrainParams
     {
@@ -714,7 +714,7 @@ namespace Game.Networking.Packets
         SpellLogMissDebug? Debug;
     }
 
-    struct SpellDispellData
+    struct SpellDispelData
     {
         public uint SpellID;
         public bool Harmful;

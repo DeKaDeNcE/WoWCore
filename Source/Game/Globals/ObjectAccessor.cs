@@ -1,18 +1,22 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game;
-using Game.Entities;
-using Game.Maps;
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+
 using System;
 using System.Collections.Generic;
+using Framework.Constants;
+using Game;
+using Game.Maps;
+using Game.Entities;
 
 public class ObjectAccessor : Singleton<ObjectAccessor>
 {
-    object _lockObject = new();
+    public object _lockObject = new();
 
-    Dictionary<ObjectGuid, Player> _players = new();
+    public Dictionary<ObjectGuid, Player> _players = new();
 
     ObjectAccessor() { }
 
@@ -94,40 +98,19 @@ public class ObjectAccessor : Singleton<ObjectAccessor>
         return null;
     }
 
-    public static Corpse GetCorpse(WorldObject u, ObjectGuid guid)
-    {
-        return u.GetMap().GetCorpse(guid);
-    }
+    public static Corpse GetCorpse(WorldObject u, ObjectGuid guid) => u.GetMap().GetCorpse(guid);
 
-    public static GameObject GetGameObject(WorldObject u, ObjectGuid guid)
-    {
-        return u.GetMap().GetGameObject(guid);
-    }
+    public static GameObject GetGameObject(WorldObject u, ObjectGuid guid) => u.GetMap().GetGameObject(guid);
 
-    public static Transport GetTransport(WorldObject u, ObjectGuid guid)
-    {
-        return u.GetMap().GetTransport(guid);
-    }
+    public static Transport GetTransport(WorldObject u, ObjectGuid guid) => u.GetMap().GetTransport(guid);
 
-    static DynamicObject GetDynamicObject(WorldObject u, ObjectGuid guid)
-    {
-        return u.GetMap().GetDynamicObject(guid);
-    }
+    public static DynamicObject GetDynamicObject(WorldObject u, ObjectGuid guid) => u.GetMap().GetDynamicObject(guid);
 
-    static AreaTrigger GetAreaTrigger(WorldObject u, ObjectGuid guid)
-    {
-        return u.GetMap().GetAreaTrigger(guid);
-    }
+    public static AreaTrigger GetAreaTrigger(WorldObject u, ObjectGuid guid) => u.GetMap().GetAreaTrigger(guid);
 
-    static SceneObject GetSceneObject(WorldObject u, ObjectGuid guid)
-    {
-        return u.GetMap().GetSceneObject(guid);
-    }
-    
-    public static Conversation GetConversation(WorldObject u, ObjectGuid guid)
-    {
-        return u.GetMap().GetConversation(guid);
-    }
+    public static SceneObject GetSceneObject(WorldObject u, ObjectGuid guid) => u.GetMap().GetSceneObject(guid);
+
+    public static Conversation GetConversation(WorldObject u, ObjectGuid guid) => u.GetMap().GetConversation(guid);
 
     public Unit GetUnit(WorldObject u, ObjectGuid guid)
     {
@@ -140,80 +123,59 @@ public class ObjectAccessor : Singleton<ObjectAccessor>
         return GetCreature(u, guid);
     }
 
-    public static Creature GetCreature(WorldObject u, ObjectGuid guid)
-    {
-        return u.GetMap().GetCreature(guid);
-    }
+    public static Creature GetCreature(WorldObject u, ObjectGuid guid) => u.GetMap().GetCreature(guid);
 
-    public static Pet GetPet(WorldObject u, ObjectGuid guid)
-    {
-        return u.GetMap().GetPet(guid);
-    }
+    public static Pet GetPet(WorldObject u, ObjectGuid guid) => u.GetMap().GetPet(guid);
 
     public Player GetPlayer(Map m, ObjectGuid guid)
     {
-        Player player = _players.LookupByKey(guid);
-        if (player)
-            if (player.IsInWorld && player.GetMap() == m)
-                return player;
+        var player = _players.LookupByKey(guid);
+
+        if (player && player.IsInWorld && player.GetMap() == m)
+            return player;
 
         return null;
     }
 
-    public Player GetPlayer(WorldObject u, ObjectGuid guid)
-    {
-        return GetPlayer(u.GetMap(), guid);
-    }
+    public Player GetPlayer(WorldObject u, ObjectGuid guid) => GetPlayer(u.GetMap(), guid);
 
-    public static Creature GetCreatureOrPetOrVehicle(WorldObject u, ObjectGuid guid)
-    {
-        if (guid.IsPet())
-            return GetPet(u, guid);
-
-        if (guid.IsCreatureOrVehicle())
-            return GetCreature(u, guid);
-
-        return null;
-    }
+    public static Creature GetCreatureOrPetOrVehicle(WorldObject u, ObjectGuid guid) => guid.IsPet() ? GetPet(u, guid) : guid.IsCreatureOrVehicle() ? GetCreature(u, guid) : null;
 
     // these functions return objects if found in whole world
     // ACCESS LIKE THAT IS NOT THREAD SAFE
     public Player FindPlayer(ObjectGuid guid)
     {
-        Player player = FindConnectedPlayer(guid);
+        var player = FindConnectedPlayer(guid);
+
         return player && player.IsInWorld ? player : null;
     }
+
     public Player FindPlayerByName(string name)
     {
-        Player player = PlayerNameMapHolder.Find(name);
+        var player = PlayerNameMapHolder.Find(name);
+
         if (!player || !player.IsInWorld)
             return null;
 
         return player;
     }
-    public Player FindPlayerByLowGUID(ulong lowguid)
-    {
-        ObjectGuid guid = ObjectGuid.Create(HighGuid.Player, lowguid);
-        return FindPlayer(guid);
-    }
+
+    public Player FindPlayerByLowGUID(ulong lowguid) => FindPlayer(ObjectGuid.Create(HighGuid.Player, lowguid));
+
     // this returns Player even if he is not in world, for example teleporting
     public Player FindConnectedPlayer(ObjectGuid guid)
     {
         lock (_lockObject)
             return _players.LookupByKey(guid);
     }
-    public Player FindConnectedPlayerByName(string name)
-    {
-        return PlayerNameMapHolder.Find(name);
-    }
+
+    public Player FindConnectedPlayerByName(string name) => PlayerNameMapHolder.Find(name);
 
     public void SaveAllPlayers()
     {
         lock (_lockObject)
-        {
             foreach (var pl in GetPlayers())
                 pl.SaveToDB();
-        }
     }
 
     public ICollection<Player> GetPlayers()
@@ -241,7 +203,7 @@ public class ObjectAccessor : Singleton<ObjectAccessor>
     }
 }
 
-class PlayerNameMapHolder
+public class PlayerNameMapHolder
 {
     public static void Insert(Player p)
     {
@@ -253,13 +215,7 @@ class PlayerNameMapHolder
         _playerNameMap.Remove(p.GetName());
     }
 
-    public static Player Find(string name)
-    {
-        if (!ObjectManager.NormalizePlayerName(ref name))
-            return null;
+    public static Player Find(string name) => ObjectManager.NormalizePlayerName(ref name) ? _playerNameMap.LookupByKey(name) : null;
 
-        return _playerNameMap.LookupByKey(name);
-    }
-
-    static Dictionary<string, Player> _playerNameMap = new();
+    private static readonly Dictionary<string, Player> _playerNameMap = new();
 }

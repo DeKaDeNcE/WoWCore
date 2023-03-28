@@ -1,13 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
-using Game.Networking;
-using Framework.Constants;
 using Framework.Database;
-using Game.Networking.Packets;
+using Framework.Constants;
 using Game.DataStorage;
+using Game.Networking;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {

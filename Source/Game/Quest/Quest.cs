@@ -1,16 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Framework.Database;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Networking.Packets;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Collections;
+using Game.Entities;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game
 {
@@ -559,8 +560,6 @@ namespace Game
                     return difficulty == Difficulty.Raid10N || difficulty == Difficulty.Raid10HC;
                 case QuestInfos.Raid25:
                     return difficulty == Difficulty.Raid25N || difficulty == Difficulty.Raid25HC;
-                default:
-                    break;
             }
 
             if (Flags.HasAnyFlag(QuestFlags.RaidGroupOk))
@@ -801,7 +800,7 @@ namespace Game
         public bool IsDailyOrWeekly() { return Flags.HasAnyFlag(QuestFlags.Daily | QuestFlags.Weekly); }
         public bool IsDFQuest() { return SpecialFlags.HasAnyFlag(QuestSpecialFlags.DfQuest); }
         public bool IsPushedToPartyOnAccept() { return HasSpecialFlag(QuestSpecialFlags.AutoPushToParty); }
-        
+
         public uint GetRewChoiceItemsCount() { return _rewChoiceItemsCount; }
         public uint GetRewItemsCount() { return _rewItemsCount; }
         public uint GetRewCurrencyCount() { return _rewCurrencyCount; }
@@ -1002,7 +1001,7 @@ namespace Game
     }
 
     public struct QuestRewardDisplaySpell
-    {    
+    {
         public uint SpellId;
         public uint PlayerConditionId;
         public QuestCompleteSpellType Type;
@@ -1060,12 +1059,10 @@ namespace Game
                 case QuestObjectiveType.ObtainCurrency:
                 case QuestObjectiveType.IncreaseReputation:
                     return true;
-                default:
-                    break;
             }
             return false;
         }
-        
+
         public bool IsStoringFlag()
         {
             switch (Type)
@@ -1077,8 +1074,6 @@ namespace Game
                 case QuestObjectiveType.AreaTriggerEnter:
                 case QuestObjectiveType.AreaTriggerExit:
                     return true;
-                default:
-                    break;
             }
             return false;
         }
@@ -1096,8 +1091,6 @@ namespace Game
                 case QuestObjectiveType.HaveCurrency:
                 case QuestObjectiveType.IncreaseReputation:
                     return true;
-                default:
-                    break;
             }
             return false;
         }

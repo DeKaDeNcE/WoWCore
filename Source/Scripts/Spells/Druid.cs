@@ -1,18 +1,27 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Dynamic;
-using Game.DataStorage;
+using Framework.Constants;
+using Game.Spells;
 using Game.Entities;
 using Game.Scripting;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Game.DataStorage;
 
-namespace Scripts.Spells.Druid
-{
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
+namespace Scripts.Spells.Druid;
+
     struct SpellIds
     {
         public const uint BalanceT10Bonus = 70718;
@@ -455,8 +464,6 @@ namespace Scripts.Spells.Druid
                 case ShapeShiftForm.None:
                 case ShapeShiftForm.TreeOfLife:
                     return true;
-                default:
-                    break;
             }
 
             return false;
@@ -555,7 +562,7 @@ namespace Scripts.Spells.Druid
             OnEffectRemove.Add(new EffectApplyHandler(OnRemove, 1, AuraType.ModShapeshift, AuraEffectHandleModes.Real));
         }
     }
-    
+
     [Script] // 210706 - Gore
     class spell_dru_gore : AuraScript
     {
@@ -617,7 +624,7 @@ namespace Scripts.Spells.Druid
             if (spec == null || spec.Role != 1)
                 return SpellCastResult.BadTargets;
 
-            return SpellCastResult.SpellCastOk;
+            return SpellCastResult.SpellCastOK;
         }
 
         void HandleRank2()
@@ -735,7 +742,7 @@ namespace Scripts.Spells.Druid
             AfterEffectRemove.Add(new EffectApplyHandler(AfterRemove, 0, AuraType.Dummy, AuraEffectHandleModes.Real));
         }
     }
-    
+
     [Script] //  8921 - Moonfire
     class spell_dru_moonfire : SpellScript
     {
@@ -840,10 +847,11 @@ namespace Scripts.Spells.Druid
         SpellCastResult CheckCast()
         {
             Unit caster = GetCaster();
+
             if (caster.GetShapeshiftForm() != ShapeShiftForm.CatForm)
                 return SpellCastResult.OnlyShapeshift;
 
-            return SpellCastResult.SpellCastOk;
+            return SpellCastResult.SpellCastOK;
         }
 
         public override void Register()
@@ -1313,10 +1321,10 @@ namespace Scripts.Spells.Druid
             if (player.HasSpell(SpellIds.FormAquaticPassive) && player.IsInWater()) // Aquatic form
                 return SpellIds.FormAquatic;
 
-            if (!player.IsInCombat() && player.GetSkillValue(SkillType.Riding) >= 225 && CheckLocationForForm(player, difficulty, requiresOutdoor, SpellIds.FormFlight) == SpellCastResult.SpellCastOk) // Flight form
+            if (!player.IsInCombat() && player.GetSkillValue(SkillType.Riding) >= 225 && CheckLocationForForm(player, difficulty, requiresOutdoor, SpellIds.FormFlight) == SpellCastResult.SpellCastOK) // Flight form
                 return player.GetSkillValue(SkillType.Riding) >= 300 ? SpellIds.FormSwiftFlight : SpellIds.FormFlight;
 
-            if (!player.IsInWater() && CheckLocationForForm(player, difficulty, requiresOutdoor, SpellIds.FormStag) == SpellCastResult.SpellCastOk) // Stag form
+            if (!player.IsInWater() && CheckLocationForForm(player, difficulty, requiresOutdoor, SpellIds.FormStag) == SpellCastResult.SpellCastOK) // Stag form
                 return SpellIds.FormStag;
 
             return 0;
@@ -1437,7 +1445,7 @@ namespace Scripts.Spells.Druid
             OnEffectPeriodic.Add(new EffectPeriodicHandler(HandlePeriodic, 1, AuraType.PeriodicDummy));
         }
     }
-    
+
     [Script] // 48438 - Wild Growth
     class spell_dru_wild_growth : SpellScript
     {
@@ -1518,4 +1526,3 @@ namespace Scripts.Spells.Druid
             OnEffectUpdatePeriodic.Add(new EffectUpdatePeriodicHandler(HandleTickUpdate, 0, AuraType.PeriodicHeal));
         }
     }
-}

@@ -1,17 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.BattleGrounds;
-using Game.DataStorage;
-using Game.Maps;
-using Game.Movement;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Maps;
+using Game.Spells;
+using Game.Movement;
+using Game.DataStorage;
+using Game.BattleGrounds;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {
@@ -141,7 +141,7 @@ namespace Game.Entities
         {
             return MovementGeneratorType.Idle;
         }
-        
+
         public void StopMoving()
         {
             ClearUnitState(UnitState.Moving);
@@ -234,7 +234,7 @@ namespace Game.Entities
             //GetMotionMaster()->LaunchMoveSpline(std::move(init), EVENT_FACE, MOTION_PRIORITY_HIGHEST);
             init.Launch();
         }
-        
+
         public void MonsterMoveWithSpeed(float x, float y, float z, float speed, bool generatePath = false, bool forceDestination = false)
         {
             var initializer = (MoveSplineInit init) =>
@@ -570,8 +570,6 @@ namespace Game.Entities
 
                     break;
                 }
-                default:
-                    break;
             }
 
             Creature creature = ToCreature();
@@ -680,7 +678,7 @@ namespace Game.Entities
         {
             return HasUnitMovementFlag(MovementFlag.Hover) ? m_unitData.HoverHeight : 0.0f;
         }
-        
+
         public bool IsWithinBoundaryRadius(Unit obj)
         {
             if (!obj || !IsInMap(obj) || !InSamePhase(obj))
@@ -859,7 +857,7 @@ namespace Game.Entities
                 }
         }
     }
-        
+
         public override void ProcessPositionDataChanged(PositionFullTerrainStatus data)
         {
             ZLiquidStatus oldLiquidStatus = GetLiquidStatus();
@@ -1153,7 +1151,7 @@ namespace Game.Entities
             {
                 WorldLocation target = new(GetMapId(), pos);
                 ToPlayer().TeleportTo(target, (TeleportToOptions.NotLeaveTransport | TeleportToOptions.NotLeaveCombat | TeleportToOptions.NotUnSummonPet | (casting ? TeleportToOptions.Spell : 0)));
-            }                
+            }
             else
             {
                 SendTeleportPacket(pos);
@@ -1210,8 +1208,6 @@ namespace Game.Entities
                             // SendAutoRepeatCancel ?
                             SetFeared(true);
                         }
-                        break;
-                    default:
                         break;
                 }
             }
@@ -1684,7 +1680,7 @@ namespace Game.Entities
         }
 
         public bool IsPlayingHoverAnim() { return _playHoverAnim; }
-        
+
         void SetPlayHoverAnim(bool enable)
         {
             _playHoverAnim = enable;
@@ -1756,7 +1752,7 @@ namespace Game.Entities
         public bool HasExtraUnitMovementFlag2(MovementFlags3 f) { return m_movementInfo.HasExtraMovementFlag2(f); }
         public MovementFlags3 GetExtraUnitMovementFlags2() { return m_movementInfo.GetExtraMovementFlags2(); }
         public void SetExtraUnitMovementFlags2(MovementFlags3 f) { m_movementInfo.SetExtraMovementFlags2(f); }
-        
+
         //Spline
         public bool IsSplineEnabled()
         {
@@ -1793,7 +1789,7 @@ namespace Game.Entities
                 if (animTier.HasValue)
                     SetAnimTier(animTier.Value);
             }
-            
+
             UpdateSplinePosition();
         }
 

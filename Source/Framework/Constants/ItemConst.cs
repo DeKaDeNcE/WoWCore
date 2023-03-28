@@ -1,4 +1,5 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
@@ -145,6 +146,7 @@ namespace Framework.Constants
         public const byte DefaultSize = 16;
     }
 
+    // slots past 214 are guessed (unused in client)
     enum EquipableSpellSlots
     {
         OffensiveSlot1 = 211,
@@ -162,7 +164,7 @@ namespace Framework.Constants
         WeaponSlot1 = 223,
         WeaponSlot2 = 224,
         WeaponSlot3 = 225,
-        WeaponSlot4 = 226,
+        WeaponSlot4 = 226
     }
 
     public struct EquipmentSlot
@@ -401,7 +403,6 @@ namespace Framework.Constants
         CraftingReagentSlot12 = 55,
         CraftingReagentSlot13 = 56,
         CraftingReagentSlot14 = 57,
-
 
         Max
     }

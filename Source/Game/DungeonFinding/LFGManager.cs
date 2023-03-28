@@ -1,18 +1,19 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Configuration;
-using Framework.Constants;
-using Framework.Database;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Maps;
-using Game.Networking.Packets;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Configuration;
+using Game.Maps;
+using Game.Groups;
+using Game.Entities;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game.DungeonFinding
 {
@@ -66,8 +67,6 @@ namespace Game.DungeonFinding
                 case LfgState.Dungeon:
                 case LfgState.FinishedDungeon:
                     SetState(guid, state);
-                    break;
-                default:
                     break;
             }
         }
@@ -1997,11 +1996,11 @@ namespace Game.DungeonFinding
                 case 288: // The Crown Chemical Co.
                     return Global.GameEventMgr.IsHolidayActive(HolidayIds.LoveIsInTheAir);
                 case 744: // Random Timewalking Dungeon (Burning Crusade)
-                    return Global.GameEventMgr.IsHolidayActive(HolidayIds.TimewalkingDungeonEventBcDefault);
+                    return Global.GameEventMgr.IsHolidayActive(HolidayIds.TimeWalkingDungeonEventBcDefault);
                 case 995: // Random Timewalking Dungeon (Wrath of the Lich King)
-                    return Global.GameEventMgr.IsHolidayActive(HolidayIds.TimewalkingDungeonEventLkDefault);
+                    return Global.GameEventMgr.IsHolidayActive(HolidayIds.TimeWalkingDungeonEventLkDefault);
                 case 1146: // Random Timewalking Dungeon (Cataclysm)
-                    return Global.GameEventMgr.IsHolidayActive(HolidayIds.TimewalkingDungeonEventCataDefault);
+                    return Global.GameEventMgr.IsHolidayActive(HolidayIds.TimeWalkingDungeonEventCataDefault);
             }
             return false;
         }

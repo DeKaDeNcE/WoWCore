@@ -1,19 +1,20 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.IO;
+using Framework.Database;
+using Framework.Constants;
+using Game.Maps;
+using Game.Loots;
+using Game.Spells;
+using Game.Groups;
+using Game.Entities;
 using Game.Conditions;
 using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Loots;
-using Game.Maps;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Game
 {
@@ -178,8 +179,6 @@ namespace Game
                         default:
                             return false;
                     }
-                default:
-                    break;
             }
             return true;
         }
@@ -210,7 +209,7 @@ namespace Game
             ConditionSourceInfo conditionSource = new(map);
             return IsObjectMeetingNotGroupedConditions(sourceType, entry, conditionSource);
         }
-        
+
         public bool HasConditionsForNotGroupedEntry(ConditionSourceType sourceType, uint entry)
         {
             if (sourceType > ConditionSourceType.None && sourceType < ConditionSourceType.Max)
@@ -303,7 +302,7 @@ namespace Game
         {
             return spellsUsedInSpellClickConditions.Contains(spellId);
         }
-        
+
         public List<Condition> GetConditionsForAreaTrigger(uint areaTriggerId, bool isServerSide)
         {
             return areaTriggerConditionContainerStorage.LookupByKey(Tuple.Create(areaTriggerId, isServerSide));
@@ -334,17 +333,17 @@ namespace Game
             }
             return true;
         }
-        
+
         public void LoadConditions(bool isReload = false)
         {
             uint oldMSTime = Time.GetMSTime();
 
             Clean();
 
-            //must clear all custom handled cases (groupped types) before reload
+            //must clear all custom handled cases (grouped types) before reload
             if (isReload)
             {
-                Log.outInfo(LogFilter.Server, "Reseting Loot Conditions...");
+                Log.outInfo(LogFilter.Server, "Resetting Loot Conditions...");
                 LootStorage.Creature.ResetConditions();
                 LootStorage.Fishing.ResetConditions();
                 LootStorage.Gameobject.ResetConditions();
@@ -585,8 +584,6 @@ namespace Game
                             ++count;
                             continue;
                         }
-                        default:
-                            break;
                     }
 
                     if (!valid)
@@ -693,8 +690,6 @@ namespace Game
                                 }
                                 break;
                             }
-                            default:
-                                break;
                         }
                     }
 
@@ -823,7 +818,7 @@ namespace Game
             Log.outError(LogFilter.Sql, $"{cond}, Graveyard {cond.SourceEntry} does not have ghostzone {cond.SourceGroup}.");
             return false;
         }
-        
+
         bool IsSourceTypeValid(Condition cond)
         {
             switch (cond.SourceType)
@@ -1065,8 +1060,6 @@ namespace Game
                             case SpellTargetSelectionCategories.Traj:
                             case SpellTargetSelectionCategories.Line:
                                 continue;
-                            default:
-                                break;
                         }
 
                         switch (spellEffectInfo.TargetB.GetSelectionCategory())
@@ -1077,8 +1070,6 @@ namespace Game
                             case SpellTargetSelectionCategories.Traj:
                             case SpellTargetSelectionCategories.Line:
                                 continue;
-                            default:
-                                break;
                         }
 
                         switch (spellEffectInfo.Effect)
@@ -1094,8 +1085,6 @@ namespace Game
                             case SpellEffectName.ApplyAreaAuraSummons:
                             case SpellEffectName.ApplyAreaAuraPartyNonrandom:
                                 continue;
-                            default:
-                                break;
                         }
 
                         Log.outError(LogFilter.Sql, "SourceEntry {0} SourceGroup {1} in `condition` table - spell {2} does not have implicit targets of types: _AREA_, _CONE_, _NEARBY_, _CHAIN_ for effect {3}, SourceGroup needs correction, ignoring.", cond.SourceEntry, origGroup, cond.SourceEntry, spellEffectInfo.EffectIndex);
@@ -1588,9 +1577,11 @@ namespace Game
                     break;
                 }
                 case ConditionTypes.TypeMaskLegacy:
+                {
                     cond.ConditionType = ConditionTypes.TypeMask;
                     cond.ConditionValue1 = Legacy.ConvertLegacyTypeMask(cond.ConditionValue1);
                     goto case ConditionTypes.TypeMask;
+                }
                 case ConditionTypes.TypeMask:
                 {
                     if (cond.ConditionValue1 == 0 || Convert.ToBoolean(cond.ConditionValue1 & ~(uint)(TypeMask.Unit | TypeMask.Player | TypeMask.GameObject | TypeMask.Corpse)))
@@ -1912,8 +1903,6 @@ namespace Game
                     return value1 < value2;
                 case 6:
                     return value1 <= value2;
-                default:
-                    break;
             }
             return false;
         }
@@ -1938,8 +1927,6 @@ namespace Game
                         break;
                     case 2:
                         result = result || results[i];
-                        break;
-                    default:
                         break;
                 }
             }
@@ -1987,8 +1974,6 @@ namespace Game
                 case PlayerConditionLfgStatus.BootCount:
                     break;
                 case PlayerConditionLfgStatus.GearDiff:
-                    break;
-                default:
                     break;
             }
 
@@ -2189,8 +2174,6 @@ namespace Game
                     case 5:
                         if (group && group.IsRaidGroup())
                             return false;
-                        break;
-                    default:
                         break;
                 }
             }
@@ -2526,8 +2509,6 @@ namespace Game
                     case WorldStateExpressionLogic.Xor:
                         finalResult = finalResult != secondResult;
                         break;
-                    default:
-                        break;
                 }
 
                 if (buffer.GetCurrentStream().Position < buffer.GetSize())
@@ -2779,8 +2760,6 @@ namespace Game
                     {
                         return !aurApp.GetFlags().HasFlag(AuraFlags.Negative) && ((int)aurApp.GetBase().GetSpellInfo().GetSchoolMask() & (1 << value)) != 0;
                     }) != null ? value : 0;
-                default:
-                    break;
             }
 
             return 0;
@@ -2792,7 +2771,7 @@ namespace Game
             {
                 if (condition.Variable[i] == 0)
                     break;
-                
+
                 int unitValue = GetUnitConditionVariable(unit, otherUnit, (UnitConditionVariable)condition.Variable[i], condition.Value[i]);
                 bool meets = false;
                 switch ((UnitConditionOp)condition.Op[i])
@@ -2815,8 +2794,6 @@ namespace Game
                     case UnitConditionOp.GreaterThanOrEqualTo:
                         meets = unitValue >= condition.Value[i];
                         break;
-                    default:
-                        break;
                 }
 
                 if (condition.GetFlags().HasFlag(UnitConditionFlags.LogicOr))
@@ -2830,7 +2807,7 @@ namespace Game
 
             return !condition.GetFlags().HasFlag(UnitConditionFlags.LogicOr);
         }
-        
+
         static int EvalSingleValue(ByteBuffer buffer, Map map)
         {
             WorldStateExpressionValueType valueType = (WorldStateExpressionValueType)buffer.ReadUInt8();
@@ -2861,8 +2838,6 @@ namespace Game
                     value = WorldStateExpressionFunction(functionType, map, arg1, arg2);
                     break;
                 }
-                default:
-                    break;
             }
 
             return value;
@@ -2920,7 +2895,7 @@ namespace Game
                         return 1;
 
                     //todo fix me
-                    // init with predetermined seed                      
+                    // init with predetermined seed
                     //std::mt19937 mt(arg2? arg2 : 1);
                     //value = mt() % arg1 + 1;
                     return 0;
@@ -2968,7 +2943,7 @@ namespace Game
             {
                 case WorldStateExpressionOperatorType.Sum:
                     return leftValue + rightValue;
-                case WorldStateExpressionOperatorType.Substraction:
+                case WorldStateExpressionOperatorType.Subtraction:
                     return leftValue - rightValue;
                 case WorldStateExpressionOperatorType.Multiplication:
                     return leftValue * rightValue;
@@ -2976,8 +2951,6 @@ namespace Game
                     return rightValue == 0 ? 0 : leftValue / rightValue;
                 case WorldStateExpressionOperatorType.Remainder:
                     return rightValue == 0 ? 0 : leftValue % rightValue;
-                default:
-                    break;
             }
 
             return leftValue;
@@ -3007,8 +2980,6 @@ namespace Game
                     return leftValue > rightValue;
                 case WorldStateExpressionComparisonType.GreaterOrEqual:
                     return leftValue >= rightValue;
-                default:
-                    break;
             }
 
             return false;

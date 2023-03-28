@@ -1,16 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Maps;
-using Game.Networking.Packets;
-using Game.Scripting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.Maps;
+using Game.Entities;
+using Game.Scripting;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game.Spells
 {
@@ -300,7 +301,7 @@ namespace Game.Spells
         {
             return $"Base: {(GetBase() != null ? GetBase().GetDebugInfo() : "NULL")}\nTarget: {(GetTarget() != null ? GetTarget().GetDebugInfo() : "NULL")}";
         }
-        
+
         public Unit GetTarget() { return _target; }
         public Aura GetBase() { return _base; }
 
@@ -577,7 +578,7 @@ namespace Game.Spells
                             }
                         }
                     }
-                    
+
                 }
 
                 if (!addUnit)
@@ -713,7 +714,7 @@ namespace Game.Spells
                                 if (power.RequiredAuraSpellID != 0 && !caster.HasAura(power.RequiredAuraSpellID))
                                     continue;
 
-                                int manaPerSecond = (int)power.ManaPerSecond;
+                                int manaPerSecond = power.ManaPerSecond;
                                 if (power.PowerType != PowerType.Health)
                                     manaPerSecond += MathFunctions.CalculatePct(caster.GetMaxPower(power.PowerType), power.PowerPctPerSecond);
                                 else
@@ -1015,7 +1016,7 @@ namespace Game.Spells
                 && !m_spellInfo.HasAttribute(SpellAttr2.AllowWhileNotShapeshiftedCasterForm)
                 && !m_spellInfo.HasAttribute(SpellAttr0.NotShapeshifted);
         }
-        
+
         public bool CanBeSaved()
         {
             if (IsPassive())
@@ -1068,8 +1069,6 @@ namespace Game.Spells
                 case SpellSpecificType.MagePolymorph:
                     if (aura.GetSpellInfo().GetSpellSpecific() == spec)
                         return true;
-                    break;
-                default:
                     break;
             }
 
@@ -1164,8 +1163,6 @@ namespace Game.Spells
                 case AuraType.ChargeRecoveryMod:
                 case AuraType.ChargeRecoveryMultiplier:
                     return true;
-                default:
-                    break;
             }
 
             return false;
@@ -1348,8 +1345,6 @@ namespace Game.Spells
                                 if (removeMode != AuraRemoveMode.Expire)
                                     break;
                                 target.CastSpell(target, 32612, new CastSpellExtraArgs(GetEffect(1)));
-                                break;
-                            default:
                                 break;
                         }
                         break;
@@ -1596,8 +1591,6 @@ namespace Game.Spells
 
                                 return true;
                             }
-                            default:
-                                break;
                         }
                     }
                     return false;
@@ -1753,7 +1746,7 @@ namespace Game.Spells
                 if (GetCharges() == 0)
                     return 0;
 
-                if (procEntry.AttributesMask.HasAnyFlag(ProcAttributes.ReqSpellmod))
+                if (procEntry.AttributesMask.HasAnyFlag(ProcAttributes.ReqSpellMod))
                 {
                     Spell eventSpell = eventInfo.GetProcSpell();
                     if (eventSpell != null)
@@ -2114,7 +2107,7 @@ namespace Game.Spells
         {
             foreach (var auraScript in m_loadedScripts)
             {
-                auraScript._PrepareScriptCall(AuraScriptHookType.EffectCalcSpellmod);
+                auraScript._PrepareScriptCall(AuraScriptHookType.EffectCalcSpellMod);
 
                 foreach (var eff in auraScript.DoEffectCalcSpellMod)
                     if (eff.IsEffectAffected(m_spellInfo, aurEff.GetEffIndex()))
@@ -2136,7 +2129,7 @@ namespace Game.Spells
                 loadedScript._FinishScriptCall();
             }
         }
-        
+
         public void CallScriptEffectAbsorbHandlers(AuraEffect aurEff, AuraApplication aurApp, DamageInfo dmgInfo, ref uint absorbAmount, ref bool defaultPrevented)
         {
             foreach (var auraScript in m_loadedScripts)
@@ -2192,7 +2185,7 @@ namespace Game.Spells
                 auraScript._FinishScriptCall();
             }
         }
-        
+
         public void CallScriptEffectManaShieldHandlers(AuraEffect aurEff, AuraApplication aurApp, DamageInfo dmgInfo, ref uint absorbAmount, ref bool defaultPrevented)
         {
             foreach (var auraScript in m_loadedScripts)
@@ -2247,7 +2240,7 @@ namespace Game.Spells
                 loadedScript._FinishScriptCall();
             }
         }
-        
+
         public bool CallScriptCheckProcHandlers(AuraApplication aurApp, ProcEventInfo eventInfo)
         {
             bool result = true;
@@ -2389,7 +2382,7 @@ namespace Game.Spells
             Cypher.Assert(GetAuraType() == AuraObjectType.DynObj);
             return m_owner.ToDynamicObject();
         }
-        
+
         public void SetCastItemGUID(ObjectGuid guid)
         {
             m_castItemGuid = guid;
@@ -2512,8 +2505,6 @@ namespace Game.Spells
                         if (spellEffectInfo.Effect == SpellEffectName.PersistentAreaAura)
                             effMask |= (1u << (int)spellEffectInfo.EffectIndex);
                     }
-                    break;
-                default:
                     break;
             }
             return (effMask & availableEffectMask);

@@ -1,17 +1,18 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Framework.Web;
-using Framework.Serialization;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
+using System.Linq;
 using System.Timers;
+using System.Collections.Generic;
 using System.Collections.Concurrent;
+using Framework.Web;
 using Framework.Realm;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Serialization;
 
 public class RealmManager : Singleton<RealmManager>
 {
@@ -153,7 +154,7 @@ public class RealmManager : Singleton<RealmManager>
         return true;
     }
 
-public RealmBuildInfo GetBuildInfo(uint build)
+    public RealmBuildInfo GetBuildInfo(uint build)
     {
         foreach (var clientBuild in _builds)
             if (clientBuild.Build == build)

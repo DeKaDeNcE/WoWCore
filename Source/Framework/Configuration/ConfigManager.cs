@@ -1,20 +1,22 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
+using Framework.Collections;
 
-namespace Framework.Configuration
-{
+namespace Framework.Configuration;
+
     public class ConfigMgr
     {
         public static bool Load(string fileName)
         {
             string path = AppContext.BaseDirectory + fileName;
+
             if (!File.Exists(path))
             {
                 Console.WriteLine("{0} doesn't exist!", fileName);
@@ -65,6 +67,5 @@ namespace Framework.Configuration
             return _configList.Where(p => p.Key.Contains(name)).Select(p => p.Key);
         }
 
-        static Dictionary<string, string> _configList = new();
+        private static Dictionary<string, string> _configList = new();
     }
-}

@@ -1,21 +1,22 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
+using System;
+using System.Text;
+using System.Collections.Generic;
 using Framework.Database;
+using Framework.Constants;
+using Framework.Collections;
+using Game.Maps;
 using Game.Chat;
-using Game.DataStorage;
-using Game.Entities;
+using Game.Mails;
 using Game.Groups;
 using Game.Guilds;
-using Game.Mails;
-using Game.Maps;
+using Game.Entities;
+using Game.DataStorage;
 using Game.Networking;
 using Game.Networking.Packets;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Game.Achievements
 {
@@ -49,7 +50,7 @@ namespace Game.Achievements
         {
             return _completedAchievements.Keys;
         }
-        
+
         public override bool CanUpdateCriteriaTree(Criteria criteria, CriteriaTree tree, Player referencePlayer)
         {
             AchievementRecord achievement = tree.Achievement;

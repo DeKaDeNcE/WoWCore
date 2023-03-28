@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.Networking;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Networking;
 
 namespace Game.DataStorage
 {
@@ -518,7 +519,7 @@ namespace Game.DataStorage
                 _transmogSetItemsByTransmogSet.Add(transmogSetItem.TransmogSetID, transmogSetItem);
             }
 
-            for (var i = 0; i < (int)UiMapSystem.Max; ++i)
+            for (var i = 0; i < (int)UIMapSystem.Max; ++i)
             {
                 _uiMapAssignmentByMap[i] = new MultiMap<int, UiMapAssignmentRecord>();
                 _uiMapAssignmentByArea[i] = new MultiMap<int, UiMapAssignmentRecord>();
@@ -1123,15 +1124,11 @@ namespace Game.DataStorage
                             return CurveInterpolationMode.Bezier3;
                         case 4:
                             return CurveInterpolationMode.Bezier4;
-                        default:
-                            break;
                     }
                     return CurveInterpolationMode.Bezier;
                 }
                 case 3:
                     return CurveInterpolationMode.Cosine;
-                default:
-                    break;
             }
 
             return points.Count != 1 ? CurveInterpolationMode.Linear : CurveInterpolationMode.Constant;
@@ -1239,8 +1236,6 @@ namespace Game.DataStorage
                 }
                 case CurveInterpolationMode.Constant:
                     return points[0].Pos.Y;
-                default:
-                    break;
             }
 
             return 0.0f;
@@ -1329,8 +1324,6 @@ namespace Game.DataStorage
                 case Class.Mage:
                     classMod = ExpectedStatModStorage.LookupByKey(1);
                     break;
-                default:
-                    break;
             }
 
             List<ContentTuningXExpectedRecord> contentTuningMods = _expectedStatModsByContentTuning.LookupByKey(contentTuningId);
@@ -1401,8 +1394,6 @@ namespace Game.DataStorage
                         value *= contentTuningMods.Sum(expectedStatMod => ExpectedStatModReducer(1.0f, expectedStatMod, stat, mythicPlusMilestoneSeason));
                     if (classMod != null)
                         value *= classMod.CreatureSpellDamageMod;
-                    break;
-                default:
                     break;
             }
             return value;
@@ -1721,8 +1712,6 @@ namespace Game.DataStorage
                         return _pvpTalentSlotUnlock[slot].DeathKnightLevelRequired;
                     case Class.DemonHunter:
                         return _pvpTalentSlotUnlock[slot].DemonHunterLevelRequired;
-                    default:
-                        break;
                 }
                 return _pvpTalentSlotUnlock[slot].LevelRequired;
             }
@@ -1845,7 +1834,7 @@ namespace Game.DataStorage
         {
             return _skillRaceClassInfoBySkill.LookupByKey(skill);
         }
-        
+
         public SoulbindConduitRankRecord GetSoulbindConduitRank(int soulbindConduitId, int rank)
         {
             return _soulbindConduitRanks.LookupByKey(Tuple.Create(soulbindConduitId, rank));
@@ -1875,7 +1864,7 @@ namespace Game.DataStorage
         {
             return _spellVisualMissilesBySet.LookupByKey(spellVisualMissileSetId);
         }
-        
+
         public List<TalentRecord> GetTalentsByPosition(Class class_, uint tier, uint column)
         {
             return _talentsByPosition[(int)class_][tier][column];
@@ -2050,7 +2039,7 @@ namespace Game.DataStorage
             return true;
         }
 
-        UiMapAssignmentRecord FindNearestMapAssignment(float x, float y, float z, int mapId, int areaId, int wmoDoodadPlacementId, int wmoGroupId, UiMapSystem system)
+        UiMapAssignmentRecord FindNearestMapAssignment(float x, float y, float z, int mapId, int areaId, int wmoDoodadPlacementId, int wmoGroupId, UIMapSystem system)
         {
             UiMapAssignmentStatus nearestMapAssignment = new();
             var iterateUiMapAssignments = new Action<MultiMap<int, UiMapAssignmentRecord>, int>((assignments, id) =>
@@ -2095,7 +2084,7 @@ namespace Game.DataStorage
             UiMapRecord uiMap = UiMapStorage.LookupByKey(uiMapID);
             while (uiMap != null)
             {
-                if (uiMap.Type <= UiMapType.Continent)
+                if (uiMap.Type <= UIMapType.Continent)
                     break;
 
                 UiMapBounds bounds = _uiMapBounds.LookupByKey(uiMap.Id);
@@ -2111,17 +2100,17 @@ namespace Game.DataStorage
             return uiPosition;
         }
 
-        public bool GetUiMapPosition(float x, float y, float z, int mapId, int areaId, int wmoDoodadPlacementId, int wmoGroupId, UiMapSystem system, bool local, out Vector2 newPos)
+        public bool GetUiMapPosition(float x, float y, float z, int mapId, int areaId, int wmoDoodadPlacementId, int wmoGroupId, UIMapSystem system, bool local, out Vector2 newPos)
         {
             return GetUiMapPosition(x, y, z, mapId, areaId, wmoDoodadPlacementId, wmoGroupId, system, local, out _, out newPos);
         }
 
-        public bool GetUiMapPosition(float x, float y, float z, int mapId, int areaId, int wmoDoodadPlacementId, int wmoGroupId, UiMapSystem system, bool local, out int uiMapId)
+        public bool GetUiMapPosition(float x, float y, float z, int mapId, int areaId, int wmoDoodadPlacementId, int wmoGroupId, UIMapSystem system, bool local, out int uiMapId)
         {
             return GetUiMapPosition(x, y, z, mapId, areaId, wmoDoodadPlacementId, wmoGroupId, system, local, out uiMapId, out _);
         }
 
-        public bool GetUiMapPosition(float x, float y, float z, int mapId, int areaId, int wmoDoodadPlacementId, int wmoGroupId, UiMapSystem system, bool local, out int uiMapId, out Vector2 newPos)
+        public bool GetUiMapPosition(float x, float y, float z, int mapId, int areaId, int wmoDoodadPlacementId, int wmoGroupId, UIMapSystem system, bool local, out int uiMapId, out Vector2 newPos)
         {
             uiMapId = -1;
             newPos = new Vector2();
@@ -2155,7 +2144,7 @@ namespace Game.DataStorage
             if (areaEntry == null)
                 return false;
 
-            foreach (var assignment in _uiMapAssignmentByArea[(int)UiMapSystem.World].LookupByKey(areaId))
+            foreach (var assignment in _uiMapAssignmentByArea[(int)UIMapSystem.World].LookupByKey(areaId))
             {
                 if (assignment.MapID >= 0 && assignment.MapID != areaEntry.ContinentID)
                     continue;
@@ -2174,7 +2163,7 @@ namespace Game.DataStorage
         public void Map2ZoneCoordinates(int areaId, ref float x, ref float y)
         {
             Vector2 zoneCoords;
-            if (!GetUiMapPosition(x, y, 0.0f, -1, areaId, 0, 0, UiMapSystem.World, true, out zoneCoords))
+            if (!GetUiMapPosition(x, y, 0.0f, -1, areaId, 0, 0, UIMapSystem.World, true, out zoneCoords))
                 return;
 
             x = zoneCoords.Y * 100.0f;
@@ -2282,10 +2271,10 @@ namespace Game.DataStorage
         MultiMap<uint, TransmogSetRecord> _transmogSetsByItemModifiedAppearance = new();
         MultiMap<uint, TransmogSetItemRecord> _transmogSetItemsByTransmogSet = new();
         Dictionary<int, UiMapBounds> _uiMapBounds = new();
-        MultiMap<int, UiMapAssignmentRecord>[] _uiMapAssignmentByMap = new MultiMap<int, UiMapAssignmentRecord>[(int)UiMapSystem.Max];
-        MultiMap<int, UiMapAssignmentRecord>[] _uiMapAssignmentByArea = new MultiMap<int, UiMapAssignmentRecord>[(int)UiMapSystem.Max];
-        MultiMap<int, UiMapAssignmentRecord>[] _uiMapAssignmentByWmoDoodadPlacement = new MultiMap<int, UiMapAssignmentRecord>[(int)UiMapSystem.Max];
-        MultiMap<int, UiMapAssignmentRecord>[] _uiMapAssignmentByWmoGroup = new MultiMap<int, UiMapAssignmentRecord>[(int)UiMapSystem.Max];
+        MultiMap<int, UiMapAssignmentRecord>[] _uiMapAssignmentByMap = new MultiMap<int, UiMapAssignmentRecord>[(int)UIMapSystem.Max];
+        MultiMap<int, UiMapAssignmentRecord>[] _uiMapAssignmentByArea = new MultiMap<int, UiMapAssignmentRecord>[(int)UIMapSystem.Max];
+        MultiMap<int, UiMapAssignmentRecord>[] _uiMapAssignmentByWmoDoodadPlacement = new MultiMap<int, UiMapAssignmentRecord>[(int)UIMapSystem.Max];
+        MultiMap<int, UiMapAssignmentRecord>[] _uiMapAssignmentByWmoGroup = new MultiMap<int, UiMapAssignmentRecord>[(int)UIMapSystem.Max];
         List<int> _uiMapPhases = new();
         Dictionary<Tuple<short, sbyte, int>, WMOAreaTableRecord> _wmoAreaTableLookup = new();
     }
@@ -2497,7 +2486,7 @@ namespace Game.DataStorage
             UniqueID = data.ReadUInt32();
         }
     }
-    
+
     public class HotfixOptionalData
     {
         public uint Key;

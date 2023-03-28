@@ -1,13 +1,16 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
+
+// ReSharper disable CheckNamespace
 
 using System.IO;
 
-namespace System.Collections.Generic
-{
+namespace System.Collections.Generic;
+
     public class Array<T> : List<T>
     {
-        int _limit;
+        private readonly int _limit;
 
         public Array(int size) : base(size)
         {
@@ -33,10 +36,7 @@ namespace System.Collections.Generic
 
         public new T this[int index]
         {
-            get
-            {
-                return base[index];
-            }
+            get => base[index];
             set
             {
                 if (index >= Count)
@@ -51,11 +51,7 @@ namespace System.Collections.Generic
             }
         }
 
-        public int GetLimit() { return _limit; }
+        public int GetLimit() => _limit;
 
-        public static implicit operator T[] (Array<T> array)
-        {
-            return array.ToArray();
-        }
+        public static implicit operator T[] (Array<T> array) => array.ToArray();
     }
-}

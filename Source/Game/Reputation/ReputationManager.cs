@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Networking.Packets;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Entities;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game
 {
@@ -49,7 +50,7 @@ namespace Game
 
             return rank;
         }
-        
+
         public FactionState GetState(FactionRecord factionEntry)
         {
             return factionEntry.CanHaveReputation() ? GetState(factionEntry.ReputationIndex) : null;
@@ -145,7 +146,7 @@ namespace Game
 
             return ReputationRankThresholds.LastOrDefault();
         }
-        
+
         public int GetReputation(FactionRecord factionEntry)
         {
             // Faction without recorded reputation. Just ignore.
@@ -183,7 +184,7 @@ namespace Game
 
             return false;
         }
-        
+
         public int GetParagonLevel(uint paragonFactionId)
         {
             return GetParagonLevel(CliDB.FactionStorage.LookupByKey(paragonFactionId));
@@ -249,7 +250,7 @@ namespace Game
 
             return 0;
         }
-        
+
         public void ApplyForceReaction(uint faction_id, ReputationRank rank, bool apply)
         {
             if (apply)
@@ -292,21 +293,22 @@ namespace Game
             SetFactionStanding setFactionStanding = new();
             setFactionStanding.BonusFromAchievementSystem = 0.0f;
 
-            int getStandingForPacket(FactionState state)
+            int GetStandingForPacket(FactionState state)
             {
                 return state.VisualStandingIncrease != 0 ? state.VisualStandingIncrease : state.Standing;
             }
 
             if (faction != null)
-                setFactionStanding.Faction.Add(new FactionStandingData((int)faction.ReputationListID, getStandingForPacket(faction)));
+                setFactionStanding.Faction.Add(new FactionStandingData((int)faction.ReputationListID, GetStandingForPacket(faction)));
 
             foreach (var state in _factions.Values)
             {
                 if (state.needSend)
                 {
                     state.needSend = false;
+
                     if (faction == null || state.ReputationListID != faction.ReputationListID)
-                        setFactionStanding.Faction.Add(new FactionStandingData((int)state.ReputationListID, getStandingForPacket(state)));
+                        setFactionStanding.Faction.Add(new FactionStandingData((int)state.ReputationListID, GetStandingForPacket(state)));
                 }
             }
 
@@ -384,7 +386,7 @@ namespace Game
         {
             return SetReputation(factionEntry, standing, false, false, false);
         }
-        
+
         public bool SetReputation(FactionRecord factionEntry, int standing, bool incremental, bool spillOverOnly, bool noSpillover)
         {
             Global.ScriptMgr.OnPlayerReputationChange(_player, factionEntry.Id, standing, incremental);
@@ -829,7 +831,7 @@ namespace Game
 
             return _player.GetLevel() >= _player.GetQuestMinLevel(quest);
         }
-        
+
         public byte GetVisibleFactionCount() { return _visibleFactionCount; }
 
         public byte GetHonoredFactionCount() { return _honoredFactionCount; }

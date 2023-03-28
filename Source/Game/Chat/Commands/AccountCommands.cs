@@ -1,10 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.Entities;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedMember.Local
+// ReSharper disable UnusedType.Local
+
 using System;
+using Framework.Database;
+using Framework.Constants;
+using Game.Entities;
 
 namespace Game.Chat
 {
@@ -334,7 +339,7 @@ namespace Game.Chat
         static bool HandleAccountPasswordCommand(CommandHandler handler, string oldPassword, string newPassword, string confirmPassword, [OptionalArg] string confirmEmail)
         {
             // First, we check config. What security type (sec type) is it ? Depending on it, the command branches out
-            uint pwConfig = WorldConfig.GetUIntValue(WorldCfg.AccPasschangesec); // 0 - PW_NONE, 1 - PW_EMAIL, 2 - PW_RBAC
+            uint pwConfig = WorldConfig.GetUIntValue(WorldCfg.AccPassChangeSec); // 0 - PW_NONE, 1 - PW_EMAIL, 2 - PW_RBAC
 
             // We compare the old, saved password to the entered old password - no chance for the unauthorized.
             if (!Global.AccountMgr.CheckPassword(handler.GetSession().GetAccountId(), oldPassword))
@@ -552,7 +557,7 @@ namespace Game.Chat
         {
             [Command("2fa", CypherStrings.CommandAccSet2faHelp, RBACPermissions.CommandAccountSet2Fa, true)]
             static bool HandleAccountSet2FACommand(CommandHandler handler, string accountName, string secret)
-            {                
+            {
                 /*uint targetAccountId = Global.AccountMgr.GetId(accountName);
                 if (targetAccountId == 0)
                 {

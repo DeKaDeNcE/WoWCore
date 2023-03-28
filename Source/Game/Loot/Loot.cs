@@ -1,16 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Constants;
+using Game.Maps;
+using Game.Groups;
+using Game.Entities;
 using Game.Conditions;
 using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Maps;
 using Game.Networking.Packets;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Game.Loots
 {
@@ -105,7 +106,7 @@ namespace Game.Loots
         {
             return allowedGUIDs.Contains(looter);
         }
-        
+
         public LootSlotType? GetUiTypeForPlayer(Player player, Loot loot)
         {
             if (is_looted)
@@ -166,8 +167,6 @@ namespace Game.Loots
                     return null;
                 case LootMethod.PersonalLoot:
                     return LootSlotType.Owner;
-                default:
-                    break;
             }
 
             return null;
@@ -242,7 +241,7 @@ namespace Game.Loots
 
             foreach (var (playerGuid, roll) in m_rollVoteMap)
             {
-                if (roll.Vote != RollVote.NotEmitedYet)
+                if (roll.Vote != RollVote.NotEmittedYet)
                     continue;
 
                 Player player = Global.ObjAccessor.GetPlayer(m_map, playerGuid);
@@ -259,7 +258,7 @@ namespace Game.Loots
             ItemTemplate itemTemplate = Global.ObjectMgr.GetItemTemplate(m_lootItem.itemid);
             foreach (var (playerGuid, roll) in m_rollVoteMap)
             {
-                if (roll.Vote != RollVote.NotEmitedYet)
+                if (roll.Vote != RollVote.NotEmittedYet)
                     continue;
 
                 Player player = Global.ObjAccessor.GetPlayer(m_map, playerGuid);
@@ -367,7 +366,7 @@ namespace Game.Loots
                 {
                     case RollVote.Pass:
                         break;
-                    case RollVote.NotEmitedYet:
+                    case RollVote.NotEmittedYet:
                     case RollVote.NotValid:
                         SendRoll(playerGuid, 0, RollVote.Pass, targetGuid);
                         break;
@@ -447,7 +446,7 @@ namespace Game.Loots
                         continue;
                     }
                     // initialize player vote map
-                    m_rollVoteMap[allowedLooter].Vote = plr.GetPassOnGroupLoot() ? RollVote.Pass : RollVote.NotEmitedYet;
+                    m_rollVoteMap[allowedLooter].Vote = plr.GetPassOnGroupLoot() ? RollVote.Pass : RollVote.NotEmittedYet;
                     if (!plr.GetPassOnGroupLoot())
                         plr.AddLootRoll(this);
 
@@ -572,10 +571,8 @@ namespace Game.Loots
                     // Explicitly passing excludes a player from winning loot, so no action required.
                     case RollVote.Pass:
                         break;
-                    case RollVote.NotEmitedYet:
+                    case RollVote.NotEmittedYet:
                         ++notVoted;
-                        break;
-                    default:
                         break;
                 }
             }
@@ -791,8 +788,6 @@ namespace Game.Loots
                                     item.is_blocked = true;
                                     break;
                                 }
-                                default:
-                                    break;
                             }
                         }
                     }
@@ -924,7 +919,7 @@ namespace Game.Loots
         {
             return _allowedLooters.Contains(looter);
         }
-        
+
         public void GenerateMoneyLoot(uint minAmount, uint maxAmount)
         {
             if (maxAmount > 0)

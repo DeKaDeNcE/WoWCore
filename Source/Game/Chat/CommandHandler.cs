@@ -1,18 +1,19 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Framework.IO;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Maps;
-using Game.Networking.Packets;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
+using Framework.IO;
+using Framework.Constants;
+using Framework.Collections;
+using Game.Maps;
+using Game.Groups;
+using Game.Entities;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game.Chat
 {
@@ -66,7 +67,7 @@ namespace Game.Chat
         }
 
         public virtual bool IsHumanReadable() { return true; }
-        
+
         public virtual bool HasPermission(RBACPermissions permission) { return _session.HasPermission(permission); }
 
         public string ExtractKeyFromLink(StringArguments args, params string[] linkType)
@@ -267,7 +268,7 @@ namespace Game.Chat
                 return 0;
 
             if (!uint.TryParse(idS, out uint id))
-                return 0;               
+                return 0;
 
             switch (type)
             {
@@ -543,7 +544,7 @@ namespace Game.Chat
             {
                 messageChat.Initialize(ChatMsg.System, Language.Universal, null, null, lines[i]);
                 _session.SendPacket(messageChat);
-            }            
+            }
         }
 
         public void SendNotification(CypherStrings str, params object[] args)
@@ -767,7 +768,7 @@ namespace Game.Chat
     {
         Action<string> _reportToRA;
 
-        public RemoteAccessHandler(Action<string> reportToRA) : base() 
+        public RemoteAccessHandler(Action<string> reportToRA) : base()
         {
             _reportToRA = reportToRA;
         }

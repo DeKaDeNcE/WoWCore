@@ -1,26 +1,27 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Configuration;
-using Framework.Constants;
-using Framework.Database;
-using Framework.Realm;
-using Game.BattlePets;
-using Game.Chat;
-using Game.Collision;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Maps;
-using Game.Networking;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
+using System.Linq;
+using System.Text;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Framework.Realm;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Collections;
+using Framework.Configuration;
+using Game.Chat;
+using Game.Maps;
+using Game.Spells;
+using Game.Entities;
+using Game.Collision;
+using Game.BattlePets;
+using Game.DataStorage;
+using Game.Networking;
+using Game.Networking.Packets;
 
 namespace Game
 {
@@ -1015,7 +1016,7 @@ namespace Game
             m_timers[WorldTimers.UpTime].SetInterval(10 * Time.Minute * Time.InMilliseconds);
             //erase corpses every 20 minutes
             m_timers[WorldTimers.Corpses].SetInterval(20 * Time.Minute * Time.InMilliseconds);
-            m_timers[WorldTimers.CleanDB].SetInterval(WorldConfig.GetIntValue(WorldCfg.LogdbClearinterval) * Time.Minute * Time.InMilliseconds);
+            m_timers[WorldTimers.CleanDB].SetInterval(WorldConfig.GetIntValue(WorldCfg.LogDBClearInterval) * Time.Minute * Time.InMilliseconds);
             m_timers[WorldTimers.AutoBroadcast].SetInterval(WorldConfig.GetIntValue(WorldCfg.AutoBroadcastInterval));
             // check for chars to delete every day
             m_timers[WorldTimers.DeleteChars].SetInterval(Time.Day * Time.InMilliseconds);
@@ -1150,13 +1151,13 @@ namespace Game
                 Global.SupportMgr.SetComplaintSystemStatus(WorldConfig.GetBoolValue(WorldCfg.SupportComplaintsEnabled));
                 Global.SupportMgr.SetSuggestionSystemStatus(WorldConfig.GetBoolValue(WorldCfg.SupportSuggestionsEnabled));
 
-                Global.MapMgr.SetMapUpdateInterval(WorldConfig.GetIntValue(WorldCfg.IntervalMapupdate));
-                Global.MapMgr.SetGridCleanUpDelay(WorldConfig.GetUIntValue(WorldCfg.IntervalGridclean));
+                Global.MapMgr.SetMapUpdateInterval(WorldConfig.GetIntValue(WorldCfg.IntervalMapUpdate));
+                Global.MapMgr.SetGridCleanUpDelay(WorldConfig.GetUIntValue(WorldCfg.IntervalGridClean));
 
                 m_timers[WorldTimers.UpTime].SetInterval(WorldConfig.GetIntValue(WorldCfg.UptimeUpdate) * Time.Minute * Time.InMilliseconds);
                 m_timers[WorldTimers.UpTime].Reset();
 
-                m_timers[WorldTimers.CleanDB].SetInterval(WorldConfig.GetIntValue(WorldCfg.LogdbClearinterval) * Time.Minute * Time.InMilliseconds);
+                m_timers[WorldTimers.CleanDB].SetInterval(WorldConfig.GetIntValue(WorldCfg.LogDBClearInterval) * Time.Minute * Time.InMilliseconds);
                 m_timers[WorldTimers.CleanDB].Reset();
 
 
@@ -1165,7 +1166,7 @@ namespace Game
             }
 
             for (byte i = 0; i < (int)UnitMoveType.Max; ++i)
-                SharedConst.playerBaseMoveSpeed[i] = SharedConst.baseMoveSpeed[i] * WorldConfig.GetFloatValue(WorldCfg.RateMovespeed);
+                SharedConst.playerBaseMoveSpeed[i] = SharedConst.baseMoveSpeed[i] * WorldConfig.GetFloatValue(WorldCfg.RateMoveSpeed);
 
             var rateCreatureAggro = WorldConfig.GetFloatValue(WorldCfg.RateCreatureAggro);
             //visibility on continents
@@ -1413,14 +1414,14 @@ namespace Game
             }
 
             // <li> Clean logs table
-            if (WorldConfig.GetIntValue(WorldCfg.LogdbCleartime) > 0) // if not enabled, ignore the timer
+            if (WorldConfig.GetIntValue(WorldCfg.LogDBClearTime) > 0) // if not enabled, ignore the timer
             {
                 if (m_timers[WorldTimers.CleanDB].Passed())
                 {
                     m_timers[WorldTimers.CleanDB].Reset();
 
                     PreparedStatement stmt = LoginDatabase.GetPreparedStatement(LoginStatements.DEL_OLD_LOGS);
-                    stmt.AddValue(0, WorldConfig.GetIntValue(WorldCfg.LogdbCleartime));
+                    stmt.AddValue(0, WorldConfig.GetIntValue(WorldCfg.LogDBClearTime));
                     stmt.AddValue(1, 0);
                     stmt.AddValue(2, GetRealm().Id.Index);
 

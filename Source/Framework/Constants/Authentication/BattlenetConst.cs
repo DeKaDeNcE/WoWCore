@@ -1,8 +1,11 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-namespace Framework.Constants
-{
+// ReSharper disable CheckNamespace
+
+namespace Framework.Constants;
+
     public enum BattlenetRpcErrorCode : uint
     {
         Ok = 0x00000000,
@@ -651,4 +654,3 @@ namespace Framework.Constants
         WowServicesSubscriptionExpired = 0x80000147,
         WowServicesCantConnect = 0x80000148,
     }
-}

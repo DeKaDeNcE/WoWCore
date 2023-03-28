@@ -1,8 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-namespace Framework.Constants
-{
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+
+using System;
+
+namespace Framework.Constants;
+
     public enum MovementGeneratorMode
     {
         Default = 0,
@@ -48,6 +54,7 @@ namespace Framework.Constants
         Max
     }
 
+    [Flags]
     public enum MotionMasterFlags
     {
         None = 0x0,
@@ -71,6 +78,7 @@ namespace Framework.Constants
         Initialize
     }
 
+    [Flags]
     public enum MovementGeneratorFlags
     {
         None = 0x000,
@@ -138,4 +146,3 @@ namespace Framework.Constants
         SingleDirectional = 0, // always in a single direction
         Gravity = 1  // pushes/pulls away from a single point
     }
-}

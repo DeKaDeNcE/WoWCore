@@ -1,17 +1,21 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Bgs.Protocol;
-using Bgs.Protocol.Authentication.V1;
-using Bgs.Protocol.Challenge.V1;
-using Framework.Constants;
-using Framework.Database;
-using Framework.Realm;
-using Google.Protobuf;
-using System;
+// ReSharper disable CheckNamespace
+// ReSharper disable UnusedMember.Local
 
-namespace BNetServer.Networking
-{
+using System;
+using Framework.Realm;
+using Framework.Database;
+using Framework.Constants;
+using Google.Protobuf;
+using Bgs.Protocol;
+using Bgs.Protocol.Challenge.V1;
+using Bgs.Protocol.Authentication.V1;
+
+namespace BNetServer.Networking;
+
     public partial class Session
     {
         [Service(OriginalHash.AuthenticationService, 1)]
@@ -41,9 +45,11 @@ namespace BNetServer.Networking
 
             var endpoint = Global.LoginServiceMgr.GetAddressForClient(GetRemoteIpEndPoint().Address);
 
-            ChallengeExternalRequest externalChallenge = new();
-            externalChallenge.PayloadType = "web_auth_url";
-            externalChallenge.Payload = ByteString.CopyFromUtf8($"https://{endpoint.Address}:{endpoint.Port}/bnetserver/login/");
+            ChallengeExternalRequest externalChallenge = new()
+            {
+                PayloadType = "web_auth_url",
+                Payload = ByteString.CopyFromUtf8($"https://{endpoint.Address}:{endpoint.Port}/bnetserver/login/")
+            };
 
             SendRequest((uint)OriginalHash.ChallengeListener, 3, externalChallenge);
             return BattlenetRpcErrorCode.Ok;
@@ -91,25 +97,27 @@ namespace BNetServer.Networking
                 {
                     var realmId = new RealmId(lastPlayerCharactersResult.Read<byte>(1), lastPlayerCharactersResult.Read<byte>(2), lastPlayerCharactersResult.Read<uint>(3));
 
-                    LastPlayedCharacterInfo lastPlayedCharacter = new();
-                    lastPlayedCharacter.RealmId = realmId;
-                    lastPlayedCharacter.CharacterName = lastPlayerCharactersResult.Read<string>(4);
-                    lastPlayedCharacter.CharacterGUID = lastPlayerCharactersResult.Read<ulong>(5);
-                    lastPlayedCharacter.LastPlayedTime = lastPlayerCharactersResult.Read<uint>(6);
+                    LastPlayedCharacterInfo lastPlayedCharacter = new()
+                    {
+                        RealmId = realmId,
+                        CharacterName = lastPlayerCharactersResult.Read<string>(4),
+                        CharacterGUID = lastPlayerCharactersResult.Read<ulong>(5),
+                        LastPlayedTime = lastPlayerCharactersResult.Read<uint>(6)
+                    };
 
                     accountInfo.GameAccounts[lastPlayerCharactersResult.Read<uint>(0)].LastPlayedCharacters[realmId.GetSubRegionAddress()] = lastPlayedCharacter;
 
                 } while (lastPlayerCharactersResult.NextRow());
             }
 
-            string ip_address = GetRemoteIpEndPoint().ToString();
+            string ipAddress = GetRemoteIpEndPoint().ToString();
 
             // If the IP is 'locked', check that the player comes indeed from the correct IP address
             if (accountInfo.IsLockedToIP)
             {
-                Log.outDebug(LogFilter.Session, $"Session.HandleVerifyWebCredentials: Account: {accountInfo.Login} is locked to IP: {accountInfo.LastIP} is logging in from IP: {ip_address}");
+                Log.outDebug(LogFilter.Session, $"Session.HandleVerifyWebCredentials: Account: {accountInfo.Login} is locked to IP: {accountInfo.LastIP} is logging in from IP: {ipAddress}");
 
-                if (accountInfo.LastIP != ip_address)
+                if (accountInfo.LastIP != ipAddress)
                     return BattlenetRpcErrorCode.RiskAccountLocked;
             }
             else
@@ -129,7 +137,7 @@ namespace BNetServer.Networking
             // If the account is banned, reject the logon attempt
             if (accountInfo.IsBanned)
             {
-                if (accountInfo.IsPermanenetlyBanned)
+                if (accountInfo.IsPermanentlyBanned)
                 {
                     Log.outDebug(LogFilter.Session, $"{GetClientInfo()} Session.HandleVerifyWebCredentials: Banned account {accountInfo.Login} tried to login!");
                     return BattlenetRpcErrorCode.GameAccountBanned;
@@ -141,16 +149,24 @@ namespace BNetServer.Networking
                 }
             }
 
-            LogonResult logonResult = new();
-            logonResult.ErrorCode = 0;
-            logonResult.AccountId = new EntityId();
-            logonResult.AccountId.Low = accountInfo.Id;
-            logonResult.AccountId.High = 0x100000000000000;
+            LogonResult logonResult = new()
+            {
+                ErrorCode = 0,
+                AccountId = new EntityId
+                {
+                    Low = accountInfo.Id,
+                    High = 0x100000000000000
+                }
+            };
+
             foreach (var pair in accountInfo.GameAccounts)
             {
-                EntityId gameAccountId = new();
-                gameAccountId.Low = pair.Value.Id;
-                gameAccountId.High = 0x200000200576F57;
+                EntityId gameAccountId = new()
+                {
+                    Low = pair.Value.Id,
+                    High = 0x200000200576F57
+                };
+
                 logonResult.GameAccountId.Add(gameAccountId);
             }
 
@@ -173,7 +189,7 @@ namespace BNetServer.Networking
 
             if (request.Program != 0x576F57)
             {
-                Log.outDebug(LogFilter.Session, $"[Battlenet::HandleGenerateWebCredentials] {GetClientInfo()} attempted to generate web cretentials with game other than WoW (using {(request.Program >> 24) & 0xFF}{(request.Program >> 16) & 0xFF}{(request.Program >> 8) & 0xFF}{request.Program & 0xFF})!");
+                Log.outDebug(LogFilter.Session, $"[Battlenet::HandleGenerateWebCredentials] {GetClientInfo()} attempted to generate web credentials with game other than WoW (using {(request.Program >> 24) & 0xFF}{(request.Program >> 16) & 0xFF}{(request.Program >> 8) & 0xFF}{request.Program & 0xFF})!");
                 return BattlenetRpcErrorCode.BadProgram;
             }
 
@@ -189,4 +205,3 @@ namespace BNetServer.Networking
             return BattlenetRpcErrorCode.Ok;
         }
     }
-}

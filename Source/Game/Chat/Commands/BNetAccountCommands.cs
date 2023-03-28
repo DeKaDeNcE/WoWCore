@@ -1,10 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Framework.IO;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedMember.Local
+// ReSharper disable UnusedType.Local
+
 using System;
+using Framework.Database;
+using Framework.Constants;
 
 namespace Game.Chat.Commands
 {
@@ -32,7 +36,7 @@ namespace Game.Chat.Commands
                     if (handler.GetSession() != null)
                     {
                         Log.outInfo(LogFilter.Player, "Account: {0} (IP: {1}) Character:[{2}] ({3}) created Battle.net account {4}{5}{6}",
-                            handler.GetSession().GetAccountId(), handler.GetSession().GetRemoteAddress(), handler.GetSession().GetPlayer().GetName(), 
+                            handler.GetSession().GetAccountId(), handler.GetSession().GetRemoteAddress(), handler.GetSession().GetPlayer().GetName(),
                             handler.GetSession().GetPlayer().GetGUID().ToString(), accountName, createGameAccount.Value ? " with game account " : "", createGameAccount.Value ? gameAccountName : "");
                     }
                     break;
@@ -45,8 +49,6 @@ namespace Game.Chat.Commands
                 case AccountOpResult.NameAlreadyExist:
                     handler.SendSysMessage(CypherStrings.AccountAlreadyExist);
                     return false;
-                default:
-                    break;
             }
 
             return true;
@@ -111,8 +113,6 @@ namespace Game.Chat.Commands
                     break;
                 case AccountOpResult.BadLink:
                     handler.SendSysMessage( CypherStrings.AccountAlreadyLinked, gameAccountName);
-                    break;
-                default:
                     break;
             }
 
@@ -205,8 +205,6 @@ namespace Game.Chat.Commands
                     break;
                 case AccountOpResult.BadLink:
                     handler.SendSysMessage(CypherStrings.AccountBnetNotLinked, gameAccountName);
-                    break;
-                default:
                     break;
             }
 
@@ -301,8 +299,6 @@ namespace Game.Chat.Commands
                     case AccountOpResult.PassTooLong:
                         handler.SendSysMessage(CypherStrings.PasswordTooLong);
                         return false;
-                    default:
-                        break;
                 }
                 return true;
             }

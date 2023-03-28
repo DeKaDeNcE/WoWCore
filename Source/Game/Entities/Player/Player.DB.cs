@@ -1,24 +1,25 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Framework.Database;
-using Game.Arenas;
-using Game.BattleGrounds;
-using Game.Cache;
-using Game.DataStorage;
-using Game.Garrisons;
-using Game.Groups;
-using Game.Guilds;
-using Game.Mails;
-using Game.Maps;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Collections;
+using Game.Maps;
+using Game.Cache;
+using Game.Mails;
+using Game.Arenas;
+using Game.Groups;
+using Game.Guilds;
+using Game.Spells;
+using Game.Garrisons;
+using Game.DataStorage;
+using Game.BattleGrounds;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {
@@ -370,8 +371,6 @@ namespace Game.Entities
                             break;
                         case SkillRangeType.Level:
                             max = GetMaxSkillValueForLevel();
-                            break;
-                        default:
                             break;
                     }
 
@@ -1070,8 +1069,6 @@ namespace Game.Entities
                         case TraitConfigType.Generic:
                             traitConfig.TraitSystemID = configsResult.Read<int>(6);
                             break;
-                        default:
-                            break;
                     }
 
                     traitConfig.Name = configsResult.Read<string>(7);
@@ -1155,8 +1152,6 @@ namespace Game.Entities
                     case TraitConfigType.Profession:
                         if (!HasSkill((uint)(int)traitConfig.SkillLineID))
                             continue;
-                        break;
-                    default:
                         break;
                 }
 
@@ -1828,8 +1823,6 @@ namespace Game.Entities
                         stmt.AddValue(1, pair.Key);
                         trans.Append(stmt);
                         break;
-                    default:
-                        break;
                 }
                 pair.Value.State = SkillState.Unchanged;
             }
@@ -1997,8 +1990,6 @@ namespace Game.Entities
                         stmt.AddValue(7, id);
                         trans.Append(stmt);
                         break;
-                    default:
-                        break;
                 }
 
                 currency.state = PlayerCurrencyState.Unchanged;
@@ -2039,7 +2030,7 @@ namespace Game.Entities
         void _SaveActions(SQLTransaction trans)
         {
             int traitConfigId = 0;
-            
+
             TraitConfig traitConfig = GetTraitConfig((int)(uint)m_activePlayerData.ActiveCombatTraitConfigID);
             if (traitConfig != null)
             {
@@ -2094,8 +2085,6 @@ namespace Game.Entities
                         trans.Append(stmt);
 
                         m_actionButtons.Remove(pair.Key);
-                        break;
-                    default:
                         break;
                 }
             }
@@ -2379,8 +2368,6 @@ namespace Game.Entities
                                     stmt.AddNull(6);
                                     stmt.AddValue(7, traitConfig.TraitSystemID);
                                     break;
-                                default:
-                                    break;
                             }
 
                             stmt.AddValue(8, traitConfig.Name);
@@ -2415,14 +2402,12 @@ namespace Game.Entities
                         stmt.AddValue(1, traitConfigId);
                         trans.Append(stmt);
                         break;
-                    default:
-                        break;
                 }
             }
 
             m_traitConfigStates.Clear();
         }
-        
+
         public void _SaveMail(SQLTransaction trans)
         {
             PreparedStatement stmt;
@@ -2920,7 +2905,7 @@ namespace Game.Entities
                     SetUpdateFieldFlagValue(m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.KnownTitles, i / 2), (ulong)((long.Parse(knownTitlesStrings[i])) << (32 * (i % 2))));
             }
 
-            SetObjectScale(1.0f);
+            SetObjectScale(SharedConst.DefaultPlayerDisplayScale);
 
             // load achievements before anything else to prevent multiple gains for the same achievement/criteria on every loading (as loading does call UpdateAchievementCriteria)
             m_achievementSys.LoadFromDB(holder.GetResult(PlayerLoginQueryLoad.Achievements), holder.GetResult(PlayerLoginQueryLoad.CriteriaProgress));
@@ -3086,7 +3071,7 @@ namespace Game.Entities
                             transport = transportOnMap;
                     }
                 }
-                
+
                 if (transport)
                 {
                     float x = trans_x;
@@ -3204,7 +3189,7 @@ namespace Game.Entities
             else if (map.IsDungeon()) // if map is dungeon...
             {
                 TransferAbortParams denyReason = map.CannotEnter(this); // ... and can't enter map, then look for entry point.
-                if (denyReason != null) 
+                if (denyReason != null)
                 {
                     SendTransferAborted(map.GetId(), denyReason.Reason, denyReason.Arg, denyReason.MapDifficultyXConditionId);
                     areaTrigger = Global.ObjectMgr.GetGoBackTrigger(mapId);
@@ -4016,7 +4001,7 @@ namespace Game.Entities
 
             // Convert guid to low GUID for CharacterNameData, but also other methods on success
             ulong guid = playerGuid.GetCounter();
-            CharDeleteMethod charDelete_method = (CharDeleteMethod)WorldConfig.GetIntValue(WorldCfg.ChardeleteMethod);
+            CharDeleteMethod charDelete_method = (CharDeleteMethod)WorldConfig.GetIntValue(WorldCfg.CharDeleteMethod);
             CharacterCacheEntry characterInfo = Global.CharacterCacheStorage.GetCharacterCacheByGuid(playerGuid);
             string name = "<Unknown>";
             if (characterInfo != null)
@@ -4030,11 +4015,11 @@ namespace Game.Entities
                 uint charDeleteMinLvl;
 
                 if (characterInfo.ClassId == Class.Deathknight)
-                    charDeleteMinLvl = WorldConfig.GetUIntValue(WorldCfg.ChardeleteDeathKnightMinLevel);
+                    charDeleteMinLvl = WorldConfig.GetUIntValue(WorldCfg.CharDeleteDeathKnightMinLevel);
                 else if (characterInfo.ClassId == Class.DemonHunter)
-                    charDeleteMinLvl = WorldConfig.GetUIntValue(WorldCfg.ChardeleteDemonHunterMinLevel);
+                    charDeleteMinLvl = WorldConfig.GetUIntValue(WorldCfg.CharDeleteDemonHunterMinLevel);
                 else
-                    charDeleteMinLvl = WorldConfig.GetUIntValue(WorldCfg.ChardeleteMinLevel);
+                    charDeleteMinLvl = WorldConfig.GetUIntValue(WorldCfg.CharDeleteMinLevel);
 
                 // if we want to finalize the character removal or the character does not meet the level requirement of either heroic or non-heroic settings,
                 // we set it to mode CHAR_DELETE_REMOVE
@@ -4489,7 +4474,7 @@ namespace Game.Entities
 
         public static void DeleteOldCharacters()
         {
-            int keepDays = WorldConfig.GetIntValue(WorldCfg.ChardeleteKeepDays);
+            int keepDays = WorldConfig.GetIntValue(WorldCfg.CharDeleteKeepDays);
             if (keepDays == 0)
                 return;
 

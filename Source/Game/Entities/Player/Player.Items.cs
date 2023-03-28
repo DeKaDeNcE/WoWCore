@@ -1,22 +1,21 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.BattleFields;
-using Game.BattleGrounds;
-using Game.DataStorage;
-using Game.Groups;
-using Game.Guilds;
-using Game.Loots;
-using Game.Mails;
-using Game.Maps;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Maps;
+using Game.Loots;
+using Game.Mails;
+using Game.Guilds;
+using Game.Spells;
+using Game.DataStorage;
+using Game.BattleGrounds;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {
@@ -207,7 +206,7 @@ namespace Game.Entities
             SendPacket(itemPurchaseRefundResult);
         }
 
-        //Trade 
+        //Trade
         void AddTradeableItem(Item item)
         {
             m_itemSoulboundTradeable.Add(item.GetGUID());
@@ -1801,15 +1800,13 @@ namespace Game.Entities
                         failure.LimitCategory = (int)(proto != null ? proto.GetItemLimitCategory() : 0u);
                         break;
                     }
-                    default:
-                        break;
                 }
             }
 
             SendPacket(failure);
         }
 
-        //Add/Remove/Misc Item 
+        //Add/Remove/Misc Item
         public bool AddItem(uint itemId, uint count)
         {
             uint noSpaceForCount;
@@ -3769,7 +3766,7 @@ namespace Game.Entities
                         ApplyRatingMod(CombatRating.Avoidance, (int)(val * combatRatingMultiplier), apply);
                         break;
                     case ItemModType.CrSturdiness:
-                        ApplyRatingMod(CombatRating.Studiness, (int)(val * combatRatingMultiplier), apply);
+                        ApplyRatingMod(CombatRating.Sturdiness, (int)(val * combatRatingMultiplier), apply);
                         break;
                     case ItemModType.AgiStrInt:
                         HandleStatFlatModifier(UnitMods.StatAgility, UnitModifierFlatType.Base, val, apply);
@@ -3841,7 +3838,7 @@ namespace Game.Entities
             if (apply)
             {
                 // Cannot be used in this stance/form
-                if (spellInfo.CheckShapeshift(GetShapeshiftForm()) != SpellCastResult.SpellCastOk)
+                if (spellInfo.CheckShapeshift(GetShapeshiftForm()) != SpellCastResult.SpellCastOK)
                     return;
 
                 if (formChange)                                    // check aura active state from other form
@@ -3866,7 +3863,7 @@ namespace Game.Entities
                 if (formChange)                                     // check aura compatibility
                 {
                     // Cannot be used in this stance/form
-                    if (spellInfo.CheckShapeshift(GetShapeshiftForm()) == SpellCastResult.SpellCastOk)
+                    if (spellInfo.CheckShapeshift(GetShapeshiftForm()) == SpellCastResult.SpellCastOK)
                         return;                                     // and remove only not compatible at form change
                 }
 
@@ -5665,8 +5662,6 @@ namespace Game.Entities
                             case EquipmentSlot.MainHand:
                             case EquipmentSlot.OffHand:
                                 RecalculateRating(CombatRating.ArmorPenetration);
-                                break;
-                            default:
                                 break;
                         }
 

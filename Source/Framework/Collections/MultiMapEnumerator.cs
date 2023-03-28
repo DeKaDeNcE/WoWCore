@@ -1,8 +1,11 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-namespace System.Collections.Generic
-{
+// ReSharper disable CheckNamespace
+
+namespace System.Collections.Generic;
+
     public class MultiMapEnumerator<TKey, TValue> : IEnumerator<KeyValuePair<TKey, TValue>>
     {
         MultiMap<TKey, TValue> _map;
@@ -60,9 +63,9 @@ namespace System.Collections.Generic
 
     public class SortedMultiMapEnumerator<TKey, TValue> : IEnumerator<KeyValuePair<TKey, TValue>>
     {
-        SortedMultiMap<TKey, TValue> _map;
-        IEnumerator<TKey> _keyEnumerator;
-        IEnumerator<TValue> _valueEnumerator;
+        private SortedMultiMap<TKey, TValue> _map;
+        private IEnumerator<TKey> _keyEnumerator;
+        private IEnumerator<TValue> _valueEnumerator;
 
         public SortedMultiMapEnumerator(SortedMultiMap<TKey, TValue> map)
         {
@@ -112,4 +115,3 @@ namespace System.Collections.Generic
             _valueEnumerator = new List<TValue>().GetEnumerator();
         }
     }
-}

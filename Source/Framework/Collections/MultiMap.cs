@@ -1,10 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
+
+// ReSharper disable CheckNamespace
 
 using System.Linq;
 
-namespace System.Collections.Generic
-{
+namespace System.Collections.Generic;
+
     public sealed class MultiMap<TKey, TValue> : IMultiMap<TKey, TValue>, IDictionary<TKey, TValue>
     {
         public MultiMap() { }
@@ -490,4 +493,3 @@ namespace System.Collections.Generic
 
         private SortedDictionary<TKey, List<TValue>> _interalStorage = new();
     }
-}

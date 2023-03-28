@@ -1,11 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Constants;
 using Game.AI;
 using Game.Entities;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Game.Combat
 {
@@ -76,7 +77,7 @@ namespace Game.Combat
                     return true;
             return false;
         }
-        
+
         public bool HasPvECombatWithPlayers()
         {
             foreach (var reference in _pveRefs)
@@ -85,7 +86,7 @@ namespace Game.Combat
 
             return false;
         }
-        
+
         public bool HasPvPCombat()
         {
             foreach (var pair in _pvpRefs)
@@ -343,7 +344,7 @@ namespace Game.Combat
         public Unit first;
         public Unit second;
         public bool _isPvP;
-        
+
         bool _suppressFirst;
         bool _suppressSecond;
 

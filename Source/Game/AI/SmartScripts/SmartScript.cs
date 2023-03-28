@@ -1,19 +1,20 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Chat;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Maps;
-using Game.Misc;
-using Game.Movement;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Chat;
+using Game.Misc;
+using Game.Maps;
+using Game.Spells;
+using Game.Groups;
+using Game.Entities;
+using Game.Movement;
+using Game.DataStorage;
 
 namespace Game.AI
 {
@@ -469,7 +470,7 @@ namespace Game.AI
                                     _me.InterruptNonMeleeSpells(false);
 
                                 SpellCastResult result = _me.CastSpell(target.ToUnit(), e.Action.cast.spell, new CastSpellExtraArgs(triggerFlag));
-                                bool spellCastFailed = (result != SpellCastResult.SpellCastOk && result != SpellCastResult.SpellInProgress);
+                                bool spellCastFailed = (result != SpellCastResult.SpellCastOK && result != SpellCastResult.SpellInProgress);
 
                                 if (e.Action.cast.castFlags.HasAnyFlag((uint)SmartCastFlags.CombatMove))
                                     ((SmartAI)_me.GetAI()).SetCombatMove(spellCastFailed, true);
@@ -2249,8 +2250,6 @@ namespace Game.AI
                                 case 1:
                                     target.ToGameObject().SetAnimKitId((ushort)e.Action.animKit.animKit, false);
                                     break;
-                                default:
-                                    break;
                             }
 
                             Log.outDebug(LogFilter.ScriptsAi, "SmartScript.ProcessAction:: SMART_ACTION_PLAY_ANIMKIT: target: {0} ({1}), AnimKit: {2}, Type: {3}", target.GetName(), target.GetGUID().ToString(), e.Action.animKit.animKit, e.Action.animKit.type);
@@ -3194,7 +3193,7 @@ namespace Game.AI
                 case SmartEvents.Evade:
                 case SmartEvents.ReachedHome:
                 case SmartEvents.CorpseRemoved:
-                case SmartEvents.AiInit:
+                case SmartEvents.AIInit:
                 case SmartEvents.TransportAddplayer:
                 case SmartEvents.TransportRemovePlayer:
                 case SmartEvents.JustSummoned:
@@ -3920,9 +3919,6 @@ namespace Game.AI
                             if (holder.Event.event_flags.HasAnyFlag(SmartEventFlags.Difficulty3))
                                 _events.Add(holder);
                             break;
-                        default:
-                            break;
-
                     }
                 }
 
@@ -4049,7 +4045,7 @@ namespace Game.AI
             foreach (var holder in _events)
                 InitTimer(holder);//calculate timers for first time use
 
-            ProcessEventsFor(SmartEvents.AiInit);
+            ProcessEventsFor(SmartEvents.AIInit);
             InstallEvents();
             ProcessEventsFor(SmartEvents.JustCreated);
             _counterList.Clear();
@@ -4093,7 +4089,7 @@ namespace Game.AI
             Cell.VisitGridObjects(_me, searcher, range);
             return searcher.GetTarget();
         }
-        
+
         void DoFindFriendlyCC(List<Creature> creatures, float range)
         {
             if (_me == null)
@@ -4193,7 +4189,7 @@ namespace Game.AI
         }
 
         public bool HasAnyEventWithFlag(SmartEventFlags flag) { return _allEventFlags.HasAnyFlag(flag); }
-        
+
         public bool IsUnit(WorldObject obj) { return obj != null && (obj.IsTypeId(TypeId.Unit) || obj.IsTypeId(TypeId.Player)); }
 
         public bool IsPlayer(WorldObject obj) { return obj != null && obj.IsTypeId(TypeId.Player); }

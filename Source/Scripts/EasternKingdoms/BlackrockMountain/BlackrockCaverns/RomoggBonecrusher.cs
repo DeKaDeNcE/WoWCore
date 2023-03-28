@@ -1,4 +1,5 @@
-// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using Framework.Constants;
@@ -25,7 +26,7 @@ namespace Scripts.EasternKingdoms.BlackrockMountain.BlackrockCaverns.RomoggBonec
         public const uint YellKill = 1;
         public const uint YellSkullcracker = 2;
         public const uint YellDeath = 3;
-        
+
         public const uint EmoteCallForHelp = 4;
         public const uint EmoteSkullcracker = 5;
     }
@@ -106,4 +107,3 @@ namespace Scripts.EasternKingdoms.BlackrockMountain.BlackrockCaverns.RomoggBonec
         }
     }
 }
-

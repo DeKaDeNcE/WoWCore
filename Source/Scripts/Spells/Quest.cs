@@ -1,20 +1,28 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game;
-using Game.Entities;
-using Game.Maps;
-using Game.Scripting;
-using Game.Spells;
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
 using System;
 using System.Collections.Generic;
+using Framework.Constants;
+using Game.Maps;
+using Game.Spells;
+using Game.Entities;
+using Game.Scripting;
 
-namespace Scripts.Spells.Quest
-{
+namespace Scripts.Spells.Quest;
+
     struct SpellIds
     {
-        //Thaumaturgychannel        
+        //Thaumaturgychannel
         public const uint ThaumaturgyChannel = 21029;
 
         //Quest11396-11399
@@ -204,7 +212,7 @@ namespace Scripts.Spells.Quest
         public const uint SicklyDeer = 12298;
         public const uint CuredDeer = 12299;
 
-        //Quest10255        
+        //Quest10255
         public const uint Helboar = 16880;
         public const uint Dreadtusk = 16992;
 
@@ -219,7 +227,7 @@ namespace Scripts.Spells.Quest
         public const uint Scavengebot005b6 = 25792;
         public const uint Npc55dCollectatron = 25793;
 
-        //Quest12459        
+        //Quest12459
         public const uint ReanimatedFrostwyrm = 26841;
         public const uint WeakReanimatedFrostwyrm = 27821;
         public const uint Turgid = 27808;
@@ -254,7 +262,7 @@ namespace Scripts.Spells.Quest
         //Quest12372
         public const uint WyrmrestTempleCredit = 27698;
 
-        //Quest11010 11102 11023        
+        //Quest11010 11102 11023
         public const uint FelCannon2 = 23082;
 
         //Quest13291 13292 13239 13261
@@ -351,7 +359,7 @@ namespace Scripts.Spells.Quest
         bool _shouldAttack;
         uint _despawnTime;
     }
-    
+
     [Script] // 9712 - Thaumaturgy Channel
     class spell_q2203_thaumaturgy_channel : AuraScript
     {
@@ -869,7 +877,7 @@ namespace Scripts.Spells.Quest
             OnEffectHitTarget.Add(new EffectHandler(HandleDummy, 0, SpellEffectName.Dummy));
         }
     }
-    
+
     [Script] // 40119 Knockdown Fel Cannon: The Aggro Burst
     class spell_q11010_q11102_q11023_aggro_burst : AuraScript
     {
@@ -886,7 +894,7 @@ namespace Scripts.Spells.Quest
             OnEffectPeriodic.Add(new EffectPeriodicHandler(HandleEffectPeriodic, 0, AuraType.PeriodicDummy));
         }
     }
-    
+
     [Script] // 40056 Knockdown Fel Cannon: Choose Loc
     class spell_q11010_q11102_q11023_choose_loc : SpellScript
     {
@@ -923,7 +931,8 @@ namespace Scripts.Spells.Quest
             // This spell will be cast only if caster has one of these auras
             if (!(caster.HasAuraType(AuraType.Fly) || caster.HasAuraType(AuraType.ModIncreaseMountedFlightSpeed)))
                 return SpellCastResult.CantDoThatRightNow;
-            return SpellCastResult.SpellCastOk;
+
+            return SpellCastResult.SpellCastOK;
         }
 
         public override void Register()
@@ -931,7 +940,7 @@ namespace Scripts.Spells.Quest
             OnCheckCast.Add(new CheckCastHandler(CheckRequirement));
         }
     }
-    
+
     [Script] // 50894 - Zul'Drak Rat
     class spell_q12527_zuldrak_rat : SpellScript
     {
@@ -956,7 +965,7 @@ namespace Scripts.Spells.Quest
             OnEffectHitTarget.Add(new EffectHandler(HandleScriptEffect, 1, SpellEffectName.ScriptEffect));
         }
     }
-    
+
     [Script] // 55368 - Summon Stefan
     class spell_q12661_q12669_q12676_q12677_q12713_summon_stefan : SpellScript
     {
@@ -1014,7 +1023,7 @@ namespace Scripts.Spells.Quest
             OnEffectHitTarget.Add(new EffectHandler(HandleDummy, 0, SpellEffectName.Dummy));
         }
     }
- 
+
     [Script] // 59303 - Summon Frost Wyrm
     class spell_q13291_q13292_q13239_q13261_armored_decoy_summon_skytalon : SpellScript
     {
@@ -1030,7 +1039,7 @@ namespace Scripts.Spells.Quest
             OnDestinationTargetSelect.Add(new DestinationTargetSelectHandler(SetDest, 0, Targets.DestCasterBack));
         }
     }
-    
+
     [Script] // 12601 - Second Chances: Summon Landgren's Soul Moveto Target Bunny
     class spell_q12847_summon_soul_moveto_bunny : SpellScript
     {
@@ -1047,7 +1056,7 @@ namespace Scripts.Spells.Quest
         }
     }
 
-    // 57385 - Argent Cannon    
+    // 57385 - Argent Cannon
     [Script] // 57412 - Reckoning Bomb
     class spell_q13086_cannons_target : SpellScript
     {
@@ -1191,7 +1200,7 @@ namespace Scripts.Spells.Quest
             OnEffectHitTarget.Add(new EffectHandler(HandleScript, 0, SpellEffectName.ScriptEffect));
         }
     }
-    
+
     // 59590 - Assign Ghoul Kill Credit to Master
     // 60039 - Assign Skeleton Kill Credit to Master
     [Script] // 60041 - Assign Geist Kill Credit to Master
@@ -1221,7 +1230,7 @@ namespace Scripts.Spells.Quest
     {
         public override bool Validate(SpellInfo spellInfo)
         {
-            return ValidateSpellInfo(SpellIds.BurstAtTheSeams52510, SpellIds.BurstAtTheSeams52508, SpellIds.BurstAtTheSeams59580, 
+            return ValidateSpellInfo(SpellIds.BurstAtTheSeams52510, SpellIds.BurstAtTheSeams52508, SpellIds.BurstAtTheSeams59580,
                 SpellIds.BurstAtTheSeamsBone, SpellIds.ExplodeAbominationMeat, SpellIds.ExplodeAbominationBloodyMeat);
         }
 
@@ -1414,7 +1423,7 @@ namespace Scripts.Spells.Quest
             OnEffectHit.Add(new EffectHandler(HandleScript, 0, SpellEffectName.ScriptEffect));
         }
     }
-    
+
     [Script] // 48682 - Escape from Silverbrook - Periodic Dummy
     class spell_q12308_escape_from_silverbrook : SpellScript
     {
@@ -1433,7 +1442,7 @@ namespace Scripts.Spells.Quest
             OnEffectHit.Add(new EffectHandler(HandleDummy, 0, SpellEffectName.Dummy));
         }
     }
-    
+
     [Script] // 48681 - Summon Silverbrook Worgen
     class spell_q12308_escape_from_silverbrook_summon_worgen : SpellScript
     {
@@ -1451,7 +1460,7 @@ namespace Scripts.Spells.Quest
             OnDestinationTargetSelect.Add(new DestinationTargetSelectHandler(ModDest, 0, Targets.DestCasterSummon));
         }
     }
-    
+
     [Script] // 51858 - Siphon of Acherus
     class spell_q12641_death_comes_from_on_high : SpellScript
     {
@@ -1490,7 +1499,7 @@ namespace Scripts.Spells.Quest
             OnEffectHitTarget.Add(new EffectHandler(HandleDummy, 0, SpellEffectName.Dummy));
         }
     }
-    
+
     [Script] // 52694 - Recall Eye of Acherus
     class spell_q12641_recall_eye_of_acherus : SpellScript
     {
@@ -1510,7 +1519,7 @@ namespace Scripts.Spells.Quest
             OnEffectHitTarget.Add(new EffectHandler(HandleDummy, 0, SpellEffectName.ScriptEffect));
         }
     }
-    
+
     [Script] // 51769 - Emblazon Runeblade
     class spell_q12619_emblazon_runeblade_AuraScript : AuraScript
     {
@@ -1527,7 +1536,7 @@ namespace Scripts.Spells.Quest
             OnEffectPeriodic.Add(new EffectPeriodicHandler(HandleEffectPeriodic, 0, AuraType.PeriodicTriggerSpell));
         }
     }
-    
+
     [Script] // 51770 - Emblazon Runeblade
     class spell_q12619_emblazon_runeblade : SpellScript
     {
@@ -1614,7 +1623,7 @@ namespace Scripts.Spells.Quest
             OnEffectHitTarget.Add(new EffectHandler(HandleDummy, 0, SpellEffectName.Dummy));
         }
     }
-   
+
     [Script] // 66744 - Make Player Destroy Totems
     class spell_q14100_q14111_make_player_destroy_totems : SpellScript
     {
@@ -1635,7 +1644,7 @@ namespace Scripts.Spells.Quest
             OnEffectHitTarget.Add(new EffectHandler(HandleScriptEffect, 0, SpellEffectName.ScriptEffect));
         }
     }
-   
+
     [Script] // 39238 - Fumping
     class spell_q10929_fumping : AuraScript
     {
@@ -1659,7 +1668,7 @@ namespace Scripts.Spells.Quest
             OnEffectRemove.Add(new EffectApplyHandler(HandleEffectRemove, 0, AuraType.Dummy, AuraEffectHandleModes.Real));
         }
     }
-   
+
     [Script] // 93072 - Get Our Boys Back Dummy
     class spell_q28813_get_our_boys_back_dummy : SpellScript
     {
@@ -1717,4 +1726,3 @@ namespace Scripts.Spells.Quest
             OnEffectHitTarget.Add(new EffectHandler(HandleScript, 1, SpellEffectName.ScriptEffect));
         }
     }
-}

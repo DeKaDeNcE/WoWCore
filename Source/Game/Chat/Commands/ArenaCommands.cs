@@ -1,9 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedMember.Local
+// ReSharper disable UnusedType.Local
+
+using System;
 using Framework.Constants;
 using Game.Arenas;
-using System;
 
 namespace Game.Chat
 {
@@ -18,7 +23,7 @@ namespace Game.Chat
                 handler.SendSysMessage(CypherStrings.ArenaErrorNameExists, name);
                 return false;
             }
-            
+
             if (captain == null)
                 captain = PlayerIdentifier.FromTargetOrSelf(handler);
             if (captain == null)
@@ -119,7 +124,7 @@ namespace Game.Chat
                 target = PlayerIdentifier.FromTargetOrSelf(handler);
             if (target == null)
                 return false;
-            
+
             if (!arena.IsMember(target.GetGUID()))
             {
                 handler.SendSysMessage(CypherStrings.ArenaErrorNotMember, target.GetName(), arena.GetName());

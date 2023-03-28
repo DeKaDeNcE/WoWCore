@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Collision;
-using Game.DataStorage;
-using Game.Entities;
 using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
+using Framework.Constants;
+using Game.Entities;
+using Game.Collision;
+using Game.DataStorage;
 
 namespace Game.Maps
 {
@@ -713,7 +714,7 @@ namespace Game.Maps
         }
 
         public uint GetAreaId(PhaseShift phaseShift, uint mapId, Position pos, DynamicMapTree dynamicMapTree = null) { return GetAreaId(phaseShift, mapId, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), dynamicMapTree); }
-        
+
         public uint GetAreaId(PhaseShift phaseShift, uint mapId, float x, float y, float z, DynamicMapTree dynamicMapTree = null)
         {
             uint mogpFlags;
@@ -753,7 +754,7 @@ namespace Game.Maps
         }
 
         public uint GetZoneId(PhaseShift phaseShift, uint mapId, Position pos, DynamicMapTree dynamicMapTree = null) { return GetZoneId(phaseShift, mapId, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), dynamicMapTree); }
-        
+
         public uint GetZoneId(PhaseShift phaseShift, uint mapId, float x, float y, float z, DynamicMapTree dynamicMapTree = null)
         {
             uint areaId = GetAreaId(phaseShift, mapId, x, y, z, dynamicMapTree);
@@ -766,7 +767,7 @@ namespace Game.Maps
         }
 
         public void GetZoneAndAreaId(PhaseShift phaseShift, uint mapId, out uint zoneid, out uint areaid, Position pos, DynamicMapTree dynamicMapTree = null) { GetZoneAndAreaId(phaseShift, mapId, out zoneid, out areaid, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), dynamicMapTree); }
-        
+
         public void GetZoneAndAreaId(PhaseShift phaseShift, uint mapId, out uint zoneid, out uint areaid, float x, float y, float z, DynamicMapTree dynamicMapTree = null)
         {
             areaid = zoneid = GetAreaId(phaseShift, mapId, x, y, z, dynamicMapTree);
@@ -840,7 +841,7 @@ namespace Game.Maps
             GridMap gmap = GetGrid(PhasingHandler.GetTerrainMapId(phaseShift, mapId, this, x, y), x, y);
             if (gmap != null)
                 return gmap.GetLiquidLevel(x, y);
-            
+
             return 0;
         }
 

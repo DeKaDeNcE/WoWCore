@@ -1,25 +1,26 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Framework.Database;
+using System;
+using System.IO;
+using System.Text;
+using System.Numerics;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
 using Framework.Realm;
-using Game.Accounts;
-using Game.BattleGrounds;
-using Game.BattlePets;
-using Game.Chat;
-using Game.Entities;
-using Game.Guilds;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Collections;
 using Game.Maps;
+using Game.Chat;
+using Game.Guilds;
+using Game.Accounts;
+using Game.Entities;
+using Game.BattlePets;
+using Game.BattleGrounds;
 using Game.Networking;
 using Game.Networking.Packets;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Numerics;
-using System.Text;
 
 namespace Game
 {
@@ -241,7 +242,7 @@ namespace Game
             long currentTime = GameTime.GetGameTime();
 
             WorldPacket packet;
-            //Check for any packets they was not recived yet.
+            //Check for any packets they was not received yet.
             while (m_Socket[(int)ConnectionType.Realm] != null && !_recvQueue.IsEmpty && (_recvQueue.TryPeek(out packet, updater) && packet != firstDelayedPacket) && _recvQueue.TryDequeue(out packet))
             {
                 try
@@ -1063,8 +1064,8 @@ namespace Game
                     Log.outInfo(LogFilter.Network, "AntiDOS: Player kicked!");
                     return false;
                 case Policy.Ban:
-                    BanMode bm = (BanMode)WorldConfig.GetIntValue(WorldCfg.PacketSpoofBanmode);
-                    uint duration = WorldConfig.GetUIntValue(WorldCfg.PacketSpoofBanduration); // in seconds
+                    BanMode bm = (BanMode)WorldConfig.GetIntValue(WorldCfg.PacketSpoofBanMode);
+                    uint duration = WorldConfig.GetUIntValue(WorldCfg.PacketSpoofBanDuration); // in seconds
                     string nameOrIp = "";
                     switch (bm)
                     {

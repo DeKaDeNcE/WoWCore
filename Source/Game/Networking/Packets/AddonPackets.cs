@@ -1,8 +1,9 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-namespace Game.Networking.Packets
-{
+namespace Game.Networking.Packets;
+
     public struct AddOnInfo
     {
         public string Name;
@@ -18,11 +19,13 @@ namespace Game.Networking.Packets
             uint versionLength = data.ReadBits<uint>(10);
             Loaded = data.HasBit();
             Disabled = data.HasBit();
+
             if (nameLength > 1)
             {
                 Name = data.ReadString(nameLength - 1);
                 data.ReadUInt8(); // null terminator
             }
+
             if (versionLength > 1)
             {
                 Version = data.ReadString(versionLength - 1);
@@ -30,4 +33,3 @@ namespace Game.Networking.Packets
             }
         }
     }
-}

@@ -1,21 +1,22 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Constants;
 using Game.AI;
+using Game.PvP;
+using Game.Maps;
+using Game.Loots;
+using Game.Spells;
+using Game.Combat;
+using Game.Groups;
+using Game.DataStorage;
 using Game.BattleFields;
 using Game.BattleGrounds;
-using Game.Combat;
-using Game.DataStorage;
-using Game.Groups;
-using Game.Loots;
-using Game.Maps;
 using Game.Networking.Packets;
-using Game.PvP;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Game.Entities
 {
@@ -503,7 +504,7 @@ namespace Game.Entities
             if (HasUnitFlag(UnitFlags.Pacified))
                 return;
 
-            if (HasUnitState(UnitState.CannotAutoattack) && !extra)
+            if (HasUnitState(UnitState.CannotAutoAttack) && !extra)
                 return;
 
             if (HasAuraType(AuraType.DisableAttackingExceptAbilities))
@@ -533,7 +534,7 @@ namespace Game.Entities
                 // attack can be redirected to another target
                 victim = GetMeleeHitRedirectTarget(victim);
 
-                var meleeAttackOverrides = GetAuraEffectsByType(AuraType.OverrideAutoattackWithMeleeSpell);
+                var meleeAttackOverrides = GetAuraEffectsByType(AuraType.OverrideAutoAttackWithMeleeSpell);
                 AuraEffect meleeAttackAuraEffect = null;
                 uint meleeAttackSpellId = 0;
                 if (attType == WeaponAttackType.BaseAttack)
@@ -605,15 +606,16 @@ namespace Game.Entities
             foreach (var i in interceptAuras)
             {
                 Unit magnet = i.GetCaster();
+
                 if (magnet != null)
-                    if (IsValidAttackTarget(magnet, spellInfo) && magnet.IsWithinLOSInMap(this)
-                       && (spellInfo == null || (spellInfo.CheckExplicitTarget(this, magnet) == SpellCastResult.SpellCastOk
-                       && spellInfo.CheckTarget(this, magnet, false) == SpellCastResult.SpellCastOk)))
+                    if (IsValidAttackTarget(magnet, spellInfo) && magnet.IsWithinLOSInMap(this) && (spellInfo == null || (spellInfo.CheckExplicitTarget(this, magnet) == SpellCastResult.SpellCastOK && spellInfo.CheckTarget(this, magnet, false) == SpellCastResult.SpellCastOK)))
                     {
                         i.GetBase().DropCharge(AuraRemoveMode.Expire);
+
                         return magnet;
                     }
             }
+
             return victim;
         }
 
@@ -822,7 +824,7 @@ namespace Game.Entities
                 }
 
                 new KillRewarder(tappers.ToArray(), victim, false).Reward();
-            }      
+            }
 
             // Do KILL and KILLED procs. KILL proc is called only for the unit who landed the killing blow (and its owner - for pets and totems) regardless of who tapped the victim
             if (attacker != null && (attacker.IsPet() || attacker.IsTotem()))
@@ -1188,9 +1190,6 @@ namespace Game.Entities
                     damageInfo.Damage += (damageInfo.Damage / 2);
                     damageInfo.OriginalDamage = damageInfo.Damage;
                     break;
-
-                default:
-                    break;
             }
 
             // Always apply HITINFO_AFFECTS_VICTIM in case its not a miss
@@ -1507,8 +1506,6 @@ namespace Game.Entities
                 case WeaponAttackType.RangedAttack:
                     SetUpdateFieldValue(m_values.ModifyValue(m_unitData).ModifyValue(m_unitData.RangedAttackRoundBaseTime), (uint)(m_baseAttackSpeed[(int)att] * m_modAttackSpeedPct[(int)att]));
                     break;
-                default:
-                    break; ;
             }
         }
 

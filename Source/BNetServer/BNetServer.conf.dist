@@ -1,5 +1,5 @@
 ###################################################################################################
-# Cypher BNet Server Configuration File #
+# BNet Server Configuration File #
 ###################################################################################################
 
 ###################################################################################################
@@ -103,16 +103,16 @@ AllowLoggingIPAddressesInDatabase = 1
 # MYSQL SETTINGS
 #
 #    LoginDatabaseInfo
-#        Description: Database connection settings for the realm server.    
+#        Description: Database connection settings for the realm server.
 #        Example:
-#					  DatabaseInfo.Host = hostname OR . for named-pipes/unit_sockets.
-#					  DatabaseInfo.Port = port_number OR some_number (named_pipes) OR path to unix socket (unix_sockets)
-#					  DatabaseInfo.Username = "username"
-#					  DatabaseInfo.Password = "password"
-#					  DatabaseInfo.Database = "auth"
-#					  DatabaseInfo.SSL = false
+#                     DatabaseInfo.Host = hostname OR . for named-pipes/unit_sockets.
+#                     DatabaseInfo.Port = port_number OR some_number (named_pipes) OR path to unix socket (unix_sockets)
+#                     DatabaseInfo.Username = "username"
+#                     DatabaseInfo.Password = "password"
+#                     DatabaseInfo.Database = "auth"
+#                     DatabaseInfo.SSL = false
 #
-#		 Note: When using NamedPipes on windows you must set "enable-named-pipe" to [mysqld] section my.ini.
+#        Note: When using NamedPipes on windows you must set "enable-named-pipe" to [mysqld] section my.ini.
 
 LoginDatabaseInfo.Host = "127.0.0.1"
 LoginDatabaseInfo.Port = "3306"
@@ -154,16 +154,16 @@ MySQLExecutable = ""
 #        Default:     0  - (All Disabled)
 #                     1  - (All Enabled)
 
-Updates.EnableDatabases = 0
+Updates.EnableDatabases = 1
 
 #
 #    Updates.SourcePath
-#        Description: The path to your CypherCore source directory.
+#        Description: The path to your WoWCore source directory.
 #                     If the path is left empty, built-in CMAKE_SOURCE_DIR is used.
-#        Example:     "../CypherCore"
+#        Example:     "../WoWCore"
 #        Default:     ""
 
-Updates.SourcePath  = ""
+Updates.SourcePath  = "../../.."
 
 #
 #    Updates.AutoSetup
@@ -224,7 +224,7 @@ Updates.CleanDeadRefMaxCount = 3
 #                     Logs directory must exists, or log file creation will be disabled.
 #        Default:     "Logs" - (Log files will be stored in the current path)
 
-LogsDir = "Logs"
+LogsDir = "logs"
 
 #
 #  Appender config values: Given an appender "name"
@@ -257,8 +257,8 @@ LogsDir = "Logs"
 #                         Allows to use one "{0}" to create dynamic files
 #
 
-Appender.Console=1,2,0
-Appender.Bnet=2,2,0,Bnet.log
+Appender.Console=1,2,7
+Appender.Bnet=2,2,7,BNetServer.log
 
 #  Logger config values: Given a logger "name"
 #    Logger.name

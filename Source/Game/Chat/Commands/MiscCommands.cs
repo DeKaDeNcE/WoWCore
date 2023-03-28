@@ -1,20 +1,25 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Framework.Database;
-using Framework.IO;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Maps;
-using Game.Movement;
-using Game.Networking.Packets;
-using Game.Spells;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedMember.Local
+// ReSharper disable UnusedType.Local
+
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.IO;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Collections;
+using Game.Maps;
+using Game.Groups;
+using Game.Spells;
+using Game.Entities;
+using Game.Movement;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game.Chat
 {
@@ -1846,7 +1851,7 @@ namespace Game.Chat
                         return true;
                     }
 
-                    // If player found: delete his freeze aura    
+                    // If player found: delete his freeze aura
                     PreparedStatement stmt = CharacterDatabase.GetPreparedStatement(CharStatements.DEL_CHAR_AURA_FROZEN);
                     stmt.AddValue(0, guid.GetCounter());
                     DB.Characters.Execute(stmt);

@@ -1,22 +1,25 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
+// ReSharper disable UnusedMember.Local
+
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Database;
+using Framework.Constants;
+using Framework.Collections;
+using Game.Maps;
 using Game.Cache;
-using Game.Conditions;
-using Game.DataStorage;
-using Game.Entities;
 using Game.Groups;
 using Game.Guilds;
-using Game.Maps;
+using Game.Spells;
+using Game.Entities;
+using Game.Conditions;
+using Game.DataStorage;
 using Game.Networking;
 using Game.Networking.Packets;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Game
 {
@@ -45,7 +48,7 @@ namespace Game
             EnumCharactersResult charResult = new();
             charResult.Success = true;
             charResult.IsDeletedCharacters = holder.IsDeletedCharacters();
-            charResult.DisabledClassesMask = WorldConfig.GetUIntValue(WorldCfg.CharacterCreatingDisabledClassmask);
+            charResult.DisabledClassesMask = WorldConfig.GetUIntValue(WorldCfg.CharacterCreatingDisabledClassMask);
 
             if (!charResult.IsDeletedCharacters)
                 _legitCharacters.Clear();
@@ -144,7 +147,7 @@ namespace Game
             EnumCharactersResult charEnum = new();
             charEnum.Success = true;
             charEnum.IsDeletedCharacters = true;
-            charEnum.DisabledClassesMask = WorldConfig.GetUIntValue(WorldCfg.CharacterCreatingDisabledClassmask);
+            charEnum.DisabledClassesMask = WorldConfig.GetUIntValue(WorldCfg.CharacterCreatingDisabledClassMask);
 
             if (!result.IsEmpty())
             {
@@ -374,7 +377,7 @@ namespace Game
                     return;
                 }
 
-                ulong raceMaskDisabled = WorldConfig.GetUInt64Value(WorldCfg.CharacterCreatingDisabledRacemask);
+                ulong raceMaskDisabled = WorldConfig.GetUInt64Value(WorldCfg.CharacterCreatingDisabledRaceMask);
                 if (Convert.ToBoolean((ulong)SharedConst.GetMaskForRace(charCreate.CreateInfo.RaceId) & raceMaskDisabled))
                 {
                     SendCharCreate(ResponseCodes.CharCreateDisabled);
@@ -384,7 +387,7 @@ namespace Game
 
             if (!HasPermission(RBACPermissions.SkipCheckCharacterCreationClassmask))
             {
-                int classMaskDisabled = WorldConfig.GetIntValue(WorldCfg.CharacterCreatingDisabledClassmask);
+                int classMaskDisabled = WorldConfig.GetIntValue(WorldCfg.CharacterCreatingDisabledClassMask);
                 if (Convert.ToBoolean((1 << ((int)charCreate.CreateInfo.ClassId - 1)) & classMaskDisabled))
                 {
                     SendCharCreate(ResponseCodes.CharCreateDisabled);
@@ -870,8 +873,6 @@ namespace Game
                             if (playerInfo.introSceneIdNPE.HasValue)
                                 pCurrChar.GetSceneMgr().PlayScene(playerInfo.introSceneIdNPE.Value);
                             break;
-                        default:
-                            break;
                     }
                 }
             }
@@ -1056,8 +1057,6 @@ namespace Game
                             repMgr.SetOneFactionReputation(CliDB.FactionStorage.LookupByKey(1064), 42999, false); // The Taunka
                             repMgr.SetOneFactionReputation(CliDB.FactionStorage.LookupByKey(1085), 42999, false); // Warsong Offensive
                             break;
-                        default:
-                            break;
                     }
                     repMgr.SendState(null);
                 }
@@ -1137,7 +1136,7 @@ namespace Game
             features.EuropaTicketSystemStatus = europaTicketSystemStatus;
 
             features.CharUndeleteEnabled = WorldConfig.GetBoolValue(WorldCfg.FeatureSystemCharacterUndeleteEnabled);
-            features.BpayStoreEnabled = WorldConfig.GetBoolValue(WorldCfg.FeatureSystemBpayStoreEnabled);
+            features.BpayStoreEnabled = WorldConfig.GetBoolValue(WorldCfg.FeatureSystemBPayStoreEnabled);
             features.WarModeFeatureEnabled = WorldConfig.GetBoolValue(WorldCfg.FeatureSystemWarModeEnabled);
             features.IsMuted = !CanSpeak();
 
@@ -1380,7 +1379,7 @@ namespace Game
         }
 
         [WorldPacketHandler(ClientOpcodes.AlterAppearance)]
-        void HandleAlterAppearance(AlterApperance packet)
+        void HandleAlterAppearance(AlterAppearance packet)
         {
             if (!ValidateAppearance(_player.GetRace(), _player.GetClass(), (Gender)packet.NewSex, packet.Customizations))
                 return;
@@ -1766,7 +1765,7 @@ namespace Game
 
             if (!HasPermission(RBACPermissions.SkipCheckCharacterCreationRacemask))
             {
-                ulong raceMaskDisabled = WorldConfig.GetUInt64Value(WorldCfg.CharacterCreatingDisabledRacemask);
+                ulong raceMaskDisabled = WorldConfig.GetUInt64Value(WorldCfg.CharacterCreatingDisabledRaceMask);
                 if (Convert.ToBoolean((ulong)SharedConst.GetMaskForRace(factionChangeInfo.RaceID) & raceMaskDisabled))
                 {
                     SendCharFactionChange(ResponseCodes.CharCreateError, factionChangeInfo);

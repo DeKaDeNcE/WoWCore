@@ -1,18 +1,19 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.BattleGrounds;
-using Game.DataStorage;
-using Game.Garrisons;
-using Game.Groups;
-using Game.Maps;
-using Game.Scripting;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Framework.Database;
+using Framework.Constants;
+using Game.Maps;
+using Game.Groups;
+using Game.Scripting;
+using Game.Garrisons;
+using Game.DataStorage;
+using Game.BattleGrounds;
 
 namespace Game.Entities
 {
@@ -20,17 +21,17 @@ namespace Game.Entities
     {
         MapManager()
         {
-            i_gridCleanUpDelay = WorldConfig.GetUIntValue(WorldCfg.IntervalGridclean);
-            i_timer.SetInterval(WorldConfig.GetIntValue(WorldCfg.IntervalMapupdate));
+            i_gridCleanUpDelay = WorldConfig.GetUIntValue(WorldCfg.IntervalGridClean);
+            i_timer.SetInterval(WorldConfig.GetIntValue(WorldCfg.IntervalMapUpdate));
         }
 
         public void Initialize()
         {
             //todo needs alot of support for threadsafe.
-            int num_threads = WorldConfig.GetIntValue(WorldCfg.Numthreads);
+            int num_threads = WorldConfig.GetIntValue(WorldCfg.NumThreads);
             // Start mtmaps if needed.
             if (num_threads > 0)
-                m_updater = new MapUpdater(WorldConfig.GetIntValue(WorldCfg.Numthreads));
+                m_updater = new MapUpdater(WorldConfig.GetIntValue(WorldCfg.NumThreads));
         }
 
         public void InitializeVisibilityDistanceInfo()
@@ -83,7 +84,7 @@ namespace Game.Entities
             map.CreateInstanceData();
             map.SetInstanceScenario(Global.ScenarioMgr.CreateInstanceScenario(map, team));
 
-            if (WorldConfig.GetBoolValue(WorldCfg.InstancemapLoadGrids))
+            if (WorldConfig.GetBoolValue(WorldCfg.InstanceMapLoadGrids))
                 map.LoadAllCells();
 
             return map;

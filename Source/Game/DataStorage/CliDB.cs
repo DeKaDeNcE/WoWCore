@@ -1,13 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Collections;
 using System.IO;
+using System.Collections;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
 
 namespace Game.DataStorage
 {
@@ -419,8 +419,8 @@ namespace Game.DataStorage
                     AllianceTaxiNodesMask[field] |= submask;
 
                 int uiMapId;
-                if (!Global.DB2Mgr.GetUiMapPosition(node.Pos.X, node.Pos.Y, node.Pos.Z, node.ContinentID, 0, 0, 0, UiMapSystem.Adventure, false, out uiMapId))
-                    Global.DB2Mgr.GetUiMapPosition(node.Pos.X, node.Pos.Y, node.Pos.Z, node.ContinentID, 0, 0, 0, UiMapSystem.Taxi, false, out uiMapId);
+                if (!Global.DB2Mgr.GetUiMapPosition(node.Pos.X, node.Pos.Y, node.Pos.Z, node.ContinentID, 0, 0, 0, UIMapSystem.Adventure, false, out uiMapId))
+                    Global.DB2Mgr.GetUiMapPosition(node.Pos.X, node.Pos.Y, node.Pos.Z, node.ContinentID, 0, 0, 0, UIMapSystem.Taxi, false, out uiMapId);
 
                 if (uiMapId == 985 || uiMapId == 986)
                     OldContinentsNodesMask[field] |= submask;
@@ -831,44 +831,24 @@ namespace Game.DataStorage
         #endregion
 
         #region Helper Methods
-        public static float GetGameTableColumnForClass(dynamic row, Class class_)
+        public static float GetGameTableColumnForClass(dynamic row, Class class_) => class_ switch
         {
-            switch (class_)
-            {
-                case Class.Warrior:
-                    return row.Warrior;
-                case Class.Paladin:
-                    return row.Paladin;
-                case Class.Hunter:
-                    return row.Hunter;
-                case Class.Rogue:
-                    return row.Rogue;
-                case Class.Priest:
-                    return row.Priest;
-                case Class.Deathknight:
-                    return row.DeathKnight;
-                case Class.Shaman:
-                    return row.Shaman;
-                case Class.Mage:
-                    return row.Mage;
-                case Class.Warlock:
-                    return row.Warlock;
-                case Class.Monk:
-                    return row.Monk;
-                case Class.Druid:
-                    return row.Druid;
-                case Class.DemonHunter:
-                    return row.DemonHunter;
-                case Class.Evoker:
-                    return row.Evoker;
-                case Class.Adventurer:
-                    return row.Adventurer;
-                default:
-                    break;
-            }
-
-            return 0.0f;
-        }
+            Class.Warrior     => row.Warrior,
+            Class.Paladin     => row.Paladin,
+            Class.Hunter      => row.Hunter,
+            Class.Rogue       => row.Rogue,
+            Class.Priest      => row.Priest,
+            Class.Deathknight => row.DeathKnight,
+            Class.Shaman      => row.Shaman,
+            Class.Mage        => row.Mage,
+            Class.Warlock     => row.Warlock,
+            Class.Monk        => row.Monk,
+            Class.Druid       => row.Druid,
+            Class.DemonHunter => row.DemonHunter,
+            Class.Evoker      => row.Evoker,
+            Class.Adventurer  => row.Adventurer,
+            _ => 0.0f
+        };
 
         public static float GetSpellScalingColumnForClass(GtSpellScalingRecord row, int class_)
         {
@@ -921,17 +901,12 @@ namespace Game.DataStorage
                     return row.DamageSecondary;
                 case -10:
                     return row.ManaConsumable;
-                default:
-                    break;
             }
 
             return 0.0f;
         }
 
-        public static float GetBattlePetXPPerLevel(GtBattlePetXPRecord row)
-        {
-            return row.Wins * row.Xp;
-        }
+        public static float GetBattlePetXPPerLevel(GtBattlePetXPRecord row) => row.Wins * row.Xp;
 
         public static float GetIlvlStatMultiplier(GtGenericMultByILvlRecord row, InventoryType invType)
         {

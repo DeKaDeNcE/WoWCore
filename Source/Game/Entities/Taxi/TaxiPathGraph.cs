@@ -1,13 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Numerics;
+using System.Collections.Generic;
+using Framework.Constants;
 using Framework.Algorithms;
 using Framework.Collections;
-using Framework.Constants;
 using Game.DataStorage;
-using System;
-using System.Collections.Generic;
-using System.Numerics;
 
 namespace Game.Entities
 {
@@ -19,8 +20,8 @@ namespace Game.Entities
 
         static void GetTaxiMapPosition(Vector3 position, int mapId, out Vector2 uiMapPosition, out int uiMapId)
         {
-            if (!Global.DB2Mgr.GetUiMapPosition(position.X, position.Y, position.Z, mapId, 0, 0, 0, UiMapSystem.Adventure, false, out uiMapId, out uiMapPosition))
-                Global.DB2Mgr.GetUiMapPosition(position.X, position.Y, position.Z, mapId, 0, 0, 0, UiMapSystem.Taxi, false, out uiMapId, out uiMapPosition);
+            if (!Global.DB2Mgr.GetUiMapPosition(position.X, position.Y, position.Z, mapId, 0, 0, 0, UIMapSystem.Adventure, false, out uiMapId, out uiMapPosition))
+                Global.DB2Mgr.GetUiMapPosition(position.X, position.Y, position.Z, mapId, 0, 0, 0, UIMapSystem.Taxi, false, out uiMapId, out uiMapPosition);
         }
 
         static uint CreateVertexFromFromNodeInfoIfNeeded(TaxiNodesRecord node)
@@ -178,4 +179,3 @@ namespace Game.Entities
         }
     }
 }
-

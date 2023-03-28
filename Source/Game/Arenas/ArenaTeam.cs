@@ -1,15 +1,16 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.Entities;
-using Game.Groups;
-using Game.Networking;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
 using Game.Cache;
+using Game.Groups;
+using Game.Entities;
+using Game.Networking;
 
 namespace Game.Arenas
 {
@@ -409,8 +410,6 @@ namespace Game.Arenas
                 case ArenaTypes.Team2v2: return 0;
                 case ArenaTypes.Team3v3: return 1;
                 case ArenaTypes.Team5v5: return 2;
-                default:
-                    break;
             }
             Log.outError(LogFilter.Arena, "FATAL: Unknown arena team type {0} for some arena team", type);
             return 0xFF;
@@ -423,8 +422,6 @@ namespace Game.Arenas
                 case 0: return (byte)ArenaTypes.Team2v2;
                 case 1: return (byte)ArenaTypes.Team3v3;
                 case 2: return (byte)ArenaTypes.Team5v5;
-                default:
-                    break;
             }
             Log.outError(LogFilter.Arena, "FATAL: Unknown arena team slot {0} for some arena team", slot);
             return 0xFF;
@@ -541,7 +538,7 @@ namespace Game.Arenas
             {
                 stats.Rating += (ushort)mod;
 
-                // Check if rating related achivements are met
+                // Check if rating related achievements are met
                 foreach (var member in Members)
                 {
                     Player player = Global.ObjAccessor.FindPlayer(member.Guid);

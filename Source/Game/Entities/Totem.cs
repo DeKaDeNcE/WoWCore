@@ -1,12 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.DataStorage;
-using Game.Groups;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
+using Framework.Constants;
+using Game.Groups;
+using Game.Spells;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {
@@ -147,8 +148,6 @@ namespace Game.Entities
                 case AuraType.ModFear:
                 case AuraType.Transform:
                     return true;
-                default:
-                    break;
             }
 
             return base.IsImmunedToSpellEffect(spellInfo, spellEffectInfo, caster, requireImmunityPurgesEffectAttribute);

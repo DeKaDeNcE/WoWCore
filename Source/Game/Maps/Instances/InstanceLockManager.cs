@@ -1,13 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Configuration;
-using Framework.Constants;
-using Framework.Database;
-using Game.DataStorage;
-using Game.Entities;
 using System;
 using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Entities;
+using Game.DataStorage;
 
 namespace Game.Maps
 {
@@ -426,7 +426,7 @@ namespace Game.Maps
             statistics.PlayerCount = _instanceLocksByPlayer.Count;
             return statistics;
         }
-        
+
         public DateTime GetNextResetTime(MapDb2Entries entries)
         {
             DateTime dateTime = GameTime.GetDateAndTime();
@@ -455,8 +455,6 @@ namespace Game.Maps
                     day += daysAdjust;
                     break;
                 }
-                default:
-                    break;
             }
 
             return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day + day, hour, 0, 0);
@@ -562,7 +560,7 @@ namespace Game.Maps
 
         public SharedInstanceLock(uint mapId, Difficulty difficultyId, DateTime expiryTime, uint instanceId, SharedInstanceLockData sharedData) : base(mapId, difficultyId, expiryTime, instanceId)
         {
-            _sharedData = sharedData;            
+            _sharedData = sharedData;
         }
 
         public override InstanceLockData GetInstanceInitializationData() { return _sharedData; }

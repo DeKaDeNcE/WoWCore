@@ -1,14 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+// ReSharper disable UnusedMember.Local
+
+using System.Collections.Generic;
 using Framework.Database;
+using Framework.Constants;
 using Game.AI;
+using Game.Spells;
 using Game.Entities;
 using Game.Networking;
 using Game.Networking.Packets;
-using Game.Spells;
-using System.Collections.Generic;
 
 namespace Game
 {
@@ -329,10 +332,10 @@ namespace Game
                                 pet.SendUpdateToPlayer(player);
                         }
 
-                        result = SpellCastResult.SpellCastOk;
+                        result = SpellCastResult.SpellCastOK;
                     }
 
-                    if (result == SpellCastResult.SpellCastOk)
+                    if (result == SpellCastResult.SpellCastOK)
                     {
                         unit_target = spell.m_targets.GetUnitTarget();
 
@@ -699,12 +702,14 @@ namespace Game
 
             SpellCastResult result = spell.CheckPetCast(null);
 
-            if (result == SpellCastResult.SpellCastOk)
+            if (result == SpellCastResult.SpellCastOK)
             {
                 Creature creature = caster.ToCreature();
+
                 if (creature)
                 {
                     Pet pet = creature.ToPet();
+
                     if (pet)
                     {
                         // 10% chance to play special pet attack talk, else growl

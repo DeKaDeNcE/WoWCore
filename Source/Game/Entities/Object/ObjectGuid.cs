@@ -1,9 +1,10 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
 using System;
 using System.Collections.Generic;
+using Framework.Constants;
 
 namespace Game.Entities
 {
@@ -301,7 +302,7 @@ namespace Game.Entities
             return new { _high, _low }.GetHashCode();
         }
 
-        //Static Methods 
+        //Static Methods
         static TypeId GetTypeId(HighGuid high)
         {
             switch (high)
@@ -1065,7 +1066,7 @@ namespace Game.Entities
         public static uint ConvertLegacyTypeMask(uint legacyTypeMask)
         {
             uint typeMask = 0;
-            for (uint i = (uint)LegacyTypeId.Object; i < (uint)LegacyTypeId.Max; i = i + 1)
+            for (var i = (uint)LegacyTypeId.Object; i < (uint)LegacyTypeId.Max; i++)
                 if ((legacyTypeMask & (1 << (int)i)) != 0)
                     typeMask |= 1u << (int)ConvertLegacyTypeID(i);
 

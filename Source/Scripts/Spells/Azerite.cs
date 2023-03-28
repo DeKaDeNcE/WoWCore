@@ -1,39 +1,48 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Entities;
-using Game.Networking.Packets;
-using Game.Scripting;
-using Game.Spells;
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
 using System;
 using System.Collections.Generic;
+using Framework.Constants;
+using Game.Spells;
+using Game.Entities;
+using Game.Scripting;
+using Game.Networking.Packets;
 
-namespace Scripts.Spells.Azerite
-{
+namespace Scripts.Spells.Azerite;
+
     struct SpellIds
     {
-        // Strengthinnumbers        
+        // StrengthInNumbers
         public const uint StrengthInNumbersTrait = 271546;
         public const uint StrengthInNumbersBuff = 271550;
 
-        // Blessedportents        
+        // BlessedPortents
         public const uint BlessedPortentsTrait = 267889;
         public const uint BlessedPortentsHeal = 280052;
 
-        // Concentratedmending        
+        // ConcentratedMending
         public const uint ConcentratedMendingTrait = 267882;
 
-        // Bracingchill        
+        // BracingChill
         public const uint BracingChillTrait = 267884;
         public const uint BracingChill = 272276;
         public const uint BracingChillHeal = 272428;
         public const uint BracingChillSearchJumpTarget = 272436;
 
-        // Orbitalprecision        
+        // OrbitalPrecision
         public const uint MageFrozenOrb = 84714;
 
-        // Bluroftalons
+        // BlurOfTalons
         public const uint HunterCoordinatedAssault = 266779;
 
         // Tradewinds
@@ -87,10 +96,7 @@ namespace Scripts.Spells.Azerite
             if (procSpell == null)
                 return false;
 
-            return procSpell.GetSpellInfo().HasAura(AuraType.ModStun)
-                || procSpell.GetSpellInfo().HasAura(AuraType.ModRoot)
-                || procSpell.GetSpellInfo().HasAura(AuraType.ModRoot2)
-                || procSpell.GetSpellInfo().HasEffect(SpellEffectName.KnockBack);
+            return procSpell.GetSpellInfo().HasAura(AuraType.ModStun) || procSpell.GetSpellInfo().HasAura(AuraType.ModRoot) || procSpell.GetSpellInfo().HasAura(AuraType.ModRoot2) || procSpell.GetSpellInfo().HasEffect(SpellEffectName.KnockBack);
         }
 
         public override void Register()
@@ -114,9 +120,7 @@ namespace Scripts.Spells.Azerite
             {
                 long enemies = GetUnitTargetCountForEffect(0);
                 if (enemies != 0)
-                    GetCaster().CastSpell(GetCaster(), SpellIds.StrengthInNumbersBuff, new CastSpellExtraArgs(TriggerCastFlags.FullMask)
-                        .AddSpellMod(SpellValueMod.BasePoint0, trait.GetAmount())
-                        .AddSpellMod(SpellValueMod.AuraStack, (int)enemies));
+                    GetCaster().CastSpell(GetCaster(), SpellIds.StrengthInNumbersBuff, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.BasePoint0, trait.GetAmount()).AddSpellMod(SpellValueMod.AuraStack, (int)enemies));
             }
         }
 
@@ -143,8 +147,7 @@ namespace Scripts.Spells.Azerite
                 {
                     AuraEffect trait = caster.GetAuraEffect(SpellIds.BlessedPortentsTrait, 0, caster.GetGUID());
                     if (trait != null)
-                        caster.CastSpell(GetTarget(), SpellIds.BlessedPortentsHeal, new CastSpellExtraArgs(TriggerCastFlags.FullMask)
-                            .AddSpellMod(SpellValueMod.BasePoint0, trait.GetAmount()));
+                        caster.CastSpell(GetTarget(), SpellIds.BlessedPortentsHeal, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.BasePoint0, trait.GetAmount()));
                 }
             }
             else
@@ -207,8 +210,7 @@ namespace Scripts.Spells.Azerite
                     new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.BasePoint0, trait.GetAmount()));
 
             if (GetStackAmount() > 1)
-                caster.CastSpell((WorldObject)null, SpellIds.BracingChillSearchJumpTarget,
-                    new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.AuraStack, GetStackAmount() - 1));
+                caster.CastSpell((WorldObject)null, SpellIds.BracingChillSearchJumpTarget, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.AuraStack, GetStackAmount() - 1));
 
             Remove();
         }
@@ -229,10 +231,7 @@ namespace Scripts.Spells.Azerite
                 return;
 
             List<WorldObject> copy = new(targets);
-            copy.RandomResize(target =>
-            {
-                return target.IsUnit() && !target.ToUnit().HasAura(SpellIds.BracingChill, GetCaster().GetGUID());
-            }, 1);
+            copy.RandomResize(target => target.IsUnit() && !target.ToUnit().HasAura(SpellIds.BracingChill, GetCaster().GetGUID()), 1);
 
             if (!copy.Empty())
             {
@@ -248,8 +247,10 @@ namespace Scripts.Spells.Azerite
 
         void MoveAura(uint effIndex)
         {
-            GetCaster().CastSpell(GetHitUnit(), SpellIds.BracingChill,
-                new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.AuraStack, GetSpellValue().AuraStackAmount));
+            Unit caster = GetCaster();
+
+            if (caster != null)
+                caster.CastSpell(GetHitUnit(), SpellIds.BracingChill, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.AuraStack, GetSpellValue().AuraStackAmount));
         }
 
         public override void Register()
@@ -349,10 +350,15 @@ namespace Scripts.Spells.Azerite
 
         void HandleRemove(AuraEffect aurEff, AuraEffectHandleModes mode)
         {
-            AuraEffect trait = GetTarget().GetAuraEffect(GetEffectInfo(1).TriggerSpell, 1);
-            if (trait != null)
-                GetTarget().CastSpell((WorldObject)null, SpellIds.TradewindsAllyBuff,
-                    new CastSpellExtraArgs(aurEff).AddSpellMod(SpellValueMod.BasePoint0, trait.GetAmount()));
+            Unit target = GetTarget();
+
+            if (target != null)
+            {
+                AuraEffect trait = target.GetAuraEffect(GetEffectInfo(1).TriggerSpell, 1);
+
+                if (trait != null)
+                    target.CastSpell((SpellCastTargets)null, SpellIds.TradewindsAllyBuff, new CastSpellExtraArgs(aurEff).AddSpellMod(SpellValueMod.BasePoint0, trait.GetAmount()));
+            }
         }
 
         public override void Register()
@@ -371,7 +377,10 @@ namespace Scripts.Spells.Azerite
 
         void TriggerIgnorePain()
         {
-            GetCaster().CastSpell(GetCaster(), SpellIds.WarriorIgnorePain, GetSpell());
+            Unit caster = GetCaster();
+
+            if (caster != null)
+                caster.CastSpell(caster, SpellIds.WarriorIgnorePain, GetSpell());
         }
 
         public override void Register()
@@ -383,14 +392,18 @@ namespace Scripts.Spells.Azerite
     [Script] // 287650 - Echoing Blades
     class spell_item_echoing_blades : AuraScript
     {
+        ObjectGuid _lastFanOfKnives;
+
         void PrepareProc(ProcEventInfo eventInfo)
         {
-            if (eventInfo.GetProcSpell())
+            Spell procSpell = eventInfo.GetProcSpell();
+
+            if (procSpell != null)
             {
-                if (eventInfo.GetProcSpell().m_castId != _lastFanOfKnives)
+                if (procSpell.m_castId != _lastFanOfKnives)
                     GetEffect(0).RecalculateAmount();
 
-                _lastFanOfKnives = eventInfo.GetProcSpell().m_castId;
+                _lastFanOfKnives = procSpell.m_castId;
             }
         }
 
@@ -410,8 +423,6 @@ namespace Scripts.Spells.Azerite
             DoCheckEffectProc.Add(new CheckEffectProcHandler(CheckFanOfKnivesCounter, 0, AuraType.ProcTriggerSpell));
             AfterEffectProc.Add(new EffectProcHandler(ReduceCounter, 0, AuraType.ProcTriggerSpell));
         }
-
-        ObjectGuid _lastFanOfKnives;
     }
 
     [Script] // 287653 - Echoing Blades
@@ -419,13 +430,13 @@ namespace Scripts.Spells.Azerite
     {
         public override bool Validate(SpellInfo spellInfo)
         {
-            return ValidateSpellInfo(SpellIds.EchoingBladesTrait)
-            && ValidateSpellEffect(SpellIds.EchoingBladesTrait, 2);
+            return ValidateSpellInfo(SpellIds.EchoingBladesTrait) && ValidateSpellEffect(SpellIds.EchoingBladesTrait, 2);
         }
 
         void CalculateDamage(uint effIndex)
         {
             AuraEffect trait = GetCaster().GetAuraEffect(SpellIds.EchoingBladesTrait, 2);
+
             if (trait != null)
                 SetHitDamage(trait.GetAmount() * 2);
         }
@@ -476,8 +487,7 @@ namespace Scripts.Spells.Azerite
             if (procSpell == null)
                 return false;
 
-            return procSpell.GetSpellInfo().HasAura(AuraType.ModStun)
-                || procSpell.GetSpellInfo().HasAura(AuraType.ModStunDisableGravity);
+            return procSpell.GetSpellInfo().HasAura(AuraType.ModStun) || procSpell.GetSpellInfo().HasAura(AuraType.ModStunDisableGravity);
         }
 
         public override void Register()
@@ -495,17 +505,11 @@ namespace Scripts.Spells.Azerite
                 return true;
 
             Spell procSpell = eventInfo.GetProcSpell();
+
             if (!procSpell)
                 return false;
 
-            bool isCrowdControl = procSpell.GetSpellInfo().HasAura(AuraType.ModConfuse)
-                || procSpell.GetSpellInfo().HasAura(AuraType.ModFear)
-                || procSpell.GetSpellInfo().HasAura(AuraType.ModStun)
-                || procSpell.GetSpellInfo().HasAura(AuraType.ModPacify)
-                || procSpell.GetSpellInfo().HasAura(AuraType.ModRoot)
-                || procSpell.GetSpellInfo().HasAura(AuraType.ModSilence)
-                || procSpell.GetSpellInfo().HasAura(AuraType.ModPacifySilence)
-                || procSpell.GetSpellInfo().HasAura(AuraType.ModRoot2);
+            bool isCrowdControl = procSpell.GetSpellInfo().HasAura(AuraType.ModConfuse) || procSpell.GetSpellInfo().HasAura(AuraType.ModFear) || procSpell.GetSpellInfo().HasAura(AuraType.ModStun) || procSpell.GetSpellInfo().HasAura(AuraType.ModPacify) || procSpell.GetSpellInfo().HasAura(AuraType.ModRoot) || procSpell.GetSpellInfo().HasAura(AuraType.ModSilence) || procSpell.GetSpellInfo().HasAura(AuraType.ModPacifySilence) || procSpell.GetSpellInfo().HasAura(AuraType.ModRoot2);
 
             if (!isCrowdControl)
                 return false;
@@ -534,14 +538,20 @@ namespace Scripts.Spells.Azerite
 
         void SetState(bool equipped)
         {
-            Player target = GetTarget().ToPlayer();
+            Unit target = GetTarget();
+
             if (target != null)
             {
-                target.ApplyAllAzeriteEmpoweredItemMods(equipped);
+                Player player = target.ToPlayer();
 
-                PlayerAzeriteItemEquippedStatusChanged statusChanged = new();
-                statusChanged.IsHeartEquipped = equipped;
-                target.SendPacket(statusChanged);
+                if (player != null)
+                {
+                    player.ApplyAllAzeriteEmpoweredItemMods(equipped);
+
+                    PlayerAzeriteItemEquippedStatusChanged statusChanged = new();
+                    statusChanged.IsHeartEquipped = equipped;
+                    player.SendPacket(statusChanged);
+                }
             }
         }
 
@@ -572,4 +582,3 @@ namespace Scripts.Spells.Azerite
             DoEffectCalcAmount.Add(new EffectCalcAmountHandler(CalcAmount, 0, AuraType.ModDecreaseSpeed));
         }
     }
-}

@@ -1,17 +1,26 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Entities;
-using Game.Networking.Packets;
-using Game.Scripting;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
 
-namespace Scripts.Spells.DeathKnight
-{
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Spells;
+using Game.Entities;
+using Game.Scripting;
+using Game.Networking.Packets;
+
+namespace Scripts.Spells.DeathKnight;
+
     struct SpellIds
     {
         public const uint ArmyFleshBeastTransform = 127533;
@@ -181,9 +190,10 @@ namespace Scripts.Spells.DeathKnight
         SpellCastResult CheckCast()
         {
             Unit owner = GetCaster().GetOwner();
+
             if (owner)
                 if (owner.HasAura(SpellIds.GlyphOfFoulMenagerie))
-                    return SpellCastResult.SpellCastOk;
+                    return SpellCastResult.SpellCastOK;
 
             return SpellCastResult.SpellUnavailable;
         }
@@ -345,7 +355,7 @@ namespace Scripts.Spells.DeathKnight
                 return SpellCastResult.CustomError;
             }
 
-            return SpellCastResult.SpellCastOk;
+            return SpellCastResult.SpellCastOK;
         }
 
         void HandleScript(uint effIndex)
@@ -378,7 +388,7 @@ namespace Scripts.Spells.DeathKnight
             if (caster.HasUnitState(UnitState.Jumping) || caster.HasUnitMovementFlag(MovementFlag.Falling))
                 return SpellCastResult.Moving;
 
-            return SpellCastResult.SpellCastOk;
+            return SpellCastResult.SpellCastOK;
         }
 
         void HandleDummy(uint effIndex)
@@ -422,8 +432,7 @@ namespace Scripts.Spells.DeathKnight
     {
         public override bool Validate(SpellInfo spellInfo)
         {
-            return ValidateSpellInfo(SpellIds.DeathStrikeEnabler, SpellIds.DeathStrikeHeal, SpellIds.BloodShieldMastery, SpellIds.BloodShieldAbsorb, SpellIds.RecentlyUsedDeathStrike, SpellIds.Frost, SpellIds.DeathStrikeOffhand)
-                && ValidateSpellEffect(spellInfo.Id, 2);
+            return ValidateSpellInfo(SpellIds.DeathStrikeEnabler, SpellIds.DeathStrikeHeal, SpellIds.BloodShieldMastery, SpellIds.BloodShieldAbsorb, SpellIds.RecentlyUsedDeathStrike, SpellIds.Frost, SpellIds.DeathStrikeOffhand) && ValidateSpellEffect(spellInfo.Id, 2);
         }
 
         void HandleDummy(uint effIndex)
@@ -499,7 +508,7 @@ namespace Scripts.Spells.DeathKnight
             OnEffectUpdatePeriodic.Add(new EffectUpdatePeriodicHandler(Update, 0, AuraType.PeriodicDummy));
         }
     }
-    
+
     [Script] // 85948 - Festering Strike
     class spell_dk_festering_strike : SpellScript
     {
@@ -604,7 +613,7 @@ namespace Scripts.Spells.DeathKnight
             OnEffectHitTarget.Add(new EffectHandler(HandleFrostFever, 0, SpellEffectName.SchoolDamage));
         }
     }
-    
+
     [Script] // 206940 - Mark of Blood
     class spell_dk_mark_of_blood : AuraScript
     {
@@ -652,8 +661,7 @@ namespace Scripts.Spells.DeathKnight
     {
         public override bool Validate(SpellInfo spellInfo)
         {
-            return ValidateSpellInfo(SpellIds.Obliteration, SpellIds.ObliterationRuneEnergize, SpellIds.KillingMachineProc)
-                && ValidateSpellEffect(SpellIds.Obliteration, 1);
+            return ValidateSpellInfo(SpellIds.Obliteration, SpellIds.ObliterationRuneEnergize, SpellIds.KillingMachineProc) && ValidateSpellEffect(SpellIds.Obliteration, 1);
         }
 
         void HandleProc(AuraEffect aurEff, ProcEventInfo eventInfo)
@@ -672,7 +680,7 @@ namespace Scripts.Spells.DeathKnight
             AfterEffectProc.Add(new EffectProcHandler(HandleProc, 0, AuraType.Dummy));
         }
     }
-    
+
     [Script] // 121916 - Glyph of the Geist (Unholy)
     class spell_dk_pet_geist_transform : SpellScript
     {
@@ -689,9 +697,10 @@ namespace Scripts.Spells.DeathKnight
         SpellCastResult CheckCast()
         {
             Unit owner = GetCaster().GetOwner();
+
             if (owner)
                 if (owner.HasAura(SpellIds.GlyphOfTheGeist))
-                    return SpellCastResult.SpellCastOk;
+                    return SpellCastResult.SpellCastOK;
 
             return SpellCastResult.SpellUnavailable;
         }
@@ -713,9 +722,10 @@ namespace Scripts.Spells.DeathKnight
         SpellCastResult CheckCast()
         {
             Unit owner = GetCaster().GetOwner();
+
             if (owner)
                 if (owner.HasAura(SpellIds.GlyphOfTheSkeleton))
-                    return SpellCastResult.SpellCastOk;
+                    return SpellCastResult.SpellCastOK;
 
             return SpellCastResult.SpellUnavailable;
         }
@@ -801,7 +811,7 @@ namespace Scripts.Spells.DeathKnight
             DoCheckEffectProc.Add(new CheckEffectProcHandler(CheckProc, 0, AuraType.ProcTriggerSpell));
         }
     }
-    
+
     [Script] // 55233 - Vampiric Blood
     class spell_dk_vampiric_blood : AuraScript
     {
@@ -815,4 +825,3 @@ namespace Scripts.Spells.DeathKnight
             DoEffectCalcAmount.Add(new EffectCalcAmountHandler(CalculateAmount, 1, AuraType.ModIncreaseHealth2));
         }
     }
-}

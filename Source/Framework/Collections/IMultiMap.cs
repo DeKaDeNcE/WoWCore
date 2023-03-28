@@ -1,8 +1,11 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-namespace System.Collections.Generic
-{
+// ReSharper disable CheckNamespace
+
+namespace System.Collections.Generic;
+
     public interface IMultiMap<TKey, TValue>
     {
         void AddRange(TKey key, IEnumerable<TValue> valueList);
@@ -24,4 +27,3 @@ namespace System.Collections.Generic
 
         List<TValue> LookupByKey(TKey key);
     }
-}

@@ -1,13 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Numerics;
+using System.Collections.Generic;
 using Framework.Constants;
-using Framework.Dynamic;
 using Game.Entities;
 using Game.Movement;
-using System;
-using System.Collections.Generic;
-using System.Numerics;
 
 namespace Game.Networking.Packets
 {
@@ -1272,7 +1272,7 @@ namespace Game.Networking.Packets
             Ticks = _worldPacket.ReadUInt32();
         }
     }
-    
+
     //Structs
     public struct MovementAck
     {
@@ -1371,7 +1371,7 @@ namespace Game.Networking.Packets
     }
 
     public class MonsterSplineUnknown901
-    {    
+    {
         public Array<Inner> Data = new(16);
 
         public void Write(WorldPacket data)

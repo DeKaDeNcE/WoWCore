@@ -1,16 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.AI;
-using Game.BattleGrounds;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.AI;
+using Game.Spells;
+using Game.BattleGrounds;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {
@@ -193,7 +194,7 @@ namespace Game.Entities
             DoneTotalMod *= GetTotalAuraMultiplierByMiscMask(AuraType.ModDamageDoneVersus, creatureTypeMask);
 
             // bonus against aurastate
-            DoneTotalMod *= GetTotalAuraMultiplier(AuraType.ModDamageDoneVersusAurastate, aurEff =>
+            DoneTotalMod *= GetTotalAuraMultiplier(AuraType.ModDamageDoneVersusAuraState, aurEff =>
             {
                 if (victim.HasAuraState((AuraStateType)aurEff.GetMiscValue()))
                     return true;
@@ -408,8 +409,6 @@ namespace Game.Entities
                     case 3736: // Hateful Totem of the Third Wind / Increased Lesser Healing Wave / LK Arena (4/5/6) Totem of the Third Wind / Savage Totem of the Third Wind
                         DoneTotal += aurEff.GetAmount();
                         break;
-                    default:
-                        break;
                 }
             }
 
@@ -514,7 +513,7 @@ namespace Game.Entities
             float DoneTotalMod = 1.0f;
 
             // bonus against aurastate
-            DoneTotalMod *= GetTotalAuraMultiplier(AuraType.ModDamageDoneVersusAurastate, aurEff =>
+            DoneTotalMod *= GetTotalAuraMultiplier(AuraType.ModDamageDoneVersusAuraState, aurEff =>
             {
                 return victim.HasAuraState((AuraStateType)aurEff.GetMiscValue());
             });
@@ -665,8 +664,6 @@ namespace Game.Entities
                                         if (_eff != null)
                                             crit_chance += _eff.GetAmount();
                                     }
-                                    break;
-                                default:
                                     break;
                             }
                         }
@@ -863,7 +860,7 @@ namespace Game.Entities
             return SpellMissInfo.None;
         }
 
-        public void FinishSpell(CurrentSpellTypes spellType, SpellCastResult result = SpellCastResult.SpellCastOk)
+        public void FinishSpell(CurrentSpellTypes spellType, SpellCastResult result = SpellCastResult.SpellCastOK)
         {
             Spell spell = GetCurrentSpell(spellType);
             if (spell == null)
@@ -928,7 +925,7 @@ namespace Game.Entities
         public void SetSilencedSchoolMask(SpellSchoolMask schoolMask) { SetUpdateFieldFlagValue(m_values.ModifyValue(m_unitData).ModifyValue(m_unitData.SilencedSchoolMask), (uint)schoolMask); }
 
         public void ReplaceAllSilencedSchoolMask(SpellSchoolMask schoolMask) { SetUpdateFieldValue(m_values.ModifyValue(m_unitData).ModifyValue(m_unitData.SilencedSchoolMask), (uint)schoolMask); }
-        
+
         public SpellHistory GetSpellHistory() { return _spellHistory; }
 
         public static ProcFlagsHit CreateProcHitMask(SpellNonMeleeDamage damageInfo, SpellMissInfo missCondition)
@@ -970,8 +967,6 @@ namespace Game.Entities
                         break;
                     case SpellMissInfo.Resist:
                         hitMask |= ProcFlagsHit.FullResist;
-                        break;
-                    default:
                         break;
                 }
             }
@@ -1741,8 +1736,7 @@ namespace Game.Entities
                     }
                     break;
                 }
-                default:
-                    break; // other spell types don't break anything now
+                // other spell types don't break anything now
             }
 
             // current spell (if it is still here) may be safely deleted now
@@ -2055,8 +2049,6 @@ namespace Game.Entities
 
                         break;
                     }
-                    default:
-                        break;
                 }
             }
 
@@ -2355,8 +2347,6 @@ namespace Game.Entities
                             case DiminishingLevels.TauntImmune:
                                 mod = 0.0f;
                                 break;
-                            default:
-                                break;
                         }
                     }
                     break;
@@ -2372,8 +2362,6 @@ namespace Game.Entities
                                 break;
                             case DiminishingLevels.Level2:
                                 mod = 0.5f;
-                                break;
-                            default:
                                 break;
                         }
                     }
@@ -2736,7 +2724,7 @@ namespace Game.Entities
 
             return false;
         }
-        
+
         public bool HasNegativeAuraWithInterruptFlag(SpellAuraInterruptFlags flag, ObjectGuid guid = default)
         {
             if (!HasInterruptFlag(flag))
@@ -2784,7 +2772,7 @@ namespace Game.Entities
 
             return false;
         }
-        
+
         public uint GetAuraCount(uint spellId)
         {
             uint count = 0;
@@ -2878,8 +2866,6 @@ namespace Game.Entities
                             return true;
                     }
                     break;
-                default:
-                    break;
             }
 
             return false;
@@ -2889,7 +2875,7 @@ namespace Game.Entities
         {
             return false;
         }
-        
+
         public void RemoveAurasWithInterruptFlags(SpellAuraInterruptFlags flag, SpellInfo source = null)
         {
             if (!HasInterruptFlag(flag))
@@ -3433,7 +3419,7 @@ namespace Game.Entities
             // this may be a dead loop if some events on aura remove will continiously apply aura on remove
             // we want to have all auras removed, so use your brain when linking events
             for (int counter = 0; !m_appliedAuras.Empty() || !m_ownedAuras.Empty(); counter++)
-            {                
+            {
                 foreach (var aurAppIter in GetAppliedAuras())
                     _UnapplyAura(aurAppIter, AuraRemoveMode.Default);
 
@@ -3587,7 +3573,7 @@ namespace Game.Entities
             {
                 if (spellProto != null)
                 {
-                    if (caster.HasAuraTypeWithAffectMask(AuraType.AbilityIgnoreAurastate, spellProto))
+                    if (caster.HasAuraTypeWithAffectMask(AuraType.AbilityIgnoreAuraState, spellProto))
                         return true;
                 }
 
@@ -3789,7 +3775,7 @@ namespace Game.Entities
             }
             return null;
         }
-        
+
         // spell mustn't have familyflags
         public AuraEffect GetAuraEffect(AuraType type, SpellFamilyNames family, FlagArray128 familyFlag, ObjectGuid casterGUID = default)
         {
@@ -3877,7 +3863,7 @@ namespace Game.Entities
             AuraApplication aurApp = GetAuraApplication(predicate);
             return aurApp?.GetBase();
         }
-        
+
         public uint BuildAuraStateUpdateForTarget(Unit target)
         {
             uint auraStates = m_unitData.AuraState & ~(uint)AuraStateType.PerCasterAuraStateMask;

@@ -1,17 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Movement;
-using Game.Spells;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using static Game.AI.SmartAction;
+using System.Runtime.CompilerServices;
+using Framework.Database;
+using Framework.Constants;
+using Game.Spells;
+using Game.Movement;
+using Game.Entities;
+using Game.DataStorage;
 
 namespace Game.AI
 {
@@ -262,8 +262,6 @@ namespace Game.AI
                             temp.Event.event_flags |= SmartEventFlags.NotRepeatable;
                             Log.outError(LogFilter.Sql, $"SmartAIMgr.LoadFromDB: Entry {temp.EntryOrGuid} SourceType {temp.GetScriptType()}, Event {temp.EventId}, Missing Repeat flag.");
                         }
-                        break;
-                    default:
                         break;
                 }
 
@@ -542,7 +540,7 @@ namespace Game.AI
                 SmartEvents.Movementinform => Marshal.SizeOf(typeof(SmartEvent.MovementInform)),
                 SmartEvents.SummonDespawned => Marshal.SizeOf(typeof(SmartEvent.Summoned)),
                 SmartEvents.CorpseRemoved => 0,
-                SmartEvents.AiInit => 0,
+                SmartEvents.AIInit => 0,
                 SmartEvents.DataSet => Marshal.SizeOf(typeof(SmartEvent.DataSet)),
                 SmartEvents.WaypointReached => Marshal.SizeOf(typeof(SmartEvent.Waypoint)),
                 SmartEvents.TransportAddplayer => 0,
@@ -1232,7 +1230,7 @@ namespace Game.AI
                     case SmartEvents.InstancePlayerEnter:
                     case SmartEvents.TransportRelocate:
                     case SmartEvents.CorpseRemoved:
-                    case SmartEvents.AiInit:
+                    case SmartEvents.AIInit:
                     case SmartEvents.ActionDone:
                     case SmartEvents.TransportAddplayer:
                     case SmartEvents.TransportRemovePlayer:
@@ -2297,113 +2295,113 @@ namespace Game.AI
         public static uint GetTypeMask(SmartScriptType smartScriptType) =>
             smartScriptType switch
             {
-                SmartScriptType.Creature => SmartScriptTypeMaskId.Creature,
-                SmartScriptType.GameObject => SmartScriptTypeMaskId.Gameobject,
-                SmartScriptType.AreaTrigger => SmartScriptTypeMaskId.Areatrigger,
-                SmartScriptType.Event => SmartScriptTypeMaskId.Event,
-                SmartScriptType.Gossip => SmartScriptTypeMaskId.Gossip,
-                SmartScriptType.Quest => SmartScriptTypeMaskId.Quest,
-                SmartScriptType.Spell => SmartScriptTypeMaskId.Spell,
-                SmartScriptType.Transport => SmartScriptTypeMaskId.Transport,
-                SmartScriptType.Instance => SmartScriptTypeMaskId.Instance,
-                SmartScriptType.TimedActionlist => SmartScriptTypeMaskId.TimedActionlist,
-                SmartScriptType.Scene => SmartScriptTypeMaskId.Scene,
-                SmartScriptType.AreaTriggerEntity => SmartScriptTypeMaskId.AreatrigggerEntity,
-                SmartScriptType.AreaTriggerEntityServerside => SmartScriptTypeMaskId.AreatrigggerEntity,
-                _ => 0,
+                SmartScriptType.Creature                    => SmartScriptTypeMaskId.Creature,
+                SmartScriptType.GameObject                  => SmartScriptTypeMaskId.GameObject,
+                SmartScriptType.AreaTrigger                 => SmartScriptTypeMaskId.AreaTrigger,
+                SmartScriptType.Event                       => SmartScriptTypeMaskId.Event,
+                SmartScriptType.Gossip                      => SmartScriptTypeMaskId.Gossip,
+                SmartScriptType.Quest                       => SmartScriptTypeMaskId.Quest,
+                SmartScriptType.Spell                       => SmartScriptTypeMaskId.Spell,
+                SmartScriptType.Transport                   => SmartScriptTypeMaskId.Transport,
+                SmartScriptType.Instance                    => SmartScriptTypeMaskId.Instance,
+                SmartScriptType.TimedActionlist             => SmartScriptTypeMaskId.TimedActionlist,
+                SmartScriptType.Scene                       => SmartScriptTypeMaskId.Scene,
+                SmartScriptType.AreaTriggerEntity           => SmartScriptTypeMaskId.AreaTriggerEntity,
+                SmartScriptType.AreaTriggerEntityServerside => SmartScriptTypeMaskId.AreaTriggerEntity,
+                _                                           => 0,
             };
 
         public static uint GetEventMask(SmartEvents smartEvent) =>
             smartEvent switch
             {
-                SmartEvents.UpdateIc => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.TimedActionlist,
-                SmartEvents.UpdateOoc => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject + SmartScriptTypeMaskId.Instance + SmartScriptTypeMaskId.AreatrigggerEntity,
-                SmartEvents.HealthPct => SmartScriptTypeMaskId.Creature,
-                SmartEvents.ManaPct => SmartScriptTypeMaskId.Creature,
-                SmartEvents.Aggro => SmartScriptTypeMaskId.Creature,
-                SmartEvents.Kill => SmartScriptTypeMaskId.Creature,
-                SmartEvents.Death => SmartScriptTypeMaskId.Creature,
-                SmartEvents.Evade => SmartScriptTypeMaskId.Creature,
-                SmartEvents.SpellHit => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.Range => SmartScriptTypeMaskId.Creature,
-                SmartEvents.OocLos => SmartScriptTypeMaskId.Creature,
-                SmartEvents.Respawn => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.TargetHealthPct => SmartScriptTypeMaskId.Creature,
-                SmartEvents.VictimCasting => SmartScriptTypeMaskId.Creature,
-                SmartEvents.FriendlyHealth => SmartScriptTypeMaskId.Creature,
-                SmartEvents.FriendlyIsCc => SmartScriptTypeMaskId.Creature,
-                SmartEvents.FriendlyMissingBuff => SmartScriptTypeMaskId.Creature,
-                SmartEvents.SummonedUnit => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.TargetManaPct => SmartScriptTypeMaskId.Creature,
-                SmartEvents.AcceptedQuest => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.RewardQuest => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.ReachedHome => SmartScriptTypeMaskId.Creature,
-                SmartEvents.ReceiveEmote => SmartScriptTypeMaskId.Creature,
-                SmartEvents.HasAura => SmartScriptTypeMaskId.Creature,
-                SmartEvents.TargetBuffed => SmartScriptTypeMaskId.Creature,
-                SmartEvents.Reset => SmartScriptTypeMaskId.Creature,
-                SmartEvents.IcLos => SmartScriptTypeMaskId.Creature,
-                SmartEvents.PassengerBoarded => SmartScriptTypeMaskId.Creature,
-                SmartEvents.PassengerRemoved => SmartScriptTypeMaskId.Creature,
-                SmartEvents.Charmed => SmartScriptTypeMaskId.Creature,
-                SmartEvents.CharmedTarget => SmartScriptTypeMaskId.Creature,
-                SmartEvents.SpellHitTarget => SmartScriptTypeMaskId.Creature,
-                SmartEvents.Damaged => SmartScriptTypeMaskId.Creature,
-                SmartEvents.DamagedTarget => SmartScriptTypeMaskId.Creature,
-                SmartEvents.Movementinform => SmartScriptTypeMaskId.Creature,
-                SmartEvents.SummonDespawned => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.CorpseRemoved => SmartScriptTypeMaskId.Creature,
-                SmartEvents.AiInit => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.DataSet => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.WaypointStart => SmartScriptTypeMaskId.Creature,
-                SmartEvents.WaypointReached => SmartScriptTypeMaskId.Creature,
-                SmartEvents.TransportAddplayer => SmartScriptTypeMaskId.Transport,
-                SmartEvents.TransportAddcreature => SmartScriptTypeMaskId.Transport,
+                SmartEvents.UpdateIc              => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.TimedActionlist,
+                SmartEvents.UpdateOoc             => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject + SmartScriptTypeMaskId.Instance + SmartScriptTypeMaskId.AreaTriggerEntity,
+                SmartEvents.HealthPct             => SmartScriptTypeMaskId.Creature,
+                SmartEvents.ManaPct               => SmartScriptTypeMaskId.Creature,
+                SmartEvents.Aggro                 => SmartScriptTypeMaskId.Creature,
+                SmartEvents.Kill                  => SmartScriptTypeMaskId.Creature,
+                SmartEvents.Death                 => SmartScriptTypeMaskId.Creature,
+                SmartEvents.Evade                 => SmartScriptTypeMaskId.Creature,
+                SmartEvents.SpellHit              => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.Range                 => SmartScriptTypeMaskId.Creature,
+                SmartEvents.OocLos                => SmartScriptTypeMaskId.Creature,
+                SmartEvents.Respawn               => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.TargetHealthPct       => SmartScriptTypeMaskId.Creature,
+                SmartEvents.VictimCasting         => SmartScriptTypeMaskId.Creature,
+                SmartEvents.FriendlyHealth        => SmartScriptTypeMaskId.Creature,
+                SmartEvents.FriendlyIsCc          => SmartScriptTypeMaskId.Creature,
+                SmartEvents.FriendlyMissingBuff   => SmartScriptTypeMaskId.Creature,
+                SmartEvents.SummonedUnit          => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.TargetManaPct         => SmartScriptTypeMaskId.Creature,
+                SmartEvents.AcceptedQuest         => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.RewardQuest           => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.ReachedHome           => SmartScriptTypeMaskId.Creature,
+                SmartEvents.ReceiveEmote          => SmartScriptTypeMaskId.Creature,
+                SmartEvents.HasAura               => SmartScriptTypeMaskId.Creature,
+                SmartEvents.TargetBuffed          => SmartScriptTypeMaskId.Creature,
+                SmartEvents.Reset                 => SmartScriptTypeMaskId.Creature,
+                SmartEvents.IcLos                 => SmartScriptTypeMaskId.Creature,
+                SmartEvents.PassengerBoarded      => SmartScriptTypeMaskId.Creature,
+                SmartEvents.PassengerRemoved      => SmartScriptTypeMaskId.Creature,
+                SmartEvents.Charmed               => SmartScriptTypeMaskId.Creature,
+                SmartEvents.CharmedTarget         => SmartScriptTypeMaskId.Creature,
+                SmartEvents.SpellHitTarget        => SmartScriptTypeMaskId.Creature,
+                SmartEvents.Damaged               => SmartScriptTypeMaskId.Creature,
+                SmartEvents.DamagedTarget         => SmartScriptTypeMaskId.Creature,
+                SmartEvents.Movementinform        => SmartScriptTypeMaskId.Creature,
+                SmartEvents.SummonDespawned       => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.CorpseRemoved         => SmartScriptTypeMaskId.Creature,
+                SmartEvents.AIInit                => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.DataSet               => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.WaypointStart         => SmartScriptTypeMaskId.Creature,
+                SmartEvents.WaypointReached       => SmartScriptTypeMaskId.Creature,
+                SmartEvents.TransportAddplayer    => SmartScriptTypeMaskId.Transport,
+                SmartEvents.TransportAddcreature  => SmartScriptTypeMaskId.Transport,
                 SmartEvents.TransportRemovePlayer => SmartScriptTypeMaskId.Transport,
-                SmartEvents.TransportRelocate => SmartScriptTypeMaskId.Transport,
-                SmartEvents.InstancePlayerEnter => SmartScriptTypeMaskId.Instance,
-                SmartEvents.AreatriggerOntrigger => SmartScriptTypeMaskId.Areatrigger + SmartScriptTypeMaskId.AreatrigggerEntity,
-                SmartEvents.QuestAccepted => SmartScriptTypeMaskId.Quest,
-                SmartEvents.QuestObjCompletion => SmartScriptTypeMaskId.Quest,
-                SmartEvents.QuestRewarded => SmartScriptTypeMaskId.Quest,
-                SmartEvents.QuestCompletion => SmartScriptTypeMaskId.Quest,
-                SmartEvents.QuestFail => SmartScriptTypeMaskId.Quest,
-                SmartEvents.TextOver => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.ReceiveHeal => SmartScriptTypeMaskId.Creature,
-                SmartEvents.JustSummoned => SmartScriptTypeMaskId.Creature,
-                SmartEvents.WaypointPaused => SmartScriptTypeMaskId.Creature,
-                SmartEvents.WaypointResumed => SmartScriptTypeMaskId.Creature,
-                SmartEvents.WaypointStopped => SmartScriptTypeMaskId.Creature,
-                SmartEvents.WaypointEnded => SmartScriptTypeMaskId.Creature,
-                SmartEvents.TimedEventTriggered => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.Update => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject + SmartScriptTypeMaskId.AreatrigggerEntity,
-                SmartEvents.Link => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject + SmartScriptTypeMaskId.Areatrigger + SmartScriptTypeMaskId.Event + SmartScriptTypeMaskId.Gossip + SmartScriptTypeMaskId.Quest + SmartScriptTypeMaskId.Spell + SmartScriptTypeMaskId.Transport + SmartScriptTypeMaskId.Instance + SmartScriptTypeMaskId.AreatrigggerEntity,
-                SmartEvents.GossipSelect => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.JustCreated => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.GossipHello => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.FollowCompleted => SmartScriptTypeMaskId.Creature,
-                SmartEvents.PhaseChange => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.IsBehindTarget => SmartScriptTypeMaskId.Creature,
-                SmartEvents.GameEventStart => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.GameEventEnd => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.GoLootStateChanged => SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.GoEventInform => SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.ActionDone => SmartScriptTypeMaskId.Creature,
-                SmartEvents.OnSpellclick => SmartScriptTypeMaskId.Creature,
-                SmartEvents.FriendlyHealthPCT => SmartScriptTypeMaskId.Creature,
-                SmartEvents.DistanceCreature => SmartScriptTypeMaskId.Creature,
-                SmartEvents.DistanceGameobject => SmartScriptTypeMaskId.Creature,
-                SmartEvents.CounterSet => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.SceneStart => SmartScriptTypeMaskId.Scene,
-                SmartEvents.SceneTrigger => SmartScriptTypeMaskId.Scene,
-                SmartEvents.SceneCancel => SmartScriptTypeMaskId.Scene,
-                SmartEvents.SceneComplete => SmartScriptTypeMaskId.Scene,
-                SmartEvents.SummonedUnitDies => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.Gameobject,
-                SmartEvents.OnSpellCast => SmartScriptTypeMaskId.Creature,
-                SmartEvents.OnSpellFailed => SmartScriptTypeMaskId.Creature,
-                SmartEvents.OnSpellStart => SmartScriptTypeMaskId.Creature,
-                SmartEvents.OnDespawn => SmartScriptTypeMaskId.Creature,
-                _ => 0,
+                SmartEvents.TransportRelocate     => SmartScriptTypeMaskId.Transport,
+                SmartEvents.InstancePlayerEnter   => SmartScriptTypeMaskId.Instance,
+                SmartEvents.AreatriggerOntrigger  => SmartScriptTypeMaskId.AreaTrigger + SmartScriptTypeMaskId.AreaTriggerEntity,
+                SmartEvents.QuestAccepted         => SmartScriptTypeMaskId.Quest,
+                SmartEvents.QuestObjCompletion    => SmartScriptTypeMaskId.Quest,
+                SmartEvents.QuestRewarded         => SmartScriptTypeMaskId.Quest,
+                SmartEvents.QuestCompletion       => SmartScriptTypeMaskId.Quest,
+                SmartEvents.QuestFail             => SmartScriptTypeMaskId.Quest,
+                SmartEvents.TextOver              => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.ReceiveHeal           => SmartScriptTypeMaskId.Creature,
+                SmartEvents.JustSummoned          => SmartScriptTypeMaskId.Creature,
+                SmartEvents.WaypointPaused        => SmartScriptTypeMaskId.Creature,
+                SmartEvents.WaypointResumed       => SmartScriptTypeMaskId.Creature,
+                SmartEvents.WaypointStopped       => SmartScriptTypeMaskId.Creature,
+                SmartEvents.WaypointEnded         => SmartScriptTypeMaskId.Creature,
+                SmartEvents.TimedEventTriggered   => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.Update                => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject + SmartScriptTypeMaskId.AreaTriggerEntity,
+                SmartEvents.Link                  => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject + SmartScriptTypeMaskId.AreaTrigger + SmartScriptTypeMaskId.Event + SmartScriptTypeMaskId.Gossip + SmartScriptTypeMaskId.Quest + SmartScriptTypeMaskId.Spell + SmartScriptTypeMaskId.Transport + SmartScriptTypeMaskId.Instance + SmartScriptTypeMaskId.AreaTriggerEntity,
+                SmartEvents.GossipSelect          => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.JustCreated           => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.GossipHello           => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.FollowCompleted       => SmartScriptTypeMaskId.Creature,
+                SmartEvents.PhaseChange           => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.IsBehindTarget        => SmartScriptTypeMaskId.Creature,
+                SmartEvents.GameEventStart        => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.GameEventEnd          => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.GoLootStateChanged    => SmartScriptTypeMaskId.GameObject,
+                SmartEvents.GoEventInform         => SmartScriptTypeMaskId.GameObject,
+                SmartEvents.ActionDone            => SmartScriptTypeMaskId.Creature,
+                SmartEvents.OnSpellclick          => SmartScriptTypeMaskId.Creature,
+                SmartEvents.FriendlyHealthPCT     => SmartScriptTypeMaskId.Creature,
+                SmartEvents.DistanceCreature      => SmartScriptTypeMaskId.Creature,
+                SmartEvents.DistanceGameobject    => SmartScriptTypeMaskId.Creature,
+                SmartEvents.CounterSet            => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.SceneStart            => SmartScriptTypeMaskId.Scene,
+                SmartEvents.SceneTrigger          => SmartScriptTypeMaskId.Scene,
+                SmartEvents.SceneCancel           => SmartScriptTypeMaskId.Scene,
+                SmartEvents.SceneComplete         => SmartScriptTypeMaskId.Scene,
+                SmartEvents.SummonedUnitDies      => SmartScriptTypeMaskId.Creature + SmartScriptTypeMaskId.GameObject,
+                SmartEvents.OnSpellCast           => SmartScriptTypeMaskId.Creature,
+                SmartEvents.OnSpellFailed         => SmartScriptTypeMaskId.Creature,
+                SmartEvents.OnSpellStart          => SmartScriptTypeMaskId.Creature,
+                SmartEvents.OnDespawn             => SmartScriptTypeMaskId.Creature,
+                _                                 => 0,
             };
 
         public static void TC_SAI_IS_BOOLEAN_VALID(SmartScriptHolder e, uint value, [CallerArgumentExpression("value")] string valueName = null)
@@ -3349,7 +3347,7 @@ namespace Game.AI
         }
         public struct WpStart
         {
-            public uint run;
+            public uint run; // unused / overridden by waypoint_data
             public uint pathID;
             public uint repeat;
             public uint quest;

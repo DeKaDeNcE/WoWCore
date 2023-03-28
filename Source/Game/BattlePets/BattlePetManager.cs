@@ -1,15 +1,16 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Spells;
+using Game.Entities;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game.BattlePets
 {
@@ -142,7 +143,7 @@ namespace Game.BattlePets
         {
             return _battlePetSpeciesBySpell.LookupByKey(spellId);
         }
-        
+
         public static ushort RollPetBreed(uint species)
         {
             var list = _availableBreedsPerSpecies.LookupByKey(species);
@@ -175,7 +176,7 @@ namespace Game.BattlePets
 
             return 0;
         }
-        
+
         public void LoadFromDB(SQLResult petsResult, SQLResult slotsResult)
         {
             if (!petsResult.IsEmpty())
@@ -475,7 +476,7 @@ namespace Game.BattlePets
                 if (summonedBattlePet.GetBattlePetCompanionGUID() == guid)
                     summonedBattlePet.SetBattlePetCompanionNameTimestamp((uint)pet.NameTimestamp);
         }
-        
+
         bool IsPetInSlot(ObjectGuid guid)
         {
             foreach (BattlePetSlot slot in _slots)
@@ -509,7 +510,7 @@ namespace Game.BattlePets
             int maxPetsPerSpecies = battlePetSpecies.GetFlags().HasFlag(BattlePetSpeciesFlags.LegacyAccountUnique) ? 1 : SharedConst.DefaultMaxBattlePetsPerSpecies;
             return GetPetCount(battlePetSpecies, ownerGuid) >= maxPetsPerSpecies;
         }
-        
+
         public uint GetPetUniqueSpeciesCount()
         {
             HashSet<uint> speciesIds = new();
@@ -518,7 +519,7 @@ namespace Game.BattlePets
 
             return (uint)speciesIds.Count;
         }
-        
+
         public void UnlockSlot(BattlePetSlots slot)
         {
             if (slot >= BattlePetSlots.Count)
@@ -866,7 +867,7 @@ namespace Game.BattlePets
         {
             return Global.WorldMgr.IsBattlePetJournalLockAcquired(_owner.GetBattlenetAccountGUID());
         }
-        
+
         public BattlePetSlot GetSlot(BattlePetSlots slot) { return slot < BattlePetSlots.Count ? _slots[(byte)slot] : null; }
         WorldSession GetOwner() { return _owner; }
 

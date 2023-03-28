@@ -1,19 +1,20 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
+using System;
+using System.Linq;
+using System.Text;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Framework.Database;
-using Game.DataStorage;
+using Framework.Constants;
+using Framework.Collections;
 using Game.Loots;
+using Game.Spells;
+using Game.DataStorage;
 using Game.Networking;
 using Game.Networking.Packets;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Game.Entities
 {
@@ -600,8 +601,6 @@ namespace Game.Entities
                                         }
                                     }
                                     break;
-                                default:
-                                    break;
                             }
                         }
                     }
@@ -793,7 +792,7 @@ namespace Game.Entities
             return !IsInBag() && (m_slot < EquipmentSlot.End
                 || (m_slot >= ProfessionSlots.Start && m_slot < ProfessionSlots.End));
         }
-        
+
         public bool CanBeTraded(bool mail = false, bool trade = false)
         {
             if (m_lootGenerated)
@@ -869,14 +868,14 @@ namespace Game.Entities
                 dmultiplier = durabilityCost.ArmorSubClassCost[itemTemplate.GetSubClass()];
 
             ulong cost = (ulong)Math.Round(lostDurability * dmultiplier * durabilityQualityEntry.Data * GetRepairCostMultiplier());
-            cost = (ulong)(cost * discount * WorldConfig.GetFloatValue(WorldCfg.RateRepaircost));
+            cost = (ulong)(cost * discount * WorldConfig.GetFloatValue(WorldCfg.RateRepairCost));
 
             if (cost == 0) // Fix for ITEM_QUALITY_ARTIFACT
                 cost = 1;
 
             return cost;
         }
-        
+
         bool HasEnchantRequiredSkill(Player player)
         {
             // Check all enchants for required skill
@@ -1102,8 +1101,6 @@ namespace Game.Entities
                                     }
                                     break;
                                 }
-                                default:
-                                    break;
                             }
                         }
                     }
@@ -1552,8 +1549,6 @@ namespace Game.Entities
                         return ItemTransmogrificationWeaponCategory.Dagger;
                     case ItemSubClassWeapon.Fist:
                         return ItemTransmogrificationWeaponCategory.Fist;
-                    default:
-                        break;
                 }
             }
 
@@ -1880,8 +1875,6 @@ namespace Game.Entities
                 case ItemModType.Corruption:
                 case ItemModType.CorruptionResistance:
                     return _bonusData.StatPercentEditor[index];
-                default:
-                    break;
             }
 
             uint itemLevel = GetItemLevel(owner);
@@ -2046,7 +2039,7 @@ namespace Game.Entities
 
             return itemModifiedAppearanceId;
         }
-        
+
         public uint GetVisibleEnchantmentId(Player owner)
         {
             uint enchantmentId = GetModifier(ItemConst.IllusionModifierSlotBySpec[owner.GetActiveTalentGroup()]);
@@ -2297,8 +2290,6 @@ namespace Game.Entities
                                 }
                             }
                             break;
-                        default:
-                            break;
                     }
                 }
             }
@@ -2391,7 +2382,7 @@ namespace Game.Entities
         {
             return $"{base.GetDebugInfo()}\nOwner: {GetOwnerGUID()} Count: {GetCount()} BagSlot: {GetBagSlot()} Slot: {GetSlot()} Equipped: {IsEquipped()}";
         }
-        
+
         public static Item NewItemOrBag(ItemTemplate proto)
         {
             if (proto.GetInventoryType() == InventoryType.Bag)
@@ -2663,7 +2654,7 @@ namespace Game.Entities
         public void SetChildItem(ObjectGuid childItem) { m_childItem = childItem; }
 
         public ItemEffectRecord[] GetEffects() { return _bonusData.Effects[0.._bonusData.EffectCount]; }
-        
+
         public override Loot GetLootForPlayer(Player player)  { return loot; }
 
         //Static

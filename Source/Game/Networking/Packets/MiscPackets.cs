@@ -1,12 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.Entities;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Entities;
 
 namespace Game.Networking.Packets
 {
@@ -230,7 +230,7 @@ namespace Game.Networking.Packets
         {
             public uint Type;
             public uint Quantity;
-            public uint? WeeklyQuantity;       // Currency count obtained this Week.  
+            public uint? WeeklyQuantity;       // Currency count obtained this Week.
             public uint? MaxWeeklyQuantity;    // Weekly Currency cap.
             public uint? TrackedQuantity;
             public int? MaxQuantity;
@@ -480,9 +480,9 @@ namespace Game.Networking.Packets
         public override void Read() { }
     }
 
-    public class PreRessurect : ServerPacket
+    public class PreResurrect : ServerPacket
     {
-        public PreRessurect() : base(ServerOpcodes.PreRessurect) { }
+        public PreResurrect() : base(ServerOpcodes.PreResurrect) { }
 
         public override void Write()
         {
@@ -790,13 +790,13 @@ namespace Game.Networking.Packets
 
         public EnableBarberShop() : base(ServerOpcodes.EnableBarberShop) { }
 
-        public override void Write() 
+        public override void Write()
         {
             _worldPacket.WriteUInt8(CustomizationScope);
         }
     }
 
-    class PhaseShiftChange : ServerPacket
+    public class PhaseShiftChange : ServerPacket
     {
         public PhaseShiftChange() : base(ServerOpcodes.PhaseShiftChange) { }
 
@@ -836,7 +836,7 @@ namespace Game.Networking.Packets
         public int AreaID;
     }
 
-    class DurabilityDamageDeath : ServerPacket
+    public class DurabilityDamageDeath : ServerPacket
     {
         public DurabilityDamageDeath() : base(ServerOpcodes.DurabilityDamageDeath) { }
 
@@ -848,7 +848,7 @@ namespace Game.Networking.Packets
         public uint Percent;
     }
 
-    class ObjectUpdateFailed : ClientPacket
+    public class ObjectUpdateFailed : ClientPacket
     {
         public ObjectUpdateFailed(WorldPacket packet) : base(packet) { }
 
@@ -860,7 +860,7 @@ namespace Game.Networking.Packets
         public ObjectGuid ObjectGUID;
     }
 
-    class ObjectUpdateRescued : ClientPacket
+    public class ObjectUpdateRescued : ClientPacket
     {
         public ObjectUpdateRescued(WorldPacket packet) : base(packet) { }
 
@@ -872,7 +872,7 @@ namespace Game.Networking.Packets
         public ObjectGuid ObjectGUID;
     }
 
-    class PlayObjectSound : ServerPacket
+    public class PlayObjectSound : ServerPacket
     {
         public PlayObjectSound() : base(ServerOpcodes.PlayObjectSound) { }
 
@@ -892,7 +892,7 @@ namespace Game.Networking.Packets
         public int BroadcastTextID;
     }
 
-    class PlaySound : ServerPacket
+    public class PlaySound : ServerPacket
     {
         public PlaySound(ObjectGuid sourceObjectGuid, uint soundKitID, uint broadcastTextId) : base(ServerOpcodes.PlaySound)
         {
@@ -913,7 +913,7 @@ namespace Game.Networking.Packets
         public uint BroadcastTextID;
     }
 
-    class PlaySpeakerBoxSound : ServerPacket
+    public class PlaySpeakerBoxSound : ServerPacket
     {
         public PlaySpeakerBoxSound(ObjectGuid sourceObjectGuid, uint soundKitID) : base(ServerOpcodes.PlaySpeakerbotSound)
         {
@@ -931,35 +931,35 @@ namespace Game.Networking.Packets
         public uint SoundKitID;
     }
 
-    class OpeningCinematic : ClientPacket
+    public class OpeningCinematic : ClientPacket
     {
         public OpeningCinematic(WorldPacket packet) : base(packet) { }
 
         public override void Read() { }
     }
 
-    class CompleteCinematic : ClientPacket
+    public class CompleteCinematic : ClientPacket
     {
         public CompleteCinematic(WorldPacket packet) : base(packet) { }
 
         public override void Read() { }
     }
 
-    class NextCinematicCamera : ClientPacket
+    public class NextCinematicCamera : ClientPacket
     {
         public NextCinematicCamera(WorldPacket packet) : base(packet) { }
 
         public override void Read() { }
     }
 
-    class CompleteMovie : ClientPacket
+    public class CompleteMovie : ClientPacket
     {
         public CompleteMovie(WorldPacket packet) : base(packet) { }
 
         public override void Read() { }
     }
 
-    class FarSight : ClientPacket
+    public class FarSight : ClientPacket
     {
         public FarSight(WorldPacket packet) : base(packet) { }
 
@@ -971,7 +971,7 @@ namespace Game.Networking.Packets
         public bool Enable;
     }
 
-    class SaveCUFProfiles : ClientPacket
+    public class SaveCUFProfiles : ClientPacket
     {
         public SaveCUFProfiles(WorldPacket packet) : base(packet) { }
 
@@ -1012,7 +1012,7 @@ namespace Game.Networking.Packets
         public List<CUFProfile> CUFProfiles = new();
     }
 
-    class LoadCUFProfiles : ServerPacket
+    public class LoadCUFProfiles : ServerPacket
     {
         public LoadCUFProfiles() : base(ServerOpcodes.LoadCufProfiles, ConnectionType.Instance) { }
 
@@ -1050,7 +1050,7 @@ namespace Game.Networking.Packets
         public List<CUFProfile> CUFProfiles = new();
     }
 
-    class PlayOneShotAnimKit : ServerPacket
+    public class PlayOneShotAnimKit : ServerPacket
     {
         public PlayOneShotAnimKit() : base(ServerOpcodes.PlayOneShotAnimKit) { }
 
@@ -1064,7 +1064,7 @@ namespace Game.Networking.Packets
         public ushort AnimKitID;
     }
 
-    class SetAIAnimKit : ServerPacket
+    public class SetAIAnimKit : ServerPacket
     {
         public SetAIAnimKit() : base(ServerOpcodes.SetAiAnimKit, ConnectionType.Instance) { }
 
@@ -1078,7 +1078,7 @@ namespace Game.Networking.Packets
         public ushort AnimKitID;
     }
 
-    class SetMeleeAnimKit : ServerPacket
+    public class SetMeleeAnimKit : ServerPacket
     {
         public SetMeleeAnimKit() : base(ServerOpcodes.SetMeleeAnimKit, ConnectionType.Instance) { }
 
@@ -1092,7 +1092,7 @@ namespace Game.Networking.Packets
         public ushort AnimKitID;
     }
 
-    class SetMovementAnimKit : ServerPacket
+    public class SetMovementAnimKit : ServerPacket
     {
         public SetMovementAnimKit() : base(ServerOpcodes.SetMovementAnimKit, ConnectionType.Instance) { }
 
@@ -1106,7 +1106,7 @@ namespace Game.Networking.Packets
         public ushort AnimKitID;
     }
 
-    class SetPlayHoverAnim : ServerPacket
+    public class SetPlayHoverAnim : ServerPacket
     {
         public SetPlayHoverAnim() : base(ServerOpcodes.SetPlayHoverAnim, ConnectionType.Instance) { }
 
@@ -1121,14 +1121,14 @@ namespace Game.Networking.Packets
         public bool PlayHoverAnim;
     }
 
-    class TogglePvP : ClientPacket
+    public class TogglePvP : ClientPacket
     {
         public TogglePvP(WorldPacket packet) : base(packet) { }
 
         public override void Read() { }
     }
 
-    class SetPvP : ClientPacket
+    public class SetPvP : ClientPacket
     {
         public SetPvP(WorldPacket packet) : base(packet) { }
 
@@ -1140,7 +1140,7 @@ namespace Game.Networking.Packets
         public bool EnablePVP;
     }
 
-    class SetWarMode : ClientPacket
+    public class SetWarMode : ClientPacket
     {
         public SetWarMode(WorldPacket packet) : base(packet) { }
 
@@ -1151,8 +1151,8 @@ namespace Game.Networking.Packets
 
        public bool Enable;
     }
-    
-    class AccountHeirloomUpdate : ServerPacket
+
+    public class AccountHeirloomUpdate : ServerPacket
     {
         public AccountHeirloomUpdate() : base(ServerOpcodes.AccountHeirloomUpdate, ConnectionType.Instance) { }
 
@@ -1179,7 +1179,7 @@ namespace Game.Networking.Packets
         public int Unk;
     }
 
-    class MountSpecial : ClientPacket
+    public class MountSpecial : ClientPacket
     {
         public MountSpecial(WorldPacket packet) : base(packet) { }
 
@@ -1195,7 +1195,7 @@ namespace Game.Networking.Packets
         public int SequenceVariation;
     }
 
-    class SpecialMountAnim : ServerPacket
+    public class SpecialMountAnim : ServerPacket
     {
         public SpecialMountAnim() : base(ServerOpcodes.SpecialMountAnim, ConnectionType.Instance) { }
 
@@ -1213,7 +1213,7 @@ namespace Game.Networking.Packets
         public int SequenceVariation;
     }
 
-    class CrossedInebriationThreshold : ServerPacket
+    public class CrossedInebriationThreshold : ServerPacket
     {
         public CrossedInebriationThreshold() : base(ServerOpcodes.CrossedInebriationThreshold) { }
 
@@ -1229,7 +1229,7 @@ namespace Game.Networking.Packets
         public uint Threshold;
     }
 
-    class SetTaxiBenchmarkMode : ClientPacket
+    public class SetTaxiBenchmarkMode : ClientPacket
     {
         public SetTaxiBenchmarkMode(WorldPacket packet) : base(packet) { }
 
@@ -1241,7 +1241,7 @@ namespace Game.Networking.Packets
         public bool Enable;
     }
 
-    class OverrideLight : ServerPacket
+    public class OverrideLight : ServerPacket
     {
         public OverrideLight() : base(ServerOpcodes.OverrideLight) { }
 
@@ -1273,7 +1273,7 @@ namespace Game.Networking.Packets
         public TimerType Type;
     }
 
-    class ConversationLineStarted : ClientPacket
+    public class ConversationLineStarted : ClientPacket
     {
         public ObjectGuid ConversationGUID;
         public uint LineID;
@@ -1287,14 +1287,14 @@ namespace Game.Networking.Packets
         }
     }
 
-    class RequestLatestSplashScreen : ClientPacket
+    public class RequestLatestSplashScreen : ClientPacket
     {
         public RequestLatestSplashScreen(WorldPacket packet) : base(packet) { }
 
         public override void Read() { }
     }
 
-    class SplashScreenShowLatest : ServerPacket
+    public class SplashScreenShowLatest : ServerPacket
     {
         public SplashScreenShowLatest() : base(ServerOpcodes.SplashScreenShowLatest, ConnectionType.Instance) { }
 
@@ -1306,7 +1306,7 @@ namespace Game.Networking.Packets
         public uint UISplashScreenID;
     }
 
-    class DisplayToast : ServerPacket
+    public class DisplayToast : ServerPacket
     {
         public ulong Quantity;
         public DisplayToastMethod DisplayToastMethod;
@@ -1343,15 +1343,13 @@ namespace Game.Networking.Packets
                 case DisplayToastType.NewCurrency:
                     _worldPacket.WriteUInt32(CurrencyID);
                     break;
-                default:
-                    break;
             }
 
             _worldPacket.FlushBits();
         }
     }
-    
-    class DisplayGameError : ServerPacket
+
+    public class DisplayGameError : ServerPacket
     {
         public DisplayGameError(GameError error) : base(ServerOpcodes.DisplayGameError)
         {
@@ -1387,7 +1385,7 @@ namespace Game.Networking.Packets
         int? Arg2;
     }
 
-    class AccountMountUpdate : ServerPacket
+    public class AccountMountUpdate : ServerPacket
     {
         public AccountMountUpdate() : base(ServerOpcodes.AccountMountUpdate, ConnectionType.Instance) { }
 
@@ -1409,7 +1407,7 @@ namespace Game.Networking.Packets
         public Dictionary<uint, MountStatusFlags> Mounts = new();
     }
 
-    class MountSetFavorite : ClientPacket
+    public class MountSetFavorite : ClientPacket
     {
         public MountSetFavorite(WorldPacket packet) : base(packet) { }
 
@@ -1423,7 +1421,7 @@ namespace Game.Networking.Packets
         public bool IsFavorite;
     }
 
-    class CloseInteraction : ClientPacket
+    public class CloseInteraction : ClientPacket
     {
         public CloseInteraction(WorldPacket packet) : base(packet) { }
 
@@ -1434,9 +1432,9 @@ namespace Game.Networking.Packets
 
         public ObjectGuid SourceGuid;
     }
-    
+
     //Structs
-    struct PhaseShiftDataPhase
+    public struct PhaseShiftDataPhase
     {
         public PhaseShiftDataPhase(uint phaseFlags, uint id)
         {
@@ -1454,7 +1452,7 @@ namespace Game.Networking.Packets
         public ushort Id;
     }
 
-    class PhaseShiftData
+    public class PhaseShiftData
     {
         public void Write(WorldPacket data)
         {

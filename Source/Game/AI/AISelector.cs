@@ -1,4 +1,5 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using Framework.Constants;
@@ -54,13 +55,13 @@ namespace Game.AI
             // select by NPC flags
             if (creature.IsVehicle())
                 return new VehicleAI(creature);
-            else if (creature.HasUnitTypeMask(UnitTypeMask.ControlableGuardian) && ((Guardian)creature).GetOwner().IsTypeId(TypeId.Player))
+            else if (creature.HasUnitTypeMask(UnitTypeMask.ControllableGuardian) && ((Guardian)creature).GetOwner().IsTypeId(TypeId.Player))
                 return new PetAI(creature);
             else if (creature.HasNpcFlag(NPCFlags.SpellClick))
                 return new NullCreatureAI(creature);
             else if (creature.IsGuard())
                 return new GuardAI(creature);
-            else if (creature.HasUnitTypeMask(UnitTypeMask.ControlableGuardian))
+            else if (creature.HasUnitTypeMask(UnitTypeMask.ControllableGuardian))
                 return new PetAI(creature);
             else if (creature.IsTotem())
                 return new TotemAI(creature);

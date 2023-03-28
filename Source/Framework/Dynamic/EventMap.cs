@@ -1,9 +1,10 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Framework.Dynamic
 {
@@ -38,7 +39,7 @@ namespace Framework.Dynamic
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>Active phases as mask.</returns>
         byte GetPhaseMask()
@@ -47,7 +48,7 @@ namespace Framework.Dynamic
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>True, if there are no events scheduled.</returns>
         public bool Empty()
@@ -324,7 +325,7 @@ namespace Framework.Dynamic
         /// <summary>
         /// Key: Time as uint when the event should occur.
         /// Value: The event data as uint.
-        /// 
+        ///
         /// Structure of event data:
         /// - Bit  0 - 15: Event Id.
         /// - Bit 16 - 23: Group

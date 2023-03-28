@@ -1,5 +1,8 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.﻿
+
+using System;
 
 namespace Framework.Constants
 {
@@ -86,6 +89,7 @@ namespace Framework.Constants
         public const uint SpellPetSummoned = 6962; // used after resurrection
     }
 
+    [Flags]
     public enum BattlegroundEventFlags
     {
         None = 0x00,
@@ -378,6 +382,7 @@ namespace Framework.Constants
         public const uint LastManStanding = 26549;            // Arena Achievement Related
     }
 
+    [Flags]
     public enum ArenaTeamCommandTypes
     {
         Create_S = 0x00,
@@ -386,6 +391,7 @@ namespace Framework.Constants
         Founder_S = 0x0e
     }
 
+    [Flags]
     public enum ArenaTeamCommandErrors
     {
         ArenaTeamCreated = 0x00,
