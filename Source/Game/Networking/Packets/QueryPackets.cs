@@ -1,15 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Framework.Dynamic;
+using System;
+using System.Numerics;
+using System.Collections.Generic;
 using Framework.IO;
+using Framework.Constants;
+using Framework.Collections;
 using Game.Cache;
 using Game.Entities;
-using System;
-using System.Collections.Generic;
-using System.Numerics;
 
 namespace Game.Networking.Packets
 {
@@ -671,7 +671,7 @@ namespace Game.Networking.Packets
         public uint Unused1;
         public ObjectGuid Unused2;
         public string Unused3 = "";
-        
+
         public void Write(WorldPacket data)
         {
             data.WriteUInt32(Unused1);

@@ -1,11 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System.Numerics;
+using System.Collections.Generic;
 using Framework.Constants;
 using Game.Entities;
 using Game.Networking.Packets;
-using System.Collections.Generic;
-using System.Numerics;
 
 namespace Game.BattleGrounds.Zones
 {
@@ -102,8 +103,6 @@ namespace Game.BattleGrounds.Zones
                         break;
                     case SAObjectTypes.BoatTwo:
                         boatid = Attackers != 0 ? SAGameObjectIds.BoatTwoH : SAGameObjectIds.BoatTwoA;
-                        break;
-                    default:
                         break;
                 }
                 if (!AddObject(i, boatid, SAMiscConst.ObjSpawnlocs[i].GetPositionX(),
@@ -548,8 +547,6 @@ namespace Game.BattleGrounds.Zones
                                         if (IsGateDestroyed(SAObjectTypes.RedGate))
                                             rewardHonor = false;
                                         break;
-                                    default:
-                                        break;
                                 }
 
                                 if (invoker)
@@ -576,8 +573,6 @@ namespace Game.BattleGrounds.Zones
                         }
                         break;
                     }
-                    default:
-                        break;
                 }
             }
         }
@@ -1009,8 +1004,6 @@ namespace Game.BattleGrounds.Zones
                     return Attackers == TeamId.Alliance;
                 case BattlegroundConst.SpellPreparation:
                     return Status == SAStatus.Warmup || Status == SAStatus.SecondWarmup;
-                default:
-                    break;
             }
 
             return true;
@@ -1029,9 +1022,7 @@ namespace Game.BattleGrounds.Zones
                 case ScoreType.DestroyedWall:
                     player.UpdateCriteria(CriteriaType.TrackedWorldStateUIModified, (uint)SAObjectives.GatesDestroyed);
                     break;
-                default:
-                    break;
-            }
+           }
             return true;
         }
 

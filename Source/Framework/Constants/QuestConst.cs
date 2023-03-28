@@ -1,4 +1,5 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
@@ -31,6 +32,7 @@ namespace Framework.Constants
         Max
     }
 
+    [Flags]
     public enum QuestObjectiveFlags
     {
         TrackedOnMinimap = 0x01, // Client Displays Large Yellow Blob On Minimap For Creature/Gameobject
@@ -52,6 +54,7 @@ namespace Framework.Constants
         public const int Max = 16;
     }
 
+    [Flags]
     public enum QuestSlotStateMask
     {
         None = 0x0000,
@@ -385,6 +388,7 @@ namespace Framework.Constants
         Max
     }
 
+    [Flags]
     public enum QuestGiverStatus : uint
     {
         None = 0x00,
@@ -487,6 +491,7 @@ namespace Framework.Constants
         PushTeamQuestUsingMapController = 0x80000000
     }
 
+    [Flags]
     public enum QuestFlagsEx2
     {
         ResetOnGameMilestone = 0x01,
@@ -507,6 +512,7 @@ namespace Framework.Constants
         EnforceMaximumQuestLevel = 0x8000
     }
 
+    [Flags]
     public enum QuestSpecialFlags
     {
         None = 0x00,

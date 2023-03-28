@@ -1,13 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Entities;
-using Game.Groups;
-using Game.Movement;
-using Game.Spells;
 using System;
 using System.Collections.Generic;
+using Framework.Constants;
+using Game.Groups;
+using Game.Spells;
+using Game.Entities;
+using Game.Movement;
 
 namespace Game.AI
 {
@@ -450,14 +451,12 @@ namespace Game.AI
                     }
                     break;
                 }
-                default:
-                    break;
             }
         }
 
         public bool CanAttack(Unit victim)
         {
-            // Evaluates wether a pet can attack a specific target based on CommandState, ReactState and other flags
+            // Evaluates whether a pet can attack a specific target based on CommandState, ReactState and other flags
             // IMPORTANT: The order in which things are checked is important, be careful if you add or remove checks
 
             // Hmmm...
@@ -466,7 +465,7 @@ namespace Game.AI
 
             if (!victim.IsAlive())
             {
-                // if target is invalid, pet should evade automaticly
+                // if target is invalid, pet should evade automatically
                 // Clear target to prevent getting stuck on dead targets
                 //me.AttackStop();
                 //me.InterruptNonMeleeSpells(false);

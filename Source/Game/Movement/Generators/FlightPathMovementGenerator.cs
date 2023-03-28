@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Maps;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Maps;
+using Game.Entities;
+using Game.DataStorage;
 
 namespace Game.Movement
 {
@@ -55,7 +56,7 @@ namespace Game.Movement
                 Vector3 vertice = new(_path[i].Loc.X, _path[i].Loc.Y, _path[i].Loc.Z);
                 init.Path().Add(vertice);
             }
-            
+
             init.SetFirstPointId((int)GetCurrentNode());
             init.SetFly();
             init.SetSmooth();
@@ -277,13 +278,13 @@ namespace Game.Movement
 
             return _path[index].PathID;
         }
-        
+
         public override string GetDebugInfo()
         {
             return $"Current Node: {GetCurrentNode()}\n{base.GetDebugInfo()}\nStart Path Id: {GetPathId(0)} Path Size: {_path.Count} HasArrived: {HasArrived()} End Grid X: {_endGridX} " +
                 $"End Grid Y: {_endGridY} End Map Id: {_endMapId} Preloaded Target Node: {_preloadTargetNode}";
         }
-        
+
         public override bool GetResetPosition(Unit u, out float x, out float y, out float z)
         {
             var node = _path[_currentNode];

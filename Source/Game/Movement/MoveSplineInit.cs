@@ -1,12 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Numerics;
+using System.Collections.Generic;
 using Framework.Constants;
 using Game.Entities;
 using Game.Networking.Packets;
-using System;
-using System.Collections.Generic;
-using System.Numerics;
 
 namespace Game.Movement
 {
@@ -60,7 +61,7 @@ namespace Game.Movement
             MoveSpline move_spline = unit.MoveSpline;
 
             bool transport = !unit.GetTransGUID().IsEmpty();
-            Vector4 real_position = new();            
+            Vector4 real_position = new();
             // there is a big chance that current position is unknown if current state is not finalized, need compute it
             // this also allows calculate spline position and update map position in much greater intervals
             // Don't compute for transport movement if the unit is in a motion between two transports
@@ -203,7 +204,7 @@ namespace Game.Movement
             args.facing.f = new Vector3(finalSpot.X, finalSpot.Y, finalSpot.Z);
             args.facing.type = MonsterMoveType.FacingSpot;
         }
-        
+
         public void SetFacing(float x, float y, float z)
         {
             SetFacing(new Vector3(x, y, z));

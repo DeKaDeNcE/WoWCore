@@ -1,28 +1,28 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.AI;
-using Game.BattleFields;
-using Game.BattleGrounds;
-using Game.Chat;
-using Game.Conditions;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Groups;
-using Game.Guilds;
-using Game.Maps;
-using Game.Movement;
-using Game.PvP;
-using Game.Spells;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Numerics;
 using System.Reflection;
+using System.Collections;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.AI;
+using Game.PvP;
+using Game.Chat;
+using Game.Maps;
+using Game.Groups;
+using Game.Guilds;
+using Game.Spells;
+using Game.Movement;
+using Game.Entities;
+using Game.Conditions;
+using Game.DataStorage;
+using Game.BattleFields;
+using Game.BattleGrounds;
 
 namespace Game.Scripting
 {
@@ -266,7 +266,7 @@ namespace Game.Scripting
         {
             UnitAI.FillAISpellInfo();
         }
-        
+
         public List<SplineChainLink> GetSplineChain(Creature who, ushort chainId)
         {
             return GetSplineChain(who.GetEntry(), chainId);
@@ -767,7 +767,7 @@ namespace Game.Scripting
 
             RunScript<AchievementScript>(p => p.OnCompleted(player, achievement), Global.AchievementMgr.GetAchievementScriptId(achievement.Id));
         }
-        
+
         // AchievementCriteriaScript
         public bool OnCriteriaCheck(uint ScriptId, Player source, Unit target)
         {
@@ -1096,7 +1096,7 @@ namespace Game.Scripting
 
             RunScript<WorldStateScript>(script => script.OnValueChange(worldStateTemplate.Id, oldValue, newValue, map), worldStateTemplate.ScriptId);
         }
-        
+
         public void ForEach<T>(Action<T> a) where T : ScriptObject
         {
             var reg = GetScriptRegistry<T>();
@@ -1153,7 +1153,7 @@ namespace Game.Scripting
         uint _ScriptCount;
         public Dictionary<uint, SpellSummary> spellSummaryStorage = new();
         Hashtable ScriptStorage = new();
-        
+
         // creature entry + chain ID
         MultiMap<Tuple<uint, ushort>, SplineChainLink> m_mSplineChainsMap = new(); // spline chains
     }

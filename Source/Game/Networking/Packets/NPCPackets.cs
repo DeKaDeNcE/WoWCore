@@ -1,12 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.Entities;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Entities;
 
 namespace Game.Networking.Packets
 {
@@ -45,7 +45,7 @@ namespace Game.Networking.Packets
         public PlayerInteractionType InteractionType;
         public bool Success = true;
     }
-    
+
     public class GossipMessagePkt : ServerPacket
     {
         public GossipMessagePkt() : base(ServerOpcodes.GossipMessage) { }
@@ -122,7 +122,7 @@ namespace Game.Networking.Packets
         public int GossipNpcOptionID;
         public int? FriendshipFactionID;
     }
-    
+
     public class GossipComplete : ServerPacket
     {
         public bool SuppressSound;
@@ -289,7 +289,7 @@ namespace Game.Networking.Packets
         public uint PetNumber;
         public byte DestSlot;
     }
-    
+
     //Structs
     public struct TreasureItem
     {
@@ -404,7 +404,7 @@ namespace Game.Networking.Packets
             data.WriteBit(DoNotFilterOnVendor);
             data.WriteBit(Refundable);
             data.FlushBits();
-            
+
             Item.Write(data);
         }
 

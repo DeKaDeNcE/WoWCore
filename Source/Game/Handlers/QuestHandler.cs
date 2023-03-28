@@ -1,14 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable UnusedMember.Local
+
+using System.Collections.Generic;
 using Framework.Constants;
-using Game.BattleGrounds;
-using Game.Entities;
 using Game.Groups;
+using Game.Entities;
+using Game.DataStorage;
+using Game.BattleGrounds;
 using Game.Networking;
 using Game.Networking.Packets;
-using Game.DataStorage;
-using System.Collections.Generic;
 
 namespace Game
 {
@@ -403,7 +406,7 @@ namespace Game
 
                     GetPlayer().SetQuestSlot(packet.Entry, 0);
                     GetPlayer().TakeQuestSourceItem(questId, true); // remove quest src item from player
-                    GetPlayer().AbandonQuest(questId); // remove all quest items player received before abandoning quest. Note, this does not remove normal drop items that happen to be quest requirements. 
+                    GetPlayer().AbandonQuest(questId); // remove all quest items player received before abandoning quest. Note, this does not remove normal drop items that happen to be quest requirements.
                     GetPlayer().RemoveActiveQuest(questId);
                     GetPlayer().RemoveCriteriaTimer(CriteriaStartEvent.AcceptQuest, questId);
 
@@ -590,8 +593,6 @@ namespace Game
                         receiver.SendPushToPartyResponse(sender, QuestPushReason.OnQuestToRecipient, quest);
                         continue;
                     }
-                    default:
-                        break;
                 }
 
                 if (!receiver.SatisfyQuestLog(false))

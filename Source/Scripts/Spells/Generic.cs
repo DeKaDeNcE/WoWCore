@@ -1,20 +1,29 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Maps;
-using Game.Networking.Packets;
-using Game.Scripting;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
 
-namespace Scripts.Spells.Generic
-{
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.Maps;
+using Game.Spells;
+using Game.Entities;
+using Game.Scripting;
+using Game.DataStorage;
+using Game.Networking.Packets;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace Scripts.Spells.Generic;
+
     struct SpellIds
     {
         // Adaptivewarding
@@ -59,7 +68,7 @@ namespace Scripts.Spells.Generic
         // Clone
         public const uint NightmareFigmentMirrorImage = 57528;
 
-        // Cloneweaponspells        
+        // Cloneweaponspells
         public const uint WeaponAura = 41054;
         public const uint Weapon2Aura = 63418;
         public const uint Weapon3Aura = 69893;
@@ -73,7 +82,7 @@ namespace Scripts.Spells.Generic
         public const uint CreateLanceAlliance = 63914;
         public const uint CreateLanceHorde = 63919;
 
-        // Dalarandisguisespells        
+        // Dalarandisguisespells
         public const uint SunreaverTrigger = 69672;
         public const uint SunreaverFemale = 70973;
         public const uint SunreaverMale = 70974;
@@ -140,14 +149,14 @@ namespace Scripts.Spells.Generic
         // Interrupt
         public const uint GenThrowInterrupt = 32747;
 
-        // Genericlifebloomspells        
+        // Genericlifebloomspells
         public const uint HexlordMalacrass = 43422;
         public const uint TurragePaw = 52552;
         public const uint CenarionScout = 53692;
         public const uint TwistedVisage = 57763;
         public const uint FactionChampionsDru = 66094;
 
-        // Chargespells        
+        // Chargespells
         public const uint Damage8k5 = 62874;
         public const uint Damage20k = 68498;
         public const uint Damage45k = 64591;
@@ -172,7 +181,7 @@ namespace Scripts.Spells.Generic
         // Nightmarevine
         public const uint NightmarePollen = 28721;
 
-        // Obsidianarmorspells        
+        // Obsidianarmorspells
         public const uint Holy = 27536;
         public const uint Fire = 27533;
         public const uint Nature = 27538;
@@ -281,7 +290,7 @@ namespace Scripts.Spells.Generic
         // Gmfreeze
         public const uint GmFreeze = 9454;
 
-        // Landmineknockbackachievement        
+        // Landmineknockbackachievement
         public const uint LandmineKnockbackAchievement = 57064;
 
         // Ponyspells
@@ -1806,10 +1815,10 @@ namespace Scripts.Spells.Generic
     }
 
     /* 57337 - Great Feast
-   57397 - Fish Feast
-   58466 - Gigantic Feast
-   58475 - Small Feast
-   66477 - Bountiful Feast */
+    57397 - Fish Feast
+    58466 - Gigantic Feast
+    58475 - Small Feast
+    66477 - Bountiful Feast */
     [Script]
     class spell_gen_feast : SpellScript
     {
@@ -1850,8 +1859,6 @@ namespace Scripts.Spells.Generic
                     target.CastSpell(target, SpellIds.BountifulFeastDrink);
                     target.CastSpell(target, SpellIds.BountifulFeastFood);
                     break;
-                default:
-                    break;
             }
         }
 
@@ -1864,12 +1871,12 @@ namespace Scripts.Spells.Generic
     /*
      * There are only 3 possible flags Feign Death auras can apply: UNIT_DYNFLAG_DEAD, UnitFlags2.FeignDeath
      * and UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT. Some auras can apply only 2 flags
-     * 
+     *
      * spell_gen_feign_death_all_flags applies all 3 flags
      * spell_gen_feign_death_all_flags_uninteractible applies all 3 flags and additionally sets UNIT_FLAG_IMMUNE_TO_PC | UNIT_FLAG_IMMUNE_TO_NPC | UNIT_FLAG_UNINTERACTIBLE
      * spell_gen_feign_death_no_dyn_flag applies no UNIT_DYNFLAG_DEAD (does not make the creature appear dead)
      * spell_gen_feign_death_no_prevent_emotes applies no UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT
-     * 
+     *
      * REACT_PASSIVE should be handled directly in scripts since not all creatures should be passive. Otherwise
      * creature will be not able to aggro or execute MoveInLineOfSight events. Removing may cause more issues
      * than already exists
@@ -1937,7 +1944,7 @@ namespace Scripts.Spells.Generic
             OnEffectRemove.Add(new EffectApplyHandler(OnRemove, 0, AuraType.Dummy, AuraEffectHandleModes.Real));
         }
     }
-    
+
     // 35357 - Spawn Feign Death
     [Script] // 51329 - Feign Death
     class spell_gen_feign_death_no_dyn_flag : AuraScript
@@ -4949,8 +4956,7 @@ namespace Scripts.Spells.Generic
     {
         public override bool Validate(SpellInfo spell)
         {
-            return ValidateSpellInfo((uint)SkinningLearningSpell.Outland, (uint)SkinningLearningSpell.Northrend, (uint)SkinningLearningSpell.Cataclysm, (uint)SkinningLearningSpell.Pandaria, (uint)SkinningLearningSpell.Draenor,
-                (uint)SkinningLearningSpell.KulTiran, (uint)SkinningLearningSpell.Zandalari, (uint)SkinningLearningSpell.Shadowlands, (uint)SkinningLearningSpell.DragonIsles);
+            return ValidateSpellInfo((uint)SkinningLearningSpell.Outland, (uint)SkinningLearningSpell.Northrend, (uint)SkinningLearningSpell.Cataclysm, (uint)SkinningLearningSpell.Pandaria, (uint)SkinningLearningSpell.Draenor, (uint)SkinningLearningSpell.KulTiran, (uint)SkinningLearningSpell.Zandalari, (uint)SkinningLearningSpell.Shadowlands, (uint)SkinningLearningSpell.DragonIsles);
         }
 
         void HandleSkinningEffect(uint effIndex)
@@ -4989,7 +4995,7 @@ namespace Scripts.Spells.Generic
                     case SkillType.DragonIslesSkinning:
                         return SkinningLearningSpell.DragonIsles;
                     case SkillType.ClassicSkinning:         // Trainer only
-                    case SkillType.LegionSkinning:                 // Quest only
+                    case SkillType.LegionSkinning:          // Quest only
                     default: break;
                 }
 
@@ -5010,17 +5016,17 @@ namespace Scripts.Spells.Generic
         }
     }
 
-             // 2825 - Bloodlust
-             // 32182 - Heroism
-             // 80353 - Time Warp
-             // 264667 - Primal Rage
-             // 390386 - Fury of the Aspects
-             // 146555 - Drums of Rage
-             // 178207 - Drums of Fury
-             // 230935 - Drums of the Mountain
-             // 256740 - Drums of the Maelstrom
-             // 309658 - Drums of Deathly Ferocity
-             // 381301 - Feral Hide Drums
+    // 2825 - Bloodlust
+    // 32182 - Heroism
+    // 80353 - Time Warp
+    // 264667 - Primal Rage
+    // 390386 - Fury of the Aspects
+    // 146555 - Drums of Rage
+    // 178207 - Drums of Fury
+    // 230935 - Drums of the Mountain
+    // 256740 - Drums of the Maelstrom
+    // 309658 - Drums of Deathly Ferocity
+    // 381301 - Feral Hide Drums
     [Script("spell_sha_bloodlust", SpellIds.ShamanSated)]
     [Script("spell_sha_heroism", SpellIds.ShamanExhaustion)]
     [Script("spell_mage_time_warp", SpellIds.MageTemporalDisplacement)]
@@ -5049,18 +5055,16 @@ namespace Scripts.Spells.Generic
                 if (unit == null)
                     return true;
 
-                return unit.HasAura(SpellIds.ShamanSated)
-                    || unit.HasAura(SpellIds.ShamanExhaustion)
-                    || unit.HasAura(SpellIds.MageTemporalDisplacement)
-                    || unit.HasAura(SpellIds.HunterFatigued)
-                    || unit.HasAura(SpellIds.EvokerExhaustion);
+                return unit.HasAura(SpellIds.ShamanSated) || unit.HasAura(SpellIds.ShamanExhaustion) || unit.HasAura(SpellIds.MageTemporalDisplacement) || unit.HasAura(SpellIds.HunterFatigued) || unit.HasAura(SpellIds.EvokerExhaustion);
             });
         }
 
         void HandleHit(uint effIndex)
         {
             Unit target = GetHitUnit();
-            target.CastSpell(target, _exhaustionSpellId, true);
+
+            if (target != null)
+                target.CastSpell(target, _exhaustionSpellId, true);
         }
 
         public override void Register()
@@ -5093,4 +5097,3 @@ namespace Scripts.Spells.Generic
             return false;
         }
     }
-}

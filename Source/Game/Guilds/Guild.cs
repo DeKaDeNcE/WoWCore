@@ -1,17 +1,18 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Database;
-using Game.Achievements;
-using Game.DataStorage;
-using Game.Entities;
+using Framework.Constants;
 using Game.Groups;
+using Game.Entities;
+using Game.DataStorage;
+using Game.Achievements;
 using Game.Networking;
 using Game.Networking.Packets;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Game.Guilds
 {
@@ -1754,7 +1755,7 @@ namespace Game.Guilds
 
             return Math.Min(m_bankMoney, (ulong)_GetMemberRemainingMoney(member));
         }
-        
+
         public void SwapItems(Player player, byte tabId, byte slotId, byte destTabId, byte destSlotId, uint splitedAmount)
         {
             if (tabId >= _GetPurchasedTabsSize() || slotId >= GuildConst.MaxBankSlots ||
@@ -1805,7 +1806,7 @@ namespace Game.Guilds
         {
             return m_ranks.Find(rank => rank.GetOrder() == rankOrder);
         }
-        
+
         // Private methods
         void _CreateNewBankTab()
         {
@@ -3122,9 +3123,9 @@ namespace Game.Guilds
 
             // Checks if new log entry can be added to holder
             public bool CanInsert() { return m_log.Count < m_maxRecords; }
-            
+
             public byte GetSize() { return (byte)m_log.Count; }
-            
+
             public void LoadEvent(T entry)
             {
                 if (m_nextGUID == GuildConst.EventLogGuidUndefined)
@@ -3651,7 +3652,7 @@ namespace Game.Guilds
             {
                 m_pPlayer.SendEquipError(result, item);
             }
-            
+
             public abstract bool IsBank();
             // Initializes item. Returns true, if item exists, false otherwise.
             public abstract bool InitItem();

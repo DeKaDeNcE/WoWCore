@@ -1,16 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Framework.Database;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Networking.Packets;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Collections;
+using Game.Entities;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game
 {
@@ -228,7 +229,7 @@ namespace Game
 
         public void LoadQuestObjective(SQLFields fields)
         {
-            QuestObjective obj = new();  
+            QuestObjective obj = new();
             obj.QuestID = fields.Read<uint>(0);
             obj.Id = fields.Read<uint>(1);
             obj.Type = (QuestObjectiveType)fields.Read<byte>(2);
@@ -425,7 +426,7 @@ namespace Game
         {
             return (uint)(MaxMoneyValue() * WorldConfig.GetFloatValue(WorldCfg.RateMoneyQuest));
         }
-        
+
         public QuestTagType? GetQuestTag()
         {
             QuestInfoRecord questInfo = CliDB.QuestInfoStorage.LookupByKey(QuestInfoID);
@@ -434,7 +435,7 @@ namespace Game
 
             return null;
         }
-        
+
         public void BuildQuestRewards(QuestRewards rewards, Player player)
         {
             rewards.ChoiceItemCount = GetRewChoiceItemsCount();
@@ -457,7 +458,7 @@ namespace Game
                 if (++displaySpellIndex >= rewards.SpellCompletionDisplayID.Length)
                     break;
             }
-            
+
             rewards.SpellCompletionID = RewardSpell;
             rewards.SkillLineID = RewardSkillId;
             rewards.NumSkillUps = RewardSkillPoints;
@@ -522,8 +523,6 @@ namespace Game
                     return difficulty == Difficulty.Raid10N || difficulty == Difficulty.Raid10HC;
                 case QuestInfos.Raid25:
                     return difficulty == Difficulty.Raid25N || difficulty == Difficulty.Raid25HC;
-                default:
-                    break;
             }
 
             if (Flags.HasAnyFlag(QuestFlags.Raid))
@@ -737,7 +736,7 @@ namespace Game
         public void SetSpecialFlag(QuestSpecialFlags flag) { SpecialFlags |= flag; }
 
         public bool HasQuestObjectiveType(QuestObjectiveType type) { return _usedQuestObjectiveTypes[(int)type]; }
-        
+
         public bool IsAutoPush() { return HasFlagEx(QuestFlagsEx.AutoPush);    }
         public bool IsWorldQuest() { return HasFlagEx(QuestFlagsEx.IsWorldQuest);}
 
@@ -958,7 +957,7 @@ namespace Game
     }
 
     public struct QuestRewardDisplaySpell
-    {    
+    {
         public uint SpellId;
         public uint PlayerConditionId;
 
@@ -1004,12 +1003,10 @@ namespace Game
                 case QuestObjectiveType.ObtainCurrency:
                 case QuestObjectiveType.IncreaseReputation:
                     return true;
-                default:
-                    break;
             }
             return false;
         }
-        
+
         public bool IsStoringFlag()
         {
             switch (Type)
@@ -1021,8 +1018,6 @@ namespace Game
                 case QuestObjectiveType.AreaTriggerEnter:
                 case QuestObjectiveType.AreaTriggerExit:
                     return true;
-                default:
-                    break;
             }
             return false;
         }
@@ -1040,8 +1035,6 @@ namespace Game
                 case QuestObjectiveType.HaveCurrency:
                 case QuestObjectiveType.IncreaseReputation:
                     return true;
-                default:
-                    break;
             }
             return false;
         }

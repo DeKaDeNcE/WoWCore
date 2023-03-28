@@ -1,13 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Constants;
+using Game.Spells;
 using Game.DataStorage;
 using Game.Networking.Packets;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Game.Entities
 {
@@ -31,8 +32,6 @@ namespace Game.Entities
                 case UnitModifierFlatType.Total:
                     m_auraFlatModifiersGroup[(int)unitMod][(int)modifierType] += apply ? amount : -amount;
                     break;
-                default:
-                    break;
             }
 
             UpdateUnitMod(unitMod);
@@ -54,8 +53,6 @@ namespace Game.Entities
                 case UnitModifierPctType.Base:
                 case UnitModifierPctType.Total:
                     MathFunctions.AddPct(ref m_auraPctModifiersGroup[(int)unitMod][(int)modifierType], pct);
-                    break;
-                default:
                     break;
             }
 
@@ -165,8 +162,6 @@ namespace Game.Entities
                 case UnitMods.DamageRanged:
                     UpdateDamagePhysical(WeaponAttackType.RangedAttack);
                     break;
-                default:
-                    break;
             }
         }
 
@@ -224,8 +219,6 @@ namespace Game.Entities
                     break;
                 case UnitMods.StatIntellect:
                     stat = Stats.Intellect;
-                    break;
-                default:
                     break;
             }
 
@@ -446,7 +439,7 @@ namespace Game.Entities
             return value;
         }
 
-        //Health  
+        //Health
         public uint GetCreateHealth() { return m_unitData.BaseHealth; }
         public void SetCreateHealth(uint val) { SetUpdateFieldValue(m_values.ModifyValue(m_unitData).ModifyValue(m_unitData.BaseHealth), val); }
         public ulong GetHealth() { return m_unitData.Health; }
@@ -561,8 +554,6 @@ namespace Game.Entities
                     break;
                 case PowerType.Focus: // Make it full
                     SetFullPower(powerType);
-                    break;
-                default:
                     break;
             }
         }
@@ -694,8 +685,6 @@ namespace Game.Entities
                             if (oldValueCheck <= effect.GetAmount() || newValueCheck > effectAmount)
                                 continue;
                             break;
-                        default:
-                            break;
                     }
 
                     CastSpell(this, triggerSpell, new CastSpellExtraArgs(effect));
@@ -739,7 +728,7 @@ namespace Game.Entities
 
             return damage;
         }
-        
+
         // player or player's pet resilience (-1%)
         uint GetDamageReduction(uint damage) { return GetCombatRatingDamageReduction(CombatRating.ResiliencePlayerDamage, 1.0f, 100.0f, damage); }
 
@@ -873,7 +862,7 @@ namespace Game.Entities
             float chance = GetUnitCriticalChanceDone(attackType);
             return victim.GetUnitCriticalChanceTaken(this, attackType, chance);
         }
-        
+
         float GetUnitDodgeChance(WeaponAttackType attType, Unit victim)
         {
             int levelDiff = (int)(victim.GetLevelForTarget(this) - GetLevelForTarget(victim));
@@ -1009,7 +998,7 @@ namespace Game.Entities
             }
             return Math.Max(resistMech, 0);
         }
-        
+
         public void ApplyModManaCostMultiplier(float manaCostMultiplier, bool apply) { ApplyModUpdateFieldValue(m_values.ModifyValue(m_unitData).ModifyValue(m_unitData.ManaCostMultiplier), manaCostMultiplier, apply); }
 
         public void ApplyModManaCostModifier(SpellSchools school, int mod, bool apply) { ApplyModUpdateFieldValue(ref m_values.ModifyValue(m_unitData).ModifyValue(m_unitData.ManaCostModifier, (int)school), mod, apply); }
@@ -1074,8 +1063,6 @@ namespace Game.Entities
                     break;
                 case Stats.Intellect:
                     UpdateSpellCritChance();
-                    break;
-                default:
                     break;
             }
 
@@ -1485,8 +1472,6 @@ namespace Game.Entities
                                 ApplyCastTimePercentMod(oldVal, false);
                                 ApplyCastTimePercentMod(newVal, true);
                                 break;
-                            default:
-                                break;
                         }
                         break;
                     }
@@ -1682,10 +1667,10 @@ namespace Game.Entities
             }
             SetUpdateFieldStatValue(m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.ParryPercentage), value);
         }
-        
+
         float[] dodge_cap =
         {
-            65.631440f,     // Warrior            
+            65.631440f,     // Warrior
             65.631440f,     // Paladin
             145.560408f,    // Hunter
             145.560408f,    // Rogue
@@ -1858,8 +1843,6 @@ namespace Game.Entities
                     return row.VersatilityDamageTaken;
                 case CombatRating.Unused12:
                     return row.Unused12;
-                default:
-                    break;
             }
             return 1.0f;
         }
@@ -1913,7 +1896,7 @@ namespace Game.Entities
 
             return Stats.Intellect;
         }
-        
+
         public override void UpdateMaxHealth()
         {
             UnitMods unitMod = UnitMods.Health;

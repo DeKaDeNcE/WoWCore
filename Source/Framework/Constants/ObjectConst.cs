@@ -1,5 +1,8 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
+
+using System;
 
 namespace Framework.Constants
 {
@@ -22,6 +25,7 @@ namespace Framework.Constants
         Max = 14
     }
 
+    [Flags]
     public enum TypeMask
     {
         Object = 0x01,
@@ -100,6 +104,7 @@ namespace Framework.Constants
         Count
     }
 
+    [Flags]
     public enum NotifyFlags
     {
         None = 0x00,
@@ -185,6 +190,7 @@ namespace Framework.Constants
         Map = 2
     }
 
+    [Flags]
     public enum GhostVisibilityType
     {
         Alive = 0x1,
@@ -249,6 +255,7 @@ namespace Framework.Constants
         Ghost = 1,
     }
 
+    [Flags]
     public enum SessionFlags
     {
         None = 0x00,

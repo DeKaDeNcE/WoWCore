@@ -1,11 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.IO;
-using Game.Entities;
-using Game.Spells;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedMember.Local
+// ReSharper disable UnusedType.Local
+
 using System;
+using Framework.Constants;
+using Game.Spells;
+using Game.Entities;
 
 namespace Game.Chat
 {
@@ -65,9 +69,7 @@ namespace Game.Chat
             if (!triggerFlags.HasValue)
                 return false;
 
-            float x, y, z;
-            handler.GetSession().GetPlayer().GetClosePoint(out x, out y, out z, dist);
-
+            handler.GetSession().GetPlayer().GetClosePoint(out var x, out var y, out var z, dist);
             handler.GetSession().GetPlayer().CastSpell(new Position(x, y, z), spellId, new CastSpellExtraArgs(triggerFlags.Value));
 
             return true;
@@ -96,7 +98,7 @@ namespace Game.Chat
         }
 
         [Command("target", RBACPermissions.CommandCastTarget)]
-        static bool HandleCastTargetCommad(CommandHandler handler, uint spellId, [OptionalArg] string triggeredStr)
+        static bool HandleCastTargetCommand(CommandHandler handler, uint spellId, [OptionalArg] string triggeredStr)
         {
             Creature caster = handler.GetSelectedCreature();
             if (!caster)
@@ -156,7 +158,7 @@ namespace Game.Chat
             }
             return TriggerCastFlags.None;
         }
-        
+
         static bool CheckSpellExistsAndIsValid(CommandHandler handler, uint spellId)
         {
             var spellInfo = Global.SpellMgr.GetSpellInfo(spellId, Difficulty.None);

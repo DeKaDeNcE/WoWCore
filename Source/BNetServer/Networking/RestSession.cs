@@ -1,16 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Configuration;
-using Framework.Constants;
-using Framework.Database;
-using Framework.Networking;
-using Framework.Serialization;
-using Framework.Web;
 using System;
+using System.Text;
 using System.Net.Sockets;
 using System.Security.Cryptography;
-using System.Text;
+using Framework.Web;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Networking;
+using Framework.Configuration;
+using Framework.Serialization;
 
 namespace BNetServer.Networking
 {
@@ -23,21 +24,21 @@ namespace BNetServer.Networking
             AsyncHandshake(Global.LoginServiceMgr.GetCertificate());
         }
 
-        public async override void ReadHandler(byte[] data, int receivedLength)
+        public override async void ReadHandler(byte[] data, int receivedLength)
         {
             var httpRequest = HttpHelper.ParseRequest(data, receivedLength);
+
             if (httpRequest == null)
                 return;
 
             switch (httpRequest.Method)
             {
-                case "GET":
-                default:
-                    SendResponse(HttpCode.Ok, Global.LoginServiceMgr.GetFormInput());
-                    break;
                 case "POST":
                     HandleLoginRequest(httpRequest);
                     return;
+                default: // GET
+                    SendResponse(HttpCode.Ok, Global.LoginServiceMgr.GetFormInput());
+                    break;
             }
 
             await AsyncRead();
@@ -79,13 +80,13 @@ namespace BNetServer.Networking
             if (!result.IsEmpty())
             {
                 uint accountId = result.Read<uint>(0);
-                string pass_hash = result.Read<string>(1);
+                string passHash = result.Read<string>(1);
                 uint failedLogins = result.Read<uint>(2);
                 string loginTicket = result.Read<string>(3);
                 uint loginTicketExpiry = result.Read<uint>(4);
                 bool isBanned = result.Read<ulong>(5) != 0;
 
-                if (CalculateShaPassHash(login.ToUpper(), password.ToUpper()) == pass_hash)
+                if (CalculateShaPassHash(login.ToUpper(), password.ToUpper()) == passHash)
                 {
                     if (loginTicket.IsEmpty() || loginTicketExpiry < Time.UnixTime)
                     {

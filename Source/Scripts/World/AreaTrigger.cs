@@ -1,13 +1,14 @@
-// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Generic;
 using Framework.Constants;
-using Game.DataStorage;
+using Game.AI;
 using Game.Entities;
 using Game.Scripting;
-using System.Collections.Generic;
-using Game.AI;
-using System;
+using Game.DataStorage;
 
 namespace Scripts.World.Areatriggers
 {
@@ -109,7 +110,7 @@ namespace Scripts.World.Areatriggers
     }
 
     struct Misc
-    { 
+    {
         //Brewfest
         public const uint AreatriggerTalkCooldown = 5; // In Seconds
 
@@ -269,8 +270,6 @@ namespace Scripts.World.Areatriggers
                     if (ipfelkofer)
                         ipfelkofer.GetAI().Talk(TextIds.SayWelcome, player);
                     break;
-                default:
-                    break;
             }
 
             _triggerTimes[triggerId] = GameTime.GetGameTime();
@@ -365,7 +364,7 @@ namespace Scripts.World.Areatriggers
             {
                 stormforgedMonitorGUID = stormforgedMonitor.GetGUID();
                 stormforgedMonitor.SetWalk(false);
-                /// The npc would search an alternative way to get to the last waypoint without this unit state.
+                // The npc would search an alternative way to get to the last waypoint without this unit state.
                 stormforgedMonitor.AddUnitState(UnitState.IgnorePathfinding);
                 stormforgedMonitor.GetMotionMaster().MovePath((CreatureIds.StormforgedMonitor * 100) << 3, false);
             }

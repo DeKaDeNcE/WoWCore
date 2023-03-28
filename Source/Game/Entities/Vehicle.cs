@@ -1,16 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.AI;
-using Game.BattleGrounds;
-using Game.DataStorage;
-using Game.Movement;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.AI;
+using Game.Movement;
+using Game.DataStorage;
+using Game.BattleGrounds;
 
 namespace Game.Entities
 {
@@ -160,8 +161,6 @@ namespace Game.Entities
                 case 338: // Salvaged Demolisher
                     _me.ApplySpellImmune(0, SpellImmunity.State, AuraType.ModDamagePercentTaken, false); // Battering Ram
                     break;
-                default:
-                    break;
             }
         }
 
@@ -251,11 +250,11 @@ namespace Game.Entities
 
             return null;
         }
-        
+
         void InstallAccessory(uint entry, sbyte seatId, bool minion, byte type, uint summonTime)
         {
             // @Prevent adding accessories when vehicle is uninstalling. (Bad script in OnUninstall/OnRemovePassenger/PassengerBoarded hook.)
-            
+
             if (_status == Status.UnInstalling)
             {
                 Log.outError(LogFilter.Vehicle, "Vehicle ({0}, Entry: {1}) attempts to install accessory (Entry: {2}) on seat {3} with STATUS_UNINSTALLING! " +
@@ -432,7 +431,7 @@ namespace Game.Entities
 
             return false;
         }
-        
+
         void InitMovementInfoForBase()
         {
             VehicleFlags vehicleFlags = (VehicleFlags)GetVehicleInfo().Flags;
@@ -482,11 +481,11 @@ namespace Game.Entities
         public float GetTransportOrientation() { return GetBase().GetOrientation(); }
 
         public void AddPassenger(WorldObject passenger) { Log.outFatal(LogFilter.Vehicle, "Vehicle cannot directly gain passengers without auras"); }
-        
+
         public void CalculatePassengerPosition(ref float x, ref float y, ref float z, ref float o)
         {
-            ITransport.CalculatePassengerPosition(ref x, ref y, ref z, ref o, 
-                GetBase().GetPositionX(), GetBase().GetPositionY(), 
+            ITransport.CalculatePassengerPosition(ref x, ref y, ref z, ref o,
+                GetBase().GetPositionX(), GetBase().GetPositionY(),
                 GetBase().GetPositionZ(), GetBase().GetOrientation());
         }
 
@@ -498,7 +497,7 @@ namespace Game.Entities
         }
 
         public int GetMapIdForSpawning() { return (int)GetBase().GetMapId(); }
-        
+
         public void RemovePendingEvent(VehicleJoinEvent e)
         {
             foreach (var Event in _pendingJoinEvents)
@@ -547,7 +546,7 @@ namespace Game.Entities
             }
             return false;
         }
-        
+
         public TimeSpan GetDespawnDelay()
         {
             VehicleTemplate vehicleTemplate = Global.ObjectMgr.GetVehicleTemplate(this);

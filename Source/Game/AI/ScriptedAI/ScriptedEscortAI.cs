@@ -1,13 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Entities;
-using Game.Groups;
-using Game.Maps;
-using Game.Movement;
 using System;
 using System.Collections.Generic;
+using Framework.Constants;
+using Game.Maps;
+using Game.Groups;
+using Game.Entities;
+using Game.Movement;
 
 namespace Game.AI
 {
@@ -31,7 +32,7 @@ namespace Game.AI
         }
 
         //see followerAI
-        bool AssistPlayerInCombatAgainst(Unit who)
+        public bool AssistPlayerInCombatAgainst(Unit who)
         {
             if (!who || !who.GetVictim())
                 return false;
@@ -112,7 +113,7 @@ namespace Game.AI
             Reset();
         }
 
-        void ReturnToLastPoint()
+        public void ReturnToLastPoint()
         {
             me.GetMotionMaster().MovePoint(0xFFFFFF, me.GetHomePosition());
         }
@@ -142,7 +143,7 @@ namespace Game.AI
             }
         }
 
-        bool IsPlayerOrGroupInRange()
+        public bool IsPlayerOrGroupInRange()
         {
             Player player = GetPlayerForEscort();
             if (player)
@@ -310,7 +311,7 @@ namespace Game.AI
             }
         }
 
-        void AddWaypoint(uint id, float x, float y, float z, bool run)
+        public void AddWaypoint(uint id, float x, float y, float z, bool run)
         {
             AddWaypoint(id, x, y, z, 0.0f, TimeSpan.Zero, run);
         }
@@ -333,7 +334,7 @@ namespace Game.AI
             _path.nodes.Add(waypoint);
         }
 
-        void ResetPath()
+        public void ResetPath()
         {
             _path.nodes.Clear();
         }
@@ -436,8 +437,8 @@ namespace Game.AI
         public bool HasEscortState(EscortState escortState) { return (_escortState & escortState) != 0; }
         public override bool IsEscorted() { return !_playerGUID.IsEmpty(); }
 
-        void SetMaxPlayerDistance(float newMax) { _maxPlayerDistance = newMax; }
-        float GetMaxPlayerDistance() { return _maxPlayerDistance; }
+        public void SetMaxPlayerDistance(float newMax) { _maxPlayerDistance = newMax; }
+        public float GetMaxPlayerDistance() { return _maxPlayerDistance; }
 
         public void SetDespawnAtEnd(bool despawn) { _despawnAtEnd = despawn; }
         public void SetDespawnAtFar(bool despawn) { _despawnAtFar = despawn; }
@@ -445,10 +446,10 @@ namespace Game.AI
         public bool IsActiveAttacker() { return _activeAttacker; } // used in EnterEvadeMode override
         public void SetActiveAttacker(bool attack) { _activeAttacker = attack; }
 
-        ObjectGuid GetEventStarterGUID() { return _playerGUID; }
+        public ObjectGuid GetEventStarterGUID() { return _playerGUID; }
 
-        void AddEscortState(EscortState escortState) { _escortState |= escortState; }
-        void RemoveEscortState(EscortState escortState) { _escortState &= ~escortState; }
+        public void AddEscortState(EscortState escortState) { _escortState |= escortState; }
+        public void RemoveEscortState(EscortState escortState) { _escortState &= ~escortState; }
 
         ObjectGuid _playerGUID;
         TimeSpan _pauseTimer;

@@ -1,30 +1,32 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Dynamic;
-using Game.Achievements;
+using Framework.Database;
+using Framework.Constants;
 using Game.AI;
-using Game.Arenas;
-using Game.BattleFields;
-using Game.BattleGrounds;
-using Game.BattlePets;
 using Game.Chat;
-using Game.DataStorage;
-using Game.Garrisons;
-using Game.Groups;
-using Game.Guilds;
+using Game.Misc;
+using Game.Maps;
 using Game.Loots;
 using Game.Mails;
-using Game.Maps;
-using Game.Misc;
+using Game.Arenas;
+using Game.Groups;
+using Game.Guilds;
+using Game.Spells;
+using Game.Garrisons;
+using Game.BattlePets;
+using Game.DataStorage;
+using Game.BattleFields;
+using Game.Achievements;
+using Game.BattleGrounds;
 using Game.Networking;
 using Game.Networking.Packets;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 
 using static Global;
 
@@ -2727,8 +2729,6 @@ namespace Game.Entities
                 }
                 case TypeId.GameObject:
                     return source.ToGameObject().GetGoInfo().GetGossipMenuId();
-                default:
-                    break;
             }
 
             return 0;
@@ -3527,8 +3527,6 @@ namespace Game.Entities
                     break;
                 case PowerType.LunarPower:
                     SetPower(PowerType.LunarPower, 0);
-                    break;
-                default:
                     break;
             }
         }
@@ -5700,8 +5698,6 @@ namespace Game.Entities
                     case TypeId.Conversation:
                         UpdateVisibilityOf(target.ToConversation(), udata, newVisibleUnits);
                         break;
-                    default:
-                        break;
                 }
             }
 
@@ -6411,8 +6407,6 @@ namespace Game.Entities
                             if (GetClass() == Class.Shaman)
                                 amount += enchantmentEntry.EffectScalingPoints[i] * item.GetTemplate().GetDelay() / 1000.0f;
                             break;
-                        default:
-                            break;
                     }
                 }
             }
@@ -6435,8 +6429,6 @@ namespace Game.Entities
                     break;
                 case BaseModGroup.OffhandCritPercentage:
                     UpdateCritPercentage(WeaponAttackType.OffAttack);
-                    break;
-                default:
                     break;
             }
         }

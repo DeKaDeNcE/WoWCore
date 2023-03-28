@@ -1,4 +1,5 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
@@ -460,7 +461,7 @@ namespace Framework.Constants
                     return -1;
             }
         }
-        
+
         public static long GetMaskForRace(Race raceId)
         {
             int raceBit = GetRaceBit(raceId);
@@ -489,8 +490,6 @@ namespace Framework.Constants
                 case LootType.Fishinghole:
                 case LootType.FishingJunk:
                     return LootType.Fishing;
-                default:
-                    break;
             }
             return lootType;
         }
@@ -552,6 +551,7 @@ namespace Framework.Constants
         Green,
         Gray
     }
+
     public enum ContentLevels
     {
         Content_1_60 = 0,
@@ -589,6 +589,7 @@ namespace Framework.Constants
         // if none flags set then non-aggressive creature
     }
 
+    [Flags]
     public enum FactionTemplateFlags
     {
         PVP = 0x800,   // flagged for PvP
@@ -792,6 +793,7 @@ namespace Framework.Constants
 
         MaxAccountExpansions
     }
+
     public enum PowerType : sbyte
     {
         Mana = 0,
@@ -837,6 +839,7 @@ namespace Framework.Constants
         Tradeskills = 2,
         Pets = 3
     }
+
     public enum TrainerSpellState
     {
         Known = 0,
@@ -850,6 +853,7 @@ namespace Framework.Constants
         NotEnoughMoney = 1
     }
 
+    [Flags]
     public enum ChatMsg
     {
         Addon = -1,
@@ -975,6 +979,7 @@ namespace Framework.Constants
         TeemingIsland = 153
     }
 
+    [Flags]
     public enum DifficultyFlags : ushort
     {
         Heroic = 0x01,
@@ -1404,6 +1409,7 @@ namespace Framework.Constants
         TransferUnknown = 9
     }
 
+    [Flags]
     public enum eScriptFlags
     {
         // Talk Flags
@@ -1475,7 +1481,7 @@ namespace Framework.Constants
         CallscriptToUnit = 21,               // Source = Worldobject (If Present Used As A Search Center), Datalong = Script Id, Datalong2 = Unit Lowguid, Dataint = Script Table To Use (See Scriptstype)
         Kill = 22,               // Source/Target = Creature, Dataint = Remove Corpse Attribute
 
-        // Cyphercore Only
+        // WoWCore Only
         Orientation = 30,               // Source = Unit, Target (Datalong > 0) = Unit, Datalong = > 0 Turn Source To Face Target, O = Orientation
         Equip = 31,               // Soucre = Creature, Datalong = Equipment Id
         Model = 32,               // Source = Creature, Datalong = Model Id
@@ -3049,6 +3055,7 @@ namespace Framework.Constants
         EquipablespellsSlotsFull = 1116
     }
 
+    [Flags]
     public enum SceneFlags
     {
         None = 0x00,
@@ -3060,6 +3067,7 @@ namespace Framework.Constants
         IgnoreTransport = 0x20
     }
 
+    [Flags]
     public enum WorldMapTransformsFlags
     {
         Dungeon = 0x04
@@ -3083,11 +3091,13 @@ namespace Framework.Constants
         TalkingHead = 1
     }
 
+    [Flags]
     public enum CorpseDynFlags
     {
         Lootable = 0x1
     }
 
+    [Flags]
     public enum QueryDataGroup
     {
         Creatures = 0x01,
@@ -3099,6 +3109,7 @@ namespace Framework.Constants
         All = 0xFF
     }
 
+    [Flags]
     public enum BattlePetDbFlags : ushort
     {
         None = 0x00,

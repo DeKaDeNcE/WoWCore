@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
-using System.Collections.Generic;
 using System.Text;
+using System.Collections.Generic;
 
-namespace Framework.Collections
-{
+namespace Framework.Collections;
+
     /// <summary>
-    /// The EdgeWeightedDigrpah class represents an edge-weighted directed graph of vertices named 0 through V-1, where each directed edge
+    /// The EdgeWeightedDigraph class represents an edge-weighted directed graph of vertices named 0 through V-1, where each directed edge
     /// is of type DirectedEdge and has real-valued weight.
     /// </summary>
     /// <seealso href="http://algs4.cs.princeton.edu/44sp/EdgeWeightedDigraph.java.html">EdgeWeightedDigraph class from Princeton University's Java Algorithms</seealso>
@@ -24,10 +25,9 @@ namespace Framework.Collections
             NumberOfVertices = vertices;
             NumberOfEdges = 0;
             _adjacent = new LinkedList<DirectedEdge>[NumberOfVertices];
+
             for (int v = 0; v < NumberOfVertices; v++)
-            {
                 _adjacent[v] = new LinkedList<DirectedEdge>();
-            }
         }
         /// <summary>
         /// The number of vertices in the edge-weighted digraph
@@ -45,9 +45,7 @@ namespace Framework.Collections
         public void AddEdge(DirectedEdge edge)
         {
             if (edge == null)
-            {
                 throw new ArgumentNullException("edge", "DirectedEdge cannot be null");
-            }
 
             _adjacent[edge.From].AddLast(edge);
         }
@@ -56,10 +54,8 @@ namespace Framework.Collections
         /// </summary>
         /// <param name="vertex">The vertex to find incident DirectedEdges from</param>
         /// <returns>IEnumerable of the DirectedEdges incident from the specified vertex</returns>
-        public IEnumerable<DirectedEdge> Adjacent(int vertex)
-        {
-            return _adjacent[vertex];
-        }
+        public IEnumerable<DirectedEdge> Adjacent(int vertex) => _adjacent[vertex];
+
         /// <summary>
         /// Returns an IEnumerable of all directed edges in the edge-weighted digraph
         /// </summary>
@@ -67,12 +63,8 @@ namespace Framework.Collections
         public IEnumerable<DirectedEdge> Edges()
         {
             for (int v = 0; v < NumberOfVertices; v++)
-            {
                 foreach (DirectedEdge edge in _adjacent[v])
-                {
                     yield return edge;
-                }
-            }
         }
         /// <summary>
         /// Returns the number of directed edges incident from the specified vertex
@@ -80,10 +72,8 @@ namespace Framework.Collections
         /// </summary>
         /// <param name="vertex">The vertex to find find the outdegree of</param>
         /// <returns>The number of directed edges incident from the specified vertex</returns>
-        public int OutDegree(int vertex)
-        {
-            return _adjacent[vertex].Count;
-        }
+        public int OutDegree(int vertex) => _adjacent[vertex].Count;
+
         /// <summary>
         /// Returns a string that represents the current edge-weighted digraph
         /// </summary>
@@ -94,21 +84,23 @@ namespace Framework.Collections
         {
             var formattedString = new StringBuilder();
             formattedString.AppendFormat("{0} vertices, {1} edges {2}", NumberOfVertices, NumberOfEdges, Environment.NewLine);
+
             for (int v = 0; v < NumberOfVertices; v++)
             {
                 formattedString.AppendFormat("{0}: ", v);
+
                 foreach (DirectedEdge edge in _adjacent[v])
-                {
                     formattedString.AppendFormat("{0} ", edge.To);
-                }
+
                 formattedString.AppendLine();
             }
+
             return formattedString.ToString();
         }
     }
 
     /// <summary>
-    /// The DirectedEdge class represents a weighted edge in an edge-weighted directed graph. 
+    /// The DirectedEdge class represents a weighted edge in an edge-weighted directed graph.
     /// </summary>
     /// <seealso href="http://algs4.cs.princeton.edu/44sp/DirectedEdge.java.html">DirectedEdge class from Princeton University's Java Algorithms</seealso>
     public class DirectedEdge
@@ -143,9 +135,5 @@ namespace Framework.Collections
         /// <returns>
         /// A string that represents the current DirectedEdge
         /// </returns>
-        public override string ToString()
-        {
-            return $"From: {From}, To: {To}, Weight: {Weight}";
-        }
+        public override string ToString() => $"From: {From}, To: {To}, Weight: {Weight}";
     }
-}

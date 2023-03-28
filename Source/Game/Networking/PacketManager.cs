@@ -1,12 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Entities;
 using System;
+using System.Reflection;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Reflection;
+using Framework.Constants;
+using Game.Entities;
 
 namespace Game.Networking
 {
@@ -127,10 +128,10 @@ namespace Game.Networking
 
         static Action<WorldSession, ClientPacket> CreateDelegate<P1>(MethodInfo method) where P1 : ClientPacket
         {
-            // create first delegate. It is not fine because its 
+            // create first delegate. It is not fine because its
             // signature contains unknown types T and P1
             Action<WorldSession, P1> d = (Action<WorldSession, P1>)method.CreateDelegate(typeof(Action<WorldSession, P1>));
-            // create another delegate having necessary signature. 
+            // create another delegate having necessary signature.
             // It encapsulates first delegate with a closure
             return delegate (WorldSession target, ClientPacket p) { d(target, (P1)p); };
         }

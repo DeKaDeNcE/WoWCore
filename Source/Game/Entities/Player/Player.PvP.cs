@@ -1,17 +1,18 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Game.Arenas;
-using Game.BattleGrounds;
-using Game.Cache;
-using Game.DataStorage;
-using Game.Networking.Packets;
-using Game.PvP;
-using Game.Spells;
 using System;
 using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.PvP;
+using Game.Cache;
+using Game.Spells;
+using Game.Arenas;
+using Game.DataStorage;
+using Game.BattleGrounds;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {
@@ -321,7 +322,7 @@ namespace Game.Entities
                 return;
 
             if (!GetCombatManager().HasPvPCombat())
-            { 
+            {
                 RemoveAurasDueToSpell(PlayerConst.SpellPvpRulesEnabled);
                 UpdateItemLevelAreaBasedScaling();
             }
@@ -492,7 +493,7 @@ namespace Game.Entities
                     return m_bgBattlegroundQueueID[i].mercenary;
             return false;
         }
-        
+
         public WorldLocation GetBattlegroundEntryPoint() { return m_bgData.joinPos; }
 
         public bool InBattleground() { return m_bgData.bgInstanceID != 0; }
@@ -614,7 +615,7 @@ namespace Game.Entities
         }
 
         public bool IsDeserter() { return HasAura(26013); }
-        
+
         public bool CanJoinToBattleground(Battleground bg)
         {
             RBACPermissions perm = RBACPermissions.JoinNormalBg;

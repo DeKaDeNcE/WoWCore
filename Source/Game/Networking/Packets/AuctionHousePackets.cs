@@ -1,10 +1,11 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.DataStorage;
-using Game.Entities;
 using System.Collections.Generic;
+using Framework.Constants;
+using Game.Entities;
+using Game.DataStorage;
 
 namespace Game.Networking.Packets
 {
@@ -267,7 +268,7 @@ namespace Game.Networking.Packets
     }
 
     class AuctionPlaceBid : ClientPacket
-    {   
+    {
         public ObjectGuid Auctioneer;
         public ulong BidAmount;
         public uint AuctionID;
@@ -345,7 +346,7 @@ namespace Game.Networking.Packets
 
         public override void Read() { }
     }
-    
+
     class AuctionSellCommodity : ClientPacket
     {
         public ObjectGuid Auctioneer;
@@ -406,7 +407,7 @@ namespace Game.Networking.Packets
     }
 
     class AuctionSetFavoriteItem : ClientPacket
-    {    
+    {
         public AuctionFavoriteInfo Item;
         public bool IsNotFavorite = true;
 
@@ -443,7 +444,7 @@ namespace Game.Networking.Packets
     }
 
     class AuctionClosedNotification : ServerPacket
-    { 
+    {
         public AuctionOwnerNotification Info;
         public float ProceedsMailDelay;
         public bool Sold = true;
@@ -460,7 +461,7 @@ namespace Game.Networking.Packets
     }
 
     class AuctionCommandResult : ServerPacket
-    {   
+    {
         public uint AuctionID; ///< the id of the auction that triggered this notification
         public int Command; ///< the type of action that triggered this notification. Possible values are @ref AuctionAction
         public int ErrorCode; ///< the error code that was generated when trying to perform the action. Possible values are @ref AuctionError
@@ -532,7 +533,7 @@ namespace Game.Networking.Packets
     }
 
     public class AuctionListBiddedItemsResult : ServerPacket
-    {   
+    {
         public List<AuctionItem> Items = new();
         public uint DesiredDelay;
         public bool HasMoreResults;
@@ -552,7 +553,7 @@ namespace Game.Networking.Packets
     }
 
     public class AuctionListBucketsResult : ServerPacket
-    {  
+    {
         public List<BucketInfo> Buckets = new();
         public uint DesiredDelay;
         public int Unknown830_0;
@@ -578,7 +579,7 @@ namespace Game.Networking.Packets
     }
 
     class AuctionFavoriteList : ServerPacket
-    {    
+    {
         public uint DesiredDelay;
         public List<AuctionFavoriteInfo> Items = new();
 
@@ -625,7 +626,7 @@ namespace Game.Networking.Packets
     }
 
     public class AuctionListOwnedItemsResult : ServerPacket
-    {   
+    {
         public List<AuctionItem> Items = new();
         public List<AuctionItem> SoldItems = new();
         public uint DesiredDelay;
@@ -650,7 +651,7 @@ namespace Game.Networking.Packets
     }
 
     class AuctionOutbidNotification : ServerPacket
-    {    
+    {
         public AuctionBidderNotification Info;
         public ulong BidAmount;
         public ulong MinIncrement;
@@ -666,7 +667,7 @@ namespace Game.Networking.Packets
     }
 
     class AuctionOwnerBidNotification : ServerPacket
-    {    
+    {
         public AuctionOwnerNotification Info;
         public ObjectGuid Bidder;
         public ulong MinIncrement;
@@ -682,7 +683,7 @@ namespace Game.Networking.Packets
     }
 
     public class AuctionReplicateResponse : ServerPacket
-    { 
+    {
         public uint ChangeNumberCursor;
         public uint ChangeNumberGlobal;
         public uint DesiredDelay;
@@ -707,7 +708,7 @@ namespace Game.Networking.Packets
     }
 
     class AuctionWonNotification : ServerPacket
-    {  
+    {
         public AuctionBidderNotification Info;
 
         public AuctionWonNotification() : base(ServerOpcodes.AuctionWonNotification) { }

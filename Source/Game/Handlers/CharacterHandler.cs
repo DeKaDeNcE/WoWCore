@@ -1,21 +1,24 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
+// ReSharper disable UnusedMember.Local
+
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Database;
+using Framework.Constants;
+using Framework.Collections;
+using Game.Maps;
 using Game.Cache;
-using Game.DataStorage;
-using Game.Entities;
 using Game.Groups;
 using Game.Guilds;
-using Game.Maps;
+using Game.Spells;
+using Game.Entities;
+using Game.DataStorage;
 using Game.Networking;
 using Game.Networking.Packets;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Game
 {
@@ -869,8 +872,6 @@ namespace Game
                             if (playerInfo.introSceneIdNPE.HasValue)
                                 pCurrChar.GetSceneMgr().PlayScene(playerInfo.introSceneIdNPE.Value);
                             break;
-                        default:
-                            break;
                     }
                 }
             }
@@ -1054,8 +1055,6 @@ namespace Game
                             repMgr.SetOneFactionReputation(CliDB.FactionStorage.LookupByKey(1124), 42999, false); // The Sunreavers
                             repMgr.SetOneFactionReputation(CliDB.FactionStorage.LookupByKey(1064), 42999, false); // The Taunka
                             repMgr.SetOneFactionReputation(CliDB.FactionStorage.LookupByKey(1085), 42999, false); // Warsong Offensive
-                            break;
-                        default:
                             break;
                     }
                     repMgr.SendState(null);
@@ -1379,7 +1378,7 @@ namespace Game
         }
 
         [WorldPacketHandler(ClientOpcodes.AlterAppearance)]
-        void HandleAlterAppearance(AlterApperance packet)
+        void HandleAlterAppearance(AlterAppearance packet)
         {
             if (!ValidateAppearance(_player.GetRace(), _player.GetClass(), (Gender)packet.NewSex, packet.Customizations))
                 return;

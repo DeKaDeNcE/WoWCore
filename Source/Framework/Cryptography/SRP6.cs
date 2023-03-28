@@ -1,10 +1,11 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Text;
 using System.Numerics;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace Framework.Cryptography
 {
@@ -30,7 +31,7 @@ namespace Framework.Cryptography
             var salt = new byte[0].GenerateRandomKey(32); // random salt
             return (salt, CalculateVerifier(username, password, salt));
         }
-        
+
         public static byte[] CalculateVerifier(string username, string password, byte[] salt)
         {
             // v = g ^ H(s || H(u || ':' || p)) mod N

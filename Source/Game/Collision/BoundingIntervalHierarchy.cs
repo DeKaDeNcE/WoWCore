@@ -1,12 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.GameMath;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Framework.GameMath;
 
 namespace Game.Collision
 {
@@ -409,7 +410,7 @@ namespace Game.Collision
                             while (n > 0)
                             {
                                 bool hit = intersectCallback.Invoke(r, objects[offset], ref maxDist, stopAtFirst);
-                                if (stopAtFirst && hit) 
+                                if (stopAtFirst && hit)
                                     return;
                                 --n;
                                 ++offset;

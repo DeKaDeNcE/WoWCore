@@ -1,13 +1,32 @@
+// https://github.com/recastnavigation/recastnavigation
+
+//
+// Copyright (c) 2009-2010 Mikko Mononen memon@inside.org
+//
+// This software is provided 'as-is', without any express or implied
+// warranty.  In no event will the authors be held liable for any damages
+// arising from the use of this software.
+// Permission is granted to anyone to use this software for any purpose,
+// including commercial applications, and to alter it and redistribute it
+// freely, subject to the following restrictions:
+// 1. The origin of this software must not be misrepresented; you must not
+//    claim that you wrote the original software. If you use this software
+//    in a product, an acknowledgment in the product documentation would be
+//    appreciated but is not required.
+// 2. Altered source versions must be plainly marked as such, and must not be
+//    misrepresented as being the original software.
+// 3. This notice may not be removed or altered from any source distribution.
+//
+
 using System;
-using System.Diagnostics;
-using System.Linq;
 using System.Numerics;
+using System.Diagnostics;
 
 /**
     @typedef dtPolyRef
     @par
 
-    Polygon references are subject to the same invalidate/preserve/restore 
+    Polygon references are subject to the same invalidate/preserve/restore
     rules that apply to #dtTileRef's.  If the #dtTileRef for the polygon's
     tile changes, the polygon reference becomes invalid.
 
@@ -23,7 +42,7 @@ using System.Numerics;
     - The navigation mesh has been initialized using a different set
       of #dtNavMeshParams.
 
-    A tile reference is preserved/restored if the tile is added to a navigation 
+    A tile reference is preserved/restored if the tile is added to a navigation
     mesh initialized with the original #dtNavMeshParams and is added at the
     original reference location. (E.g. The lastRef parameter is used with
     dtNavMesh::addTile.)
@@ -180,9 +199,9 @@ public static partial class Detour
     Notes:
 
     - This class is usually used in conjunction with the dtNavMeshQuery class for pathfinding.
-    - Technically, all navigation meshes are tiled. A 'solo' mesh is simply a navigation mesh initialized 
+    - Technically, all navigation meshes are tiled. A 'solo' mesh is simply a navigation mesh initialized
         to have only a single tile.
-    - This class does not implement any asynchronous methods. So the ::dtStatus result of all methods will 
+    - This class does not implement any asynchronous methods. So the ::dtStatus result of all methods will
         always contain either a success or failure flag.
 
     @see dtNavMeshQuery, dtCreateNavMeshData, dtNavMeshCreateParams, #dtAllocNavMesh, #dtFreeNavMesh
@@ -395,7 +414,7 @@ public static partial class Detour
             calcSlabEndPoints(va, vaStart, vb, vbStart, amin, amax, side);
             float apos = getSlabCoord(va, vaStart, side);
 
-            // Remove links pointing to 'side' and compact the links array. 
+            // Remove links pointing to 'side' and compact the links array.
             float[] bmin = new float[2];
             float[] bmax = new float[2];
             ushort m = (ushort)(DT_EXT_LINK | (ushort)side);
@@ -582,7 +601,7 @@ public static partial class Detour
                 dtPolyRef polyRef = findNearestPolyInTile(tile, targetCon.pos, pIndex, halfExtents, nearestPt);
                 if (polyRef == 0)
                     continue;
-                // findNearestPoly may return too optimistic results, further check to make sure. 
+                // findNearestPoly may return too optimistic results, further check to make sure.
                 if (dtSqr(nearestPt[0] - targetCon.pos[pIndex]) + dtSqr(nearestPt[2] - targetCon.pos[pIndex + 2]) > dtSqr(targetCon.rad))
                     continue;
                 // Make sure the location is on current mesh.
@@ -688,7 +707,7 @@ public static partial class Detour
                 dtPolyRef polyRef = findNearestPolyInTile(tile, con.pos, 0, halfExtents, nearestPt);
                 if (polyRef == 0)
                     continue;
-                // findNearestPoly may return too optimistic results, further check to make sure. 
+                // findNearestPoly may return too optimistic results, further check to make sure.
                 if (dtSqr(nearestPt[0] - con.pos[0]) + dtSqr(nearestPt[2] - con.pos[2]) > dtSqr(con.rad))
                     continue;
                 // Make sure the location is on current mesh.
@@ -710,7 +729,7 @@ public static partial class Detour
                     poly.firstLink = idx;
                 }
 
-                // Start end-point is always connect back to off-mesh connection. 
+                // Start end-point is always connect back to off-mesh connection.
                 uint tidx = allocLink(tile);
                 if (tidx != DT_NULL_LINK)
                 {
@@ -1031,7 +1050,7 @@ public static partial class Detour
         ///
         /// The lastRef parameter is used to restore a tile with the same tile
         /// reference it had previously used.  In this case the #dtPolyRef's for the
-        /// tile will be restored to the same values they were before the tile was 
+        /// tile will be restored to the same values they were before the tile was
         /// removed.
         ///
         // @see dtCreateNavMeshData, #removeTile
@@ -1288,7 +1307,7 @@ public static partial class Detour
         }
         /// Gets the tile for the specified tile reference.
         ///  @param[in]	ref		The tile reference of the tile to retrieve.
-        // @return The tile for the specified reference, or null if the 
+        // @return The tile for the specified reference, or null if the
         ///		reference is invalid.
         public dtMeshTile getTileByRef(dtTileRef tileRef)
         {
@@ -1545,7 +1564,7 @@ public static partial class Detour
         /// {
         ///     const dtPoly* p = tile.polys[i];
         ///     const dtPolyRef ref = base | (dtPolyRef)i;
-        ///     
+        ///
         ///     // Use the reference to access the polygon data.
         /// }
         // @endcode
@@ -1589,15 +1608,15 @@ public static partial class Detour
             const int sizeReq = getTileStateSize(tile);
             if (maxDataSize < sizeReq)
                 return DT_FAILURE | DT_BUFFER_TOO_SMALL;
-		
+
             dtTileState* tileState = (dtTileState*)data; data += dtAlign4(sizeof(dtTileState));
             dtPolyState* polyStates = (dtPolyState*)data; data += dtAlign4(sizeof(dtPolyState) * tile.header.polyCount);
-	
+
             // Store tile state.
             tileState.magic = DT_NAVMESH_STATE_MAGIC;
             tileState.version = DT_NAVMESH_STATE_VERSION;
             tileState.ref = getTileRef(tile);
-	
+
             // Store per poly state.
             for (int i = 0; i < tile.header.polyCount; ++i)
             {
@@ -1606,7 +1625,7 @@ public static partial class Detour
                 s.flags = p.flags;
                 s.area = p.getArea();
             }
-	
+
             return DT_SUCCESS;
         }
 
@@ -1626,10 +1645,10 @@ public static partial class Detour
             const int sizeReq = getTileStateSize(tile);
             if (maxDataSize < sizeReq)
                 return DT_FAILURE | DT_INVALID_PARAM;
-	
+
             const dtTileState* tileState = (const dtTileState*)data; data += dtAlign4(sizeof(dtTileState));
             const dtPolyState* polyStates = (const dtPolyState*)data; data += dtAlign4(sizeof(dtPolyState) * tile.header.polyCount);
-	
+
             // Check that the restore is possible.
             if (tileState.magic != DT_NAVMESH_STATE_MAGIC)
                 return DT_FAILURE | DT_WRONG_MAGIC;
@@ -1637,7 +1656,7 @@ public static partial class Detour
                 return DT_FAILURE | DT_WRONG_VERSION;
             if (tileState.ref != getTileRef(tile))
                 return DT_FAILURE | DT_INVALID_PARAM;
-	
+
             // Restore per poly state.
             for (int i = 0; i < tile.header.polyCount; ++i)
             {
@@ -1646,16 +1665,16 @@ public static partial class Detour
                 p.flags = s.flags;
                 p.setArea(s.area);
             }
-	
+
             return DT_SUCCESS;
         }
             */
         // @par
         ///
-        /// Off-mesh connections are stored in the navigation mesh as special 2-vertex 
-        /// polygons with a single edge. At least one of the vertices is expected to be 
-        /// inside a normal polygon. So an off-mesh connection is "entered" from a 
-        /// normal polygon at one of its endpoints. This is the polygon identified by 
+        /// Off-mesh connections are stored in the navigation mesh as special 2-vertex
+        /// polygons with a single edge. At least one of the vertices is expected to be
+        /// inside a normal polygon. So an off-mesh connection is "entered" from a
+        /// normal polygon at one of its endpoints. This is the polygon identified by
         /// the prevRef parameter.
         /// Gets the endpoints for an off-mesh connection, ordered by "direction of travel".
         ///  @param[in]		prevRef		The reference of the polygon before the connection.
@@ -1734,7 +1753,7 @@ public static partial class Detour
 
         // @{
         // @name State Management
-        /// These functions do not effect #dtTileRef or #dtPolyRef's. 
+        /// These functions do not effect #dtTileRef or #dtPolyRef's.
 
         /// Sets the user defined flags for the specified polygon.
         ///  @param[in]	ref		The polygon reference.

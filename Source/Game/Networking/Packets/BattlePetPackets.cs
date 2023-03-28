@@ -1,11 +1,11 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.Entities;
 using System;
 using System.Collections.Generic;
+using Framework.Constants;
+using Game.Entities;
 
 namespace Game.Networking.Packets
 {
@@ -47,7 +47,7 @@ namespace Game.Networking.Packets
 
         public override void Write() { }
     }
-    
+
     class BattlePetRequestJournal : ClientPacket
     {
         public BattlePetRequestJournal(WorldPacket packet) : base(packet) { }
@@ -61,7 +61,7 @@ namespace Game.Networking.Packets
 
         public override void Read() { }
     }
-    
+
     class BattlePetUpdates : ServerPacket
     {
         public BattlePetUpdates() : base(ServerOpcodes.BattlePetUpdates) { }
@@ -196,7 +196,7 @@ namespace Game.Networking.Packets
         public DeclinedName DeclinedNames;
         public string Name;
     }
-    
+
     class BattlePetDeletePet : ClientPacket
     {
         public BattlePetDeletePet(WorldPacket packet) : base(packet) { }
@@ -236,7 +236,7 @@ namespace Game.Networking.Packets
 
         public ObjectGuid PetGuid;
     }
-    
+
     class CageBattlePet : ClientPacket
     {
         public CageBattlePet(WorldPacket packet) : base(packet) { }
@@ -298,7 +298,7 @@ namespace Game.Networking.Packets
             PetGuid = _worldPacket.ReadPackedGuid();
         }
     }
-    
+
     //Structs
     public struct BattlePetStruct
     {

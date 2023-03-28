@@ -1,12 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Entities;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Spells;
+using Game.Entities;
 
 namespace Game.Scripting
 {
@@ -186,7 +187,7 @@ namespace Game.Scripting
 
             SpellOnResistAbsorbCalculateFnType _onCalculateResistAbsorbHandlerScript;
         }
-        
+
         public class EffectHandler : EffectHook
         {
             public EffectHandler(SpellEffectFnType pEffectHandlerScript, uint effIndex, SpellEffectName effName) : base(effIndex)
@@ -310,13 +311,9 @@ namespace Game.Scripting
                                         return !_area;
                                     case SpellTargetReferenceTypes.Target: // BOTH
                                         return true;
-                                    default:
-                                        break;
                                 }
                                 break;
                         }
-                        break;
-                    default:
                         break;
                 }
 
@@ -438,7 +435,7 @@ namespace Game.Scripting
             return m_currentScriptState == (byte)SpellScriptHookType.CheckCast;
         }
 
-        bool IsAfterTargetSelectionPhase()
+        public bool IsAfterTargetSelectionPhase()
         {
             return IsInHitPhase()
                 || IsInEffectHook()
@@ -446,7 +443,7 @@ namespace Game.Scripting
                 || m_currentScriptState == (byte)SpellScriptHookType.AfterCast
                 || m_currentScriptState == (byte)SpellScriptHookType.CalcCritChance;
         }
-        
+
         public bool IsInTargetHook()
         {
             switch ((SpellScriptHookType)m_currentScriptState)
@@ -462,7 +459,7 @@ namespace Game.Scripting
             return false;
         }
 
-        bool IsInModifiableHook()
+        public bool IsInModifiableHook()
         {
             // after hit hook executed after damage/healing is already done
             // modifying it at this point has no effect
@@ -476,7 +473,7 @@ namespace Game.Scripting
             }
             return false;
         }
-        
+
         public bool IsInHitPhase()
         {
             return (m_currentScriptState >= (byte)SpellScriptHookType.EffectHit && m_currentScriptState < (byte)SpellScriptHookType.AfterHit + 1);
@@ -654,7 +651,7 @@ namespace Game.Scripting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>target of current effect if it was Creature otherwise null</returns>
         public Creature GetHitCreature()
@@ -671,7 +668,7 @@ namespace Game.Scripting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>target of current effect if it was Player otherwise null</returns>
         public Player GetHitPlayer()
@@ -688,7 +685,7 @@ namespace Game.Scripting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>target of current effect if it was Item otherwise null</returns>
         public Item GetHitItem()
@@ -702,7 +699,7 @@ namespace Game.Scripting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>target of current effect if it was GameObject otherwise null</returns>
         public GameObject GetHitGObj()
@@ -716,7 +713,7 @@ namespace Game.Scripting
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>target of current effect if it was Corpse otherwise nullptr</returns>
         public Corpse GetHitCorpse()
@@ -728,9 +725,9 @@ namespace Game.Scripting
             }
             return m_spell.corpseTarget;
         }
-        
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>destination of current effect</returns>
         public WorldLocation GetHitDest()
@@ -784,11 +781,11 @@ namespace Game.Scripting
             }
             m_spell.m_healing = heal;
         }
-        void PreventHitHeal() { SetHitHeal(0); }
+        public void PreventHitHeal() { SetHitHeal(0); }
         public Spell GetSpell() { return m_spell; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns>true if spell critically hits current HitUnit</returns>
         public bool IsHitCrit()
@@ -881,7 +878,7 @@ namespace Game.Scripting
             return m_spell.effectInfo;
         }
 
-        // method avalible only in EffectHandler method
+        // method available only in EffectHandler method
         public int GetEffectValue()
         {
             if (!IsInEffectHook())
@@ -924,7 +921,7 @@ namespace Game.Scripting
 
             m_spell.variance = variance;
         }
-        
+
         // returns: cast item if present.
         public Item GetCastItem() { return m_spell.m_CastItem; }
 
@@ -1291,7 +1288,7 @@ namespace Game.Scripting
         }
         public class EnterLeaveCombatHandler
         {
-            public EnterLeaveCombatHandler(AuraEnterLeaveCombatFnType handlerScript) 
+            public EnterLeaveCombatHandler(AuraEnterLeaveCombatFnType handlerScript)
             {
                 _handlerScript = handlerScript;
             }
@@ -1302,7 +1299,7 @@ namespace Game.Scripting
 
             AuraEnterLeaveCombatFnType _handlerScript;
         }
-        
+
         public AuraScript()
         {
             m_aura = null;
@@ -1655,7 +1652,7 @@ namespace Game.Scripting
 
         // returns guid of object which casted the aura (m_originalCaster of the Spell class)
         public ObjectGuid GetCasterGUID() { return m_aura.GetCasterGUID(); }
-        // returns unit which casted the aura or null if not avalible (caster logged out for example)
+        // returns unit which casted the aura or null if not available (caster logged out for example)
         public Unit GetCaster()
         {
             WorldObject caster = m_aura.GetCaster();
@@ -1678,7 +1675,7 @@ namespace Game.Scripting
         // returns owner if it's unit or unit derived object, null otherwise (only for persistent area auras null is returned)
         public Unit GetUnitOwner() { return m_aura.GetUnitOwner(); }
         // returns owner if it's dynobj, null otherwise
-        DynamicObject GetDynobjOwner() { return m_aura.GetDynobjOwner(); }
+        public DynamicObject GetDynobjOwner() { return m_aura.GetDynobjOwner(); }
 
         // removes aura with remove mode (see AuraRemoveMode enum)
         public void Remove(AuraRemoveMode removeMode = 0) { m_aura.Remove(removeMode); }
@@ -1686,39 +1683,39 @@ namespace Game.Scripting
         public Aura GetAura() { return m_aura; }
 
         // returns type of the aura, may be dynobj owned aura or unit owned aura
-        AuraObjectType GetAuraType() { return m_aura.GetAuraType(); }
+        public AuraObjectType GetAuraType() { return m_aura.GetAuraType(); }
 
         // aura duration manipulation - when duration goes to 0 aura is removed
         public int GetDuration() { return m_aura.GetDuration(); }
         public void SetDuration(int duration, bool withMods = false) { m_aura.SetDuration(duration, withMods); }
         // sets duration to maxduration
         public void RefreshDuration() { m_aura.RefreshDuration(); }
-        long GetApplyTime() { return m_aura.GetApplyTime(); }
+        public long GetApplyTime() { return m_aura.GetApplyTime(); }
         public int GetMaxDuration() { return m_aura.GetMaxDuration(); }
         public void SetMaxDuration(int duration) { m_aura.SetMaxDuration(duration); }
-        int CalcMaxDuration() { return m_aura.CalcMaxDuration(); }
+        public int CalcMaxDuration() { return m_aura.CalcMaxDuration(); }
         // expired - duration just went to 0
         public bool IsExpired() { return m_aura.IsExpired(); }
         // permament - has infinite duration
-        bool IsPermanent() { return m_aura.IsPermanent(); }
+        public bool IsPermanent() { return m_aura.IsPermanent(); }
 
         // charges manipulation - 0 - not charged aura
-        byte GetCharges() { return m_aura.GetCharges(); }
-        void SetCharges(byte charges) { m_aura.SetCharges(charges); }
-        byte CalcMaxCharges() { return m_aura.CalcMaxCharges(); }
-        bool ModCharges(sbyte num, AuraRemoveMode removeMode = AuraRemoveMode.Default) { return m_aura.ModCharges(num, removeMode); }
+        public byte GetCharges() { return m_aura.GetCharges(); }
+        public void SetCharges(byte charges) { m_aura.SetCharges(charges); }
+        public byte CalcMaxCharges() { return m_aura.CalcMaxCharges(); }
+        public bool ModCharges(sbyte num, AuraRemoveMode removeMode = AuraRemoveMode.Default) { return m_aura.ModCharges(num, removeMode); }
         // returns true if last charge dropped
-        bool DropCharge(AuraRemoveMode removeMode = AuraRemoveMode.Default) { return m_aura.DropCharge(removeMode); }
+        public bool DropCharge(AuraRemoveMode removeMode = AuraRemoveMode.Default) { return m_aura.DropCharge(removeMode); }
 
         // stack amount manipulation
         public byte GetStackAmount() { return m_aura.GetStackAmount(); }
-        void SetStackAmount(byte num) { m_aura.SetStackAmount(num); }
+        public void SetStackAmount(byte num) { m_aura.SetStackAmount(num); }
         public bool ModStackAmount(int num, AuraRemoveMode removeMode = AuraRemoveMode.Default) { return m_aura.ModStackAmount(num, removeMode); }
 
         // passive - "working in background", not saved, not removed by immunities, not seen by player
-        bool IsPassive() { return m_aura.IsPassive(); }
+        public bool IsPassive() { return m_aura.IsPassive(); }
         // death persistent - not removed on death
-        bool IsDeathPersistent() { return m_aura.IsDeathPersistent(); }
+        public bool IsDeathPersistent() { return m_aura.IsDeathPersistent(); }
 
         // check if aura has effect of given effindex
         public bool HasEffect(byte effIndex) { return m_aura.HasEffect(effIndex); }
@@ -1726,13 +1723,13 @@ namespace Game.Scripting
         public AuraEffect GetEffect(byte effIndex) { return m_aura.GetEffect(effIndex); }
 
         // check if aura has effect of given aura type
-        bool HasEffectType(AuraType type)
+        public bool HasEffectType(AuraType type)
         {
             return m_aura.HasEffectType(type);
         }
 
         // AuraScript interface - functions which are redirecting to AuraApplication class
-        // Do not call these in hooks in which AuraApplication is not avalible, otherwise result will differ from expected (the functions will return null)
+        // Do not call these in hooks in which AuraApplication is not available, otherwise result will differ from expected (the functions will return null)
 
         // returns currently processed target of an aura
         // Return value does not need to be null-checked, the only situation this will (always)

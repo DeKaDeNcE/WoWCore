@@ -1,18 +1,19 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Framework.IO;
-using Game.BattlePets;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Mails;
-using Game.Networking.Packets;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Framework.IO;
+using Framework.Database;
+using Framework.Constants;
+using Game.Mails;
+using Game.Entities;
+using Game.BattlePets;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game
 {
@@ -73,8 +74,6 @@ namespace Game
                     return mHordeAuctions;
                 case 7:
                     return mGoblinAuctions;
-                default:
-                    break;
             }
             return mNeutralAuctions;
         }
@@ -569,8 +568,6 @@ namespace Game
                     case ItemClass.Recipe:
                         bucket.SortLevel = (byte)((ItemSubClassRecipe)itemTemplate.GetSubClass() != ItemSubClassRecipe.Book ? itemTemplate.GetRequiredSkillRank() : (uint)itemTemplate.GetBaseRequiredLevel());
                         break;
-                    default:
-                        break;
                 }
 
                 for (Locale locale = Locale.enUS; locale < Locale.Total; ++locale)
@@ -663,7 +660,7 @@ namespace Game
 
             _itemsByAuctionId[auction.Id] = auction;
 
-            AuctionPosting.Sorter insertSorter = new(Locale.enUS, new AuctionSortDef[] { new AuctionSortDef(AuctionHouseSortOrder.Price, false) }, 1);
+            AuctionPosting.Sorter insertSorter = new(Locale.enUS, new AuctionSortDef[] { new (AuctionHouseSortOrder.Price, false) }, 1);
             var auctionIndex = bucket.Auctions.BinarySearch(auction, insertSorter);
             if (auctionIndex < 0)
                 auctionIndex = ~auctionIndex;
@@ -758,7 +755,7 @@ namespace Game
         {
             DateTime curTime = GameTime.GetSystemTime();
             DateTime curTimeSteady = GameTime.Now();
-            ///- Handle expired auctions
+            //- Handle expired auctions
 
             // Clear expired throttled players
             foreach (var key in _replicateThrottleMap.Keys.ToList())
@@ -776,17 +773,17 @@ namespace Game
 
             foreach (var auction in _itemsByAuctionId.Values.ToList())
             {
-                ///- filter auctions expired on next update
+                //- filter auctions expired on next update
                 if (auction.EndTime > curTime.AddMinutes(1))
                     continue;
 
-                ///- Either cancel the auction if there was no bidder
+                //- Either cancel the auction if there was no bidder
                 if (auction.Bidder.IsEmpty())
                 {
                     SendAuctionExpired(auction, trans);
                     Global.ScriptMgr.OnAuctionExpire(this, auction);
                 }
-                ///- Or perform the transaction
+                //- Or perform the transaction
                 else
                 {
                     //we should send an "item sold" message if the seller is online
@@ -797,7 +794,7 @@ namespace Game
                     Global.ScriptMgr.OnAuctionSuccessful(this, auction);
                 }
 
-                ///- In any case clear the auction
+                //- In any case clear the auction
                 RemoveAuction(trans, auction);
             }
 
@@ -1496,7 +1493,7 @@ namespace Game
 
                 int itemIndex = 0;
                 while (itemIndex < auction.Items.Count)
-                {  
+                {
                     MailDraft mail = new(Global.AuctionHouseMgr.BuildItemAuctionMailSubject(AuctionMailType.Expired, auction), "");
 
                     for (int i = 0; i < SharedConst.MaxMailItems && itemIndex < auction.Items.Count; ++i, ++itemIndex)
@@ -1585,7 +1582,7 @@ namespace Game
                 TotalPrice += unitPrice * item.GetCount();
             }
         }
-        
+
         AuctionHouseRecord _auctionHouse;
 
         SortedList<uint, AuctionPosting> _itemsByAuctionId = new(); // ordered for replicate
@@ -1765,8 +1762,6 @@ namespace Game
                         return (long)(left.BidAmount - right.BidAmount);
                     case AuctionHouseSortOrder.Buyout:
                         return (long)(left.BuyoutOrUnitPrice - right.BuyoutOrUnitPrice);
-                    default:
-                        break;
                 }
 
                 return 0;
@@ -1792,10 +1787,10 @@ namespace Game
         public uint[] QualityCounts = new uint[(int)ItemQuality.Max];
         public ulong MinPrice; // for sort
         public (uint Id, uint Count)[] ItemModifiedAppearanceId = new (uint Id, uint Count)[4]; // for uncollected search
-        public byte RequiredLevel = 0; // for usable search
-        public byte SortLevel = 0;
-        public byte MinBattlePetLevel = 0;
-        public byte MaxBattlePetLevel = 0;
+        public byte RequiredLevel; // for usable search
+        public byte SortLevel;
+        public byte MinBattlePetLevel;
+        public byte MaxBattlePetLevel;
         public string[] FullName = new string[(int)Locale.Total];
 
         public List<AuctionPosting> Auctions = new();
@@ -1874,8 +1869,6 @@ namespace Game
                         return left.FullName[(int)_locale].CompareTo(right.FullName[(int)_locale]);
                     case AuctionHouseSortOrder.Level:
                         return left.SortLevel - right.SortLevel;
-                    default:
-                        break;
                 }
 
                 return 0;
@@ -1985,8 +1978,8 @@ namespace Game
         {
             public FilterType SubclassMask;
             public ulong[] InvTypes = new ulong[ItemConst.MaxItemSubclassTotal];
-        } 
-        
+        }
+
         public enum FilterType : uint
         {
             SkipClass = 0,

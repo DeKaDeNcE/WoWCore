@@ -1,17 +1,18 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.BattleGrounds;
-using Game.Conditions;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Maps;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.Maps;
+using Game.Entities;
+using Game.Conditions;
+using Game.DataStorage;
+using Game.BattleGrounds;
 
 namespace Game.Spells
 {
@@ -510,8 +511,6 @@ namespace Game.Spells
                     case SpellTargetCheckTypes.Raid:
                     case SpellTargetCheckTypes.RaidClass:
                         return true;
-                    default:
-                        break;
                 }
             }
 
@@ -657,8 +656,6 @@ namespace Game.Spells
                     return HasLabel((uint)(mod as SpellFlatModifierByLabel).value.LabelID);
                 case SpellModType.LabelPct:
                     return HasLabel((uint)(mod as SpellPctModifierByLabel).value.LabelID);
-                default:
-                    break;
             }
 
             return false;
@@ -670,7 +667,7 @@ namespace Game.Spells
             if (auraSpellInfo == null || auraSpellInfo.HasAttribute(SpellAttr0.NoImmunities))
                 return false;
 
-            // these spells pierce all avalible spells (Resurrection Sickness for example)
+            // these spells pierce all available spells (Resurrection Sickness for example)
             if (HasAttribute(SpellAttr0.NoImmunities))
                 return true;
 
@@ -1429,8 +1426,6 @@ namespace Game.Spells
                 case 331134: // Spotted
                     _auraState = AuraStateType.FaerieFire;
                     break;
-                default:
-                    break;
             }
         }
 
@@ -1468,8 +1463,6 @@ namespace Game.Spells
                                 case AuraType.ModPowerRegen:
                                 case AuraType.ObsModPower:
                                     drink = true;
-                                    break;
-                                default:
                                     break;
                             }
                         }
@@ -1578,8 +1571,6 @@ namespace Game.Spells
                         case 317920: // Concentration Aura
                             _spellSpecific = SpellSpecificType.Aura;
                             break;
-                        default:
-                            break;
                     }
 
                     break;
@@ -1677,8 +1668,6 @@ namespace Game.Spells
                 case 108199:    // Gorefiend's Grasp
                 case 191244:    // Sticky Bomb
                     return DiminishingGroup.AOEKnockback;
-                default:
-                    break;
             }
 
             // Explicit Diminishing Groups
@@ -2017,11 +2006,7 @@ namespace Game.Spells
                         case 217832: // Imprison
                         case 221527: // Imprison
                             return DiminishingGroup.Incapacitate;
-                        default:
-                            break;
                     }
-                    break;
-                default:
                     break;
             }
 
@@ -2091,11 +2076,7 @@ namespace Game.Spells
                         case 217832: // Imprison
                         case 221527: // Imprison
                             return 4 * Time.InMilliseconds;
-                        default:
-                            break;
                     }
-                    break;
-                default:
                     break;
             }
 
@@ -2159,8 +2140,6 @@ namespace Game.Spells
 
                                         immuneInfo.SpellEffectImmune.Add(SpellEffectName.KnockBack);
                                         immuneInfo.SpellEffectImmune.Add(SpellEffectName.KnockBackDest);
-                                        break;
-                                    default:
                                         break;
                                 }
                                 break;
@@ -2258,8 +2237,6 @@ namespace Game.Spells
                                 }
                                 break;
                             }
-                            default:
-                                break;
                         }
 
                         if (immuneInfo.AuraTypeImmune.Empty())
@@ -2348,8 +2325,6 @@ namespace Game.Spells
                         dispelImmunity = (uint)miscVal;
                         break;
                     }
-                    default:
-                        break;
                 }
 
                 immuneInfo.SchoolImmuneMask = schoolImmunityMask;
@@ -2652,7 +2627,7 @@ namespace Game.Spells
 
             return mechanicImmunityMask;
         }
-        
+
         public float GetMinRange(bool positive = false)
         {
             if (RangeEntry == null)
@@ -2961,8 +2936,6 @@ namespace Game.Spells
                     case 2:
                         mod = SpellModOp.PowerCost2;
                         break;
-                    default:
-                        break;
                 }
 
                 if (mod != SpellModOp.Max)
@@ -3063,8 +3036,6 @@ namespace Game.Spells
                     return (1.0f / regenHaste - 1.0f) * mod.Coeff;
                 case 5:
                     return (1.0f / Math.Min(Math.Min(Math.Min(haste, rangedHaste), spellHaste), regenHaste) - 1.0f) * mod.Coeff;
-                default:
-                    break;
             }
 
             return 0.0f;
@@ -3090,8 +3061,6 @@ namespace Game.Spells
                     return spellCrit * mod.Coeff * 0.01f;
                 case 4:
                     return Math.Min(Math.Min(crit, rangedCrit), spellCrit) * mod.Coeff * 0.01f;
-                default:
-                    break;
             }
 
             return 0.0f;
@@ -3161,8 +3130,6 @@ namespace Game.Spells
                             ppm *= 1.0f + mod.Coeff;
                         break;
                     }
-                    default:
-                        break;
                 }
             }
 
@@ -3391,8 +3358,6 @@ namespace Game.Spells
                         case 61834: // Manabonked! (minigob)
                         case 73523: // Rigor Mortis
                             return true;
-                        default:
-                            break;
                     }
                     break;
                 case SpellFamilyNames.Rogue:
@@ -3403,8 +3368,6 @@ namespace Game.Spells
                             return true;
                         case 40251: // Shadow of Death, Teron Gorefiend, Black Temple
                             return false;
-                        default:
-                            break;
                     }
                     break;
                 case SpellFamilyNames.Warrior:
@@ -3412,16 +3375,12 @@ namespace Game.Spells
                     if ((spellInfo.SpellFamilyFlags[0] & 0x20200000) != 0)
                         return false;
                     break;
-                default:
-                    break;
             }
 
             switch (spellInfo.Mechanic)
             {
                 case Mechanics.ImmuneShield:
                     return true;
-                default:
-                    break;
             }
 
             // Special case: effects which determine positivity of whole spell
@@ -3448,8 +3407,6 @@ namespace Game.Spells
                             otherEffect.TargetB.GetTarget() == effect.TargetB.GetTarget())
                             return false;
                         break;
-                    default:
-                        break;
                 }
 
                 if (otherEffect.IsAura())
@@ -3464,8 +3421,6 @@ namespace Game.Spells
                         case AuraType.ModSpellDamageFromCaster:
                         case AuraType.PreventsFleeing:
                             return false;
-                        default:
-                            break;
                     }
                 }
             }
@@ -3514,8 +3469,6 @@ namespace Game.Spells
                         case DispelType.Invisibility:
                         case DispelType.Enrage:
                             return false;
-                        default:
-                            break;
                     }
 
                     // also check targets
@@ -3533,8 +3486,6 @@ namespace Game.Spells
                             case Mechanics.Mount:
                             case Mechanics.Invulnerability:
                                 return false;
-                            default:
-                                break;
                         }
                     }
                     break;
@@ -3543,8 +3494,6 @@ namespace Game.Spells
                     // check targets AND basepoints
                     if (!_isPositiveTarget(effect) && bp > 0)
                         return false;
-                    break;
-                default:
                     break;
             }
 
@@ -3636,7 +3585,7 @@ namespace Game.Spells
                                 if (_isPositiveTarget(spellTriggeredEffect) && !_isPositiveEffectImpl(spellTriggeredProto, spellTriggeredEffect, visited))
                                     return false;
                             }
-                        }                        
+                        }
                         break;
                     case AuraType.PeriodicTriggerSpell:
                     case AuraType.ModStun:
@@ -3709,8 +3658,6 @@ namespace Game.Spells
                             case Mechanics.Mount:
                             case Mechanics.Invulnerability:
                                 return false;
-                            default:
-                                break;
                         }
                         break;
                     }
@@ -3759,8 +3706,6 @@ namespace Game.Spells
                         }
                         break;
                     }
-                    default:
-                        break;
                 }
             }
 
@@ -3825,8 +3770,6 @@ namespace Game.Spells
                                 NegativeEffects[(int)spellEffectInfo.EffectIndex] = true;
                         break;
                     }
-                    default:
-                        break;
                 }
             }
         }
@@ -4491,11 +4434,7 @@ namespace Game.Spells
                             if (MiscValue == (int)PowerType.Mana)
                                 return ExpectedStatType.PlayerMana;
                             return ExpectedStatType.None;
-                        default:
-                            break;
                     }
-                    break;
-                default:
                     break;
             }
             return ExpectedStatType.None;
@@ -4998,11 +4937,7 @@ namespace Game.Spells
                                         break;
                                 }
                                 break;
-                            default:
-                                break;
                         }
-                        break;
-                    default:
                         break;
                 }
             }
@@ -5015,8 +4950,6 @@ namespace Game.Spells
                 case SpellTargetObjectTypes.Dest:
                 case SpellTargetObjectTypes.UnitAndDest:
                     dstSet = true;
-                    break;
-                default:
                     break;
             }
             return targetMask;
@@ -5226,4 +5159,3 @@ namespace Game.Spells
         public List<SpellEffectName> SpellEffectImmune = new();
     }
 }
-

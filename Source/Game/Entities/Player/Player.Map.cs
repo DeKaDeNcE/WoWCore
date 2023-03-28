@@ -1,15 +1,16 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Constants;
-using Game.DataStorage;
+using Game.Maps;
 using Game.Groups;
 using Game.Guilds;
-using Game.Maps;
+using Game.DataStorage;
 using Game.Networking.Packets;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Game.Entities
 {
@@ -263,8 +264,6 @@ namespace Game.Entities
                     case ZonePVPTypeOverride.Combat:
                         pvpInfo.IsInHostileArea = true;
                         break;
-                    default:
-                        break;
                 }
             }
 
@@ -512,8 +511,6 @@ namespace Game.Entities
                                 break;
                             case InstanceResetResult.CannotReset:
                                 break;
-                            default:
-                                break;
                         }
                     }
                 }
@@ -560,7 +557,7 @@ namespace Game.Entities
 
             return (instanceLock.GetData().CompletedEncountersMask & (1u << dungeonEncounter.Bit)) != 0;
         }
-        
+
         public override void ProcessTerrainStatusUpdate(ZLiquidStatus oldLiquidStatus, LiquidData newLiquidData)
         {
             // process liquid auras using generic unit code

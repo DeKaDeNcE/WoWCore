@@ -1,3 +1,23 @@
+// https://github.com/recastnavigation/recastnavigation
+
+//
+// Copyright (c) 2009-2010 Mikko Mononen memon@inside.org
+//
+// This software is provided 'as-is', without any express or implied
+// warranty.  In no event will the authors be held liable for any damages
+// arising from the use of this software.
+// Permission is granted to anyone to use this software for any purpose,
+// including commercial applications, and to alter it and redistribute it
+// freely, subject to the following restrictions:
+// 1. The origin of this software must not be misrepresented; you must not
+//    claim that you wrote the original software. If you use this software
+//    in a product, an acknowledgment in the product documentation would be
+//    appreciated but is not required.
+// 2. Altered source versions must be plainly marked as such, and must not be
+//    misrepresented as being the original software.
+// 3. This notice may not be removed or altered from any source distribution.
+//
+
 using System;
 using System.Collections.Generic;
 
@@ -303,8 +323,8 @@ public static partial class Detour
         /// The polygon reference of the connection within the tile.
         public ushort poly;
 
-        /// Link flags. 
-        // @note These are not the connection's user defined flags. Those are assigned via the 
+        /// Link flags.
+        // @note These are not the connection's user defined flags. Those are assigned via the
         /// connection's dtPoly definition. These are link flags used for internal purposes.
         public byte flags;
 
@@ -376,7 +396,7 @@ public static partial class Detour
         public float[] bmin = new float[3];				//< The minimum bounds of the tile's AABB. [(x, y, z)]
         public float[] bmax = new float[3];             //< The maximum bounds of the tile's AABB. [(x, y, z)]
 
-        /// The bounding volume quantization factor. 
+        /// The bounding volume quantization factor.
         public float bvQuantFactor;
 
         public int FromBytes(byte[] array, int start)
@@ -583,7 +603,7 @@ public static partial class Detour
     }
     /// Defines a navigation mesh tile.
     // @ingroup detour
-    /* 
+    /*
     @struct dtMeshTile
     @par
 
@@ -592,18 +612,18 @@ public static partial class Detour
     Some tile content is optional.  For example, a tile may not contain any
     off-mesh connections.  In this case the associated pointer will be null.
 
-    If a detail mesh exists it will share vertices with the base polygon mesh.  
+    If a detail mesh exists it will share vertices with the base polygon mesh.
     Only the vertices unique to the detail mesh will be stored in #detailVerts.
 
     @warning Tiles returned by a dtNavMesh object are not guarenteed to be populated.
     For example: The tile at a location might not have been loaded yet, or may have been removed.
-    In this case, pointers will be null.  So if in doubt, check the polygon count in the 
+    In this case, pointers will be null.  So if in doubt, check the polygon count in the
     tile's header to determine if a tile has polygons defined.
 
     @var float dtOffMeshConnection::pos[6]
     @par
 
-    For a properly built navigation mesh, vertex A will always be within the bounds of the mesh. 
+    For a properly built navigation mesh, vertex A will always be within the bounds of the mesh.
     Vertex B is not required to be within the bounds of the mesh.
 
     */
@@ -683,10 +703,10 @@ public static partial class Detour
 
     See the rcPolyMesh and rcPolyMeshDetail documentation for detailed information related to mesh structure.
 
-    Units are usually in voxels (vx) or world units (wu). The units for voxels, grid size, and cell size 
+    Units are usually in voxels (vx) or world units (wu). The units for voxels, grid size, and cell size
     are all based on the values of #cs and #ch.
 
-    The standard navigation mesh build process is to create tile data using dtCreateNavMeshData, then add the tile 
+    The standard navigation mesh build process is to create tile data using dtCreateNavMeshData, then add the tile
     to a navigation mesh using either the dtNavMesh single tile <tt>init()</tt> function or the dtNavMesh::addTile()
     function.
 
@@ -722,8 +742,8 @@ public static partial class Detour
 
         // @}
         // @name Off-Mesh Connections Attributes (Optional)
-        // Used to define a custom point-to-point edge within the navigation graph, an 
-        // off-mesh connection is a user defined traversable connection made up to two vertices, 
+        // Used to define a custom point-to-point edge within the navigation graph, an
+        // off-mesh connection is a user defined traversable connection made up to two vertices,
         // at least one of which resides within a navigation mesh polygon.
         // @{
 
@@ -784,7 +804,7 @@ public static partial class Detour
     //public static int compareItemX(const void* va, const void* vb)
     public class BVItemCompareX : IComparer<BVItem>
     {
-        // Compares by Height, Length, and Width. 
+        // Compares by Height, Length, and Width.
         public int Compare(BVItem a, BVItem b)
         {
             if (a.bmin[0] < b.bmin[0])
@@ -1025,7 +1045,7 @@ public static partial class Detour
     // TODO: Better error handling.
 
     // @par
-    /// 
+    ///
     /// The output data array is allocated using the detour allocator (dtAlloc()).  The method
     /// used to free the memory will be determined by how the tile is added to the navigation
     /// mesh.
@@ -1207,11 +1227,11 @@ public static partial class Detour
 	    const int detailTrisSize = dtAlign4(sizeof(byte)*4*detailTriCount);
 	    const int bvTreeSize = createParams.buildBvTree ? dtAlign4(sizeof(dtBVNode)*createParams.polyCount*2) : 0;
 	    const int offMeshConsSize = dtAlign4(sizeof(dtOffMeshConnection)*storedOffMeshConCount);
-	
+
 	    const int dataSize = headerSize + vertsSize + polysSize + linksSize +
 						     detailMeshesSize + detailVertsSize + detailTrisSize +
 						     bvTreeSize + offMeshConsSize;
-						 
+
 	    byte* data = (byte*)dtAlloc(sizeof(byte)*dataSize, DT_ALLOC_PERM);
 	    if (!data)
 	    {
@@ -1219,8 +1239,8 @@ public static partial class Detour
 		    return false;
 	    }
 	    memset(data, 0, dataSize);
-	    
-        
+
+
 
 	    byte* d = data;
 	    dtMeshHeader* header = (dtMeshHeader*)d; d += headerSize;
@@ -1498,18 +1518,18 @@ public static partial class Detour
     bool dtNavMeshHeaderSwapEndian(byte* data, const int dataSize)
     {
 	    dtMeshHeader* header = (dtMeshHeader*)data;
-	
+
 	    int swappedMagic = DT_NAVMESH_MAGIC;
 	    int swappedVersion = DT_NAVMESH_VERSION;
 	    dtSwapEndian(&swappedMagic);
 	    dtSwapEndian(&swappedVersion);
-	
+
 	    if ((header.magic != DT_NAVMESH_MAGIC || header.version != DT_NAVMESH_VERSION) &&
 		    (header.magic != swappedMagic || header.version != swappedVersion))
 	    {
 		    return false;
 	    }
-		
+
 	    dtSwapEndian(&header.magic);
 	    dtSwapEndian(&header.version);
 	    dtSwapEndian(&header.x);
@@ -1543,9 +1563,9 @@ public static partial class Detour
     */
     // @par
     //
-    // @warning This function assumes that the header is in the correct endianess already. 
-    // Call #dtNavMeshHeaderSwapEndian() first on the data if the data is expected to be in wrong endianess 
-    // to start with. Call #dtNavMeshHeaderSwapEndian() after the data has been swapped if converting from 
+    // @warning This function assumes that the header is in the correct endianess already.
+    // Call #dtNavMeshHeaderSwapEndian() first on the data if the data is expected to be in wrong endianess
+    // to start with. Call #dtNavMeshHeaderSwapEndian() after the data has been swapped if converting from
     // native to foreign endianess.
     // Swaps endianess of the tile data.
     //  @param[in,out]	data		The tile data array.
@@ -1559,7 +1579,7 @@ public static partial class Detour
 		    return false;
 	    if (header.version != DT_NAVMESH_VERSION)
 		    return false;
-	
+
 	    // Patch header pointers.
 	    const int headerSize = dtAlign4(sizeof(dtMeshHeader));
 	    const int vertsSize = dtAlign4(sizeof(float)*3*header.vertCount);
@@ -1570,20 +1590,20 @@ public static partial class Detour
 	    const int detailTrisSize = dtAlign4(sizeof(byte)*4*header.detailTriCount);
 	    const int bvtreeSize = dtAlign4(sizeof(dtBVNode)*header.bvNodeCount);
 	    const int offMeshLinksSize = dtAlign4(sizeof(dtOffMeshConnection)*header.offMeshConCount);
-	
+
 	    byte* d = data + headerSize;
 	    float* verts = (float*)d; d += vertsSize;
 	    dtPoly* polys = (dtPoly*)d; d += polysSize;
 	    //dtLink* links = (dtLink*)d;
       d += linksSize;
-      
+
 	    dtPolyDetail* detailMeshes = (dtPolyDetail*)d; d += detailMeshesSize;
 	    float* detailVerts = (float*)d; d += detailVertsSize;
-	    //byte* detailTris = (byte*)d; 
+	    //byte* detailTris = (byte*)d;
     d += detailTrisSize;
 	    dtBVNode* bvTree = (dtBVNode*)d; d += bvtreeSize;
 	    dtOffMeshConnection* offMeshCons = (dtOffMeshConnection*)d; d += offMeshLinksSize;
-	
+
 	    // Vertices
 	    for (int i = 0; i < header.vertCount*3; ++i)
 	    {
@@ -1612,7 +1632,7 @@ public static partial class Detour
 		    dtSwapEndian(&pd.vertBase);
 		    dtSwapEndian(&pd.triBase);
 	    }
-	
+
 	    // Detail verts
 	    for (int i = 0; i < header.detailVertCount*3; ++i)
 	    {
@@ -1640,7 +1660,7 @@ public static partial class Detour
 		    dtSwapEndian(&con.rad);
 		    dtSwapEndian(&con.poly);
 	    }
-	
+
 	    return true;
     }
      * */

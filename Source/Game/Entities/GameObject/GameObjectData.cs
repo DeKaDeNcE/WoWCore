@@ -1,12 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Game.Maps;
-using Game.Networking.Packets;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using Framework.Constants;
+using Framework.Collections;
+using Game.Maps;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {
@@ -498,8 +499,6 @@ namespace Game.Entities
                 case GameObjectTypes.TrapDoor:
                     autoCloseTime = TrapDoor.autoClose;
                     break;
-                default:
-                    break;
             }
             return autoCloseTime;   // prior to 3.0.3, conversion was / 0x10000;
         }
@@ -685,7 +684,7 @@ namespace Game.Entities
             GameObjectTypes.AuraGenerator => AuraGenerator.serverOnly,
             _ => 0,
         };
-        
+
         public uint GetSpellFocusType()
         {
             switch (type)
@@ -717,7 +716,7 @@ namespace Game.Entities
             GameObjectTypes.SpellFocus or GameObjectTypes.Multi or GameObjectTypes.SiegeableMulti => false,
             _ => true
         };
-        
+
         public void InitializeQueryData()
         {
             QueryData = new QueryGameObjectResponse();

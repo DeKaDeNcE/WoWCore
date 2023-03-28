@@ -1,4 +1,5 @@
-// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using Framework.Constants;
@@ -830,7 +831,7 @@ namespace Scripts.BrokenIsles.ZoneOrderhallWarrior
             new Vector3(1071.891f, 7222.934f, 108.9545f),
             new Vector3(1081.530f, 7224.331f, 98.63076f)
         };
-        
+
         public npc_valkyr_of_odyn_4(Creature creature) : base(creature) { }
 
         public override void Reset()
@@ -897,7 +898,7 @@ namespace Scripts.BrokenIsles.ZoneOrderhallWarrior
             new Vector3(1075.891f, 7224.811f, 101.7954f),
             new Vector3(1082.438f, 7224.540f, 99.12900f)
         };
-        
+
         public npc_valkyr_of_odyn_5(Creature creature) : base(creature) { }
 
         public override void Reset()
@@ -969,7 +970,7 @@ namespace Scripts.BrokenIsles.ZoneOrderhallWarrior
             new Vector3(1053.083f, 7102.808f, 125.9283f),
             new Vector3(1055.122f, 7059.807f, 130.4395f)
         };
-        
+
         public npc_valkyr_of_odyn_6(Creature creature) : base(creature) { }
 
         public override void Reset()
@@ -1151,4 +1152,3 @@ namespace Scripts.BrokenIsles.ZoneOrderhallWarrior
         }
     }
 }
-

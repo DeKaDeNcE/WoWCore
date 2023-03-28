@@ -1,12 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Networking.Packets;
 using System.Collections.Generic;
+using Framework.Constants;
+using Game.Entities;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game.Chat
 {
@@ -62,7 +62,7 @@ namespace Game.Chat
             player.SendPacket(TranslatedPacket);
         }
     }
-    
+
     public class BroadcastTextBuilder : MessageBuilder
     {
         public BroadcastTextBuilder(WorldObject obj, ChatMsg msgtype, uint textId, Gender gender, WorldObject target = null, uint achievementId = 0)

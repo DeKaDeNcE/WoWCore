@@ -1,9 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Bgs.Protocol.Account.V1;
-using Framework.Constants;
+// ReSharper disable UnusedMember.Local
+
 using System.Collections.Generic;
+using Framework.Constants;
+using Bgs.Protocol.Account.V1;
 
 namespace BNetServer.Networking
 {
@@ -62,8 +65,8 @@ namespace BNetServer.Networking
                 if (gameAccountInfo != null)
                 {
                     response.State.GameStatus.IsSuspended = gameAccountInfo.IsBanned;
-                    response.State.GameStatus.IsBanned = gameAccountInfo.IsPermanenetlyBanned;
-                    response.State.GameStatus.SuspensionExpires = (gameAccountInfo.UnbanDate * 1000000);
+                    response.State.GameStatus.IsBanned = gameAccountInfo.IsPermanentlyBanned;
+                    response.State.GameStatus.SuspensionExpires = gameAccountInfo.UnbanDate * 1000000;
                 }
 
                 response.State.GameStatus.Program = 5730135; // WoW

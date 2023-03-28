@@ -1,16 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Framework.Database;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Maps;
-using Game.Networking.Packets;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Collections;
+using Game.Maps;
+using Game.Entities;
+using Game.DataStorage;
+using Game.Networking.Packets;
 
 namespace Game.Chat
 {
@@ -833,7 +834,7 @@ namespace Game.Chat
         public bool IsConstant() { return _channelId != 0; }
 
         public ObjectGuid GetGUID() { return _channelGuid; }
-        
+
         public bool IsLFG() { return GetFlags().HasAnyFlag(ChannelFlags.Lfg); }
         bool IsAnnounce() { return _announceEnabled; }
         public void SetAnnounce(bool announce) { _announceEnabled = announce; }
@@ -843,7 +844,7 @@ namespace Game.Chat
 
         public void SetPassword(string npassword) { _channelPassword = npassword; }
         public bool CheckPassword(string password) { return _channelPassword.IsEmpty() || (_channelPassword == password); }
-        
+
         public uint GetNumPlayers() { return (uint)_playersStore.Count; }
 
         public ChannelFlags GetFlags() { return _channelFlags; }

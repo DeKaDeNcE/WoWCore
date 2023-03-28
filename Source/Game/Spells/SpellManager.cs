@@ -1,19 +1,20 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Framework.Dynamic;
-using Game.BattleFields;
-using Game.BattleGrounds;
-using Game.BattlePets;
-using Game.DataStorage;
-using Game.Movement;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Spells;
+using Game.Movement;
+using Game.BattlePets;
+using Game.DataStorage;
+using Game.BattleFields;
+using Game.BattleGrounds;
 
 namespace Game.Entities
 {
@@ -274,7 +275,7 @@ namespace Game.Entities
             return mSpellLearnSpells.LookupByKey(spell_id);
         }
 
-        bool IsSpellLearnSpell(uint spell_id)
+        public bool IsSpellLearnSpell(uint spell_id)
         {
             return mSpellLearnSpells.ContainsKey(spell_id);
         }
@@ -309,7 +310,7 @@ namespace Game.Entities
             return false;
         }
 
-        List<int> GetSpellGroupSpellMapBounds(SpellGroup group_id)
+        public List<int> GetSpellGroupSpellMapBounds(SpellGroup group_id)
         {
             return mSpellGroupSpell.LookupByKey(group_id);
         }
@@ -320,7 +321,7 @@ namespace Game.Entities
             GetSetOfSpellsInSpellGroup(group_id, out foundSpells, ref usedGroups);
         }
 
-        void GetSetOfSpellsInSpellGroup(SpellGroup group_id, out List<int> foundSpells, ref List<SpellGroup> usedGroups)
+        public void GetSetOfSpellsInSpellGroup(SpellGroup group_id, out List<int> foundSpells, ref List<SpellGroup> usedGroups)
         {
             foundSpells = new List<int>();
             if (usedGroups.Find(p => p == group_id) == 0)
@@ -643,7 +644,7 @@ namespace Game.Entities
                 callback(spellInfo);
         }
 
-        void UnloadSpellInfoChains()
+        public void UnloadSpellInfoChains()
         {
             foreach (var pair in mSpellChains)
                 foreach (SpellInfo spellInfo in _GetSpellInfo(pair.Key))
@@ -1477,8 +1478,6 @@ namespace Game.Entities
                             case AuraType.ProcTriggerDamage:
                                 addTriggerFlag = true;
                                 break;
-                            default:
-                                break;
                         }
                     }
                 }
@@ -1881,7 +1880,7 @@ namespace Game.Entities
             Log.outInfo(LogFilter.ServerLoading, "Loaded {0} summonable creature templates in {1} ms", countCreature, Time.GetMSTimeDiffToNow(oldMSTime));
         }
 
-        bool LoadPetDefaultSpells_helper(CreatureTemplate cInfo, PetDefaultSpellsEntry petDefSpells)
+        public bool LoadPetDefaultSpells_helper(CreatureTemplate cInfo, PetDefaultSpellsEntry petDefSpells)
         {
             // skip empty list;
             bool have_spell = false;
@@ -2862,8 +2861,6 @@ namespace Game.Entities
                         if (spellInfo.Id == 5729)
                             spellInfo.AttributesCu |= SpellCustomAttributes.AuraCC;
                         break;
-                    default:
-                        break;
                 }
 
                 spellInfo._InitializeExplicitTargetMask();
@@ -2933,8 +2930,6 @@ namespace Game.Entities
                                             allNonBinary = false;
                                     }
                                     break;
-                                default:
-                                    break;
                             }
                         }
                     }
@@ -2960,7 +2955,7 @@ namespace Game.Entities
             Log.outInfo(LogFilter.ServerLoading, "Loaded SpellInfo custom attributes in {0} ms", Time.GetMSTimeDiffToNow(oldMSTime));
         }
 
-        void ApplySpellFix(int[] spellIds, Action<SpellInfo> fix)
+        public void ApplySpellFix(int[] spellIds, Action<SpellInfo> fix)
         {
             foreach (uint spellId in spellIds)
             {
@@ -2976,7 +2971,7 @@ namespace Game.Entities
             }
         }
 
-        void ApplySpellEffectFix(SpellInfo spellInfo, uint effectIndex, Action<SpellEffectInfo> fix)
+        public void ApplySpellEffectFix(SpellInfo spellInfo, uint effectIndex, Action<SpellEffectInfo> fix)
         {
             if (spellInfo.GetEffects().Count <= effectIndex)
             {
@@ -3051,7 +3046,7 @@ namespace Game.Entities
                 {
                     ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
                     {
-                        spellEffectInfo.TriggerSpell = 23171;
+                        spellEffectInfo.TriggerSpell = 23171; // 23171 Time Stop
                     });
                 });
 
@@ -3060,7 +3055,7 @@ namespace Game.Entities
                 {
                     ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
                     {
-                        spellEffectInfo.TriggerSpell = 29916;
+                        spellEffectInfo.TriggerSpell = 29916; // 29916 Feed Captured Animal
                     });
                 });
 
@@ -3069,7 +3064,7 @@ namespace Game.Entities
                 {
                     ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
                     {
-                        spellEffectInfo.TriggerSpell = 37029;
+                        spellEffectInfo.TriggerSpell = 37029; // 37029 Remote Toy
                     });
                 });
 
@@ -3078,7 +3073,7 @@ namespace Game.Entities
                 {
                     ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
                     {
-                        spellEffectInfo.TriggerSpell = 38530;
+                        spellEffectInfo.TriggerSpell = 38530; // 38530 Quest Credit for Eye of Grillok
                     });
                 });
 
@@ -3087,7 +3082,7 @@ namespace Game.Entities
                 {
                     ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
                     {
-                        spellEffectInfo.TriggerSpell = 39856;
+                        spellEffectInfo.TriggerSpell = 39856; // 39856 Tear of Azzinoth Summon Trigger
                     });
                 });
 
@@ -3096,7 +3091,7 @@ namespace Game.Entities
                 {
                     ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
                     {
-                        spellEffectInfo.TriggerSpell = 46737;
+                        spellEffectInfo.TriggerSpell = 46737; // 46737 Personalized Weather
                         spellEffectInfo.ApplyAuraName = AuraType.PeriodicTriggerSpell;
                     });
                 });
@@ -3566,7 +3561,7 @@ namespace Game.Entities
             });
 
             // Tag Greater Felfire Diemetradon
-            ApplySpellFix(new[] { 
+            ApplySpellFix(new[] {
                 37851, // Tag Greater Felfire Diemetradon
                 37918  // Arcano-pince
             }, spellInfo =>
@@ -4047,7 +4042,7 @@ namespace Game.Entities
                 ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
                 {
                     spellEffectInfo.RadiusEntry = CliDB.SpellRadiusStorage.LookupByKey(EffectRadiusIndex.Yards10); // 10yd
-            spellEffectInfo.MiscValue = 190;
+                    spellEffectInfo.MiscValue = 190;
                 });
             });
 
@@ -4341,12 +4336,13 @@ namespace Game.Entities
                 });
             });
 
+            // 265057 Bleeding Crescent (Level 70)
             ApplySpellFix(new[] { 265057 }, spellInfo =>
             {
                 ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
                 {
                     // Fix incorrect spell id (it has self in TriggerSpell)
-                    spellEffectInfo.TriggerSpell = 16403;
+                    spellEffectInfo.TriggerSpell = 16403; // 16403 Rend (Level 70)
                 });
             });
 
@@ -4383,7 +4379,7 @@ namespace Game.Entities
                         case SpellEffectName.JumpDest:
                         case SpellEffectName.LeapBack:
                             if (spellInfo.Speed == 0 && spellInfo.SpellFamilyName == 0 && !spellInfo.HasAttribute(SpellAttr9.SpecialDelayCalculation))
-                                spellInfo.Speed = MotionMaster.SPEED_CHARGE;
+                                spellInfo.Speed = MotionMaster.SpeedCharge;
                             break;
                     }
 
@@ -4551,7 +4547,7 @@ namespace Game.Entities
         }
         #endregion
 
-        bool IsTriggerAura(AuraType type)
+        public bool IsTriggerAura(AuraType type)
         {
             switch (type)
             {
@@ -4606,7 +4602,7 @@ namespace Game.Entities
             }
             return false;
         }
-        bool IsAlwaysTriggeredAura(AuraType type)
+        public bool IsAlwaysTriggeredAura(AuraType type)
         {
             switch (type)
             {
@@ -4860,7 +4856,7 @@ namespace Game.Entities
         public uint Charges { get; set; }                                   // if nonzero - owerwrite procCharges field for given Spell.dbc entry, defines how many times proc can occur before aura remove, 0 - infinite
     }
 
-    struct ServersideSpellName
+    public struct ServersideSpellName
     {
         public SpellNameRecord Name;
 

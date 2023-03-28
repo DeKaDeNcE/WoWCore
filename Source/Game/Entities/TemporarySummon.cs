@@ -1,12 +1,13 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.DataStorage;
 using System;
 using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Constants;
 using Game.Maps;
+using Game.DataStorage;
 
 namespace Game.Entities
 {
@@ -358,18 +359,18 @@ namespace Game.Entities
         {
             return $"{base.GetDebugInfo()}\nTempSummonType : {GetSummonType()} Summoner: {GetSummonerGUID()} Timer: {GetTimer()}";
         }
-        
+
         public override void SaveToDB(uint mapid, List<Difficulty> spawnDifficulties) { }
 
         public ObjectGuid GetSummonerGUID() { return m_summonerGUID; }
 
-        TempSummonType GetSummonType() { return m_type; }
+        public TempSummonType GetSummonType() { return m_type; }
 
         public uint GetTimer() { return m_timer; }
 
         public uint? GetCreatureIdVisibleToSummoner() { return m_creatureIdVisibleToSummoner; }
         public uint? GetDisplayIdVisibleToSummoner() { return m_displayIdVisibleToSummoner; }
-        
+
         public bool CanFollowOwner() { return m_canFollowOwner; }
         public void SetCanFollowOwner(bool can) { m_canFollowOwner = can; }
 
@@ -840,8 +841,6 @@ namespace Game.Entities
                 case Stats.Intellect:
                     UpdateMaxPower(PowerType.Mana);
                     break;
-                default:
-                    break;
             }
 
             return true;
@@ -1069,7 +1068,7 @@ namespace Game.Entities
             SetUpdateFieldStatValue(m_values.ModifyValue(m_unitData).ModifyValue(m_unitData.MaxDamage), maxdamage);
         }
 
-        void SetBonusDamage(int damage)
+        public void SetBonusDamage(int damage)
         {
             m_bonusSpellDamage = damage;
             Player playerOwner = GetOwner().ToPlayer();

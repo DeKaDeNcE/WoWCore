@@ -1,4 +1,5 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
@@ -139,7 +140,7 @@ namespace Framework.Constants
         Summon = 0x40000000,
         LeavingCombat = 0x80000000,
 
-        NotVictim = (HostileActionReceived | Damage | NonPeriodicDamage)
+        NotVictim = HostileActionReceived | Damage | NonPeriodicDamage
     }
 
     [Flags]
@@ -256,10 +257,10 @@ namespace Framework.Constants
         ZGTicket = 10,
         OldUnused = 11,
 
-        AllMask = ((1 << Magic) | (1 << Curse) | (1 << Disease) | (1 << Poison))
+        AllMask = (1 << Magic) | (1 << Curse) | (1 << Disease) | (1 << Poison)
     }
 
-    // Spell clasification
+    // Spell classification
     public enum SpellSpecificType
     {
         Normal = 0,
@@ -330,11 +331,11 @@ namespace Framework.Constants
         Taunted = 36,
         Max = 37,
 
-        ImmuneToMovementImpairmentAndLossControlMask = ((1 << Charm) | (1 << Disoriented) |
+        ImmuneToMovementImpairmentAndLossControlMask = (1 << Charm) | (1 << Disoriented) |
             (1 << Fear) | (1 << Root) | (1 << Sleep) | (1 << Snare) | (1 << Stun) |
             (1 << Freeze) | (1 << Silence) | (1 << Disarm) | (1 << Knockout) |
             (1 << Polymorph) | (1 << Banish) | (1 << Shackle) |
-            (1 << Turn) | (1 << Horror) | (1 << Daze) | (1 << Sapped))
+            (1 << Turn) | (1 << Horror) | (1 << Daze) | (1 << Sapped)
     }
 
     public enum SpellModOp
@@ -1404,6 +1405,7 @@ namespace Framework.Constants
         Reflect = 11
     }
 
+    [Flags]
     public enum SpellHitType
     {
         CritDebu = 0x1,
@@ -1532,24 +1534,25 @@ namespace Framework.Constants
         FullDebugMask = 0xFFFFFFFF
     }
 
+    [Flags]
     public enum SpellSchoolMask
     {
         None = 0x0,                       // Not Exist
-        Normal = (1 << SpellSchools.Normal), // Physical (Armor)
-        Holy = (1 << SpellSchools.Holy),
-        Fire = (1 << SpellSchools.Fire),
-        Nature = (1 << SpellSchools.Nature),
-        Frost = (1 << SpellSchools.Frost),
-        Shadow = (1 << SpellSchools.Shadow),
-        Arcane = (1 << SpellSchools.Arcane),
+        Normal = 1 << SpellSchools.Normal, // Physical (Armor)
+        Holy = 1 << SpellSchools.Holy,
+        Fire = 1 << SpellSchools.Fire,
+        Nature = 1 << SpellSchools.Nature,
+        Frost = 1 << SpellSchools.Frost,
+        Shadow = 1 << SpellSchools.Shadow,
+        Arcane = 1 << SpellSchools.Arcane,
 
         // 124, Not Include Normal And Holy Damage
-        Spell = (Fire | Nature | Frost | Shadow | Arcane),
+        Spell = Fire | Nature | Frost | Shadow | Arcane,
         // 126
-        Magic = (Holy | Spell),
+        Magic = Holy | Spell,
 
         // 127
-        All = (Normal | Magic),
+        All = Normal | Magic,
     }
 
     [Flags]
@@ -1590,7 +1593,7 @@ namespace Framework.Constants
         Unk32 = 0x80000000
     }
 
-    [System.Flags]
+    [Flags]
     public enum SpellCastFlagsEx
     {
         None = 0x0,
@@ -1617,6 +1620,8 @@ namespace Framework.Constants
     }
 
     #region Spell Attributes
+
+    [Flags]
     public enum SpellAttr0 : uint
     {
         ProcFailureBurnsCharge = 0x01, /*Nyi*/ // Proc Failure Burns Charge
@@ -1652,6 +1657,8 @@ namespace Framework.Constants
         HeartbeatResist = 0x40000000, // Heartbeat Resist Description Periodically Re-Rolls Against Resistance To Potentially Expire Aura Early
         NoAuraCancel = 0x80000000  // No Aura Cancel Description Prevents The Player From Voluntarily Canceling A Positive Aura
     }
+
+    [Flags]
     public enum SpellAttr1 : uint
     {
         DismissPetFirst = 0x01, // Dismiss Pet First Description Without This Attribute, Summoning Spells Will Fail If Caster Already Has A Pet
@@ -1687,6 +1694,8 @@ namespace Framework.Constants
         DispelAllStacks = 0x40000000, // Dispel All Stacks
         CastWhenLearned = 0x80000000  // Cast When Learned
     }
+
+    [Flags]
     public enum SpellAttr2 : uint
     {
         AllowDeadTarget = 0x01, // Allow Dead Target
@@ -1722,6 +1731,8 @@ namespace Framework.Constants
         ActiveThreat = 0x40000000, // Active Threat
         RetainItemCast = 0x80000000  // Retain Item Cast Description Passes MCastitem To Triggered Spells
     }
+
+    [Flags]
     public enum SpellAttr3 : uint
     {
         PvpEnabling = 0x01, // Pvp Enabling
@@ -1757,6 +1768,8 @@ namespace Framework.Constants
         DoNotDisplayRange = 0x40000000, // Do Not Display Range (Client Only)
         NotOnAoeImmune = 0x80000000  /*Nyi, No Aoe Immunity Implementation*/ // Not On Aoe Immune
     }
+
+    [Flags]
     public enum SpellAttr4 : uint
     {
         NoCastLog = 0x01, // No Cast Log
@@ -1792,6 +1805,8 @@ namespace Framework.Constants
         Obsolete = 0x40000000, // Obsolete
         UseFacingFromSpell = 0x80000000  // Use Facing From Spell
     }
+
+    [Flags]
     public enum SpellAttr5 : uint
     {
         AllowActionsDuringChannel = 0x01, // Allow Actions During Channel
@@ -1827,6 +1842,8 @@ namespace Framework.Constants
         AlwaysShowGroundTexture = 0x40000000, // Always Show Ground Texture
         AddMeleeHitRating = 0x80000000  /*Nyi*/ // Add Melee Hit Rating
     }
+
+    [Flags]
     public enum SpellAttr6 : uint
     {
         NoCooldownOnTooltip = 0x01, // No Cooldown On Tooltip (Client Only)
@@ -1862,6 +1879,8 @@ namespace Framework.Constants
         DisableTiedEffectPoints = 0x40000000, /*Nyi*/ // Disable Tied Effect Points
         NoCategoryCooldownMods = 0x80000000  // No Category Cooldown Mods
     }
+
+    [Flags]
     public enum SpellAttr7 : uint
     {
         Unk0 = 0x01, //  0 Shaman'S New Spells (Call Of The ...), Feign Death.
@@ -1897,6 +1916,8 @@ namespace Framework.Constants
         Unk30 = 0x40000000, // 30 Burning Determination, Divine Sacrifice, Earth Shield, Prayer Of Mending
         ClientIndicator = 0x80000000  // 31 Only 70769
     }
+
+    [Flags]
     public enum SpellAttr8 : uint
     {
         CantMiss = 0x01, // 0
@@ -1932,6 +1953,8 @@ namespace Framework.Constants
         Unk30 = 0x40000000, // 30
         AttackIgnoreImmuneToPCFlag = 0x80000000  // 31
     }
+
+    [Flags]
     public enum SpellAttr9 : uint
     {
         Unk0 = 0x01, // 0
@@ -1967,6 +1990,8 @@ namespace Framework.Constants
         Unk30 = 0x40000000, // 30
         Unk31 = 0x80000000  // 31
     }
+
+    [Flags]
     public enum SpellAttr10 : uint
     {
         Unk0 = 0x01, // 0
@@ -2002,6 +2027,8 @@ namespace Framework.Constants
         Unk30 = 0x40000000, // 30
         Unk31 = 0x80000000  // 31
     }
+
+    [Flags]
     public enum SpellAttr11 : uint
     {
         Unk0 = 0x01, //  0
@@ -2037,6 +2064,8 @@ namespace Framework.Constants
         Unk30 = 0x40000000, // 30
         Unk31 = 0x80000000  // 31
     }
+
+    [Flags]
     public enum SpellAttr12 : uint
     {
         Unk0 = 0x01, //  0
@@ -2072,6 +2101,8 @@ namespace Framework.Constants
         Unk30 = 0x40000000, // 30
         OnlyProcFromClassAbilities = 0x80000000  // 31 Only Proc From Class Abilities
     }
+
+    [Flags]
     public enum SpellAttr13 : uint
     {
         AllowClassAbilityProcs = 0x01, //  0 Allow Class Ability Procs
@@ -2107,6 +2138,8 @@ namespace Framework.Constants
         Unk30 = 0x40000000, // 30
         Unk31 = 0x80000000  // 31
     }
+
+    [Flags]
     public enum SpellAttr14 : uint
     {
         Unk0 = 0x01, //  0
@@ -2142,6 +2175,8 @@ namespace Framework.Constants
         Unk30 = 0x40000000, // 30
         Unk31 = 0x80000000  // 31
     }
+
+    [Flags]
     public enum SpellCustomAttributes
     {
         EnchantProc = 0x01,
@@ -2577,6 +2612,7 @@ namespace Framework.Constants
                                   DealRangedAttack | TakeRangedAttack | DealRangedAbility | TakeRangedAbility)
     }
 
+    [Flags]
     public enum ProcFlags2
     {
         None = 0x00,
@@ -2585,6 +2621,7 @@ namespace Framework.Constants
         CastSuccessful = 0x04
     }
 
+    [Flags]
     public enum ProcFlagsSpellPhase
     {
         None = 0x0,
@@ -2884,6 +2921,7 @@ namespace Framework.Constants
         Entry
     }
 
+    [Flags]
     public enum ProcFlagsSpellType
     {
         None = 0x0,
@@ -2893,6 +2931,7 @@ namespace Framework.Constants
         MaskAll = Damage | Heal | NoDmgHeal
     }
 
+    [Flags]
     public enum SpellCooldownFlags
     {
         None = 0x0,
@@ -2902,6 +2941,7 @@ namespace Framework.Constants
         OnHold = 0x8   // Forces cooldown to behave as if SpellInfo::IsCooldownStartedOnEvent was true
     }
 
+    [Flags]
     public enum SpellAreaFlag
     {
         AutoCast = 0x1, // if has autocast, spell is applied on enter
@@ -2909,6 +2949,7 @@ namespace Framework.Constants
         IgnoreAutocastOnQuestStatusChange = 0x4, // if this flag is set then spell will not be applied automatically on quest status change
     }
 
+    [Flags]
     public enum EnchantProcAttributes
     {
         WhiteHit = 0x01, // enchant shall only proc off white hits (not abilities)

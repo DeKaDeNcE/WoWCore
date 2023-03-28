@@ -1,18 +1,18 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
-using Game.AI;
-using Game.Entities;
-using Game.Maps;
-using Game.Scripting;
-using Game.Spells;
 using System;
 using System.Collections.Generic;
+using Framework.Dynamic;
+using Framework.Constants;
+using Game.AI;
+using Game.Spells;
+using Game.Entities;
+using Game.Scripting;
 
-namespace Scripts.Spells.Shaman
-{
+namespace Scripts.Spells.Shaman;
+
     struct SpellIds
     {
         public const uint AftershockEnergize = 210712;
@@ -481,7 +481,7 @@ namespace Scripts.Spells.Shaman
             OnHit.Add(new HitHandler(HandleOnHit));
         }
     }
-    
+
     // 117014 - Elemental Blast
     [Script] // 120588 - Elemental Blast Overload
     class spell_sha_elemental_blast : SpellScript
@@ -690,7 +690,7 @@ namespace Scripts.Spells.Shaman
             OnEffectProc.Add(new EffectProcHandler(HandleEffectProc, 1, AuraType.AddPctModifier));
         }
     }
-    
+
     [Script] // 23551 - Lightning Shield T2 Bonus
     class spell_sha_item_lightning_shield : AuraScript
     {
@@ -1137,8 +1137,6 @@ namespace Scripts.Spells.Shaman
                     return SpellIds.ChainLightningOverload;
                 case SpellIds.LavaBeam:
                     return SpellIds.LavaBeamOverload;
-                default:
-                    break;
             }
             return 0;
         }
@@ -1524,7 +1522,7 @@ namespace Scripts.Spells.Shaman
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 0, AuraType.Dummy));
         }
     }
-    
+
     [Script] // 33757 - Windfury Weapon
     class spell_sha_windfury_weapon : SpellScript
     {
@@ -1624,4 +1622,3 @@ namespace Scripts.Spells.Shaman
             }
         }
     }
-}

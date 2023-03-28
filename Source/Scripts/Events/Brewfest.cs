@@ -1,11 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using Framework.Constants;
 using Game;
+using Game.Spells;
 using Game.Entities;
 using Game.Scripting;
-using Game.Spells;
 
 namespace Scripts.Events.Brewfest
 {
@@ -108,8 +109,6 @@ namespace Scripts.Events.Brewfest
                     target.RemoveAura(SpellIds.RamCanter);
                     target.CastSpell(target, SpellIds.RamGallop, true);
                     break;
-                default:
-                    break;
             }
 
             if (GetTargetApplication().GetRemoveMode() == AuraRemoveMode.Default)
@@ -181,8 +180,6 @@ namespace Scripts.Events.Brewfest
                         target.CastSpell(target, QuestIds.BrewfestSpeedBunnyRed, true);
                     break;
                 }
-                default:
-                    break;
             }
         }
 

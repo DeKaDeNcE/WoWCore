@@ -1,11 +1,11 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Dynamic;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Constants;
 
 namespace Game.Movement
 {
@@ -339,7 +339,7 @@ namespace Game.Movement
         public Vector3 CurrentDestination() { return Initialized() ? spline.GetPoint(point_Idx + 1) : Vector3.Zero; }
 
         public AnimTier? GetAnimation() { return anim_tier != null ? (AnimTier)anim_tier.AnimTier : null; }
-        
+
         #region Fields
         public MoveSplineInitArgs InitArgs;
         public Spline<int> spline = new();

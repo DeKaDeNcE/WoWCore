@@ -1,8 +1,10 @@
-﻿using System;
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
+// Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
+
+using System;
 using System.Linq;
-using System.Numerics;
 using System.Runtime.CompilerServices;
-using System.Diagnostics.Contracts;
 
 namespace Framework.Cryptography.Ed25519
 {
@@ -10,10 +12,10 @@ namespace Framework.Cryptography.Ed25519
     {
         /// <summary>
         /// Comparison of two arrays.
-        /// 
+        ///
         /// The runtime of this method does not depend on the contents of the arrays. Using constant time
         /// prevents timing attacks that allow an attacker to learn if the arrays have a common prefix.
-        /// 
+        ///
         /// It is important to use such a constant time comparison when verifying MACs.
         /// </summary>
         /// <param name="x">Byte array</param>
@@ -28,10 +30,10 @@ namespace Framework.Cryptography.Ed25519
 
         /// <summary>
         /// Comparison of two array segments.
-        /// 
+        ///
         /// The runtime of this method does not depend on the contents of the arrays. Using constant time
         /// prevents timing attacks that allow an attacker to learn if the arrays have a common prefix.
-        /// 
+        ///
         /// It is important to use such a constant time comparison when verifying MACs.
         /// </summary>
         /// <param name="x">Byte array segment</param>
@@ -46,10 +48,10 @@ namespace Framework.Cryptography.Ed25519
 
         /// <summary>
         /// Comparison of two byte sequences.
-        /// 
+        ///
         /// The runtime of this method does not depend on the contents of the arrays. Using constant time
         /// prevents timing attacks that allow an attacker to learn if the arrays have a common prefix.
-        /// 
+        ///
         /// It is important to use such a constant time comparison when verifying MACs.
         /// </summary>
         /// <param name="x">Byte array</param>
@@ -72,7 +74,7 @@ namespace Framework.Cryptography.Ed25519
         }
 
         /// <summary>
-        /// Overwrites the contents of the array, wiping the previous content. 
+        /// Overwrites the contents of the array, wiping the previous content.
         /// </summary>
         /// <param name="data">Byte array</param>
         public static void Wipe(byte[] data)
@@ -81,7 +83,7 @@ namespace Framework.Cryptography.Ed25519
         }
 
         /// <summary>
-        /// Overwrites the contents of the array, wiping the previous content. 
+        /// Overwrites the contents of the array, wiping the previous content.
         /// </summary>
         /// <param name="data">Byte array</param>
         /// <param name="offset">Index of byte sequence</param>
@@ -92,7 +94,7 @@ namespace Framework.Cryptography.Ed25519
         }
 
         /// <summary>
-        /// Overwrites the contents of the array segment, wiping the previous content. 
+        /// Overwrites the contents of the array segment, wiping the previous content.
         /// </summary>
         /// <param name="data">Byte array segment</param>
         public static void Wipe(ArraySegment<byte> data)
@@ -184,7 +186,7 @@ namespace Framework.Cryptography.Ed25519
         }
 
         /// <summary>
-        /// Encodes the bytes with the Base64 encoding. 
+        /// Encodes the bytes with the Base64 encoding.
         /// More compact than hex, but it is case-sensitive and uses the special characters `+`, `/` and `=`.
         /// </summary>
         /// <param name="data">Byte array</param>
@@ -248,7 +250,7 @@ namespace Framework.Cryptography.Ed25519
         /// <returns>Byte array</returns>
         public static byte[] Base58Decode(string input)
         {
-            // Decode Base58 string to BigInteger 
+            // Decode Base58 string to BigInteger
             System.Numerics.BigInteger intData = 0;
             for (int i = 0; i < input.Length; i++)
             {

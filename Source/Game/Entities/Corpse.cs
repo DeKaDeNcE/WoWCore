@@ -1,16 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
+using System.Text;
+using System.Collections.Generic;
 using Framework.Database;
-using Game.DataStorage;
-using Game.Loots;
+using Framework.Constants;
+using Framework.Collections;
 using Game.Maps;
+using Game.Loots;
+using Game.DataStorage;
 using Game.Networking;
 using Game.Networking.Packets;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Game.Entities
 {
@@ -81,7 +82,7 @@ namespace Game.Entities
         public override void Update(uint diff)
         {
             base.Update(diff);
-            
+
             loot?.Update();
         }
 
@@ -318,7 +319,7 @@ namespace Game.Entities
         public void SetCellCoord(CellCoord cellCoord) { _cellCoord = cellCoord; }
 
         public override Loot GetLootForPlayer(Player player)  { return loot; }
-        
+
         public CorpseData m_corpseData;
 
         public Loot loot;

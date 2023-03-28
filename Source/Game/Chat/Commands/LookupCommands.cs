@@ -1,15 +1,19 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Database;
-using Framework.IO;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Spells;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedMember.Local
+// ReSharper disable UnusedType.Local
+
 using System;
 using System.Text;
 using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Game.Spells;
+using Game.Entities;
+using Game.DataStorage;
 
 namespace Game.Chat
 {
@@ -1017,8 +1021,6 @@ namespace Game.Chat
                                         case QuestStatus.Rewarded:
                                             statusStr = handler.GetCypherString(CypherStrings.CommandQuestRewarded);
                                             break;
-                                        default:
-                                            break;
                                     }
                                 }
 
@@ -1079,8 +1081,6 @@ namespace Game.Chat
                                     break;
                                 case QuestStatus.Rewarded:
                                     statusStr = handler.GetCypherString(CypherStrings.CommandQuestRewarded);
-                                    break;
-                                default:
                                     break;
                             }
                         }
@@ -1147,8 +1147,6 @@ namespace Game.Chat
                                 break;
                             case QuestStatus.Rewarded:
                                 statusStr = handler.GetCypherString(CypherStrings.CommandQuestRewarded);
-                                break;
-                            default:
                                 break;
                         }
                     }

@@ -1,20 +1,21 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Database;
+using Framework.Constants;
 using Game.AI;
+using Game.Misc;
+using Game.Maps;
+using Game.Mails;
+using Game.Groups;
+using Game.Spells;
 using Game.Conditions;
 using Game.DataStorage;
-using Game.Groups;
-using Game.Mails;
-using Game.Maps;
-using Game.Misc;
 using Game.Networking.Packets;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Game.Entities
 {
@@ -250,8 +251,6 @@ namespace Game.Entities
                     return IsAlive() && questGiver.ToPlayer().IsAlive();
                 case TypeId.Item:
                     return IsAlive();
-                default:
-                    break;
             }
             return false;
         }
@@ -733,8 +732,6 @@ namespace Game.Entities
                     PlayerTalkClass.ClearMenus();
                     questGiver.ToGameObject().GetAI().OnQuestAccept(this, quest);
                     break;
-                default:
-                    break;
             }
         }
 
@@ -772,8 +769,6 @@ namespace Game.Entities
                         break;
                     case QuestObjectiveType.CriteriaTree:
                         m_questObjectiveCriteriaMgr.ResetCriteriaTree((uint)obj.ObjectID);
-                        break;
-                    default:
                         break;
                 }
             }
@@ -899,8 +894,6 @@ namespace Game.Entities
                     return rewardProto.ItemSpecClassMask == 0 || (rewardProto.ItemSpecClassMask & GetClassMask()) != 0;
                 case QuestPackageFilter.Everyone:
                     return true;
-                default:
-                    break;
             }
 
             return false;
@@ -1205,7 +1198,7 @@ namespace Game.Entities
                     case TypeId.Unit:
                     case TypeId.Player:
                     {
-                        //For AutoSubmition was added plr case there as it almost same exclute AI script cases.
+                        //For AutoSubmission was added plr case there as it almost same exclude AI script cases.
                         // Send next quest
                         Quest nextQuest = GetNextQuest(questGiver.GetGUID(), quest);
                         if (nextQuest != null)
@@ -1247,8 +1240,6 @@ namespace Game.Entities
                         questGiverGob.GetAI().OnQuestReward(this, quest, rewardType, rewardId);
                         break;
                     }
-                    default:
-                        break;
                 }
             }
 
@@ -2060,8 +2051,6 @@ namespace Game.Entities
                             result |= QuestGiverStatus.CovenantCallingReward;
                         else
                             result |= QuestGiverStatus.Reward;
-                        break;
-                    default:
                         break;
                 }
 
@@ -3051,8 +3040,6 @@ namespace Game.Entities
                                 if (Global.ObjectMgr.IsGameObjectForQuests(obj.GetEntry()))
                                     objMask.MarkChanged(obj.m_objectData.DynamicFlags);
                                 break;
-                            default:
-                                break;
                         }
 
                         if (objMask.GetUpdateMask().IsAnySet() || goMask.GetUpdateMask().IsAnySet())
@@ -3174,8 +3161,6 @@ namespace Game.Entities
                 }
                 case DisplayToastType.NewCurrency:
                     displayToast.CurrencyID = entry;
-                    break;
-                default:
                     break;
             }
 

@@ -1,14 +1,15 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Framework.Cryptography;
-using Framework.Database;
-using Framework.IO;
-using Framework.Networking;
-using Game.Networking.Packets;
 using System;
 using System.Net.Sockets;
+using Framework.IO;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Networking;
+using Framework.Cryptography;
+using Game.Networking.Packets;
 
 namespace Game.Networking
 {
@@ -368,7 +369,7 @@ namespace Game.Networking
 
                 byte[] compressedData;
                 uint compressedSize = CompressPacket(data, opcode, out compressedData);
-                buffer.WriteUInt32(ZLib.adler32(0x9827D8F1, compressedData, compressedSize)); 
+                buffer.WriteUInt32(ZLib.adler32(0x9827D8F1, compressedData, compressedSize));
                 buffer.WriteBytes(compressedData, compressedSize);
 
                 packetSize = (int)(compressedSize + 12);

@@ -1,22 +1,23 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Framework.Database;
+using Framework.Constants;
+using Game.Maps;
+using Game.Spells;
 using Game.Arenas;
-using Game.BattleGrounds;
-using Game.DataStorage;
 using Game.Entities;
 using Game.Garrisons;
-using Game.Maps;
+using Game.Scenarios;
+using Game.DataStorage;
+using Game.BattleGrounds;
 using Game.Networking;
 using Game.Networking.Packets;
-using Game.Scenarios;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace Game.Achievements
 {
@@ -715,8 +716,6 @@ namespace Game.Achievements
                     });
                     return progress >= requiredCount;
                 }
-                default:
-                    break;
             }
 
             return false;
@@ -832,8 +831,6 @@ namespace Game.Achievements
                 case CriteriaType.Login:
                     return true;
                 // handle all statistic-only criteria here
-                default:
-                    break;
             }
 
             return false;
@@ -899,8 +896,6 @@ namespace Game.Achievements
                 case CriteriaFailEvent.ModifyPartyStatus:
                     if (referencePlayer.GetGroup())
                         return false;
-                    break;
-                default:
                     break;
             }
 
@@ -1208,8 +1203,6 @@ namespace Game.Achievements
                     if (miscValue1 == 0 || miscValue1 != criteria.Entry.Asset)
                         return false;
                     break;
-                default:
-                    break;
             }
             return true;
         }
@@ -1237,8 +1230,6 @@ namespace Game.Achievements
 
                     return false;
                 }
-                default:
-                    break;
             }
 
             return false;
@@ -3302,8 +3293,6 @@ namespace Game.Achievements
                         case 149: // Shadowlands Season 2 End
                                   // timestamp = unknown
                             break;
-                        default:
-                            break;
                     }
                     if (GameTime.GetGameTime() < eventTimestamp)
                         return false;
@@ -4032,7 +4021,7 @@ namespace Game.Achievements
         {
             return _scenarioCriteriasByTypeAndScenarioId[(int)type].LookupByKey(scenarioId);
         }
-        
+
         public List<Criteria> GetGuildCriteriaByType(CriteriaType type)
         {
             return _guildCriteriasByType.LookupByKey(type);
@@ -4074,8 +4063,6 @@ namespace Game.Achievements
                 case CriteriaType.GainAura:            // NYI
                 case CriteriaType.WinAnyBattleground:  // NYI
                     return true;
-                default:
-                    break;
             }
 
             return false;
@@ -4585,8 +4572,6 @@ namespace Game.Achievements
                         return false;
                     return (uint)pProto.GetQuality() == itemQuality.Quality;
                 }
-                default:
-                    break;
             }
             return false;
         }

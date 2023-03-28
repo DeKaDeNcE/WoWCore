@@ -1,22 +1,23 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.AI;
-using Game.BattleGrounds;
-using Game.Chat;
-using Game.Combat;
-using Game.DataStorage;
-using Game.Groups;
-using Game.Maps;
-using Game.Movement;
-using Game.Networking;
-using Game.Networking.Packets;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.AI;
+using Game.Chat;
+using Game.Maps;
+using Game.Groups;
+using Game.Combat;
+using Game.Spells;
+using Game.Movement;
+using Game.DataStorage;
+using Game.BattleGrounds;
+using Game.Networking;
+using Game.Networking.Packets;
 
 namespace Game.Entities
 {
@@ -1351,8 +1352,6 @@ namespace Game.Entities
                         return 0;
                     break;
                 }
-                default:
-                    break;
             }
 
             Player thisPlayer = ToPlayer();
@@ -1393,8 +1392,6 @@ namespace Game.Entities
                         case ShapeShiftForm.FlightForm:
                             useRandom = HasAura(344342);
                             break; // Glyph of the Aerial Chameleon
-                        default:
-                            break;
                     }
 
                     if (useRandom)
@@ -1438,8 +1435,6 @@ namespace Game.Entities
                     case ShapeShiftForm.GhostWolf:
                         if (HasAura(58135)) // Glyph of Spectral Wolf
                             return 60247;
-                        break;
-                    default:
                         break;
                 }
             }
@@ -1871,7 +1866,7 @@ namespace Game.Entities
         public virtual float GetNativeObjectScale() { return 1.0f; }
 
         public float GetDisplayScale() { return m_unitData.DisplayScale; }
-        
+
         public uint GetDisplayId() { return m_unitData.DisplayID; }
 
         public virtual void SetDisplayId(uint displayId, bool setNative = false)
@@ -3101,8 +3096,6 @@ namespace Game.Entities
                     case AuraTriggerOnHealthChangeDirection.Below:
                         if (newVal > threshold || oldVal < threshold)
                             continue;
-                        break;
-                    default:
                         break;
                 }
 

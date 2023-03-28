@@ -1,20 +1,21 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Framework.Collections
-{
+namespace Framework.Collections;
+
     /// <inheritdoc/>
     /// <summary>
     /// Circular buffer.
-    /// 
+    ///
     /// When writing to a full buffer:
     /// PushBack -> removes this[0] / Front()
     /// PushFront -> removes this[Size-1] / Back()
-    /// 
+    ///
     /// this implementation is inspired by
     /// http://www.boost.org/doc/libs/1_53_0/libs/circular_buffer/doc/circular_buffer.html
     /// because I liked their interface.
@@ -40,19 +41,16 @@ namespace Framework.Collections
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CircularBuffer{T}"/> class.
-        /// 
+        ///
         /// </summary>
         /// <param name='capacity'>
         /// Buffer capacity. Must be positive.
         /// </param>
-        public CircularBuffer(int capacity)
-            : this(capacity, new T[] { })
-        {
-        }
+        public CircularBuffer(int capacity) : this(capacity, new T[] { }) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CircularBuffer{T}"/> class.
-        /// 
+        ///
         /// </summary>
         /// <param name='capacity'>
         /// Buffer capacity. Must be positive.
@@ -65,19 +63,13 @@ namespace Framework.Collections
         public CircularBuffer(int capacity, T[] items)
         {
             if (capacity < 1)
-            {
-                throw new ArgumentException(
-                    "Circular buffer cannot have negative or zero capacity.", nameof(capacity));
-            }
+                throw new ArgumentException("Circular buffer cannot have negative or zero capacity.", nameof(capacity));
+
             if (items == null)
-            {
                 throw new ArgumentNullException(nameof(items));
-            }
+
             if (items.Length > capacity)
-            {
-                throw new ArgumentException(
-                    "Too many items to fit circular buffer", nameof(items));
-            }
+                throw new ArgumentException("Too many items to fit circular buffer", nameof(items));
 
             _buffer = new T[capacity];
 
@@ -92,7 +84,7 @@ namespace Framework.Collections
         /// Maximum capacity of the buffer. Elements pushed into the buffer after
         /// maximum capacity is reached (IsFull = true), will remove an element.
         /// </summary>
-        public int Capacity { get { return _buffer.Length; } }
+        public int Capacity => _buffer.Length;
 
         /// <summary>
         /// Boolean indicating if Circular is at full capacity.
@@ -100,29 +92,17 @@ namespace Framework.Collections
         /// cause elements to be removed from the other end
         /// of the buffer.
         /// </summary>
-        public bool IsFull
-        {
-            get
-            {
-                return Size == Capacity;
-            }
-        }
+        public bool IsFull => Size == Capacity;
 
         /// <summary>
         /// True if has no elements.
         /// </summary>
-        public bool IsEmpty
-        {
-            get
-            {
-                return Size == 0;
-            }
-        }
+        public bool IsEmpty => Size == 0;
 
         /// <summary>
         /// Current buffer size (the number of elements that the buffer has).
         /// </summary>
-        public int Size { get { return _size; } }
+        public int Size => _size;
 
         /// <summary>
         /// Element at the front of the buffer - this[0].
@@ -156,26 +136,24 @@ namespace Framework.Collections
             get
             {
                 if (IsEmpty)
-                {
-                    throw new IndexOutOfRangeException(string.Format("Cannot access index {0}. Buffer is empty", index));
-                }
+                    throw new IndexOutOfRangeException($"Cannot access index {index}. Buffer is empty");
+
                 if (index >= _size)
-                {
-                    throw new IndexOutOfRangeException(string.Format("Cannot access index {0}. Buffer size is {1}", index, _size));
-                }
+                    throw new IndexOutOfRangeException($"Cannot access index {index}. Buffer size is {_size}");
+
                 int actualIndex = InternalIndex(index);
+
                 return _buffer[actualIndex];
             }
+
             set
             {
                 if (IsEmpty)
-                {
-                    throw new IndexOutOfRangeException(string.Format("Cannot access index {0}. Buffer is empty", index));
-                }
+                    throw new IndexOutOfRangeException($"Cannot access index {index}. Buffer is empty");
+
                 if (index >= _size)
-                {
-                    throw new IndexOutOfRangeException(string.Format("Cannot access index {0}. Buffer size is {1}", index, _size));
-                }
+                    throw new IndexOutOfRangeException($"Cannot access index {index}. Buffer size is {_size}");
+
                 int actualIndex = InternalIndex(index);
                 _buffer[actualIndex] = value;
             }
@@ -184,8 +162,8 @@ namespace Framework.Collections
         /// <summary>
         /// Pushes a new element to the back of the buffer. Back()/this[Size-1]
         /// will now return this element.
-        /// 
-        /// When the buffer is full, the element at Front()/this[0] will be 
+        ///
+        /// When the buffer is full, the element at Front()/this[0] will be
         /// popped to allow for this new element to fit.
         /// </summary>
         /// <param name="item">Item to push to the back of the buffer</param>
@@ -208,8 +186,8 @@ namespace Framework.Collections
         /// <summary>
         /// Pushes a new element to the front of the buffer. Front()/this[0]
         /// will now return this element.
-        /// 
-        /// When the buffer is full, the element at Back()/this[Size-1] will be 
+        ///
+        /// When the buffer is full, the element at Back()/this[Size-1] will be
         /// popped to allow for this new element to fit.
         /// </summary>
         /// <param name="item">Item to push to the front of the buffer</param>
@@ -230,7 +208,7 @@ namespace Framework.Collections
         }
 
         /// <summary>
-        /// Removes the element at the back of the buffer. Decreasing the 
+        /// Removes the element at the back of the buffer. Decreasing the
         /// Buffer size by 1.
         /// </summary>
         public void PopBack()
@@ -242,7 +220,7 @@ namespace Framework.Collections
         }
 
         /// <summary>
-        /// Removes the element at the front of the buffer. Decreasing the 
+        /// Removes the element at the front of the buffer. Decreasing the
         /// Buffer size by 1.
         /// </summary>
         public void PopFront()
@@ -255,7 +233,7 @@ namespace Framework.Collections
 
         /// <summary>
         /// Copies the buffer contents to an array, according to the logical
-        /// contents of the buffer (i.e. independent of the internal 
+        /// contents of the buffer (i.e. independent of the internal
         /// order/contents)
         /// </summary>
         /// <returns>A new array with a copy of the buffer contents.</returns>
@@ -264,11 +242,13 @@ namespace Framework.Collections
             T[] newArray = new T[Size];
             int newArrayOffset = 0;
             var segments = ToArraySegments();
+
             foreach (ArraySegment<T> segment in segments)
             {
                 Array.Copy(segment.Array, segment.Offset, newArray, newArrayOffset, segment.Count);
                 newArrayOffset += segment.Count;
             }
+
             return newArray;
         }
 
@@ -280,14 +260,11 @@ namespace Framework.Collections
         ///
         /// Fast: does not copy the array elements.
         /// Useful for methods like <c>Send(IList&lt;ArraySegment&lt;Byte&gt;&gt;)</c>.
-        /// 
+        ///
         /// <remarks>Segments may be empty.</remarks>
         /// </summary>
         /// <returns>An IList with 2 segments corresponding to the buffer content.</returns>
-        public IList<ArraySegment<T>> ToArraySegments()
-        {
-            return new[] { ArrayOne(), ArrayTwo() };
-        }
+        public IList<ArraySegment<T>> ToArraySegments() => new[] { ArrayOne(), ArrayTwo() };
 
         #region IEnumerable<T> implementation
         /// <summary>
@@ -297,28 +274,20 @@ namespace Framework.Collections
         public IEnumerator<T> GetEnumerator()
         {
             var segments = ToArraySegments();
+
             foreach (ArraySegment<T> segment in segments)
-            {
                 for (int i = 0; i < segment.Count; i++)
-                {
                     yield return segment.Array[segment.Offset + i];
-                }
-            }
         }
         #endregion
         #region IEnumerable implementation
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         #endregion
 
         private void ThrowIfEmpty(string message = "Cannot access an empty buffer.")
         {
             if (IsEmpty)
-            {
                 throw new InvalidOperationException(message);
-            }
         }
 
         /// <summary>
@@ -329,9 +298,7 @@ namespace Framework.Collections
         private void Increment(ref int index)
         {
             if (++index == Capacity)
-            {
                 index = 0;
-            }
         }
 
         /// <summary>
@@ -342,9 +309,8 @@ namespace Framework.Collections
         private void Decrement(ref int index)
         {
             if (index == 0)
-            {
                 index = Capacity;
-            }
+
             index--;
         }
 
@@ -357,51 +323,37 @@ namespace Framework.Collections
         /// <param name='index'>
         /// External index.
         /// </param>
-        private int InternalIndex(int index)
-        {
-            return _start + (index < (Capacity - _start) ? index : index - Capacity);
-        }
+        private int InternalIndex(int index) => _start + (index < Capacity - _start ? index : index - Capacity);
 
-        // doing ArrayOne and ArrayTwo methods returning ArraySegment<T> as seen here: 
+        // doing ArrayOne and ArrayTwo methods returning ArraySegment<T> as seen here:
         // http://www.boost.org/doc/libs/1_37_0/libs/circular_buffer/doc/circular_buffer.html#classboost_1_1circular__buffer_1957cccdcb0c4ef7d80a34a990065818d
         // http://www.boost.org/doc/libs/1_37_0/libs/circular_buffer/doc/circular_buffer.html#classboost_1_1circular__buffer_1f5081a54afbc2dfc1a7fb20329df7d5b
         // should help a lot with the code.
 
         #region Array items easy access.
-        // The array is composed by at most two non-contiguous segments, 
+        // The array is composed by at most two non-contiguous segments,
         // the next two methods allow easy access to those.
 
         private ArraySegment<T> ArrayOne()
         {
             if (IsEmpty)
-            {
                 return new ArraySegment<T>(new T[0]);
-            }
-            else if (_start < _end)
-            {
+
+            if (_start < _end)
                 return new ArraySegment<T>(_buffer, _start, _end - _start);
-            }
-            else
-            {
-                return new ArraySegment<T>(_buffer, _start, _buffer.Length - _start);
-            }
+
+            return new ArraySegment<T>(_buffer, _start, _buffer.Length - _start);
         }
 
         private ArraySegment<T> ArrayTwo()
         {
             if (IsEmpty)
-            {
                 return new ArraySegment<T>(new T[0]);
-            }
-            else if (_start < _end)
-            {
+
+            if (_start < _end)
                 return new ArraySegment<T>(_buffer, _end, 0);
-            }
-            else
-            {
-                return new ArraySegment<T>(_buffer, 0, _end);
-            }
+
+            return new ArraySegment<T>(_buffer, 0, _end);
         }
         #endregion
     }
-}

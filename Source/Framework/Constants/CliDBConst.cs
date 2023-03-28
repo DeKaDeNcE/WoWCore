@@ -1,4 +1,5 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using System;
@@ -934,6 +935,7 @@ namespace Framework.Constants
         Fishing = 2
     }
 
+    [Flags]
     public enum ArtifactPowerFlag : byte
     {
         Gold = 0x01,
@@ -953,6 +955,7 @@ namespace Framework.Constants
         BonusStamina = 2
     }
 
+    [Flags]
     public enum AzeriteTierUnlockSetFlags
     {
         Default = 0x01
@@ -965,11 +968,13 @@ namespace Framework.Constants
         Max
     }
 
+    [Flags]
     public enum ChrCustomizationOptionFlag
     {
         Disabled = 0x04
     }
 
+    [Flags]
     public enum ChrCustomizationReqFlag
     {
         HasRequirements = 0x01
@@ -1044,7 +1049,7 @@ namespace Framework.Constants
     }
 
     [Flags]
-    public enum BattlemasterListFlags : int
+    public enum BattlemasterListFlags
     {
         Disabled = 0x01,
         SkipRoleCheck = 0x02,
@@ -1085,6 +1090,7 @@ namespace Framework.Constants
         InternalOnly = 0x100000,
     }
 
+    [Flags]
     public enum ChrSpecializationFlag
     {
         Caster = 0x01,
@@ -1540,9 +1546,10 @@ namespace Framework.Constants
         Prime = 2
     }
 
+    [Flags]
     public enum ItemSetFlags
     {
-        LegacyInactive = 0x01,
+        LegacyInactive = 0x01
     }
 
     public enum ItemSpecStat : byte
@@ -1686,7 +1693,8 @@ namespace Framework.Constants
         Scenario = 5
     }
 
-    public enum MapDifficultyFlags : int
+    [Flags]
+    public enum MapDifficultyFlags
     {
         LimitToPlayersFromOneRealm = 0x01,
         UseLootBasedLockInsteadOfInstanceLock = 0x02, // Lock to single encounters
@@ -1702,6 +1710,7 @@ namespace Framework.Constants
         Weekly = 2
     }
 
+    [Flags]
     public enum AreaMountFlags
     {
         GroundAllowed = 0x1,
@@ -1718,6 +1727,7 @@ namespace Framework.Constants
         Some = 8
     }
 
+    [Flags]
     public enum MountCapabilityFlags : byte
     {
         Ground = 0x1,
@@ -1727,6 +1737,7 @@ namespace Framework.Constants
         IgnoreRestrictions = 0x20
     }
 
+    [Flags]
     public enum MountFlags : ushort
     {
         SelfMount = 0x02,                   // Player becomes the mount himself
@@ -1736,6 +1747,7 @@ namespace Framework.Constants
         HideIfUnknown = 0x40
     }
 
+    [Flags]
     public enum PhaseEntryFlags : ushort
     {
         ReadOnly = 0x1,
@@ -1842,6 +1854,7 @@ namespace Framework.Constants
         MajorFactionRenown = 64
     }
 
+    [Flags]
     public enum PrestigeLevelInfoFlags : byte
     {
         Disabled = 0x01                      // Prestige levels with this flag won't be included to calculate max prestigelevel.
@@ -1855,12 +1868,14 @@ namespace Framework.Constants
         Everyone = 3     // Players can always select this quest reward
     }
 
+    [Flags]
     public enum ScenarioStepFlags : byte
     {
         BonusObjective = 0x1,
         HeroicOnly = 0x2
     }
 
+    [Flags]
     public enum SkillRaceClassInfoFlags : ushort
     {
         NoSkillupMessage = 0x2,
@@ -1871,6 +1886,7 @@ namespace Framework.Constants
         MonoValue = 0x400     // Skill always has value 1
     }
 
+    [Flags]
     public enum SpellCategoryFlags : sbyte
     {
         CooldownScalesWithWeaponSpeed = 0x01, // unused
@@ -1901,6 +1917,7 @@ namespace Framework.Constants
         Battleground = 7
     }
 
+    [Flags]
     public enum SpellShapeshiftFormFlags
     {
         Stance = 0x01,
@@ -1922,6 +1939,7 @@ namespace Framework.Constants
         CannotUseGameObjects = 0x10000
     }
 
+    [Flags]
     public enum SummonPropertiesFlags : uint
     {
         None = 0x00,
@@ -1959,6 +1977,7 @@ namespace Framework.Constants
         DontDismissWhenEncounterIsAborted = 0x80000000  // NYI
     }
 
+    [Flags]
     public enum TaxiNodeFlags : ushort
     {
         Alliance = 0x1,
@@ -1966,6 +1985,7 @@ namespace Framework.Constants
         UseFavoriteMount = 0x10
     }
 
+    [Flags]
     public enum TaxiPathNodeFlags : byte
     {
         Teleport = 0x1,
@@ -2350,6 +2370,7 @@ namespace Framework.Constants
         HideSingleRankNumbers = 0x2
     }
 
+    [Flags]
     public enum UiMapFlag
     {
         None = 0x00,
@@ -2589,6 +2610,7 @@ namespace Framework.Constants
         Max,
     }
 
+    [Flags]
     public enum CorruptionEffectsFlag
     {
         None = 0,
@@ -2618,7 +2640,8 @@ namespace Framework.Constants
         SuppressEmittersOnLowSettings = 0x40000
     }
 
-    public enum FriendshipReputationFlags : int
+    [Flags]
+    public enum FriendshipReputationFlags
     {
         NoFXOnReactionChange = 0x01,
         NoLogTextOnRepGain = 0x02,
@@ -2647,7 +2670,8 @@ namespace Framework.Constants
         ContentTuningPvpItemLevelDamageScaling = 15,
     }
 
-    public enum BattlePetSpeciesFlags : int
+    [Flags]
+    public enum BattlePetSpeciesFlags
     {
         NoRename = 0x01,
         WellKnown = 0x02,

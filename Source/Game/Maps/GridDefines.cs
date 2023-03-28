@@ -1,9 +1,10 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
 using Framework.Constants;
 using Game.Entities;
-using System;
 
 namespace Game.Maps
 {
@@ -28,7 +29,7 @@ namespace Game.Maps
         {
             return IsValidMapCoord(x, y, z) && float.IsFinite(o);
         }
-        
+
         public static bool IsValidMapCoord(uint mapid, float x, float y)
         {
             return Global.MapMgr.IsValidMAP(mapid) && IsValidMapCoord(x, y);
@@ -206,7 +207,7 @@ namespace Game.Maps
         {
             return Y_coord * Limit + X_coord;
         }
-        
+
         public void Dec_x(uint val)
         {
             if (X_coord > val)

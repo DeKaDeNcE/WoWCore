@@ -1,15 +1,24 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.Entities;
-using Game.Scripting;
-using Game.Spells;
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
 using System;
 using System.Collections.Generic;
+using Framework.Constants;
+using Game.Spells;
+using Game.Entities;
+using Game.Scripting;
 
-namespace Scripts.Spells.Monk
-{
+namespace Scripts.Spells.Monk;
+
     struct SpellIds
     {
         public const uint CracklingJadeLightningChannel = 117952;
@@ -30,6 +39,18 @@ namespace Scripts.Spells.Monk
         public const uint StaggerLight = 124275;
         public const uint StaggerModerate = 124274;
         public const uint SurgingMistHeal = 116995;
+        public const uint BlackoutKick = 100784;
+        public const uint SpiritOfTheCrane = 210802;
+        public const uint SpiritOfTheCraneEnergize = 210803;
+        public const uint Vivify = 116670;
+        public const uint Lifecycles = 197915;
+        public const uint VivifyLifecycles = 197916;
+        public const uint EnvelopingMist = 124682;
+        public const uint EnvelopingMistLifecycles = 197919;
+        public const uint ThunderFocusTea = 116680;
+        public const uint RenewingMist = 115151;
+        public const uint RisingSunKick = 107428;
+        public const uint EssenceFont = 191837;
     }
 
     [Script] // 117952 - Crackling Jade Lightning
@@ -127,7 +148,7 @@ namespace Scripts.Spells.Monk
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 0, AuraType.Dummy));
         }
     }
-    
+
     [Script] // 115546 - Provoke
     class spell_monk_provoke : SpellScript
     {
@@ -237,7 +258,7 @@ namespace Scripts.Spells.Monk
             AfterEffectRemove.Add(new EffectApplyHandler(RestoreRunBackSpeed, 4, AuraType.UseNormalMovementSpeed, AuraEffectHandleModes.Real));
         }
     }
-    
+
     [Script] // 115069 - Stagger
     class spell_monk_stagger : AuraScript
     {
@@ -458,4 +479,3 @@ namespace Scripts.Spells.Monk
             }
         }
     }
-}

@@ -1,29 +1,29 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using Game;
-using Game.Achievements;
 using Game.AI;
-using Game.Arenas;
-using Game.BattleFields;
-using Game.BattleGrounds;
-using Game.BlackMarket;
-using Game.Cache;
-using Game.Chat;
-using Game.Collision;
-using Game.DataStorage;
-using Game.DungeonFinding;
-using Game.Entities;
-using Game.Garrisons;
-using Game.Groups;
-using Game.Guilds;
-using Game.Loots;
-using Game.Maps;
 using Game.PvP;
+using Game.Chat;
+using Game.Maps;
+using Game.Cache;
+using Game.Loots;
+using Game.Groups;
+using Game.Arenas;
+using Game.Services;
+using Game.Entities;
+using Game.Collision;
+using Game.Garrisons;
 using Game.Scenarios;
 using Game.Scripting;
-using Game.Services;
+using Game.BlackMarket;
+using Game.DataStorage;
+using Game.BattleFields;
+using Game.Achievements;
+using Game.BattleGrounds;
 using Game.SupportSystem;
+using Game.DungeonFinding;
 
 public static class Global
 {

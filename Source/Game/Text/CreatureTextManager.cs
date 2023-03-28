@@ -1,4 +1,5 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 using Framework.Collections;
@@ -245,8 +246,6 @@ namespace Game
                 case ChatMsg.RaidBossEmote:
                     dist = WorldConfig.GetFloatValue(WorldCfg.ListenRangeTextemote);
                     break;
-                default:
-                    break;
             }
 
             return dist;
@@ -302,8 +301,6 @@ namespace Game
                         }
                         break;
                     }
-                default:
-                    break;
             }
 
             switch (range)
@@ -454,8 +451,6 @@ namespace Game
                         }
                         break;
                     }
-                default:
-                    break;
             }
 
             switch (range)
@@ -600,8 +595,6 @@ namespace Game
                     ChatPkt message = sender.UntranslatedPacket;
                     message.SetReceiver(player, loc_idx);
                     player.SendPacket(message);
-                    break;
-                default:
                     break;
             }
 

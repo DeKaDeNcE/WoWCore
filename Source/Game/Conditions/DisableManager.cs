@@ -1,13 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Framework.Database;
-using Game.DataStorage;
-using Game.Entities;
 using System;
 using System.Collections.Generic;
+using Framework.Database;
+using Framework.Constants;
+using Framework.Collections;
+using Game.Entities;
+using Game.DataStorage;
 
 namespace Game
 {
@@ -196,8 +197,6 @@ namespace Game
                                 if (flags.HasFlag(DisableFlags.VmapLOS))
                                     Log.outInfo(LogFilter.Server, "LoS disabled for arena map {0}.", entry);
                                 break;
-                            default:
-                                break;
                         }
                         break;
                     }
@@ -224,13 +223,9 @@ namespace Game
                             case MapTypes.Arena:
                                 Log.outInfo(LogFilter.Server, "Pathfinding disabled for arena map {0}.", entry);
                                 break;
-                            default:
-                                break;
                         }
                         break;
                     }
-                    default:
-                        break;
                 }
                 if (!m_DisableMap.ContainsKey(type))
                     m_DisableMap[type] = new Dictionary<uint, DisableData>();

@@ -1,10 +1,11 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
 using Framework.Dynamic;
-using Game.Entities;
+using Framework.Constants;
 using Game.Spells;
+using Game.Entities;
 
 namespace Game.AI
 {
@@ -94,7 +95,7 @@ namespace Game.AI
 
         // Called when the capture point gets assaulted by a player. Return true to disable default behaviour.
         public virtual bool OnCapturePointAssaulted(Player player) { return false; }
-        
+
         // Called when the capture point state gets updated. Return true to disable default behaviour.
         public virtual bool OnCapturePointUpdated(BattlegroundCapturePointState state) { return false; }
     }

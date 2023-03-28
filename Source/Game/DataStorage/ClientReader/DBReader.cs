@@ -1,19 +1,18 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Collections;
-using Framework.Constants;
-using Framework.Database;
-using Framework.Dynamic;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Linq;
 using System.Numerics;
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
+using System.Runtime.CompilerServices;
+using Framework.Dynamic;
+using Framework.Constants;
+using Framework.Collections;
 
 namespace Game.DataStorage
 {
@@ -62,7 +61,7 @@ namespace Game.DataStorage
                 // field meta data
                 FieldMeta = reader.ReadArray<FieldMetaData>(Header.FieldCount);
 
-                // column meta data 
+                // column meta data
                 ColumnMeta = reader.ReadArray<ColumnMetaData>(Header.FieldCount);
 
                 // pallet data
@@ -216,7 +215,7 @@ namespace Game.DataStorage
                 }
             }
 
-            return true;            
+            return true;
         }
     }
 

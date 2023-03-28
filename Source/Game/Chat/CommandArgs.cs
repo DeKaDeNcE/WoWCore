@@ -1,14 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Spells;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
+using System.Collections.Generic;
+using Framework.Constants;
+using Game.Spells;
+using Game.Entities;
+using Game.DataStorage;
 
 namespace Game.Chat
 {
@@ -284,7 +284,7 @@ namespace Game.Chat
                             ChatCommandResult result =  TryConsume(out dynamic tempVal, typeof(uint), handler, args);
                             if (!result.IsSuccessful() || (val = Global.ObjectMgr.GetQuestTemplate(tempVal)) != null)
                                 return result;
-                            
+
                             return ChatCommandResult.FromErrorMessage(handler.GetParsedString(CypherStrings.CmdparserQuestNoExist, tempVal));
                         }
                     }
@@ -349,7 +349,7 @@ namespace Game.Chat
 
         public string GetErrorMessage() { return errorMessage; }
 
-        public void SetErrorMessage(string _value) 
+        public void SetErrorMessage(string _value)
         {
             result = false;
             errorMessage = _value;

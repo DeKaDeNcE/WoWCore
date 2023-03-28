@@ -1,16 +1,17 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Configuration;
-using Framework.Threading;
-using MySqlConnector;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Transactions;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Framework.Threading;
+using Framework.Configuration;
+using MySqlConnector;
 
 namespace Framework.Database
 {
@@ -306,7 +307,7 @@ namespace Framework.Database
                 Log.outFatal(LogFilter.SqlUpdates, $"Applying of file \'{path}\' to database \'{GetDatabaseName()}\' failed!" +
                     " If you are a user, please pull the latest revision from the repository. " +
                     "Also make sure you have not applied any of the databases with your sql client. " +
-                    "You cannot use auto-update system and import sql files from CypherCore repository with your sql client. " +
+                    "You cannot use auto-update system and import sql files from WoWCore repository with your sql client. " +
                     "If you are a developer, please fix your sql query.");
 
                 throw new Exception("update failed");

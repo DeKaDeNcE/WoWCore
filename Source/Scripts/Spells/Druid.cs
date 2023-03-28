@@ -1,18 +1,27 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Dynamic;
-using Game.DataStorage;
+using Framework.Constants;
+using Game.Spells;
 using Game.Entities;
 using Game.Scripting;
-using Game.Spells;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Game.DataStorage;
 
-namespace Scripts.Spells.Druid
-{
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
+namespace Scripts.Spells.Druid;
+
     struct SpellIds
     {
         public const uint BalanceT10Bonus = 70718;
@@ -455,8 +464,6 @@ namespace Scripts.Spells.Druid
                 case ShapeShiftForm.None:
                 case ShapeShiftForm.TreeOfLife:
                     return true;
-                default:
-                    break;
             }
 
             return false;
@@ -555,7 +562,7 @@ namespace Scripts.Spells.Druid
             OnEffectRemove.Add(new EffectApplyHandler(OnRemove, 1, AuraType.ModShapeshift, AuraEffectHandleModes.Real));
         }
     }
-    
+
     [Script] // 210706 - Gore
     class spell_dru_gore : AuraScript
     {
@@ -735,7 +742,7 @@ namespace Scripts.Spells.Druid
             AfterEffectRemove.Add(new EffectApplyHandler(AfterRemove, 0, AuraType.Dummy, AuraEffectHandleModes.Real));
         }
     }
-    
+
     [Script] //  8921 - Moonfire
     class spell_dru_moonfire : SpellScript
     {
@@ -1437,7 +1444,7 @@ namespace Scripts.Spells.Druid
             OnEffectPeriodic.Add(new EffectPeriodicHandler(HandlePeriodic, 1, AuraType.PeriodicDummy));
         }
     }
-    
+
     [Script] // 48438 - Wild Growth
     class spell_dru_wild_growth : SpellScript
     {
@@ -1518,4 +1525,3 @@ namespace Scripts.Spells.Druid
             OnEffectUpdatePeriodic.Add(new EffectUpdatePeriodicHandler(HandleTickUpdate, 0, AuraType.PeriodicHeal));
         }
     }
-}

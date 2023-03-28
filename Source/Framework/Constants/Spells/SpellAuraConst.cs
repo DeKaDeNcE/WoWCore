@@ -1,5 +1,8 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
+
+using System;
 
 namespace Framework.Constants
 {
@@ -195,7 +198,7 @@ namespace Framework.Constants
         ModAttackerRangedHitChance = 185,
         ModAttackerSpellHitChance = 186,
         ModAttackerMeleeCritChance = 187,
-        ModUIHealingRange = 188,
+        ModUIHealingRange = 188, // handled clientside - affects UnitInRange lua function only
         ModRating = 189,
         ModFactionReputationGain = 190,
         UseNormalMovementSpeed = 191,
@@ -546,6 +549,7 @@ namespace Framework.Constants
         Total
     }
 
+    [Flags]
     public enum AuraEffectHandleModes
     {
         Default = 0x0,
@@ -555,10 +559,10 @@ namespace Framework.Constants
         Reapply = 0x08, // Handler Updates Effect On Target After Aura Is Reapplied On Target
         Stat = 0x10, // Handler Updates Effect On Target When Stat Removal/Apply Is Needed For Calculations By Core
         Skill = 0x20, // Handler Updates Effect On Target When Skill Removal/Apply Is Needed For Calculations By Core
-        SendForClientMask = (SendForClient | Real), // Any Case Handler Need To Send Packet
-        ChangeAmountMask = (ChangeAmount | Real), // Any Case Handler Applies Effect Depending On Amount
-        ChangeAmountSendForClientMask = (ChangeAmountMask | SendForClientMask),
-        RealOrReapplyMask = (Reapply | Real)
+        SendForClientMask = SendForClient | Real, // Any Case Handler Need To Send Packet
+        ChangeAmountMask = ChangeAmount | Real, // Any Case Handler Applies Effect Depending On Amount
+        ChangeAmountSendForClientMask = ChangeAmountMask | SendForClientMask,
+        RealOrReapplyMask = Reapply | Real
     }
 
     public enum AuraTriggerOnPowerChangeDirection

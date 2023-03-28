@@ -1,20 +1,23 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+// ReSharper disable UnusedMember.Local
+
+using System;
+using System.Text;
+using System.Collections.Generic;
 using Framework.IO;
-using Game.BattleGrounds;
-using Game.DataStorage;
-using Game.Entities;
+using Framework.Constants;
+using Game.PvP;
+using Game.Maps;
 using Game.Groups;
 using Game.Guilds;
-using Game.Maps;
+using Game.Entities;
+using Game.DataStorage;
+using Game.BattleGrounds;
 using Game.Networking;
 using Game.Networking.Packets;
-using Game.PvP;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Game
 {
@@ -317,8 +320,6 @@ namespace Game
                         case TransferAbortReason.NotFound:
                             Log.outDebug(LogFilter.Maps, $"MAP: Player '{player.GetName()}' cannot enter instance map {at.target_mapId} because instance is resetting.");
                             break;
-                        default:
-                            break;
                     }
 
                     if (denyReason.Reason != TransferAbortReason.NeedGroup)
@@ -481,7 +482,7 @@ namespace Game
             splashScreenShowLatest.UISplashScreenID = splashScreen != null ? splashScreen.Id : 0;
             SendPacket(splashScreenShowLatest);
         }
-        
+
         [WorldPacketHandler(ClientOpcodes.ChatUnregisterAllAddonPrefixes)]
         void HandleUnregisterAllAddonPrefixes(ChatUnregisterAllAddonPrefixes packet)
         {

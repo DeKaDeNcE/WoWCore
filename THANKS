@@ -1,8 +1,11 @@
-= CypherCore -- Thanks/credits file =
+= WoWCore -- Thanks/Credits File =
 
 Special Thanks To:
 
-- Arctium (https://arctium.org/)
+- CypherCore (https://github.com/CypherCore/CypherCore)
+For the base code and continuous updates.
+
+- Arctium (https://arctium.io/)
 For the base code, and tons of help and ideas.
 
 - TrinityCore (http://www.trinitycore.org)

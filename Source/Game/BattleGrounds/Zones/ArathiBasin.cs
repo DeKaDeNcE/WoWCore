@@ -1,11 +1,12 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Generic;
 using Framework.Constants;
 using Game.Entities;
 using Game.Networking.Packets;
-using System;
-using System.Collections.Generic;
 
 namespace Game.BattleGrounds.Zones
 {
@@ -230,16 +231,6 @@ namespace Game.BattleGrounds.Zones
                     if (GetStatus() == BattlegroundStatus.WaitJoin && !entered)
                         TeleportPlayerToExploitLocation(player);
                     break;
-                case 3948:                                          // Arathi Basin Alliance Exit.
-                case 3949:                                          // Arathi Basin Horde Exit.
-                case 3866:                                          // Stables
-                case 3869:                                          // Gold Mine
-                case 3867:                                          // Farm
-                case 3868:                                          // Lumber Mill
-                case 3870:                                          // Black Smith
-                case 4020:                                          // Unk1
-                case 4021:                                          // Unk2
-                case 4674:                                          // Unk3
                 default:
                     base.HandleAreaTrigger(player, trigger, entered);
                     break;
@@ -320,8 +311,6 @@ namespace Game.BattleGrounds.Zones
                     UpdateWorldState(ABWorldStates.GoldMineHordeControlState, m_Nodes[node] == ABNodeStatus.HordeOccupied ? 2 : (m_Nodes[node] == ABNodeStatus.HordeContested ? 1 : 0));
                     UpdateWorldState(ABWorldStates.GoldMineAllianceControlState, m_Nodes[node] == ABNodeStatus.AllyOccupied ? 2 : (m_Nodes[node] == ABNodeStatus.AllyContested ? 1 : 0));
                     break;
-                default:
-                    break;
             }
 
             // How many bases each team owns
@@ -358,9 +347,9 @@ namespace Game.BattleGrounds.Zones
             if (!trigger)
                 trigger = AddCreature(SharedConst.WorldTrigger, node + 7, NodePositions[node], GetTeamIndexByTeamId(team));
 
-            //add bonus honor aura trigger creature when node is accupied
+            //add bonus honor aura trigger creature when node is occupied
             //cast bonus aura (+50% honor in 25yards)
-            //aura should only apply to players who have accupied the node, set correct faction for trigger
+            //aura should only apply to players who have occupied the node, set correct faction for trigger
             if (trigger)
             {
                 trigger.SetFaction(team == Team.Alliance ? 84u : 83u);
@@ -673,8 +662,6 @@ namespace Game.BattleGrounds.Zones
                 case ScoreType.BasesDefended:
                     player.UpdateCriteria(CriteriaType.TrackedWorldStateUIModified, (uint)ABObjectives.DefendBase);
                     break;
-                default:
-                    break;
             }
             return true;
         }
@@ -734,8 +721,8 @@ namespace Game.BattleGrounds.Zones
         // x, y, z, o, rot0, rot1, rot2, rot3
         public static float[][] DoorPositions =
         {
-            new float[] {1284.597f, 1281.167f, -15.97792f, 0.7068594f, 0.012957f, -0.060288f, 0.344959f, 0.93659f },
-            new float[] {708.0903f, 708.4479f, -17.8342f, -2.391099f, 0.050291f, 0.015127f, 0.929217f, -0.365784f}
+            new [] {1284.597f, 1281.167f, -15.97792f, 0.7068594f, 0.012957f, -0.060288f, 0.344959f, 0.93659f },
+            new [] {708.0903f, 708.4479f, -17.8342f, -2.391099f, 0.050291f, 0.015127f, 0.929217f, -0.365784f}
         };
 
         // Tick intervals and given points: case 0, 1, 2, 3, 4, 5 captured nodes
@@ -748,11 +735,11 @@ namespace Game.BattleGrounds.Zones
         // x, y, z, o
         public static float[][] BuffPositions =
         {
-            new float[] {1185.566f, 1184.629f, -56.36329f, 2.303831f },         // stables
-            new float[] {990.1131f, 1008.73f, -42.60328f, 0.8203033f },         // blacksmith
-            new float[] {818.0089f, 842.3543f, -56.54062f, 3.176533f },         // farm
-            new float[] {808.8463f, 1185.417f,  11.92161f, 5.619962f },         // lumber mill
-            new float[] {1147.091f, 816.8362f, -98.39896f, 6.056293f }          // gold mine
+            new [] {1185.566f, 1184.629f, -56.36329f, 2.303831f },         // stables
+            new [] {990.1131f, 1008.73f, -42.60328f, 0.8203033f },         // blacksmith
+            new [] {818.0089f, 842.3543f, -56.54062f, 3.176533f },         // farm
+            new [] {808.8463f, 1185.417f,  11.92161f, 5.619962f },         // lumber mill
+            new [] {1147.091f, 816.8362f, -98.39896f, 6.056293f }          // gold mine
         };
 
         public static Position[] SpiritGuidePos =

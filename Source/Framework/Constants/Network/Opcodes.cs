@@ -1,4 +1,5 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
 namespace Framework.Constants
@@ -554,7 +555,7 @@ namespace Framework.Constants
         OpenItem = 0x334c,
         OpenMissionNpc = 0x330f,
         OpenShipmentNpc = 0x3317,
-        OpenTradeskillNpc = 0x3322,
+        OpenTradeSkillNpc = 0x3322,
         OptOutOfLoot = 0x3504,
         OverrideScreenFlash = 0x352e,
         PartyInvite = 0x3602,
@@ -886,7 +887,7 @@ namespace Framework.Constants
         AllAchievementData = 0x2570,
         AllGuildAchievements = 0x29b8,
         ApplyMountEquipmentResult = 0x284f,
-        ArchaeologySurveryCast = 0x2588,
+        ArchaeologySurveyCast = 0x2588,
         AreaPoiUpdateResponse = 0x3010,
         AreaSpiritHealerTime = 0x273a,
         AreaTriggerDenied = 0x2902,
@@ -1068,7 +1069,7 @@ namespace Framework.Constants
         ChatRegionalServiceStatus = 0x2bc5,
         ChatRestricted = 0x2bb3,
         ChatServerMessage = 0x2bc4,
-        CheatIgnoreDimishingReturns = 0x2c12,
+        CheatIgnoreDiminishingReturns = 0x2c12,
         CheckAbandonNpe = 0x3018,
         CheckCharacterNameAvailabilityResult = 0x2584,
         CheckWargameEntry = 0x2592,
@@ -1702,7 +1703,7 @@ namespace Framework.Constants
         PreloadChildMap = 0x2579,
         PreloadWorld = 0x2599,
         PrepopulateNameCache = 0x2844,
-        PreRessurect = 0x2762,
+        PreResurrect = 0x2762,
         PrintNotification = 0x25ca,
         ProcResist = 0x2756,
         ProfessionGossip = 0x27fb,
@@ -1889,7 +1890,7 @@ namespace Framework.Constants
         SpellCooldown = 0x2c15,
         SpellDamageShield = 0x2c31,
         SpellDelayed = 0x2c42,
-        SpellDispellLog = 0x2c1a,
+        SpellDispelLog = 0x2c1a,
         SpellEmpowerSetStage = 0x2c38,
         SpellEmpowerStart = 0x2c36,
         SpellEmpowerUpdate = 0x2c37,
@@ -1928,7 +1929,7 @@ namespace Framework.Constants
         SummonCancel = 0x26ae,
         SummonRaidMemberValidateFailed = 0x258f,
         SummonRequest = 0x271c,
-        SupercededSpells = 0x2c4f,
+        SupersededSpells = 0x2c4f,
         SuspendComms = 0x304a,
         SuspendToken = 0x25a9,
         SyncWowEntitlements = 0x2865,

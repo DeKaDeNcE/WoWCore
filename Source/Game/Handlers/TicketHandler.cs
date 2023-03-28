@@ -1,11 +1,14 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
+// ReSharper disable UnusedMember.Local
+
 using Framework.Database;
+using Framework.Constants;
+using Game.SupportSystem;
 using Game.Networking;
 using Game.Networking.Packets;
-using Game.SupportSystem;
 
 namespace Game
 {

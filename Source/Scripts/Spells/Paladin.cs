@@ -1,18 +1,27 @@
-﻿// Copyright (c) CypherCore <http://github.com/CypherCore> All rights reserved.
+﻿// Copyright (c) CypherCore <https://github.com/CypherCore> All rights reserved.
+// Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
-using Framework.Constants;
-using Game.AI;
-using Game.DataStorage;
-using Game.Entities;
-using Game.Scripting;
-using Game.Spells;
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
 using System;
 using System.Collections.Generic;
 using Framework.Dynamic;
+using Framework.Constants;
+using Game.AI;
+using Game.Spells;
+using Game.Entities;
+using Game.Scripting;
+using Game.DataStorage;
 
-namespace Scripts.Spells.Paladin
-{
+namespace Scripts.Spells.Paladin;
+
     struct SpellIds
     {
         public const uint ArtOfWarTriggered = 231843;
@@ -121,7 +130,7 @@ namespace Scripts.Spells.Paladin
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 0, AuraType.Dummy));
         }
     }
-    
+
     [Script] // 19042 - Ashen Hallow
     class areatrigger_pal_ashen_hallow : AreaTriggerAI
     {
@@ -219,7 +228,7 @@ namespace Scripts.Spells.Paladin
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 0, AuraType.Dummy));
         }
     }
-    
+
     // 1022 - Blessing of Protection
     [Script] // 204018 - Blessing of Spellwarding
     class spell_pal_blessing_of_protection : SpellScript
@@ -379,7 +388,7 @@ namespace Scripts.Spells.Paladin
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 0, AuraType.Dummy));
         }
     }
-    
+
     [Script] // 642 - Divine Shield
     class spell_pal_divine_shield : SpellScript
     {
@@ -457,8 +466,6 @@ namespace Scripts.Spells.Paladin
                 case Race.ZandalariTroll:
                     spellId = SpellIds.DivineSteedZandalariTroll;
                     break;
-                default:
-                    break;
             }
 
             caster.CastSpell(caster, spellId, true);
@@ -507,7 +514,7 @@ namespace Scripts.Spells.Paladin
             OnEffectProc.Add(new EffectProcHandler(HandleEffectProc, 0, AuraType.Dummy));
         }
     }
-    
+
     [Script] // 234299 - Fist of Justice
     class spell_pal_fist_of_justice : AuraScript
     {
@@ -671,7 +678,7 @@ namespace Scripts.Spells.Paladin
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 1, AuraType.Dummy));
         }
     }
-    
+
     [Script] // 327193 - Moment of Glory
     class spell_pal_moment_of_glory : SpellScript
     {
@@ -800,7 +807,7 @@ namespace Scripts.Spells.Paladin
             OnEffectHitTarget.Add(new EffectHandler(HandleScript, 2, SpellEffectName.ScriptEffect));
         }
     }
-    
+
     [Script] // 20473 - Holy Shock
     class spell_pal_holy_shock : SpellScript
     {
@@ -889,7 +896,7 @@ namespace Scripts.Spells.Paladin
             AfterHit.Add(new HitHandler(PlayVisual));
         }
     }
-    
+
     [Script] // 37705 - Healing Discount
     class spell_pal_item_healing_discount : AuraScript
     {
@@ -1092,7 +1099,7 @@ namespace Scripts.Spells.Paladin
             OnEffectPeriodic.Add(new EffectPeriodicHandler(HandleEffectPeriodic, 0, AuraType.PeriodicDummy));
         }
     }
-    
+
     [Script] // 204074 - Righteous Protector
     class spell_pal_righteous_protector : AuraScript
     {
@@ -1288,4 +1295,3 @@ namespace Scripts.Spells.Paladin
             OnEffectProc.Add(new EffectProcHandler(HandleEffectProc, 0, AuraType.ProcTriggerSpell));
         }
     }
-}
