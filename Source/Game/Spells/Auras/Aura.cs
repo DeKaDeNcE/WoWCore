@@ -1326,7 +1326,7 @@ namespace Game.Spells
                             if (caster.HasAura(64760))
                             {
                                 CastSpellExtraArgs args = new(GetEffect(0));
-                                args.AddSpellMod(SpellValueMod.BasePoint0, GetEffect(0).GetAmount());
+                                args.AddSpellBP0(GetEffect(0).GetAmount());
                                 caster.CastSpell(target, 64801, args);
                             }
                         }
@@ -1379,7 +1379,7 @@ namespace Game.Spells
                                     float multiplier = aurEff.GetAmount();
                                     CastSpellExtraArgs args = new(TriggerCastFlags.FullMask);
                                     args.SetOriginalCastId(GetCastId());
-                                    args.AddSpellMod(SpellValueMod.BasePoint0, MathFunctions.CalculatePct(caster.GetMaxPower(PowerType.Mana), multiplier));
+                                    args.AddSpellBP0(MathFunctions.CalculatePct(caster.GetMaxPower(PowerType.Mana), multiplier));
                                     caster.CastSpell(caster, 47755, args);
                                 }
                             }

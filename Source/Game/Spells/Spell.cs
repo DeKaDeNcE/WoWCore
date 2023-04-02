@@ -9275,6 +9275,12 @@ namespace Game.Spells
             return this;
         }
 
+        public CastSpellExtraArgs AddSpellBP0(int val)
+        {
+            // because i don't want to type SPELLVALUE_BASE_POINT0 300 times
+            return AddSpellMod(SpellValueMod.BasePoint0, val);
+        }
+
         public CastSpellExtraArgs SetCustomArg(object customArg)
         {
             CustomArg = customArg;

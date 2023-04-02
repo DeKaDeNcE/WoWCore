@@ -168,7 +168,7 @@ namespace Scripts.Spells.Hunter;
         {
             Unit caster = GetCaster();
             CastSpellExtraArgs args = new(TriggerCastFlags.FullMask);
-            args.AddSpellMod(SpellValueMod.BasePoint0, (int)caster.CountPctFromMaxHealth(30));
+            args.AddSpellBP0((int)caster.CountPctFromMaxHealth(30));
             caster.CastSpell(caster, SpellIds.PetLastStandTriggered, args);
         }
 
@@ -312,7 +312,7 @@ namespace Scripts.Spells.Hunter;
                 if (!caster.HasAura(SpellIds.PetHeartOfThePhoenixDebuff))
                 {
                     CastSpellExtraArgs args = new(TriggerCastFlags.FullMask);
-                    args.AddSpellMod(SpellValueMod.BasePoint0, 100);
+                    args.AddSpellBP0( 100);
                     owner.CastSpell(caster, SpellIds.PetHeartOfThePhoenixTriggered, args);
                     caster.CastSpell(caster, SpellIds.PetHeartOfThePhoenixDebuff, true);
                 }
@@ -373,7 +373,7 @@ namespace Scripts.Spells.Hunter;
             PreventDefaultAction();
 
             CastSpellExtraArgs args = new(aurEff);
-            args.AddSpellMod(SpellValueMod.BasePoint0, (int)MathFunctions.CalculatePct(eventInfo.GetDamageInfo().GetDamage(), aurEff.GetAmount()));
+            args.AddSpellBP0((int)MathFunctions.CalculatePct(eventInfo.GetDamageInfo().GetDamage(), aurEff.GetAmount()));
             eventInfo.GetActor().CastSpell(GetCaster(), SpellIds.RoarOfSacrificeTriggered, args);
         }
 

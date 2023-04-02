@@ -5445,7 +5445,7 @@ namespace Game.Entities
                         if (apply)
                         {
                             CastSpellExtraArgs args = new(TriggerCastFlags.FullMask);
-                            args.AddSpellMod(SpellValueMod.BasePoint0, (int)azeriteEssencePower.MajorPowerDescription);
+                            args.AddSpellBP0((int)azeriteEssencePower.MajorPowerDescription);
                             CastSpell(this, PlayerConst.SpellIdHeartEssenceActionBarOverride, args);
                         }
                         else

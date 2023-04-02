@@ -121,7 +121,7 @@ namespace Scripts.Spells.Shaman;
             int? energize = procSpell.GetPowerTypeCostAmount(PowerType.Maelstrom);
 
             eventInfo.GetActor().CastSpell(eventInfo.GetActor(), SpellIds.AftershockEnergize, new CastSpellExtraArgs(energize != 0)
-                .AddSpellMod(SpellValueMod.BasePoint0, energize.Value));
+                .AddSpellBP0(energize.Value));
         }
 
         public override void Register()
@@ -153,7 +153,7 @@ namespace Scripts.Spells.Shaman;
             if (bp0 != 0)
             {
                 CastSpellExtraArgs args = new(aurEff);
-                args.AddSpellMod(SpellValueMod.BasePoint0, bp0);
+                args.AddSpellBP0(bp0);
                 eventInfo.GetActor().CastSpell(eventInfo.GetActor(), SpellIds.AncestralGuidanceHeal, args);
             }
         }
@@ -198,7 +198,7 @@ namespace Scripts.Spells.Shaman;
             AuraEffect energizeAmount = GetCaster().GetAuraEffect(SpellIds.MaelstromController, 4);
             if (energizeAmount != null)
                 GetCaster().CastSpell(GetCaster(), SpellIds.ChainLightningEnergize, new CastSpellExtraArgs(energizeAmount)
-                    .AddSpellMod(SpellValueMod.BasePoint0, (int)(energizeAmount.GetAmount() * GetUnitTargetCountForEffect(0))));
+                    .AddSpellBP0((int)(energizeAmount.GetAmount() * GetUnitTargetCountForEffect(0))));
         }
 
         public override void Register()
@@ -221,7 +221,7 @@ namespace Scripts.Spells.Shaman;
             AuraEffect energizeAmount = GetCaster().GetAuraEffect(SpellIds.MaelstromController, 5);
             if (energizeAmount != null)
                 GetCaster().CastSpell(GetCaster(), SpellIds.ChainLightningOverloadEnergize, new CastSpellExtraArgs(energizeAmount)
-                    .AddSpellMod(SpellValueMod.BasePoint0, (int)(energizeAmount.GetAmount() * GetUnitTargetCountForEffect(0))));
+                    .AddSpellBP0((int)(energizeAmount.GetAmount() * GetUnitTargetCountForEffect(0))));
         }
 
         public override void Register()
@@ -252,7 +252,7 @@ namespace Scripts.Spells.Shaman;
             if (gatheringStorms != null)
             {
                 CastSpellExtraArgs args = new(TriggerCastFlags.FullMask);
-                args.AddSpellMod(SpellValueMod.BasePoint0, (int)(gatheringStorms.GetAmount() * _targetsHit));
+                args.AddSpellBP0(gatheringStorms.GetAmount() * _targetsHit);
                 GetCaster().CastSpell(GetCaster(), SpellIds.GatheringStormsBuff, args);
             }
         }
@@ -499,7 +499,7 @@ namespace Scripts.Spells.Shaman;
             AuraEffect energizeAmount = GetCaster().GetAuraEffect(SpellIds.MaelstromController, GetSpellInfo().Id == SpellIds.ElementalBlast ? 9 : 10u);
             if (energizeAmount != null)
                 GetCaster().CastSpell(GetCaster(), SpellIds.ElementalBlastEnergize, new CastSpellExtraArgs(energizeAmount)
-                    .AddSpellMod(SpellValueMod.BasePoint0, energizeAmount.GetAmount()));
+                    .AddSpellBP0(energizeAmount.GetAmount()));
         }
 
         void TriggerBuff()
@@ -568,7 +568,7 @@ namespace Scripts.Spells.Shaman;
 
             Unit attacker = eventInfo.GetActor();
             CastSpellExtraArgs args = new(aurEff);
-            args.AddSpellMod(SpellValueMod.BasePoint0, Math.Max(1, (int)(attacker.GetTotalAttackPowerValue(WeaponAttackType.BaseAttack) * 0.0264f)));
+            args.AddSpellBP0(Math.Max(1, (int)(attacker.GetTotalAttackPowerValue(WeaponAttackType.BaseAttack) * 0.0264f)));
             attacker.CastSpell(eventInfo.GetActionTarget(), SpellIds.FlametongueAttack, args);
         }
 
@@ -756,7 +756,7 @@ namespace Scripts.Spells.Shaman;
                 if (mana > 0)
                 {
                     CastSpellExtraArgs args = new(aurEff);
-                    args.AddSpellMod(SpellValueMod.BasePoint0, mana);
+                    args.AddSpellBP0(mana);
                     GetTarget().CastSpell(GetTarget(), SpellIds.ItemManaSurge, args);
                 }
             }
@@ -996,7 +996,7 @@ namespace Scripts.Spells.Shaman;
             AuraEffect energizeAmount = GetCaster().GetAuraEffect(SpellIds.MaelstromController, 0);
             if (energizeAmount != null)
                 GetCaster().CastSpell(GetCaster(), SpellIds.LightningBoltEnergize, new CastSpellExtraArgs(energizeAmount)
-                    .AddSpellMod(SpellValueMod.BasePoint0, energizeAmount.GetAmount()));
+                    .AddSpellBP0(energizeAmount.GetAmount()));
         }
 
         public override void Register()
@@ -1019,7 +1019,7 @@ namespace Scripts.Spells.Shaman;
             AuraEffect energizeAmount = GetCaster().GetAuraEffect(SpellIds.MaelstromController, 1);
             if (energizeAmount != null)
                 GetCaster().CastSpell(GetCaster(), SpellIds.LightningBoltOverloadEnergize, new CastSpellExtraArgs(energizeAmount)
-                    .AddSpellMod(SpellValueMod.BasePoint0, energizeAmount.GetAmount()));
+                    .AddSpellBP0(energizeAmount.GetAmount()));
         }
 
         public override void Register()
@@ -1262,7 +1262,7 @@ namespace Scripts.Spells.Shaman;
         {
             PreventDefaultAction();
             CastSpellExtraArgs args = new(aurEff);
-            args.AddSpellMod(SpellValueMod.BasePoint0, -aurEff.GetAmount());
+            args.AddSpellBP0(-aurEff.GetAmount());
             args.AddSpellMod(SpellValueMod.BasePoint1, aurEff.GetAmount());
 
             GetTarget().CastSpell(GetTarget(), SpellIds.TidalWaves, args);
@@ -1364,7 +1364,7 @@ namespace Scripts.Spells.Shaman;
             Unit target = eventInfo.GetProcTarget();
 
             CastSpellExtraArgs args = new(aurEff);
-            args.AddSpellMod(SpellValueMod.BasePoint0, amount);
+            args.AddSpellBP0(amount);
             caster.CastSpell(target, SpellIds.Electrified, args);
         }
 
@@ -1398,7 +1398,7 @@ namespace Scripts.Spells.Shaman;
             Unit target = eventInfo.GetProcTarget();
 
             CastSpellExtraArgs args = new(aurEff);
-            args.AddSpellMod(SpellValueMod.BasePoint0, amount);
+            args.AddSpellBP0(amount);
             caster.CastSpell(target, SpellIds.LavaBurstBonusDamage, args);
         }
 
@@ -1464,7 +1464,7 @@ namespace Scripts.Spells.Shaman;
             Unit target = eventInfo.GetProcTarget();
 
             CastSpellExtraArgs args = new(aurEff);
-            args.AddSpellMod(SpellValueMod.BasePoint0, amount);
+            args.AddSpellBP0(amount);
             caster.CastSpell(target, SpellIds.ChainedHeal, args);
         }
 

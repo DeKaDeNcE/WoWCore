@@ -235,7 +235,7 @@ namespace Scripts.Spells.Warlock;
         {
             Unit caster = GetCaster();
             CastSpellExtraArgs args = new(TriggerCastFlags.FullMask);
-            args.AddSpellMod(SpellValueMod.BasePoint0, GetEffectInfo(1).CalcValue(caster));
+            args.AddSpellBP0(GetEffectInfo(1).CalcValue(caster));
 
             caster.CastSpell(caster, SpellIds.DevourMagicHeal, args);
 
@@ -868,7 +868,7 @@ namespace Scripts.Spells.Warlock;
                 {
                     // backfire damage and silence
                     CastSpellExtraArgs args = new(aurEff);
-                    args.AddSpellMod(SpellValueMod.BasePoint0, aurEff.GetAmount() * 9);
+                    args.AddSpellBP0(aurEff.GetAmount() * 9);
                     caster.CastSpell(dispelInfo.GetDispeller(), SpellIds.UnstableAfflictionDispel, args);
                 }
             }

@@ -577,7 +577,7 @@ class spell_garothi_searing_barrage_dummy : SpellScript
 
     void HandleHit(uint effIndex)
     {
-        GetHitUnit().CastSpell(GetHitUnit(), SpellIds.SearingBarrageSelector, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.BasePoint0, (int)GetSpellInfo().Id));
+        GetHitUnit().CastSpell(GetHitUnit(), SpellIds.SearingBarrageSelector, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellBP0((int)GetSpellInfo().Id));
     }
 
     public override void Register()

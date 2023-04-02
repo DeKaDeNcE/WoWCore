@@ -118,7 +118,7 @@ namespace Scripts.Spells.Rogue;
             if (damageInfo != null)
             {
                 CastSpellExtraArgs args = new(aurEff);
-                args.AddSpellMod(SpellValueMod.BasePoint0, (int)damageInfo.GetDamage());
+                args.AddSpellBP0((int)damageInfo.GetDamage());
                 GetTarget().CastSpell(_procTarget, SpellIds.BladeFlurryExtraAttack, args);
             }
         }
