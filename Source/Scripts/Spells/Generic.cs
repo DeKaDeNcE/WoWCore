@@ -975,7 +975,7 @@ namespace Scripts.Spells.Generic
 
             Unit caster = eventInfo.GetActionTarget();
             CastSpellExtraArgs args = new(aurEff);
-            args.AddSpellMod(SpellValueMod.BasePoint0, aurEff.GetAmount());
+            args.AddSpellBP0(aurEff.GetAmount());
             caster.CastSpell(caster, SpellIds.BloodReserveHeal, args);
             caster.RemoveAura(SpellIds.BloodReserveAura);
         }
@@ -1190,7 +1190,7 @@ namespace Scripts.Spells.Generic
             if (target)
             {
                 CastSpellExtraArgs args = new(TriggerCastFlags.FullMask);
-                args.AddSpellMod(SpellValueMod.BasePoint0, basepoints0);
+                args.AddSpellBP0(basepoints0);
                 caster.CastSpell(target, SpellIds.ChaosBlast, args);
             }
         }
@@ -3181,7 +3181,7 @@ namespace Scripts.Spells.Generic
             if (target.HasAuraType(AuraType.WorgenAlteredForm))
                 target.RemoveAurasByType(AuraType.WorgenAlteredForm);
             else    // Basepoints 1 for this aura control whether to trigger transform transition animation or not.
-                target.CastSpell(target, SpellIds.AlteredForm, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.BasePoint0, 1));
+                target.CastSpell(target, SpellIds.AlteredForm, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellBP0(1));
         }
 
         public override void Register()
@@ -3579,7 +3579,7 @@ namespace Scripts.Spells.Generic
 
             Unit caster = eventInfo.GetActor();
             CastSpellExtraArgs args = new(aurEff);
-            args.AddSpellMod(SpellValueMod.BasePoint0, (int)damageInfo.GetDamage() / 2);
+            args.AddSpellBP0((int)damageInfo.GetDamage() / 2);
             caster.CastSpell(caster, SpellIds.VampiricTouchHeal, args);
         }
 
@@ -4424,7 +4424,7 @@ namespace Scripts.Spells.Generic
             int bp = GetEffectValue();
             Unit target = GetHitUnit();
             CastSpellExtraArgs args = new(TriggerCastFlags.FullMask);
-            args.AddSpellMod(SpellValueMod.BasePoint0, bp);
+            args.AddSpellBP0(bp);
             target.CastSpell(target, SpellIds.CannonBlastDamage, args);
         }
 

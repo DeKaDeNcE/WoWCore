@@ -1025,7 +1025,7 @@ namespace Scripts.Spells.Paladin
                     if (!applications.Empty())
                     {
                         CastSpellExtraArgs args = new(aurEff);
-                        args.AddSpellMod(SpellValueMod.BasePoint0, (int)heal);
+                        args.AddSpellBP0((int)heal);
                         eventInfo.GetActor().CastSpell(applications[0].GetTarget(), SpellIds.BeaconOfLightHeal, args);
                     }
                     return;
@@ -1258,7 +1258,7 @@ namespace Scripts.Spells.Paladin
             amount /= (int)spellInfo.GetMaxTicks();
 
             CastSpellExtraArgs args = new(aurEff);
-            args.AddSpellMod(SpellValueMod.BasePoint0, amount);
+            args.AddSpellBP0(amount);
             caster.CastSpell(target, SpellIds.HolyMending, args);
         }
 

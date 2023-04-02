@@ -166,7 +166,7 @@ namespace Scripts.Spells.DemonHunter
         {
             PreventDefaultAction();
             CastSpellExtraArgs args = new(TriggerCastFlags.FullMask);
-            args.AddSpellMod(SpellValueMod.BasePoint0, aurEff.GetAmount());
+            args.AddSpellBP0(aurEff.GetAmount());
             args.SetTriggeringAura(aurEff);
             GetTarget().CastSpell(GetTarget(), SpellIds.ChaosStrikeEnergize, args);
         }
