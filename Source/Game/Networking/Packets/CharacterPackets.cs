@@ -1083,6 +1083,30 @@ namespace Game.Networking.Packets
         public DeclinedNameResult ResultCode;
     }
 
+    public class OverrideScreenFlash : ClientPacket
+    {
+        public bool ScreenFlashEnabled;
+
+        public OverrideScreenFlash(WorldPacket packet) : base(packet) { }
+
+        public override void Read()
+        {
+            ScreenFlashEnabled = _worldPacket.ReadBool();
+        }
+    }
+
+    public class QuickJoinAutoAcceptRequest : ClientPacket
+    {
+        public bool AutoAccept;
+
+        public QuickJoinAutoAcceptRequest(WorldPacket packet) : base(packet) { }
+
+        public override void Read()
+        {
+            AutoAccept = _worldPacket.ReadBool();
+        }
+    }
+
     //Structs
     public class CharacterCreateInfo
     {
