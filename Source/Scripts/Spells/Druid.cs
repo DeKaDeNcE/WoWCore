@@ -147,7 +147,7 @@ namespace Scripts.Spells.Druid;
             Unit target = GetTarget();
             Unit attacker = dmgInfo.GetAttacker();
             if (attacker != null)
-                target.CastSpell(attacker, SpellIds.BramblesRelect, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.BasePoint0, (int)absorbAmount));
+                target.CastSpell(attacker, SpellIds.BramblesRelect, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellBP0((int)absorbAmount));
         }
 
         public override void Register()
@@ -174,7 +174,7 @@ namespace Scripts.Spells.Druid;
                 Unit target = GetTarget();
                 uint rage = (uint)(target.GetMaxPower(PowerType.Rage) * (float)damageInfo.GetDamage() / (float)target.GetMaxHealth());
                 if (rage > 0)
-                    target.CastSpell(target, SpellIds.BristlingFurGainRage, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.BasePoint0, (int)rage));
+                    target.CastSpell(target, SpellIds.BristlingFurGainRage, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellBP0((int)rage));
             }
         }
 
@@ -637,7 +637,7 @@ namespace Scripts.Spells.Druid;
                 caster.CastSpell(caster, SpellIds.Innervate,
                     new CastSpellExtraArgs(TriggerCastFlags.IgnoreSpellAndCategoryCD | TriggerCastFlags.IgnoreCastInProgress)
                     .SetTriggeringSpell(GetSpell())
-                    .AddSpellMod(SpellValueMod.BasePoint0, -innervateR2.GetAmount()));
+                    .AddSpellBP0(-innervateR2.GetAmount()));
             }
         }
 
@@ -1065,7 +1065,7 @@ namespace Scripts.Spells.Druid;
 
             int amount = MathFunctions.CalculatePct(spellPowerCost.Amount, aurEff.GetAmount());
             CastSpellExtraArgs args = new (aurEff);
-            args.AddSpellMod(SpellValueMod.BasePoint0, amount);
+            args.AddSpellBP0(amount);
             caster.CastSpell((Unit)null, SpellIds.Exhilarate, args);
         }
 
@@ -1120,7 +1120,7 @@ namespace Scripts.Spells.Druid;
             amount /= (int)spellInfo.GetMaxTicks();
 
             CastSpellExtraArgs args = new(aurEff);
-            args.AddSpellMod(SpellValueMod.BasePoint0, amount);
+            args.AddSpellBP0(amount);
             caster.CastSpell(target, SpellIds.Languish, args);
         }
 
@@ -1203,7 +1203,7 @@ namespace Scripts.Spells.Druid;
 
             int amount = (int)eventInfo.GetHealInfo().GetHeal();
             CastSpellExtraArgs args = new(aurEff);
-            args.AddSpellMod(SpellValueMod.BasePoint0, (int)eventInfo.GetHealInfo().GetHeal());
+            args.AddSpellBP0((int)eventInfo.GetHealInfo().GetHeal());
             eventInfo.GetActor().CastSpell((Unit)null, SpellIds.RejuvenationT10Proc, args);
         }
 

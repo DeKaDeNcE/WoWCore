@@ -965,7 +965,7 @@ namespace Game.Entities
         public void EnterVehicle(Unit baseUnit, sbyte seatId = -1)
         {
             CastSpellExtraArgs args = new(TriggerCastFlags.IgnoreCasterMountedOrOnVehicle);
-            args.AddSpellMod(SpellValueMod.BasePoint0, seatId + 1);
+            args.AddSpellBP0(seatId + 1);
             CastSpell(baseUnit, SharedConst.VehicleSpellRideHardcoded, args);
         }
 

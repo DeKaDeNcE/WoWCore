@@ -426,7 +426,7 @@ namespace Game.Spells
                         CastSpellExtraArgs args1 = new(TriggerCastFlags.FullMask);
                         args1.SetOriginalCaster(m_originalCasterGUID);
                         args1.SetTriggeringSpell(this);
-                        args1.AddSpellMod(SpellValueMod.BasePoint0, damage);
+                        args1.AddSpellBP0(damage);
                         unitTarget.CastSpell(unitTarget, spellInfo.Id, args1);
                         return;
                     }
@@ -1632,7 +1632,7 @@ namespace Game.Spells
 
                     // if we have small value, it indicates seat position
                     if (basePoints > 0 && basePoints < SharedConst.MaxVehicleSeats)
-                        args.AddSpellMod(SpellValueMod.BasePoint0, basePoints);
+                        args.AddSpellBP0(basePoints);
 
                     unitCaster.CastSpell(summon, spellId, args);
                     break;
@@ -3158,7 +3158,7 @@ namespace Game.Spells
 
             CastSpellExtraArgs args = new(TriggerCastFlags.FullMask);
             args.SetTriggeringSpell(this);
-            args.AddSpellMod(SpellValueMod.BasePoint0, pct);
+            args.AddSpellBP0(pct);
             m_caster.CastSpell(pet, effectInfo.TriggerSpell, args);
         }
 
@@ -3967,7 +3967,7 @@ namespace Game.Spells
             {
                 CastSpellExtraArgs args = new(TriggerCastFlags.FullMask);
                 args.SetTriggeringSpell(this);
-                args.AddSpellMod(SpellValueMod.BasePoint0, mana);
+                args.AddSpellBP0(mana);
                 unitCaster.CastSpell(m_caster, 39104, args);
             }
         }

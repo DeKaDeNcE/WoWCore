@@ -1423,7 +1423,7 @@ namespace Game.Entities
             CastSpellExtraArgs args = new(TriggerCastFlags.FullMask);
 
             if (auraId == 35696)                                      // Demonic Knowledge
-                args.AddSpellMod(SpellValueMod.BasePoint0, MathFunctions.CalculatePct(aura.GetDamage(), GetStat(Stats.Stamina) + GetStat(Stats.Intellect)));
+                args.AddSpellBP0(MathFunctions.CalculatePct(aura.GetDamage(), GetStat(Stats.Stamina) + GetStat(Stats.Intellect)));
 
             CastSpell(this, auraId, args);
         }

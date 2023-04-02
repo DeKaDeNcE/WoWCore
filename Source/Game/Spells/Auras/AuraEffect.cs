@@ -4701,7 +4701,7 @@ namespace Game.Spells
                 {
                     CastSpellExtraArgs args = new(this);
                     if (GetAmount() != 0) // If amount available cast with basepoints (Crypt Fever for example)
-                        args.AddSpellMod(SpellValueMod.BasePoint0, GetAmount());
+                        args.AddSpellBP0(GetAmount());
 
                     caster.CastSpell(target, triggeredSpellId, args);
                 }
@@ -5368,7 +5368,7 @@ namespace Game.Spells
                     int feedAmount = MathFunctions.CalculatePct(gainedAmount, manaFeedVal);
 
                     CastSpellExtraArgs args = new(this);
-                    args.AddSpellMod(SpellValueMod.BasePoint0, feedAmount);
+                    args.AddSpellBP0(feedAmount);
                     caster.CastSpell(caster, 32554, args);
                 }
             }
@@ -5556,7 +5556,7 @@ namespace Game.Spells
             {
                 CastSpellExtraArgs args = new(this);
                 args.SetTriggeringSpell(eventInfo.GetProcSpell());
-                args.AddSpellMod(SpellValueMod.BasePoint0, GetAmount());
+                args.AddSpellBP0(GetAmount());
                 triggerCaster.CastSpell(triggerTarget, triggerSpellId, args);
                 Log.outDebug(LogFilter.Spells, "AuraEffect.HandleProcTriggerSpellWithValueAuraProc: Triggering spell {0} with value {1} from aura {2} proc", triggeredSpellInfo.Id, GetAmount(), GetId());
             }

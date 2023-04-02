@@ -811,7 +811,7 @@ namespace Scripts.Spells.Mage;
             int amount = (int)(MathFunctions.CalculatePct(eventInfo.GetDamageInfo().GetDamage(), pct) / igniteDot.GetMaxTicks());
 
             CastSpellExtraArgs args = new(aurEff);
-            args.AddSpellMod(SpellValueMod.BasePoint0, amount);
+            args.AddSpellBP0(amount);
             GetTarget().CastSpell(eventInfo.GetProcTarget(), SpellIds.Ignite, args);
         }
 
@@ -944,7 +944,7 @@ namespace Scripts.Spells.Mage;
 
             Unit caster = GetCaster();
             if (caster)
-                caster.CastSpell(GetTarget(), SpellIds.LivingBombExplosion, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.BasePoint0, aurEff.GetAmount()));
+                caster.CastSpell(GetTarget(), SpellIds.LivingBombExplosion, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellBP0(aurEff.GetAmount()));
         }
 
         public override void Register()
@@ -1214,7 +1214,7 @@ namespace Scripts.Spells.Mage;
 
             Unit caster = GetCaster();
             if (caster != null)
-                caster.CastSpell(GetTarget(), SpellIds.TouchOfTheMagiExplode, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.BasePoint0, amount));
+                caster.CastSpell(GetTarget(), SpellIds.TouchOfTheMagiExplode, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellBP0(amount));
         }
 
         public override void Register()

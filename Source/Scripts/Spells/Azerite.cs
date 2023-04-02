@@ -120,7 +120,7 @@ namespace Scripts.Spells.Azerite;
             {
                 long enemies = GetUnitTargetCountForEffect(0);
                 if (enemies != 0)
-                    GetCaster().CastSpell(GetCaster(), SpellIds.StrengthInNumbersBuff, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.BasePoint0, trait.GetAmount()).AddSpellMod(SpellValueMod.AuraStack, (int)enemies));
+                    GetCaster().CastSpell(GetCaster(), SpellIds.StrengthInNumbersBuff, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellBP0(trait.GetAmount()).AddSpellMod(SpellValueMod.AuraStack, (int)enemies));
             }
         }
 
@@ -147,7 +147,7 @@ namespace Scripts.Spells.Azerite;
                 {
                     AuraEffect trait = caster.GetAuraEffect(SpellIds.BlessedPortentsTrait, 0, caster.GetGUID());
                     if (trait != null)
-                        caster.CastSpell(GetTarget(), SpellIds.BlessedPortentsHeal, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.BasePoint0, trait.GetAmount()));
+                        caster.CastSpell(GetTarget(), SpellIds.BlessedPortentsHeal, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellBP0(trait.GetAmount()));
                 }
             }
             else
@@ -207,7 +207,7 @@ namespace Scripts.Spells.Azerite;
             AuraEffect trait = caster.GetAuraEffect(SpellIds.BracingChillTrait, 0, caster.GetGUID());
             if (trait != null)
                 caster.CastSpell(procInfo.GetProcTarget(), SpellIds.BracingChillHeal,
-                    new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.BasePoint0, trait.GetAmount()));
+                    new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellBP0(trait.GetAmount()));
 
             if (GetStackAmount() > 1)
                 caster.CastSpell((WorldObject)null, SpellIds.BracingChillSearchJumpTarget, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.AuraStack, GetStackAmount() - 1));

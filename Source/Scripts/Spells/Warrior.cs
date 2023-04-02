@@ -180,7 +180,7 @@ namespace Scripts.Spells.Warrior;
         {
             Unit caster = GetCaster();
             Unit target = GetHitUnit();
-            caster.CastSpell(caster, SpellIds.ChargePauseRageDecay, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellMod(SpellValueMod.BasePoint0, 0));
+            caster.CastSpell(caster, SpellIds.ChargePauseRageDecay, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellBP0(0));
             caster.CastSpell(target, SpellIds.ChargeRootEffect, true);
             caster.CastSpell(target, SpellIds.ChargeSlowEffect, true);
         }
@@ -431,7 +431,7 @@ namespace Scripts.Spells.Warrior;
             Unit target = eventInfo.GetActionTarget();
             int bp0 = (int)MathFunctions.CalculatePct(target.GetMaxHealth(), GetEffectInfo(1).CalcValue());
             CastSpellExtraArgs args = new(TriggerCastFlags.FullMask);
-            args.AddSpellMod(SpellValueMod.BasePoint0, bp0);
+            args.AddSpellBP0(bp0);
             target.CastSpell((Unit)null, SpellIds.Stoicism, args);
         }
 
@@ -478,7 +478,7 @@ namespace Scripts.Spells.Warrior;
         void HandleScript(uint effIndex)
         {
             CastSpellExtraArgs args = new(TriggerCastFlags.FullMask);
-            args.AddSpellMod(SpellValueMod.BasePoint0, (int)GetHitUnit().CountPctFromMaxHealth(GetEffectValue()));
+            args.AddSpellBP0((int)GetHitUnit().CountPctFromMaxHealth(GetEffectValue()));
 
             GetCaster().CastSpell(GetHitUnit(), SpellIds.RallyingCry, args);
         }
@@ -634,7 +634,7 @@ namespace Scripts.Spells.Warrior;
                 else
                 {
                     CastSpellExtraArgs args = new(aurEff);
-                    args.AddSpellMod(SpellValueMod.BasePoint0, (int)damageInfo.GetDamage());
+                    args.AddSpellBP0((int)damageInfo.GetDamage());
                     GetTarget().CastSpell(_procTarget, SpellIds.SweepingStrikesExtraAttack1, args);
                 }
             }
@@ -663,7 +663,7 @@ namespace Scripts.Spells.Warrior;
             //Get 25% of damage from the spell casted (Slam & Whirlwind) plus Remaining Damage from Aura
             int damage = (int)(MathFunctions.CalculatePct(eventInfo.GetDamageInfo().GetDamage(), aurEff.GetAmount()) / Global.SpellMgr.GetSpellInfo(SpellIds.TraumaEffect, GetCastDifficulty()).GetMaxTicks());
             CastSpellExtraArgs args = new(TriggerCastFlags.FullMask);
-            args.AddSpellMod(SpellValueMod.BasePoint0, damage);
+            args.AddSpellBP0(damage);
             GetCaster().CastSpell(target, SpellIds.TraumaEffect, args);
         }
 
