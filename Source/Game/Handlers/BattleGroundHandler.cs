@@ -675,5 +675,14 @@ namespace Game
             GetPlayer().ResurrectPlayer(1.0f);
             GetPlayer().TeleportTo(GetPlayer().GetHomebind());
         }
+
+        [WorldPacketHandler(ClientOpcodes.RequestCrowdControlSpell)]
+        void HandleCrowdControlSpell(RequestCrowdControlSpell packet)
+        {
+            ArenaCrowdControlSpellResult crowdControlSpell = new();
+            crowdControlSpell.PlayerGUID = packet.PlayerGUID;
+            crowdControlSpell.SpellID = 0;
+            SendPacket(crowdControlSpell);
+        }
     }
 }

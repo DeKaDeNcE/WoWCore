@@ -553,6 +553,31 @@ namespace Game.Networking.Packets
         }
     }
 
+    class RequestCrowdControlSpell : ClientPacket
+    {
+        public ObjectGuid PlayerGUID;
+        public RequestCrowdControlSpell(WorldPacket packet) : base(packet) { }
+
+        public override void Read()
+        {
+            PlayerGUID = _worldPacket.ReadPackedGuid();
+        }
+    }
+
+    class ArenaCrowdControlSpellResult : ServerPacket
+    {
+        public ObjectGuid PlayerGUID;
+        public int SpellID;
+
+        public ArenaCrowdControlSpellResult() : base(ServerOpcodes.ArenaCrowdControlSpellResult, ConnectionType.Instance) { }
+
+        public override void Write()
+        {
+            _worldPacket.WritePackedGuid(PlayerGUID);
+            _worldPacket.WriteInt32(SpellID);
+        }
+    }
+
     //Structs
     struct BracketInfo
     {
