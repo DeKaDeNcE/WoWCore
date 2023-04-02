@@ -1735,15 +1735,12 @@ namespace Game.DataStorage
 
         public List<QuestPackageItemRecord> GetQuestPackageItems(uint questPackageID)
         {
-            if (_questPackages.ContainsKey(questPackageID))
-                return _questPackages[questPackageID].Item1;
-
-            return null;
+            return _questPackages.LookupByKey(questPackageID)?.Item1;
         }
 
         public List<QuestPackageItemRecord> GetQuestPackageItemsFallback(uint questPackageID)
         {
-            return _questPackages.LookupByKey(questPackageID).Item2;
+            return _questPackages.LookupByKey(questPackageID)?.Item2;
         }
 
         public uint GetQuestUniqueBitFlag(uint questId)
