@@ -77,16 +77,17 @@ namespace Scripts.Spells.Rogue;
 
         void HandleHitDamage(uint effIndex)
         {
-            Unit hitUnit = GetHitUnit();
-            if (!hitUnit)
-                return;
-
             Unit caster = GetCaster();
-            if (hitUnit.IsInBack(caster))
+            Unit hitUnit = GetHitUnit();
+
+            if (caster != null && hitUnit != null)
             {
-                float currDamage = (float)GetHitDamage();
-                float newDamage = MathFunctions.AddPct(ref currDamage, (float)GetEffectInfo(3).CalcValue(caster));
-                SetHitDamage((int)newDamage);
+                if (hitUnit.IsInBack(caster))
+                {
+                    float currDamage = GetHitDamage();
+                    float newDamage = MathFunctions.AddPct(ref currDamage, GetEffectInfo(3).CalcValue(caster));
+                    SetHitDamage((int)newDamage);
+                }
             }
         }
 
@@ -97,8 +98,10 @@ namespace Scripts.Spells.Rogue;
     }
 
     [Script] // 13877, 33735, (check 51211, 65956) - Blade Flurry
-    class spell_rog_blade_flurry_AuraScript : AuraScript
+    class spell_rog_blade_flurry : AuraScript
     {
+        Unit _procTarget;
+
         public override bool Validate(SpellInfo spellInfo)
         {
             return ValidateSpellInfo(SpellIds.BladeFlurryExtraAttack);
@@ -115,6 +118,7 @@ namespace Scripts.Spells.Rogue;
             PreventDefaultAction();
 
             DamageInfo damageInfo = eventInfo.GetDamageInfo();
+
             if (damageInfo != null)
             {
                 CastSpellExtraArgs args = new(aurEff);
@@ -131,13 +135,13 @@ namespace Scripts.Spells.Rogue;
             else
                 OnEffectProc.Add(new EffectProcHandler(HandleProc, 0, AuraType.ModMeleeHaste));
         }
-
-        Unit _procTarget = null;
     }
 
     [Script] // 2818 - Deadly Poison
-    class spell_rog_deadly_poison_SpellScript : SpellScript
+    class spell_rog_deadly_poison : SpellScript
     {
+        byte _stackAmount;
+
         public override bool Load()
         {
             // at this point CastItem must already be initialized
@@ -150,10 +154,12 @@ namespace Scripts.Spells.Rogue;
                 return;
 
             Unit target = GetHitUnit();
+
             if (target != null)
             {
                 // Deadly Poison
-                AuraEffect aurEff = target.GetAuraEffect(AuraType.PeriodicDummy, SpellFamilyNames.Rogue, new FlagArray128(0x10000, 0x80000, 0), GetCaster().GetGUID());
+                AuraEffect aurEff = target.GetAuraEffect(AuraType.PeriodicDummy, SpellFamilyNames.Rogue, new FlagArray128(0x10000, 0x80000), GetCaster().GetGUID());
+
                 if (aurEff != null)
                     _stackAmount = aurEff.GetBase().GetStackAmount();
             }
@@ -166,10 +172,11 @@ namespace Scripts.Spells.Rogue;
 
             Player player = GetCaster().ToPlayer();
             Unit target = GetHitUnit();
+
             if (target != null)
             {
-
                 Item item = player.GetItemByPos(InventorySlots.Bag0, EquipmentSlot.MainHand);
+
                 if (item == GetCastItem())
                     item = player.GetItemByPos(InventorySlots.Bag0, EquipmentSlot.OffHand);
 
@@ -180,6 +187,7 @@ namespace Scripts.Spells.Rogue;
                 for (byte slot = 0; slot < (int)EnchantmentSlot.Max; ++slot)
                 {
                     var enchant = CliDB.SpellItemEnchantmentStorage.LookupByKey(item.GetEnchantmentId((EnchantmentSlot)slot));
+
                     if (enchant == null)
                         continue;
 
@@ -217,8 +225,6 @@ namespace Scripts.Spells.Rogue;
             BeforeHit.Add(new BeforeHitHandler(HandleBeforeHit));
             AfterHit.Add(new HitHandler(HandleAfterHit));
         }
-
-        byte _stackAmount = 0;
     }
 
     [Script] // 32645 - Envenom
@@ -228,12 +234,14 @@ namespace Scripts.Spells.Rogue;
         {
             int damagePerCombo = GetHitDamage();
             AuraEffect t5 = GetCaster().GetAuraEffect(SpellIds.T52pSetBonus, 0);
+
             if (t5 != null)
                 damagePerCombo += t5.GetAmount();
 
             int finalDamage = damagePerCombo;
             var costs = GetSpell().GetPowerCost();
             var c = costs.Find(cost => cost.Power == PowerType.ComboPoints);
+
             if (c != null)
                 finalDamage *= c.Amount;
 
@@ -291,9 +299,11 @@ namespace Scripts.Spells.Rogue;
             int amount = aurEff.GetAmount() * procSpell.GetPowerTypeCostAmount(PowerType.ComboPoints).Value * 1000;
 
             Unit target = GetTarget();
+
             if (target != null)
             {
                 Aura aura = target.GetAura(SpellIds.SliceAndDice);
+
                 if (aura != null)
                     aura.SetDuration(aura.GetDuration() + amount);
                 else
@@ -312,8 +322,7 @@ namespace Scripts.Spells.Rogue;
         }
     }
 
-    // 198031 - Honor Among Thieves
-    [Script] /// 7.1.5
+    [Script] // 198031 - Honor Among Thieves
     class spell_rog_honor_among_thieves : AuraScript
     {
         public override bool Validate(SpellInfo spellInfo)
@@ -336,34 +345,7 @@ namespace Scripts.Spells.Rogue;
     }
 
     [Script] // 51690 - Killing Spree
-    class spell_rog_killing_spree_SpellScript : SpellScript
-    {
-        void FilterTargets(List<WorldObject> targets)
-        {
-            if (targets.Empty() || GetCaster().GetVehicleBase())
-                FinishCast(SpellCastResult.OutOfRange);
-        }
-
-        void HandleDummy(uint effIndex)
-        {
-            Aura aura = GetCaster().GetAura(SpellIds.KillingSpree);
-            if (aura != null)
-            {
-                spell_rog_killing_spree_AuraScript script = aura.GetScript<spell_rog_killing_spree_AuraScript>();
-                if (script != null)
-                    script.AddTarget(GetHitUnit());
-            }
-        }
-
-        public override void Register()
-        {
-            OnObjectAreaTargetSelect.Add(new ObjectAreaTargetSelectHandler(FilterTargets, 1, Targets.UnitDestAreaEnemy));
-            OnEffectHitTarget.Add(new EffectHandler(HandleDummy, 1, SpellEffectName.Dummy));
-        }
-    }
-
-    [Script]
-    class spell_rog_killing_spree_AuraScript : AuraScript
+    class spell_rog_killing_spree_aura : AuraScript
     {
         List<ObjectGuid> _targets = new();
 
@@ -383,14 +365,15 @@ namespace Scripts.Spells.Rogue;
             {
                 ObjectGuid guid = _targets.SelectRandom();
                 Unit target = Global.ObjAccessor.GetUnit(GetTarget(), guid);
+
                 if (target != null)
                 {
                     GetTarget().CastSpell(target, SpellIds.KillingSpreeTeleport, true);
                     GetTarget().CastSpell(target, SpellIds.KillingSpreeWeaponDmg, true);
                     break;
                 }
-                else
-                    _targets.Remove(guid);
+
+                _targets.Remove(guid);
             }
         }
 
@@ -412,6 +395,35 @@ namespace Scripts.Spells.Rogue;
         }
     }
 
+    [Script]
+    class spell_rog_killing_spree : SpellScript
+    {
+        void FilterTargets(List<WorldObject> targets)
+        {
+            if (targets.Empty() || GetCaster().GetVehicleBase())
+                FinishCast(SpellCastResult.OutOfRange);
+        }
+
+        void HandleDummy(uint effIndex)
+        {
+            Aura aura = GetCaster().GetAura(SpellIds.KillingSpree);
+
+            if (aura != null)
+            {
+                spell_rog_killing_spree_aura script = aura.GetScript<spell_rog_killing_spree_aura>();
+
+                if (script != null)
+                    script.AddTarget(GetHitUnit());
+            }
+        }
+
+        public override void Register()
+        {
+            OnObjectAreaTargetSelect.Add(new ObjectAreaTargetSelectHandler(FilterTargets, 1, Targets.UnitDestAreaEnemy));
+            OnEffectHitTarget.Add(new EffectHandler(HandleDummy, 1, SpellEffectName.Dummy));
+        }
+    }
+
     [Script] // 76806 - Mastery: Main Gauche
     class spell_rog_mastery_main_gauche : AuraScript
     {
@@ -428,6 +440,7 @@ namespace Scripts.Spells.Rogue;
         void HandleProc(AuraEffect aurEff, ProcEventInfo procInfo)
         {
             Unit target = GetTarget();
+
             if (target != null)
                 target.CastSpell(procInfo.GetDamageInfo().GetVictim(), SpellIds.MainGauche, new CastSpellExtraArgs(aurEff));
         }
@@ -459,7 +472,7 @@ namespace Scripts.Spells.Rogue;
     [Script] // 79096 - Restless Blades
     class spell_rog_restless_blades : AuraScript
     {
-        static uint[] Spells = { SpellIds.AdrenalineRush, SpellIds.BetweenTheEyes, SpellIds.Sprint, SpellIds.GrapplingHook, SpellIds.Vanish, SpellIds.KillingSpree, SpellIds.MarkedForDeath, SpellIds.DeathFromAbove };
+        static readonly uint[] Spells = { SpellIds.AdrenalineRush, SpellIds.BetweenTheEyes, SpellIds.Sprint, SpellIds.GrapplingHook, SpellIds.Vanish, SpellIds.KillingSpree, SpellIds.MarkedForDeath, SpellIds.DeathFromAbove };
 
         public override bool Validate(SpellInfo spellInfo)
         {
@@ -469,11 +482,13 @@ namespace Scripts.Spells.Rogue;
         void HandleProc(AuraEffect aurEff, ProcEventInfo procInfo)
         {
             int? spentCP = procInfo.GetProcSpell()?.GetPowerTypeCostAmount(PowerType.ComboPoints);
+
             if (spentCP.HasValue)
             {
-                int cdExtra = (int)-((float)(aurEff.GetAmount() * spentCP.Value) * 0.1f);
+                int cdExtra = (int)-(aurEff.GetAmount() * spentCP.Value * 0.1f);
 
                 SpellHistory history = GetTarget().GetSpellHistory();
+
                 foreach (uint spellId in Spells)
                     history.ModifyCooldown(spellId, TimeSpan.FromSeconds(cdExtra), true);
             }
@@ -488,7 +503,7 @@ namespace Scripts.Spells.Rogue;
     [Script] // 315508 - Roll the Bones
     class spell_rog_roll_the_bones : SpellScript
     {
-        static uint[] Spells = { SpellIds.SkullAndCrossbones, SpellIds.GrandMelee, SpellIds.RuthlessPrecision, SpellIds.TrueBearing, SpellIds.BuriedTreasure, SpellIds.Broadside };
+        static readonly uint[] Spells = { SpellIds.SkullAndCrossbones, SpellIds.GrandMelee, SpellIds.RuthlessPrecision, SpellIds.TrueBearing, SpellIds.BuriedTreasure, SpellIds.Broadside };
 
         public override bool Validate(SpellInfo spellInfo)
         {
@@ -498,9 +513,11 @@ namespace Scripts.Spells.Rogue;
         void HandleDummy(uint effIndex)
         {
             int currentDuration = 0;
+
             foreach (uint spellId in Spells)
             {
                 Aura aura = GetCaster().GetAura(spellId);
+
                 if (aura != null)
                 {
                     currentDuration = aura.GetDuration();
@@ -537,7 +554,7 @@ namespace Scripts.Spells.Rogue;
     }
 
     [Script] // 1943 - Rupture
-    class spell_rog_rupture_AuraScript : AuraScript
+    class spell_rog_rupture : AuraScript
     {
         public override bool Validate(SpellInfo spellInfo)
         {
@@ -547,23 +564,27 @@ namespace Scripts.Spells.Rogue;
         void CalculateAmount(AuraEffect aurEff, ref int amount, ref bool canBeRecalculated)
         {
             Unit caster = GetCaster();
+
             if (caster != null)
             {
                 canBeRecalculated = false;
 
                 float[] attackpowerPerCombo =
                 {
-                        0.0f,
-                        0.015f,         // 1 point:  ${($m1 + $b1*1 + 0.015 * $AP) * 4} damage over 8 secs
-                        0.024f,         // 2 points: ${($m1 + $b1*2 + 0.024 * $AP) * 5} damage over 10 secs
-                        0.03f,          // 3 points: ${($m1 + $b1*3 + 0.03 * $AP) * 6} damage over 12 secs
-                        0.03428571f,    // 4 points: ${($m1 + $b1*4 + 0.03428571 * $AP) * 7} damage over 14 secs
-                        0.0375f         // 5 points: ${($m1 + $b1*5 + 0.0375 * $AP) * 8} damage over 16 secs
+                    0.0f,
+                    0.47712f * 2, // 1 point:  ${0.47712 * $AP * 2} damage over 8 secs
+                    0.47712f * 3, // 2 points: ${0.47712 * $AP * 3} damage over 12 secs
+                    0.47712f * 4, // 3 points: ${0.47712 * $AP * 4} damage over 16 secs
+                    0.47712f * 5, // 4 points: ${0.47712 * $AP * 5} damage over 20 secs
+                    0.47712f * 6, // 5 points: ${0.47712 * $AP * 6} damage over 24 secs
+                    0.47712f * 7, // 6 points: ${0.47712 * $AP * 7} damage over 28 secs
+                    0.47712f * 8  // 7 points: ${0.47712 * $AP * 8} damage over 32 secs
                 };
 
                 uint cp = caster.GetComboPoints();
-                if (cp > 5)
-                    cp = 5;
+
+                if (cp > 7)
+                    cp = 7;
 
                 amount += (int)(caster.GetTotalAttackPowerValue(WeaponAttackType.BaseAttack) * attackpowerPerCombo[cp]);
             }
@@ -576,10 +597,12 @@ namespace Scripts.Spells.Rogue;
 
             Aura aura = GetAura();
             Unit caster = aura.GetCaster();
-            if (!caster)
+
+            if (caster == null)
                 return;
 
             Aura auraVenomousWounds = caster.GetAura(SpellIds.VenomousWounds);
+
             if (auraVenomousWounds == null)
                 return;
 
@@ -588,15 +611,15 @@ namespace Scripts.Spells.Rogue;
             if (cost == null)
                 return;
 
-            float pct = (float)aura.GetDuration() / (float)aura.GetMaxDuration();
-            int extraAmount = (int)((float)cost.Amount * pct);
+            float pct = aura.GetDuration() / (float)aura.GetMaxDuration();
+            int extraAmount = (int)(cost.Amount * pct);
             caster.ModifyPower(PowerType.Energy, extraAmount);
         }
 
         public override void Register()
         {
-            DoEffectCalcAmount.Add(new EffectCalcAmountHandler(CalculateAmount, 0, AuraType.PeriodicDummy));
-            OnEffectRemove.Add(new EffectApplyHandler(OnEffectRemoved, 0, AuraType.PeriodicDummy, AuraEffectHandleModes.Real));
+            DoEffectCalcAmount.Add(new EffectCalcAmountHandler(CalculateAmount, 0, AuraType.PeriodicDamage));
+            OnEffectRemove.Add(new EffectApplyHandler(OnEffectRemoved, 0, AuraType.PeriodicDamage, AuraEffectHandleModes.Real));
         }
     }
 
@@ -608,6 +631,7 @@ namespace Scripts.Spells.Rogue;
             Unit target = GetTarget();
 
             int? cost = procInfo.GetProcSpell()?.GetPowerTypeCostAmount(PowerType.ComboPoints);
+
             if (cost.HasValue)
                 if (RandomHelper.randChance(aurEff.GetSpellEffectInfo().PointsPerResource * cost.Value))
                     target.ModifyPower(PowerType.ComboPoints, 1);
@@ -622,6 +646,8 @@ namespace Scripts.Spells.Rogue;
     [Script] // 185438 - Shadowstrike
     class spell_rog_shadowstrike : SpellScript
     {
+        bool _hasPremeditationAura;
+
         public override bool Validate(SpellInfo spellInfo)
         {
             return ValidateSpellInfo(SpellIds.PremeditationAura, SpellIds.SliceAndDice, SpellIds.PremeditationPassive)
@@ -639,14 +665,17 @@ namespace Scripts.Spells.Rogue;
         void HandleEnergize(uint effIndex)
         {
             Unit caster = GetCaster();
+
             if (_hasPremeditationAura)
             {
                 if (caster.HasAura(SpellIds.SliceAndDice))
                 {
                     Aura premeditationPassive = caster.GetAura(SpellIds.PremeditationPassive);
+
                     if (premeditationPassive != null)
                     {
                         AuraEffect auraEff = premeditationPassive.GetEffect(1);
+
                         if (auraEff != null)
                             SetHitDamage(GetHitDamage() + auraEff.GetAmount());
                     }
@@ -666,8 +695,6 @@ namespace Scripts.Spells.Rogue;
             OnCheckCast.Add(new CheckCastHandler(HandleCheckCast));
             OnEffectHitTarget.Add(new EffectHandler(HandleEnergize, 1, SpellEffectName.Energize));
         }
-
-        bool _hasPremeditationAura = false;
     }
 
     [Script] // 193315 - Sinister Strike
@@ -681,7 +708,9 @@ namespace Scripts.Spells.Rogue;
         void HandleDummy(uint effIndex)
         {
             int damagePerCombo = GetHitDamage();
+
             AuraEffect t5 = GetCaster().GetAuraEffect(SpellIds.T52pSetBonus, 0);
+
             if (t5 != null)
                 damagePerCombo += t5.GetAmount();
 
@@ -785,6 +814,8 @@ namespace Scripts.Spells.Rogue;
     [Script] // 57934 - Tricks of the Trade
     class spell_rog_tricks_of_the_trade_aura : AuraScript
     {
+        ObjectGuid _redirectTarget;
+
         public override bool Validate(SpellInfo spellInfo)
         {
             return ValidateSpellInfo(SpellIds.TricksOfTheTradeProc);
@@ -801,8 +832,10 @@ namespace Scripts.Spells.Rogue;
             PreventDefaultAction();
 
             Unit rogue = GetTarget();
+
             if (Global.ObjAccessor.GetUnit(rogue, _redirectTarget))
                 rogue.CastSpell(rogue, SpellIds.TricksOfTheTradeProc, new CastSpellExtraArgs(aurEff));
+
             Remove(AuraRemoveMode.Default);
         }
 
@@ -811,8 +844,6 @@ namespace Scripts.Spells.Rogue;
             AfterEffectRemove.Add(new EffectApplyHandler(OnRemove, 1, AuraType.Dummy, AuraEffectHandleModes.Real));
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 1, AuraType.Dummy));
         }
-
-        ObjectGuid _redirectTarget;
 
         public void SetRedirectTarget(ObjectGuid guid) { _redirectTarget = guid; }
     }
@@ -823,12 +854,15 @@ namespace Scripts.Spells.Rogue;
         void DoAfterHit()
         {
             Aura aura = GetHitAura();
+
             if (aura != null)
             {
                 spell_rog_tricks_of_the_trade_aura script = aura.GetScript<spell_rog_tricks_of_the_trade_aura>();
+
                 if (script != null)
                 {
                     Unit explTarget = GetExplTargetUnit();
+
                     if (explTarget != null)
                         script.SetRedirectTarget(explTarget.GetGUID());
                     else
@@ -857,46 +891,6 @@ namespace Scripts.Spells.Rogue;
         }
     }
 
-    [Script] // 198020 - Turn the Tables (PvP Talent)
-    class spell_rog_turn_the_tables : AuraScript
-    {
-        bool CheckForStun(AuraEffect aurEff, ProcEventInfo eventInfo)
-        {
-            return eventInfo.GetProcSpell() && eventInfo.GetProcSpell().GetSpellInfo().HasAura(AuraType.ModStun);
-        }
-
-        public override void Register()
-        {
-            DoCheckEffectProc.Add(new CheckEffectProcHandler(CheckForStun, 0, AuraType.ProcTriggerSpell));
-        }
-    }
-
-    [Script] // 198023 - Turn the Tables (periodic)
-    class spell_rog_turn_the_tables_periodic_check : AuraScript
-    {
-        public override bool Validate(SpellInfo spellInfo)
-        {
-            return ValidateSpellInfo(SpellIds.TurnTheTablesBuff);
-        }
-
-        void CheckForStun(AuraEffect aurEff)
-        {
-            Unit target = GetTarget();
-
-            if (target != null && !target.HasAuraType(AuraType.ModStun))
-            {
-                target.CastSpell(target, SpellIds.TurnTheTablesBuff, new CastSpellExtraArgs(aurEff));
-                PreventDefaultAction();
-                Remove();
-            }
-        }
-
-        public override void Register()
-        {
-            OnEffectPeriodic.Add(new EffectPeriodicHandler(CheckForStun, 0, AuraType.PeriodicDummy));
-        }
-    }
-
     [Script] // 1856 - Vanish - SPELL_ROGUE_VANISH
     class spell_rog_vanish : SpellScript
     {
@@ -912,6 +906,7 @@ namespace Scripts.Spells.Rogue;
             Unit target = GetHitUnit();
 
             target.RemoveAurasByType(AuraType.ModStalked);
+
             if (!target.IsPlayer())
                 return;
 
