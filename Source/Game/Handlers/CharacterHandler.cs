@@ -2520,6 +2520,18 @@ namespace Game
             GetPlayer().SetStandState(packet.StandState);
         }
 
+        [WorldPacketHandler(ClientOpcodes.QuickJoinAutoAcceptRequests)]
+        void HandleQuickJoinAutoAcceptRequests(QuickJoinAutoAcceptRequest packet)
+        {
+            GetPlayer().AutoAcceptQuickJoin = packet.AutoAccept;
+        }
+
+        [WorldPacketHandler(ClientOpcodes.OverrideScreenFlash)]
+        void HandleOverrideScreenFlash(OverrideScreenFlash packet)
+        {
+            GetPlayer().OverrideScreenFlash = packet.ScreenFlashEnabled;
+        }
+
         void SendCharCreate(ResponseCodes result, ObjectGuid guid = default)
         {
             CreateChar response = new();

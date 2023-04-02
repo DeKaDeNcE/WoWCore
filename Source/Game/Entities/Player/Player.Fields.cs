@@ -254,6 +254,9 @@ namespace Game.Entities
 
         PlayerCommandStates _activeCheats;
 
+        public bool AutoAcceptQuickJoin;
+        public bool OverrideScreenFlash;
+
         class ValuesUpdateForPlayerWithMaskSender : IDoWork<Player>
         {
             Player Owner;
