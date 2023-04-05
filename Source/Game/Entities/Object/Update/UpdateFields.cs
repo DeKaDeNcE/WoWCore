@@ -2925,11 +2925,11 @@ namespace Game.Entities
                     }
                 }
             }
-            if (changesMask[214])
+            if (changesMask[213])
             {
                 for (int i = 0; i < 19; ++i)
                 {
-                    if (changesMask[164 + i])
+                    if (changesMask[214 + i])
                     {
                         VisibleItems[i].WriteUpdate(data, ignoreNestedChangesMask, owner, receiver);
                     }
