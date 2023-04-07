@@ -11,21 +11,21 @@ namespace Game.DataStorage
 {
     public class M2Storage
     {
-        // Convert the geomoetry from a spline value, to an actual WoW XYZ
+        // Convert the geometry from a spline value, to an actual WoW XYZ
         static Vector3 TranslateLocation(Vector4 dbcLocation, Vector3 basePosition, Vector3 splineVector)
         {
             Vector3 work = new();
             float x = basePosition.X + splineVector.X;
             float y = basePosition.Y + splineVector.Y;
             float z = basePosition.Z + splineVector.Z;
-            float distance = (float)Math.Sqrt((x * x) + (y * y));
-            float angle = (float)Math.Atan2(x, y) - dbcLocation.W;
+            float distance = MathF.Sqrt(x * x + y * y);
+            float angle = MathF.Atan2(x, y) - dbcLocation.W;
 
             if (angle < 0)
-                angle += 2 * MathFunctions.PI;
+                angle += 2 * MathF.PI;
 
-            work.X = dbcLocation.X + (distance * (float)Math.Sin(angle));
-            work.Y = dbcLocation.Y + (distance * (float)Math.Cos(angle));
+            work.X = dbcLocation.X + distance * MathF.Sin(angle);
+            work.Y = dbcLocation.Y + distance * MathF.Cos(angle);
             work.Z = dbcLocation.Z + z;
             return work;
         }
@@ -126,16 +126,16 @@ namespace Game.DataStorage
                             float xDiff = nextTarget.locations.X - lastTarget.locations.X;
                             float yDiff = nextTarget.locations.Y - lastTarget.locations.Y;
                             float zDiff = nextTarget.locations.Z - lastTarget.locations.Z;
-                            x = lastTarget.locations.X + (xDiff * ((float)timeDiffThis / timeDiffTarget));
-                            y = lastTarget.locations.Y + (yDiff * ((float)timeDiffThis / timeDiffTarget));
-                            z = lastTarget.locations.Z + (zDiff * ((float)timeDiffThis / timeDiffTarget));
+                            x = lastTarget.locations.X + xDiff * ((float)timeDiffThis / timeDiffTarget);
+                            y = lastTarget.locations.Y + yDiff * ((float)timeDiffThis / timeDiffTarget);
+                            z = lastTarget.locations.Z + zDiff * ((float)timeDiffThis / timeDiffTarget);
                         }
                         float xDiff1 = x - thisCam.locations.X;
                         float yDiff1 = y - thisCam.locations.Y;
-                        thisCam.locations.W = (float)Math.Atan2(yDiff1, xDiff1);
+                        thisCam.locations.W = MathF.Atan2(yDiff1, xDiff1);
 
                         if (thisCam.locations.W < 0)
-                            thisCam.locations.W += 2 * MathFunctions.PI;
+                            thisCam.locations.W += 2 * MathF.PI;
                     }
 
                     cameras.Add(thisCam);

@@ -66,7 +66,7 @@ namespace Game.Movement
                 RemoveFlag(MovementGeneratorFlags.Transitory);
 
                 Position destination = new(_reference);
-                float distance = (float)(4.0f * RandomHelper.FRand(0.0f, 1.0f) - 2.0f);
+                float distance = 4.0f * RandomHelper.FRand(0.0f, 1.0f) - 2.0f;
                 float angle = RandomHelper.FRand(0.0f, 1.0f) * MathF.PI * 2.0f;
                 owner.MovePositionToFirstCollision(destination, distance, angle);
 

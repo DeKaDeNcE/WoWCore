@@ -43,7 +43,7 @@ namespace Game.Maps
             {
                 double offX = GetDoublePositionX() - pos.GetDoublePositionX();
                 double offY = GetDoublePositionY() - pos.GetDoublePositionY();
-                return (offX * offX) + (offY * offY);
+                return offX * offX + offY * offY;
             }
 
             public Position Sync()

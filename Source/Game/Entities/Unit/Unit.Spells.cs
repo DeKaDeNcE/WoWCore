@@ -107,7 +107,7 @@ namespace Game.Entities
                 if (spellProto.HasAttribute(SpellAttr3.RequiresOffHandWeapon) && !spellProto.HasAttribute(SpellAttr3.RequiresMainHandWeapon))
                     attType = WeaponAttackType.OffAttack;
 
-                float APbonus = (float)(victim.GetTotalAuraModifier(attType != WeaponAttackType.RangedAttack ? AuraType.MeleeAttackPowerAttackerBonus : AuraType.RangedAttackPowerAttackerBonus));
+                float APbonus = victim.GetTotalAuraModifier(attType != WeaponAttackType.RangedAttack ? AuraType.MeleeAttackPowerAttackerBonus : AuraType.RangedAttackPowerAttackerBonus);
                 APbonus += GetTotalAttackPowerValue(attType);
                 DoneTotal += (int)(stack * ApCoeffMod * APbonus);
             }
@@ -132,7 +132,7 @@ namespace Game.Entities
                 DoneTotal += (int)(DoneAdvertisedBenefit * coeff * stack);
             }
 
-            float tmpDamage = (float)((int)pdamage + DoneTotal) * DoneTotalMod;
+            float tmpDamage = ((int)pdamage + DoneTotal) * DoneTotalMod;
             // apply spellmod to Done damage (flat and pct)
             Player _modOwner = GetSpellModOwner();
             if (_modOwner != null)
@@ -428,8 +428,8 @@ namespace Game.Entities
             float coeff = spellEffectInfo.BonusCoefficient;
             if (spellEffectInfo.BonusCoefficientFromAP > 0.0f)
             {
-                WeaponAttackType attType = (spellProto.IsRangedWeaponSpell() && spellProto.DmgClass != SpellDmgClass.Melee) ? WeaponAttackType.RangedAttack : WeaponAttackType.BaseAttack;
-                float APbonus = (float)victim.GetTotalAuraModifier(attType == WeaponAttackType.BaseAttack ? AuraType.MeleeAttackPowerAttackerBonus : AuraType.RangedAttackPowerAttackerBonus);
+                WeaponAttackType attType = spellProto.IsRangedWeaponSpell() && spellProto.DmgClass != SpellDmgClass.Melee ? WeaponAttackType.RangedAttack : WeaponAttackType.BaseAttack;
+                float APbonus = victim.GetTotalAuraModifier(attType == WeaponAttackType.BaseAttack ? AuraType.MeleeAttackPowerAttackerBonus : AuraType.RangedAttackPowerAttackerBonus);
                 APbonus += GetTotalAttackPowerValue(attType);
 
                 DoneTotal += (int)(spellEffectInfo.BonusCoefficientFromAP * stack * APbonus);
@@ -469,7 +469,7 @@ namespace Game.Entities
                     DoneTotal = 0;
             }
 
-            float heal = (float)((int)healamount + DoneTotal) * DoneTotalMod;
+            float heal = ((int)healamount + DoneTotal) * DoneTotalMod;
 
             // apply spellmod to Done amount
             Player _modOwner = GetSpellModOwner();
@@ -557,11 +557,11 @@ namespace Game.Entities
             if (damagetype == DamageEffectType.DOT)
             {
                 // Healing over time taken percent
-                float minval_hot = (float)GetMaxNegativeAuraModifier(AuraType.ModHotPct);
+                float minval_hot = GetMaxNegativeAuraModifier(AuraType.ModHotPct);
                 if (minval_hot != 0)
                     MathFunctions.AddPct(ref TakenTotalMod, minval_hot);
 
-                float maxval_hot = (float)GetMaxPositiveAuraModifier(AuraType.ModHotPct);
+                float maxval_hot = GetMaxPositiveAuraModifier(AuraType.ModHotPct);
                 if (maxval_hot != 0)
                     MathFunctions.AddPct(ref TakenTotalMod, maxval_hot);
             }
@@ -775,7 +775,7 @@ namespace Game.Entities
                 canDodge = false;
 
                 // only if in front
-                if (!victim.HasUnitState(UnitState.Controlled) && (victim.HasInArc(MathFunctions.PI, this) || victim.HasAuraType(AuraType.IgnoreHitDirection)))
+                if (!victim.HasUnitState(UnitState.Controlled) && (victim.HasInArc(MathF.PI, this) || victim.HasAuraType(AuraType.IgnoreHitDirection)))
                 {
                     int deflect_chance = victim.GetTotalAuraModifier(AuraType.DeflectSpells) * 100;
                     tmp += deflect_chance;
@@ -785,7 +785,7 @@ namespace Game.Entities
             }
 
             // Check for attack from behind
-            if (!victim.HasInArc(MathFunctions.PI, this))
+            if (!victim.HasInArc(MathF.PI, this))
             {
                 if (!victim.HasAuraType(AuraType.IgnoreHitDirection))
                 {

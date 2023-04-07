@@ -1482,15 +1482,15 @@ namespace Game.Achievements
                     break;
                 }
                 case ModifierTreeType.PlayerHealthBelowPercent: // 43
-                    if (referencePlayer.GetHealthPct() > (float)reqValue)
+                    if (referencePlayer.GetHealthPct() > reqValue)
                         return false;
                     break;
                 case ModifierTreeType.PlayerHealthAbovePercent: // 44
-                    if (referencePlayer.GetHealthPct() < (float)reqValue)
+                    if (referencePlayer.GetHealthPct() < reqValue)
                         return false;
                     break;
                 case ModifierTreeType.PlayerHealthEqualsPercent: // 45
-                    if (referencePlayer.GetHealthPct() != (float)reqValue)
+                    if (referencePlayer.GetHealthPct() != reqValue)
                         return false;
                     break;
                 case ModifierTreeType.TargetHealthBelowPercent: // 46

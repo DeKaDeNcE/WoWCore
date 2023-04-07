@@ -3818,7 +3818,7 @@ public static partial class Detour
             dtVsub(hitNormal, centerPos, hitPos);
             dtVnormalize(hitNormal);
 
-            hitDist = (float)Math.Sqrt(radiusSqr);
+            hitDist = MathF.Sqrt(radiusSqr);
 
             return status;
         }

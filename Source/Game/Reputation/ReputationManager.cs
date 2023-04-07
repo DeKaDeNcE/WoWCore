@@ -495,7 +495,7 @@ namespace Game
                 if (incremental || IsRenownReputation(factionEntry))
                 {
                     // int32 *= float cause one point loss?
-                    standing = (int)(Math.Floor(standing * WorldConfig.GetFloatValue(WorldCfg.RateReputationGain) + 0.5f));
+                    standing = (int)MathF.Floor(standing * WorldConfig.GetFloatValue(WorldCfg.RateReputationGain) + 0.5f);
                     standing += oldStanding;
                 }
 

@@ -88,13 +88,13 @@ namespace Game
         public ulong GetCommodityAuctionDeposit(ItemTemplate item, TimeSpan time, uint quantity)
         {
             uint sellPrice = item.GetSellPrice();
-            return (ulong)((Math.Ceiling(Math.Floor(Math.Max(0.15 * quantity * sellPrice, 100.0)) / MoneyConstants.Silver) * MoneyConstants.Silver) * (time.Minutes / (MIN_AUCTION_TIME / Time.Minute)));
+            return (ulong)(MathF.Ceiling(MathF.Floor(Math.Max(0.15f * quantity * sellPrice, 100.0f)) / MoneyConstants.Silver) * MoneyConstants.Silver * (time.Minutes / (MIN_AUCTION_TIME / Time.Minute)));
         }
 
         public ulong GetItemAuctionDeposit(Player player, Item item, TimeSpan time)
         {
             uint sellPrice = item.GetSellPrice(player);
-            return (ulong)((Math.Ceiling(Math.Floor(Math.Max(sellPrice * 0.15, 100.0)) / MoneyConstants.Silver) * MoneyConstants.Silver) * (time.Minutes / (MIN_AUCTION_TIME / Time.Minute)));
+            return (ulong)(MathF.Ceiling(MathF.Floor(MathF.Max(sellPrice * 0.15f, 100.0f)) / MoneyConstants.Silver) * MoneyConstants.Silver * (time.Minutes / (MIN_AUCTION_TIME / Time.Minute)));
         }
 
         public string BuildItemAuctionMailSubject(AuctionMailType type, AuctionPosting auction)
@@ -1307,7 +1307,7 @@ namespace Game
                 {
                     owner.UpdateCriteria(CriteriaType.MoneyEarnedFromAuctions, profit);
                     owner.UpdateCriteria(CriteriaType.HighestAuctionSale, profit);
-                    owner.GetSession().SendAuctionClosedNotification(auction, (float)WorldConfig.GetIntValue(WorldCfg.MailDeliveryDelay), true);
+                    owner.GetSession().SendAuctionClosedNotification(auction, WorldConfig.GetIntValue(WorldCfg.MailDeliveryDelay), true);
                 }
 
                 new MailDraft(Global.AuctionHouseMgr.BuildCommodityAuctionMailSubject(AuctionMailType.Sold, itemId, boughtFromAuction),
@@ -1476,7 +1476,7 @@ namespace Game
                     owner.UpdateCriteria(CriteriaType.MoneyEarnedFromAuctions, profit);
                     owner.UpdateCriteria(CriteriaType.HighestAuctionSale, auction.BidAmount);
                     //send auction owner notification, bidder must be current!
-                    owner.GetSession().SendAuctionClosedNotification(auction, (float)WorldConfig.GetIntValue(WorldCfg.MailDeliveryDelay), true);
+                    owner.GetSession().SendAuctionClosedNotification(auction, WorldConfig.GetIntValue(WorldCfg.MailDeliveryDelay), true);
                 }
 
                 new MailDraft(Global.AuctionHouseMgr.BuildItemAuctionMailSubject(AuctionMailType.Sold, auction),

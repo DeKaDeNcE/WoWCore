@@ -472,8 +472,8 @@ namespace Game.Maps
 
             GridCoord gridCoord = GridDefines.ComputeGridCoordSimple(x, y);
 
-            int doubleGridX = (int)(Math.Floor(-(x - MapConst.MapHalfSize) / MapConst.CenterGridOffset));
-            int doubleGridY = (int)(Math.Floor(-(y - MapConst.MapHalfSize) / MapConst.CenterGridOffset));
+            int doubleGridX = (int)MathF.Floor(-(x - MapConst.MapHalfSize) / MapConst.CenterGridOffset);
+            int doubleGridY = (int)MathF.Floor(-(y - MapConst.MapHalfSize) / MapConst.CenterGridOffset);
 
             float gx = x - ((int)gridCoord.X_coord - MapConst.CenterGridId + 1) * MapConst.SizeofGrids;
             float gy = y - ((int)gridCoord.Y_coord - MapConst.CenterGridId + 1) * MapConst.SizeofGrids;
@@ -484,10 +484,10 @@ namespace Game.Maps
                 if (Convert.ToBoolean(doubleGridX & 1))
                     quarterIndex = 4 + (gx <= gy ? 1 : 0u);
                 else
-                    quarterIndex = (2 + ((-MapConst.SizeofGrids - gx) > gy ? 1u : 0));
+                    quarterIndex = 2 + (-MapConst.SizeofGrids - gx > gy ? 1u : 0);
             }
             else if (Convert.ToBoolean(doubleGridX & 1))
-                quarterIndex = 6 + ((-MapConst.SizeofGrids - gx) <= gy ? 1u : 0);
+                quarterIndex = 6 + (-MapConst.SizeofGrids - gx <= gy ? 1u : 0);
             else
                 quarterIndex = gx > gy ? 1u : 0;
 

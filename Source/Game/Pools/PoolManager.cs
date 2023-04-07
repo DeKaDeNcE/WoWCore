@@ -682,7 +682,7 @@ namespace Game
                 // roll objects to be spawned
                 if (!ExplicitlyChanced.Empty())
                 {
-                    float roll = (float)RandomHelper.randChance();
+                    float roll = RandomHelper.randFChance();
 
                     foreach (PoolObject obj in ExplicitlyChanced)
                     {

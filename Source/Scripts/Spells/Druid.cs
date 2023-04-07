@@ -164,7 +164,7 @@ namespace Scripts.Spells.Druid
             if (damageInfo != null)
             {
                 Unit target = GetTarget();
-                uint rage = (uint)(target.GetMaxPower(PowerType.Rage) * (float)damageInfo.GetDamage() / (float)target.GetMaxHealth());
+                uint rage = (uint)(target.GetMaxPower(PowerType.Rage) * (float)damageInfo.GetDamage() / target.GetMaxHealth());
                 if (rage > 0)
                     target.CastSpell(target, SpellIds.BristlingFurGainRage, new CastSpellExtraArgs(TriggerCastFlags.FullMask).AddSpellBP0((int)rage));
             }
@@ -400,13 +400,13 @@ namespace Scripts.Spells.Druid
 
         void HandleHitTargetBurn(uint effIndex)
         {
-            int newValue = (int)((float)GetEffectValue() * _damageMultiplier);
+            int newValue = (int)(GetEffectValue() * _damageMultiplier);
             SetEffectValue(newValue);
         }
 
         void HandleHitTargetDmg(uint effIndex)
         {
-            int newValue = (int)((float)GetHitDamage() * (1.0f + _damageMultiplier));
+            int newValue = (int)(GetHitDamage() * (1.0f + _damageMultiplier));
             SetHitDamage(newValue);
         }
 
@@ -419,12 +419,12 @@ namespace Scripts.Spells.Druid
             AuraEffect auraEffect = caster.GetAuraEffect(SpellIds.IncarnationKingOfTheJungle, 1);
             if (auraEffect != null)
             {
-                float multiplier = 1.0f + (float)auraEffect.GetAmount() / 100.0f;
-                maxExtraConsumedPower = (int)((float)maxExtraConsumedPower * multiplier);
+                float multiplier = 1.0f + auraEffect.GetAmount() / 100.0f;
+                maxExtraConsumedPower = (int)(maxExtraConsumedPower * multiplier);
                 SetEffectValue(maxExtraConsumedPower);
             }
 
-            _damageMultiplier = Math.Min(caster.GetPower(PowerType.Energy), maxExtraConsumedPower) / maxExtraConsumedPower;
+            _damageMultiplier = Math.Min(caster.GetPower(PowerType.Energy), (float)maxExtraConsumedPower) / maxExtraConsumedPower;
         }
 
         public override void Register()

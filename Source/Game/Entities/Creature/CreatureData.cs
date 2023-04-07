@@ -281,7 +281,7 @@ namespace Game.Entities
             if (BaseMana == 0)
                 return 0;
 
-            return (uint)Math.Ceiling(BaseMana * info.ModMana * info.ModManaExtra);
+            return (uint)MathF.Ceiling(BaseMana * info.ModMana * info.ModManaExtra);
         }
     }
 

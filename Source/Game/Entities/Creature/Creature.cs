@@ -1842,7 +1842,7 @@ namespace Game.Entities
             float baseAggroDistance = 20.0f - GetCombatReach();
 
             // + - 1 yard for each level difference between player and creature
-            float aggroRadius = baseAggroDistance + (float)levelDifference;
+            float aggroRadius = baseAggroDistance + levelDifference;
 
             // detect range auras
             if ((creatureLevel + 5) <= WorldConfig.GetIntValue(WorldCfg.MaxPlayerLevel))
@@ -1855,7 +1855,7 @@ namespace Game.Entities
             // This makes sure that creatures such as bosses wont have a bigger aggro range than the rest of the npc's
             // The following code is used for blizzlike behaviour such as skippable bosses
             if (creatureLevel > expansionMaxLevel)
-                aggroRadius = baseAggroDistance + (float)(expansionMaxLevel - playerLevel);
+                aggroRadius = baseAggroDistance + (expansionMaxLevel - playerLevel);
 
             // Make sure that we wont go over the total range limits
             if (aggroRadius > maxRadius)
@@ -2724,8 +2724,8 @@ namespace Game.Entities
             {
                 if (IsWorldBoss())
                 {
-                    int level = (int)(unitTarget.GetLevel() + WorldConfig.GetIntValue(WorldCfg.WorldBossLevelDiff));
-                    return (uint)MathFunctions.RoundToInterval(ref level, 1u, 255u);
+                    uint level = unitTarget.GetLevel() + (uint)WorldConfig.GetIntValue(WorldCfg.WorldBossLevelDiff);
+                    return MathFunctions.RoundToInterval(ref level, 1u, 255u);
                 }
 
                 // If this creature should scale level, adapt level depending of target level

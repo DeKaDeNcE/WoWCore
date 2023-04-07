@@ -999,7 +999,7 @@ namespace Game.BattleFields
                 if (capturePoint)
                 {
                     player.SendUpdateWorldState(capturePoint.GetGoInfo().ControlZone.worldState1, 1);
-                    player.SendUpdateWorldState(capturePoint.GetGoInfo().ControlZone.worldstate2, (uint)(Math.Ceiling((m_value + m_maxValue) / (2 * m_maxValue) * 100.0f)));
+                    player.SendUpdateWorldState(capturePoint.GetGoInfo().ControlZone.worldstate2, (uint)MathF.Ceiling((m_value + m_maxValue) / (2 * m_maxValue) * 100.0f));
                     player.SendUpdateWorldState(capturePoint.GetGoInfo().ControlZone.worldstate3, m_neutralValuePct);
                 }
             }
@@ -1030,7 +1030,7 @@ namespace Game.BattleFields
                 // send this too, sometimes the slider disappears, dunno why :(
                 SendUpdateWorldState(capturePoint.GetGoInfo().ControlZone.worldState1, 1);
                 // send these updates to only the ones in this objective
-                SendUpdateWorldState(capturePoint.GetGoInfo().ControlZone.worldstate2, (uint)Math.Ceiling((m_value + m_maxValue) / (2 * m_maxValue) * 100.0f));
+                SendUpdateWorldState(capturePoint.GetGoInfo().ControlZone.worldstate2, (uint)MathF.Ceiling((m_value + m_maxValue) / (2 * m_maxValue) * 100.0f));
                 // send this too, sometimes it resets :S
                 SendUpdateWorldState(capturePoint.GetGoInfo().ControlZone.worldstate3, m_neutralValuePct);
             }

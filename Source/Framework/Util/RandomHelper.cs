@@ -17,6 +17,15 @@ public class RandomHelper
     /// Returns a random number between 0.0 and 1.0.
     /// </summary>
     /// <returns></returns>
+    public static float NextSingle()
+    {
+        return rand.NextSingle();
+    }
+
+    /// <summary>
+    /// Returns a random number between 0.0 and 1.0.
+    /// </summary>
+    /// <returns></returns>
     public static double NextDouble()
     {
         return rand.NextDouble();
@@ -68,7 +77,12 @@ public class RandomHelper
     /// <returns></returns>
     public static bool randChance(float i)
     {
-        return i > randChance();
+        return i > randFChance();
+    }
+
+    public static float randFChance()
+    {
+        return rand.NextSingle() * 100.0f;
     }
 
     public static double randChance()

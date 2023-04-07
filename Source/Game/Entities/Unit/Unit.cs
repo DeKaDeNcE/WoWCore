@@ -2756,7 +2756,7 @@ namespace Game.Entities
                 else                                                // victim is a player
                 {
                     // random durability for items (HIT TAKEN)
-                    if (durabilityLoss && WorldConfig.GetFloatValue(WorldCfg.RateDurabilityLossDamage) > RandomHelper.randChance())
+                    if (durabilityLoss && WorldConfig.GetFloatValue(WorldCfg.RateDurabilityLossDamage) > RandomHelper.randFChance())
                     {
                         byte slot = (byte)RandomHelper.IRand(0, EquipmentSlot.End - 1);
                         victim.ToPlayer().DurabilityPointLossForEquipSlot(slot);
@@ -2900,7 +2900,7 @@ namespace Game.Entities
 
             // If this is a creature and it attacks from behind it has a probability to daze it's victim
             if ((damageInfo.HitOutCome == MeleeHitOutcome.Crit || damageInfo.HitOutCome == MeleeHitOutcome.Crushing || damageInfo.HitOutCome == MeleeHitOutcome.Normal || damageInfo.HitOutCome == MeleeHitOutcome.Glancing) &&
-                !IsTypeId(TypeId.Player) && !ToCreature().IsControlledByPlayer() && !victim.HasInArc(MathFunctions.PI, this)
+                !IsTypeId(TypeId.Player) && !ToCreature().IsControlledByPlayer() && !victim.HasInArc(MathF.PI, this)
                 && (victim.IsTypeId(TypeId.Player) || !victim.ToCreature().IsWorldBoss()) && !victim.IsVehicle())
             {
                 // 20% base chance
@@ -3211,7 +3211,7 @@ namespace Game.Entities
                     modOwner.ApplySpellMod(spellProto, SpellModOp.ProcFrequency, ref PPM);
             }
 
-            return (float)Math.Floor((WeaponSpeed * PPM) / 600.0f);   // result is chance in percents (probability = Speed_in_sec * (PPM / 60))
+            return MathF.Floor((WeaponSpeed * PPM) / 600.0f);   // result is chance in percents (probability = Speed_in_sec * (PPM / 60))
         }
 
         public Unit GetNextRandomRaidMemberOrPet(float radius)
@@ -3352,7 +3352,7 @@ namespace Game.Entities
                     discreteResistProbability[i] = Math.Max(0.5f - 2.5f * Math.Abs(0.1f * i - averageResist), 0.0f);
             }
 
-            float roll = (float)RandomHelper.NextDouble();
+            float roll = RandomHelper.NextSingle();
             float probabilitySum = 0.0f;
 
             uint resistance = 0;
@@ -3420,7 +3420,7 @@ namespace Game.Entities
             // level-based resistance does not apply to binary spells, and cannot be overcome by spell penetration
             // gameobject caster -- should it have level based resistance?
             if (caster != null && !caster.IsGameObject() && (spellInfo == null || !spellInfo.HasAttribute(SpellCustomAttributes.BinarySpell)))
-                victimResistance += Math.Max(((float)victim.GetLevelForTarget(caster) - (float)caster.GetLevelForTarget(victim)) * 5.0f, 0.0f);
+                victimResistance += Math.Max(((float)victim.GetLevelForTarget(caster) - caster.GetLevelForTarget(victim)) * 5.0f, 0.0f);
 
             uint bossLevel = 83;
             float bossResistanceConstant = 510.0f;
@@ -3493,7 +3493,7 @@ namespace Game.Entities
                 if (!defaultPrevented)
                 {
                     // absorb must be smaller than the damage itself
-                    currentAbsorb = MathFunctions.RoundToInterval(ref currentAbsorb, 0, damageInfo.GetDamage());
+                    currentAbsorb = MathFunctions.RoundToInterval(ref currentAbsorb, 0, (int)damageInfo.GetDamage());
 
                     damageInfo.AbsorbDamage((uint)currentAbsorb);
 
@@ -3563,7 +3563,7 @@ namespace Game.Entities
                 if (!defaultPrevented)
                 {
                     // absorb must be smaller than the damage itself
-                    currentAbsorb = MathFunctions.RoundToInterval(ref currentAbsorb, 0, damageInfo.GetDamage());
+                    currentAbsorb = MathFunctions.RoundToInterval(ref currentAbsorb, 0, (int)damageInfo.GetDamage());
 
                     int manaReduction = currentAbsorb;
 
@@ -3704,7 +3704,7 @@ namespace Game.Entities
                 if (!defaultPrevented)
                 {
                     // absorb must be smaller than the heal itself
-                    currentAbsorb = MathFunctions.RoundToInterval(ref currentAbsorb, 0, healInfo.GetHeal());
+                    currentAbsorb = MathFunctions.RoundToInterval(ref currentAbsorb, 0, (int)healInfo.GetHeal());
 
                     healInfo.AbsorbHeal((uint)currentAbsorb);
 
@@ -3785,7 +3785,7 @@ namespace Game.Entities
                 foreach (var eff in resIgnoreAuras)
                 {
                     if (eff.GetMiscValue().HasAnyFlag((int)SpellSchoolMask.Normal) && eff.IsAffectingSpell(spellInfo))
-                        armor = (float)Math.Floor(MathFunctions.AddPct(ref armor, -eff.GetAmount()));
+                        armor = MathF.Floor(MathFunctions.AddPct(ref armor, -eff.GetAmount()));
                 }
 
                 // Apply Player CR_ARMOR_PENETRATION rating
@@ -4037,7 +4037,7 @@ namespace Game.Entities
                 TakenTotalMod = 1.0f - damageReduction;
             }
 
-            float tmpDamage = (float)(pdamage + TakenFlatBenefit) * TakenTotalMod;
+            float tmpDamage = (pdamage + TakenFlatBenefit) * TakenTotalMod;
             return (uint)Math.Max(tmpDamage, 0.0f);
         }
 

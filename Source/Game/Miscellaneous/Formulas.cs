@@ -20,7 +20,7 @@ namespace Game
 
         public static uint HKHonorAtLevel(uint level, float multiplier = 1.0f)
         {
-            return (uint)Math.Ceiling(HKHonorAtLevelF(level, multiplier));
+            return (uint)MathF.Ceiling(HKHonorAtLevelF(level, multiplier));
         }
 
         public static uint GetGrayLevel(uint pl_level)
@@ -235,7 +235,7 @@ namespace Game
                 rate = 3000;
 
             // http://www.arenajunkies.com/topic/179536-conquest-point-cap-vs-personal-rating-chart/page__st__60#entry3085246
-            return (uint)(1.4326 * ((1511.26 / (1 + 1639.28 / Math.Exp(0.00412 * rate))) + 850.15));
+            return (uint)(1.4326f * (1511.26f / (1 + 1639.28f / MathF.Exp(0.00412f * rate)) + 850.15f));
         }
 
         public static uint BgConquestRatingCalculator(uint rate)

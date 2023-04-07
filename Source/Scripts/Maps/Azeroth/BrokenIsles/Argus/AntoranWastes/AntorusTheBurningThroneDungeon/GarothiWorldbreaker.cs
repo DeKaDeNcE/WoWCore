@@ -801,7 +801,7 @@ class spell_garothi_cannon_chooser : SpellScript
         else if ((lastCannonEntry == CreatureIds.Decimator && annihilator) || (annihilator && !decimator))
         {
             byte count = (byte)(caster.GetMap().GetDifficultyID() == Difficulty.MythicRaid ? MiscConst.MaxTargetsSize :
-                Math.Max(MiscConst.MinTargetsSize, Math.Ceiling((float)caster.GetMap().GetPlayersCountExceptGMs() / 5)));
+                Math.Max(MiscConst.MinTargetsSize, MathF.Ceiling((float)caster.GetMap().GetPlayersCountExceptGMs() / 5)));
 
             for (byte i = 0; i < count; i++)
             {

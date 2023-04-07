@@ -1815,7 +1815,7 @@ namespace Game.Entities
 
                     // the object orientation + 1/2 pi
                     // every slot will be on that straight line
-                    float orthogonalOrientation = GetOrientation() + MathFunctions.PI * 0.5f;
+                    float orthogonalOrientation = GetOrientation() + MathF.PI * 0.5f;
                     // find nearest slot
                     bool found_free_slot = false;
 
@@ -1824,8 +1824,8 @@ namespace Game.Entities
                         // the distance between this slot and the center of the go - imagine a 1D space
                         float relativeDistance = (info.size * slot) - (info.size * (info.Chair.chairslots - 1) / 2.0f);
 
-                        float x_i = (float)(GetPositionX() + relativeDistance * Math.Cos(orthogonalOrientation));
-                        float y_i = (float)(GetPositionY() + relativeDistance * Math.Sin(orthogonalOrientation));
+                        float x_i = GetPositionX() + relativeDistance * MathF.Cos(orthogonalOrientation);
+                        float y_i = GetPositionY() + relativeDistance * MathF.Sin(orthogonalOrientation);
 
                         if (!sittingUnit.IsEmpty())
                         {
@@ -2024,7 +2024,7 @@ namespace Game.Entities
                             int chance = 100;
                             if (playerFishingLevel < areaFishingLevel)
                             {
-                                chance = (int)Math.Pow((double)playerFishingLevel / areaFishingLevel, 2) * 100;
+                                chance = (int)MathF.Pow((float)playerFishingLevel / areaFishingLevel, 2) * 100;
                                 if (chance < 1)
                                     chance = 1;
                             }
@@ -2540,12 +2540,12 @@ namespace Game.Entities
             if (info == null)
                 return IsWithinDist3d(x, y, z, radius);
 
-            float sinA = (float)Math.Sin(GetOrientation());
-            float cosA = (float)Math.Cos(GetOrientation());
+            float sinA = MathF.Sin(GetOrientation());
+            float cosA = MathF.Cos(GetOrientation());
             float dx = x - GetPositionX();
             float dy = y - GetPositionY();
             float dz = z - GetPositionZ();
-            float dist = (float)Math.Sqrt(dx * dx + dy * dy);
+            float dist = MathF.Sqrt(dx * dx + dy * dy);
             //! Check if the distance between the 2 objects is 0, can happen if both objects are on the same position.
             //! The code below this check wont crash if dist is 0 because 0/0 in float operations is valid, and returns infinite
             if (MathFunctions.fuzzyEq(dist, 0.0f))
@@ -3239,7 +3239,7 @@ namespace Game.Entities
         public float GetInteractionDistance()
         {
             if (GetGoInfo().GetInteractRadiusOverride() != 0)
-                return (float)GetGoInfo().GetInteractRadiusOverride() / 100.0f;
+                return GetGoInfo().GetInteractRadiusOverride() / 100.0f;
 
             switch (GetGoType())
             {
@@ -3949,9 +3949,9 @@ namespace Game.Entities
                     if (now < _owner.m_gameObjectData.Level)
                     {
                         int timeToStop = (int)(_owner.m_gameObjectData.Level - _stateChangeTime);
-                        float stopSourcePathPct = (float)_stateChangeProgress / (float)period;
-                        float stopTargetPathPct = (float)stopTargetTime / (float)period;
-                        float timeSinceStopProgressPct = (float)(now - _stateChangeTime) / (float)timeToStop;
+                        float stopSourcePathPct = (float)_stateChangeProgress / period;
+                        float stopTargetPathPct = (float)stopTargetTime / period;
+                        float timeSinceStopProgressPct = (float)(now - _stateChangeTime) / timeToStop;
 
                         float progressPct;
                         if (!_owner.HasDynamicFlag(GameObjectDynamicLowFlags.InvertedMovement))
@@ -3978,7 +3978,7 @@ namespace Game.Entities
                                 progressPct += 1.0f;
                         }
 
-                        newProgress = (uint)((float)period * progressPct) % period;
+                        newProgress = (uint)(period * progressPct) % period;
                     }
                     else
                         newProgress = (uint)stopTargetTime;
@@ -4062,7 +4062,7 @@ namespace Game.Entities
                     Vector3 dst = next;
                     if (prev != next)
                     {
-                        float animProgress = (float)(newProgress - oldAnimation.TimeIndex) / (float)(newAnimation.TimeIndex - oldAnimation.TimeIndex);
+                        float animProgress = (float)(newProgress - oldAnimation.TimeIndex) / (newAnimation.TimeIndex - oldAnimation.TimeIndex);
 
                         dst = pathRotation.Multiply(Vector3.Lerp(prev, next, animProgress));
                     }
@@ -4084,7 +4084,7 @@ namespace Game.Entities
 
                     if (prev != next)
                     {
-                        float animProgress = (float)(newProgress - oldRotation.TimeIndex) / (float)(newRotation.TimeIndex - oldRotation.TimeIndex);
+                        float animProgress = (float)(newProgress - oldRotation.TimeIndex) / (newRotation.TimeIndex - oldRotation.TimeIndex);
 
                         rotation = Quaternion.Lerp(prev, next, animProgress);
                     }
@@ -4094,7 +4094,7 @@ namespace Game.Entities
                 }
 
                 // update progress marker for client
-                _owner.SetPathProgressForClient((float)_pathProgress / (float)period);
+                _owner.SetPathProgressForClient((float)_pathProgress / period);
             }
 
             public override void OnStateChanged(GameObjectState oldState, GameObjectState newState)
@@ -4121,9 +4121,9 @@ namespace Game.Entities
 
                 _stateChangeTime = GameTime.GetGameTimeMS();
                 _stateChangeProgress = _pathProgress;
-                uint timeToStop = (uint)Math.Abs(_pathProgress - stopPathProgress);
+                uint timeToStop = _pathProgress - stopPathProgress;
                 _owner.SetLevel(GameTime.GetGameTimeMS() + timeToStop);
-                _owner.SetPathProgressForClient((float)_pathProgress / (float)GetTransportPeriod());
+                _owner.SetPathProgressForClient((float)_pathProgress / GetTransportPeriod());
 
                 if (oldState == GameObjectState.Active || oldState == newState)
                 {

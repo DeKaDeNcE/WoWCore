@@ -72,7 +72,6 @@ namespace Game.Movement
 
     public class MotionMaster
     {
-        public const double gravity = 19.29110527038574;
         public const float SPEED_CHARGE = 42.0f;
         static IdleMovementGenerator staticIdleMovement = new();
         static uint splineId;
@@ -614,8 +613,8 @@ namespace Game.Movement
             if (distanceToTravel > 0.0f)
             {
                 float angle = _owner.GetAbsoluteAngle(target);
-                float destx = _owner.GetPositionX() + distanceToTravel * (float)Math.Cos(angle);
-                float desty = _owner.GetPositionY() + distanceToTravel * (float)Math.Sin(angle);
+                float destx = _owner.GetPositionX() + distanceToTravel * MathF.Cos(angle);
+                float desty = _owner.GetPositionY() + distanceToTravel * MathF.Sin(angle);
                 MovePoint(id, destx, desty, target.GetPositionZ());
             }
             else
@@ -723,7 +722,7 @@ namespace Game.Movement
                 return;
 
             Position dest = _owner.GetPosition();
-            float moveTimeHalf = (float)(speedZ / gravity);
+            float moveTimeHalf = speedZ / SharedConst.gravity;
             float dist = 2 * moveTimeHalf * speedXY;
             float max_height = -MoveSpline.ComputeFallElevation(moveTimeHalf, false, -speedZ);
 
@@ -752,7 +751,7 @@ namespace Game.Movement
             if (_owner.IsTypeId(TypeId.Player))
                 return;
 
-            float moveTimeHalf = (float)(speedZ / gravity);
+            float moveTimeHalf = speedZ / SharedConst.gravity;
             float dist = 2 * moveTimeHalf * speedXY;
             _owner.GetNearPoint2D(null, out float x, out float y, dist, _owner.GetOrientation() + angle);
             float z = _owner.GetPositionZ();
@@ -771,7 +770,7 @@ namespace Game.Movement
             if (speedXY < 0.01f)
                 return;
 
-            float moveTimeHalf = (float)(speedZ / gravity);
+            float moveTimeHalf = speedZ / SharedConst.gravity;
             float max_height = -MoveSpline.ComputeFallElevation(moveTimeHalf, false, -speedZ);
 
             var initializer = (MoveSplineInit init) =>
@@ -837,7 +836,7 @@ namespace Game.Movement
         {
             var initializer = (MoveSplineInit init) =>
             {
-                float step = 2 * MathFunctions.PI / stepCount * (clockwise ? -1.0f : 1.0f);
+                float step = 2 * MathF.PI / stepCount * (clockwise ? -1.0f : 1.0f);
                 Position pos = new(x, y, z, 0.0f);
                 float angle = pos.GetAbsoluteAngle(_owner.GetPositionX(), _owner.GetPositionY());
 
@@ -847,8 +846,8 @@ namespace Game.Movement
                 for (byte i = 0; i < stepCount; angle += step, ++i)
                 {
                     Vector3 point = new();
-                    point.X = (float)(x + radius * Math.Cos(angle));
-                    point.Y = (float)(y + radius * Math.Sin(angle));
+                    point.X = x + radius * MathF.Cos(angle);
+                    point.Y = y + radius * MathF.Sin(angle);
 
                     if (_owner.IsFlying())
                         point.Z = z;
@@ -1076,14 +1075,14 @@ namespace Game.Movement
             float duration = dist / speedXY;
             float durationSqr = duration * duration;
             float height;
-            if (durationSqr < minHeight * 8 / gravity)
+            if (durationSqr < minHeight * 8 / SharedConst.gravity)
                 height = minHeight;
-            else if (durationSqr > maxHeight * 8 / gravity)
+            else if (durationSqr > maxHeight * 8 / SharedConst.gravity)
                 height = maxHeight;
             else
-                height = (float)(gravity * durationSqr / 8);
+                height = SharedConst.gravity * durationSqr / 8;
 
-            speedZ = (float)Math.Sqrt(2 * gravity * height);
+            speedZ = MathF.Sqrt(2 * SharedConst.gravity * height);
         }
 
         void ResolveDelayedActions()

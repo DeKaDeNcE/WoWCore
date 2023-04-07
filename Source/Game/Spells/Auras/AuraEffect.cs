@@ -3083,7 +3083,7 @@ namespace Game.Spells
                 {
                     if (spellGroupVal != 0)
                     {
-                        target.HandleStatFlatModifier((UnitMods.StatStart + (int)i), UnitModifierFlatType.Total, (float)spellGroupVal, !apply);
+                        target.HandleStatFlatModifier((UnitMods.StatStart + (int)i), UnitModifierFlatType.Total, spellGroupVal, !apply);
                         if (target.IsTypeId(TypeId.Player) || target.IsPet())
                             target.UpdateStatBuffMod(i);
                     }
@@ -5059,7 +5059,7 @@ namespace Game.Spells
                             case 72854: // Unbound Plague
                             case 72855: // Unbound Plague
                             case 72856: // Unbound Plague
-                                damage *= (uint)Math.Pow(1.25f, _ticksDone);
+                                damage *= (uint)MathF.Pow(1.25f, _ticksDone);
                                 break;
                             default:
                                 break;
@@ -5082,7 +5082,7 @@ namespace Game.Spells
                 }
                 case AuraType.PeriodicDamagePercent:
                     // ceil obtained value, it may happen that 10 ticks for 10% damage may not kill owner
-                    damage = (uint)Math.Ceiling(MathFunctions.CalculatePct((float)target.GetMaxHealth(), (float)damage));
+                    damage = (uint)MathF.Ceiling(MathFunctions.CalculatePct((float)target.GetMaxHealth(), damage));
                     damage = target.SpellDamageBonusTaken(caster, GetSpellInfo(), damage, DamageEffectType.DOT);
                     break;
                 default:

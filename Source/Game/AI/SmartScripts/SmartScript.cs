@@ -767,7 +767,7 @@ namespace Game.AI
                     {
                         if (IsUnit(target))
                         {
-                            float angle = e.Action.follow.angle > 6 ? (e.Action.follow.angle * (float)Math.PI / 180.0f) : e.Action.follow.angle;
+                            float angle = e.Action.follow.angle > 6 ? (e.Action.follow.angle * MathF.PI / 180.0f) : e.Action.follow.angle;
                             ((SmartAI)_me.GetAI()).SetFollow(target.ToUnit(), e.Action.follow.dist + 0.1f, angle, e.Action.follow.credit, e.Action.follow.entry, e.Action.follow.creditType);
                             Log.outDebug(LogFilter.ScriptsAi, "SmartScript.ProcessAction: SMART_ACTION_FOLLOW: Creature {0} following target {1}",
                                 _me.GetGUID().ToString(), target.GetGUID().ToString());
@@ -1093,8 +1093,8 @@ namespace Game.AI
 
                         // Use forward/backward/left/right cartesian plane movement
                         float o = pos.GetOrientation();
-                        float x = (float)(pos.GetPositionX() + (Math.Cos(o - (Math.PI / 2)) * e.Target.x) + (Math.Cos(o) * e.Target.y));
-                        float y = (float)(pos.GetPositionY() + (Math.Sin(o - (Math.PI / 2)) * e.Target.x) + (Math.Sin(o) * e.Target.y));
+                        float x = pos.GetPositionX() + MathF.Cos(o - MathF.PI / 2) * e.Target.x + MathF.Cos(o) * e.Target.y;
+                        float y = pos.GetPositionY() + MathF.Sin(o - MathF.PI / 2) * e.Target.x + MathF.Sin(o) * e.Target.y;
                         float z = pos.GetPositionZ() + e.Target.z;
                         target.ToCreature().GetMotionMaster().MovePoint(e.Action.moveOffset.PointId, x, y, z);
                     }
@@ -1515,7 +1515,7 @@ namespace Game.AI
                         break;
 
                     float attackDistance = e.Action.setRangedMovement.distance;
-                    float attackAngle = e.Action.setRangedMovement.angle / 180.0f * MathFunctions.PI;
+                    float attackAngle = e.Action.setRangedMovement.angle / 180.0f * MathF.PI;
 
                     foreach (var target in targets)
                     {
@@ -1826,7 +1826,7 @@ namespace Game.AI
 
                     if (e.Action.jump.Gravity != 0 || e.Action.jump.UseDefaultGravity != 0)
                     {
-                        float gravity = e.Action.jump.UseDefaultGravity != 0 ? (float)MotionMaster.gravity : e.Action.jump.Gravity;
+                        float gravity = e.Action.jump.UseDefaultGravity != 0 ? SharedConst.gravity : e.Action.jump.Gravity;
                         _me.GetMotionMaster().MoveJumpWithGravity(pos, e.Action.jump.SpeedXY, gravity, e.Action.jump.PointId);
                     }
                     else
@@ -2183,7 +2183,7 @@ namespace Game.AI
 
                     foreach (var target in targets)
                         if (IsUnit(target))
-                            _me.GetThreatManager().AddThreat(target.ToUnit(), (float)(e.Action.threat.threatINC - (float)e.Action.threat.threatDEC), null, true, true);
+                            _me.GetThreatManager().AddThreat(target.ToUnit(), e.Action.threat.threatINC - e.Action.threat.threatDEC, null, true, true);
 
                     break;
                 }
@@ -2297,7 +2297,7 @@ namespace Game.AI
                 {
                     uint speedInteger = e.Action.movementSpeed.speedInteger;
                     uint speedFraction = e.Action.movementSpeed.speedFraction;
-                    float speed = (float)((float)speedInteger + (float)speedFraction / Math.Pow(10, Math.Floor(Math.Log10((float)(speedFraction != 0 ? speedFraction : 1)) + 1)));
+                    float speed = speedInteger + speedFraction / MathF.Pow(10, MathF.Floor(MathF.Log10(speedFraction != 0 ? speedFraction : 1) + 1));
 
                     foreach (var target in targets)
                         if (IsCreature(target))
@@ -2596,13 +2596,13 @@ namespace Game.AI
                     {
                         if (e.Target.hostilRandom.powerType != 0)
                         {
-                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.MaxThreat, 1, new PowerUsersSelector(_me, (PowerType)(e.Target.hostilRandom.powerType - 1), (float)e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0));
+                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.MaxThreat, 1, new PowerUsersSelector(_me, (PowerType)(e.Target.hostilRandom.powerType - 1), e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0));
                             if (u != null)
                                 targets.Add(u);
                         }
                         else
                         {
-                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.MaxThreat, 1, (float)e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0);
+                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.MaxThreat, 1, e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0);
                             if (u != null)
                                 targets.Add(u);
                         }
@@ -2613,13 +2613,13 @@ namespace Game.AI
                     {
                         if (e.Target.hostilRandom.powerType != 0)
                         {
-                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.MinThreat, 1, new PowerUsersSelector(_me, (PowerType)(e.Target.hostilRandom.powerType - 1), (float)e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0));
+                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.MinThreat, 1, new PowerUsersSelector(_me, (PowerType)(e.Target.hostilRandom.powerType - 1), e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0));
                             if (u != null)
                                 targets.Add(u);
                         }
                         else
                         {
-                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.MinThreat, 1, (float)e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0);
+                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.MinThreat, 1, e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0);
                             if (u != null)
                                 targets.Add(u);
                         }
@@ -2630,13 +2630,13 @@ namespace Game.AI
                     {
                         if (e.Target.hostilRandom.powerType != 0)
                         {
-                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.Random, 1, new PowerUsersSelector(_me, (PowerType)(e.Target.hostilRandom.powerType - 1), (float)e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0));
+                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.Random, 1, new PowerUsersSelector(_me, (PowerType)(e.Target.hostilRandom.powerType - 1), e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0));
                             if (u != null)
                                 targets.Add(u);
                         }
                         else
                         {
-                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.Random, 1, (float)e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0);
+                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.Random, 1, e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0);
                             if (u != null)
                                 targets.Add(u);
                         }
@@ -2647,13 +2647,13 @@ namespace Game.AI
                     {
                         if (e.Target.hostilRandom.powerType != 0)
                         {
-                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.Random, 1, new PowerUsersSelector(_me, (PowerType)(e.Target.hostilRandom.powerType - 1), (float)e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0));
+                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.Random, 1, new PowerUsersSelector(_me, (PowerType)(e.Target.hostilRandom.powerType - 1), e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0));
                             if (u != null)
                                 targets.Add(u);
                         }
                         else
                         {
-                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.Random, 1, (float)e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0);
+                            Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.Random, 1, e.Target.hostilRandom.maxDist, e.Target.hostilRandom.playerOnly != 0);
                             if (u != null)
                                 targets.Add(u);
                         }
@@ -2662,7 +2662,7 @@ namespace Game.AI
                 case SmartTargets.Farthest:
                     if (_me)
                     {
-                        Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.MaxDistance, 0, new FarthestTargetSelector(_me, (float)e.Target.farthest.maxDist, e.Target.farthest.playerOnly != 0, e.Target.farthest.isInLos != 0));
+                        Unit u = _me.GetAI().SelectTarget(SelectTargetMethod.MaxDistance, 0, new FarthestTargetSelector(_me, e.Target.farthest.maxDist, e.Target.farthest.playerOnly != 0, e.Target.farthest.isInLos != 0));
                         if (u != null)
                             targets.Add(u);
                     }
@@ -3015,7 +3015,7 @@ namespace Game.AI
                 }
                 case SmartTargets.ClosestUnspawnedGameobject:
                 {
-                    GameObject target = baseObject.FindNearestUnspawnedGameObject(e.Target.goClosest.entry, (float)(e.Target.goClosest.dist != 0 ? e.Target.goClosest.dist : 100));
+                    GameObject target = baseObject.FindNearestUnspawnedGameObject(e.Target.goClosest.entry, (e.Target.goClosest.dist != 0 ? e.Target.goClosest.dist : 100));
                     if (target != null)
                         targets.Add(target);
                     break;
@@ -3520,7 +3520,7 @@ namespace Game.AI
                         }
                         break;
                         case SmartTargets.ActionInvoker:
-                            unitTarget = DoSelectLowestHpPercentFriendly((float)e.Event.friendlyHealthPct.radius, e.Event.friendlyHealthPct.minHpPct, e.Event.friendlyHealthPct.maxHpPct);
+                            unitTarget = DoSelectLowestHpPercentFriendly(e.Event.friendlyHealthPct.radius, e.Event.friendlyHealthPct.minHpPct, e.Event.friendlyHealthPct.maxHpPct);
                             break;
                         default:
                             return;

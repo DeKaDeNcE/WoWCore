@@ -94,9 +94,9 @@ namespace Game.Movement
                     break;
             }
 
-            distance = (float)Math.Sqrt(minDist);
+            distance = MathF.Sqrt(minDist);
 
-            return (minDist < 3.0f) ? nearestPoly : 0u;
+            return minDist < 3.0f ? nearestPoly : 0u;
         }
 
         ulong GetPolyByLocation(float[] point, ref float distance)
@@ -729,7 +729,7 @@ namespace Game.Movement
                 // Find movement delta.
                 float[] delta = new float[3];
                 Detour.dtVsub(delta, steerPos, iterPos);
-                float len = (float)Math.Sqrt(Detour.dtVdot(delta, delta));
+                float len = MathF.Sqrt(Detour.dtVdot(delta, delta));
                 // If the steer target is end of path or off-mesh link, do not move past the location.
                 if ((endOfPath || offMeshConnection) && len < 4.0f)
                     len = 1.0f;

@@ -85,8 +85,8 @@ namespace Game.Entities
         }
         public void RelocateOffset(Position offset)
         {
-            posX = (float)(posX + (offset.posX * Math.Cos(Orientation) + offset.posY * Math.Sin(Orientation + MathFunctions.PI)));
-            posY = (float)(posY + (offset.posY * Math.Cos(Orientation) + offset.posX * Math.Sin(Orientation)));
+            posX = posX + (offset.posX * MathF.Cos(Orientation) + offset.posY * MathF.Sin(Orientation + MathF.PI));
+            posY = posY + (offset.posY * MathF.Cos(Orientation) + offset.posX * MathF.Sin(Orientation));
             posZ += offset.posZ;
             SetOrientation(Orientation + offset.Orientation);
         }
@@ -137,8 +137,8 @@ namespace Game.Entities
             float dx = endPos.GetPositionX() - GetPositionX();
             float dy = endPos.GetPositionY() - GetPositionY();
 
-            retOffset.posX = (float)(dx * Math.Cos(GetOrientation()) + dy * Math.Sin(GetOrientation()));
-            retOffset.posY = (float)(dy * Math.Cos(GetOrientation()) - dx * Math.Sin(GetOrientation()));
+            retOffset.posX = dx * MathF.Cos(GetOrientation()) + dy * MathF.Sin(GetOrientation());
+            retOffset.posY = dy * MathF.Cos(GetOrientation()) - dx * MathF.Sin(GetOrientation());
             retOffset.posZ = endPos.GetPositionZ() - GetPositionZ();
             retOffset.SetOrientation(endPos.GetOrientation() - GetOrientation());
         }
@@ -157,20 +157,20 @@ namespace Game.Entities
             if (o < 0)
             {
                 float mod = o * -1;
-                mod %= (2.0f * MathFunctions.PI);
-                mod = -mod + 2.0f * MathFunctions.PI;
+                mod %= (2.0f * MathF.PI);
+                mod = -mod + 2.0f * MathF.PI;
                 return mod;
             }
-            return o % (2.0f * MathFunctions.PI);
+            return o % (2.0f * MathF.PI);
         }
 
         public float GetExactDist(float x, float y, float z)
         {
-            return (float)Math.Sqrt(GetExactDistSq(x, y, z));
+            return MathF.Sqrt(GetExactDistSq(x, y, z));
         }
         public float GetExactDist(Position pos)
         {
-            return (float)Math.Sqrt(GetExactDistSq(pos));
+            return MathF.Sqrt(GetExactDistSq(pos));
         }
         public float GetExactDistSq(float x, float y, float z)
         {
@@ -188,11 +188,11 @@ namespace Game.Entities
         }
         public float GetExactDist2d(float x, float y)
         {
-            return (float)Math.Sqrt(GetExactDist2dSq(x, y));
+            return MathF.Sqrt(GetExactDist2dSq(x, y));
         }
         public float GetExactDist2d(Position pos)
         {
-            return (float)Math.Sqrt(GetExactDist2dSq(pos));
+            return MathF.Sqrt(GetExactDist2dSq(pos));
         }
         public float GetExactDist2dSq(float x, float y)
         {
@@ -259,21 +259,21 @@ namespace Game.Entities
             // is-in-cube check and we have to calculate only one point instead of 4
 
             // 2PI = 360*, keep in mind that ingame orientation is counter-clockwise
-            double rotation = 2 * Math.PI - center.GetOrientation();
-            double sinVal = Math.Sin(rotation);
-            double cosVal = Math.Cos(rotation);
+            float rotation = 2 * MathF.PI - center.GetOrientation();
+            float sinVal = MathF.Sin(rotation);
+            float cosVal = MathF.Cos(rotation);
 
             float BoxDistX = GetPositionX() - center.GetPositionX();
             float BoxDistY = GetPositionY() - center.GetPositionY();
 
-            float rotX = (float)(center.GetPositionX() + BoxDistX * cosVal - BoxDistY * sinVal);
-            float rotY = (float)(center.GetPositionY() + BoxDistY * cosVal + BoxDistX * sinVal);
+            float rotX = center.GetPositionX() + BoxDistX * cosVal - BoxDistY * sinVal;
+            float rotY = center.GetPositionY() + BoxDistY * cosVal + BoxDistX * sinVal;
 
             // box edges are parallel to coordiante axis, so we can treat every dimension independently :D
             float dz = GetPositionZ() - center.GetPositionZ();
             float dx = rotX - center.GetPositionX();
             float dy = rotY - center.GetPositionY();
-            if ((Math.Abs(dx) > xradius) || (Math.Abs(dy) > yradius) || (Math.Abs(dz) > zradius))
+            if (Math.Abs(dx) > xradius || Math.Abs(dy) > yradius || Math.Abs(dz) > zradius)
                 return false;
 
             return true;
@@ -296,8 +296,8 @@ namespace Game.Entities
 
             // move angle to range -pi ... +pi
             float angle = GetRelativeAngle(obj);
-            if (angle > MathFunctions.PI)
-                angle -= 2.0f * MathFunctions.PI;
+            if (angle > MathF.PI)
+                angle -= 2.0f * MathF.PI;
 
             float lborder = -1 * (arc / border);                        // in range -pi..0
             float rborder = (arc / border);                             // in range 0..pi
@@ -306,12 +306,12 @@ namespace Game.Entities
 
         public bool HasInLine(Position pos, float objSize, float width)
         {
-            if (!HasInArc(MathFunctions.PI, pos, 2.0f))
+            if (!HasInArc(MathF.PI, pos, 2.0f))
                 return false;
 
             width += objSize;
             float angle = GetRelativeAngle(pos);
-            return Math.Abs(Math.Sin(angle)) * GetExactDist2d(pos.GetPositionX(), pos.GetPositionY()) < width;
+            return Math.Abs(MathF.Sin(angle)) * GetExactDist2d(pos.GetPositionX(), pos.GetPositionY()) < width;
         }
 
         public override string ToString()

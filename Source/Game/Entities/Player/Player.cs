@@ -433,7 +433,7 @@ namespace Game.Entities
                             }
                         }
                         //120 degrees of radiant range, if player is not in boundary radius
-                        else if (!IsWithinBoundaryRadius(victim) && !HasInArc(2 * MathFunctions.PI / 3, victim))
+                        else if (!IsWithinBoundaryRadius(victim) && !HasInArc(2 * MathF.PI / 3, victim))
                         {
                             SetAttackTimer(WeaponAttackType.BaseAttack, 100);
                             if (m_swingErrorMsg != 2)               // send single time (client auto repeat)
@@ -461,7 +461,7 @@ namespace Game.Entities
                     {
                         if (!IsWithinMeleeRange(victim))
                             SetAttackTimer(WeaponAttackType.OffAttack, 100);
-                        else if (!IsWithinBoundaryRadius(victim) && !HasInArc(2 * MathFunctions.PI / 3, victim))
+                        else if (!IsWithinBoundaryRadius(victim) && !HasInArc(2 * MathF.PI / 3, victim))
                             SetAttackTimer(WeaponAttackType.BaseAttack, 100);
                         else
                         {
@@ -6638,8 +6638,8 @@ namespace Game.Entities
             if (npc != null)
             {
                 float discount = GetReputationPriceDiscount(npc);
-                totalcost = (uint)Math.Ceiling(totalcost * discount);
-                firstcost = (uint)Math.Ceiling(firstcost * discount);
+                totalcost = (uint)MathF.Ceiling(totalcost * discount);
+                firstcost = (uint)MathF.Ceiling(firstcost * discount);
                 m_taxi.SetFlightMasterFactionTemplateId(npc.GetFaction());
             }
             else

@@ -165,7 +165,7 @@ namespace Game.Entities
             }
 
             _pathProgress = goinfo.MoTransport.allowstopping == 0 ? Time.GetMSTime() /*might be called before world update loop begins, don't use GameTime*/ % tInfo.TotalPathTime : 0;
-            SetPathProgressForClient((float)_pathProgress / (float)tInfo.TotalPathTime);
+            SetPathProgressForClient((float)_pathProgress / tInfo.TotalPathTime);
             SetObjectScale(goinfo.size);
             SetPeriod(tInfo.TotalPathTime);
             SetEntry(goinfo.entry);
@@ -229,7 +229,7 @@ namespace Game.Entities
                 _eventsToTrigger.SetAll(true);
             }
 
-            SetPathProgressForClient((float)_pathProgress / (float)GetTransportPeriod());
+            SetPathProgressForClient((float)_pathProgress / GetTransportPeriod());
 
             uint timer = _pathProgress % GetTransportPeriod();
 

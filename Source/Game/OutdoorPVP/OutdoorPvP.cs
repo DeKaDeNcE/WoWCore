@@ -277,7 +277,7 @@ namespace Game.PvP
             if (m_capturePoint)
             {
                 player.SendUpdateWorldState(m_capturePoint.GetGoInfo().ControlZone.worldState1, 1);
-                player.SendUpdateWorldState(m_capturePoint.GetGoInfo().ControlZone.worldstate2, (uint)Math.Ceiling((m_value + m_maxValue) / (2 * m_maxValue) * 100.0f));
+                player.SendUpdateWorldState(m_capturePoint.GetGoInfo().ControlZone.worldstate2, (uint)MathF.Ceiling((m_value + m_maxValue) / (2 * m_maxValue) * 100.0f));
                 player.SendUpdateWorldState(m_capturePoint.GetGoInfo().ControlZone.worldstate3, m_neutralValuePct);
             }
             return m_activePlayers[player.GetTeamId()].Add(player.GetGUID());
@@ -298,7 +298,7 @@ namespace Game.PvP
             // send this too, sometimes the slider disappears, dunno why :(
             SendUpdateWorldState(m_capturePoint.GetGoInfo().ControlZone.worldState1, 1);
             // send these updates to only the ones in this objective
-            SendUpdateWorldState(m_capturePoint.GetGoInfo().ControlZone.worldstate2, (uint)Math.Ceiling((m_value + m_maxValue) / (2 * m_maxValue) * 100.0f));
+            SendUpdateWorldState(m_capturePoint.GetGoInfo().ControlZone.worldstate2, (uint)MathF.Ceiling((m_value + m_maxValue) / (2 * m_maxValue) * 100.0f));
             // send this too, sometimes it resets :S
             SendUpdateWorldState(m_capturePoint.GetGoInfo().ControlZone.worldstate3, m_neutralValuePct);
         }

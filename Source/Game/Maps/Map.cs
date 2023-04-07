@@ -280,8 +280,8 @@ namespace Game.Maps
         void GridMarkNoUnload(uint x, uint y)
         {
             // First make sure this grid is loaded
-            float gX = (((float)x - 0.5f - MapConst.CenterGridId) * MapConst.SizeofGrids) + (MapConst.CenterGridOffset * 2);
-            float gY = (((float)y - 0.5f - MapConst.CenterGridId) * MapConst.SizeofGrids) + (MapConst.CenterGridOffset * 2);
+            float gX = (x - 0.5f - MapConst.CenterGridId) * MapConst.SizeofGrids + MapConst.CenterGridOffset * 2;
+            float gY = (y - 0.5f - MapConst.CenterGridId) * MapConst.SizeofGrids + MapConst.CenterGridOffset * 2;
             Cell cell = new(gX, gY);
             EnsureGridLoaded(cell);
 
@@ -2173,15 +2173,15 @@ namespace Game.Maps
             if (playerCount == 0)
                 return;
 
-            double adjustFactor = WorldConfig.GetFloatValue(type == SpawnObjectType.GameObject ? WorldCfg.RespawnDynamicRateGameobject : WorldCfg.RespawnDynamicRateCreature) / playerCount;
-            if (adjustFactor >= 1.0) // nothing to do here
+            float adjustFactor = WorldConfig.GetFloatValue(type == SpawnObjectType.GameObject ? WorldCfg.RespawnDynamicRateGameobject : WorldCfg.RespawnDynamicRateCreature) / playerCount;
+            if (adjustFactor >= 1.0f) // nothing to do here
                 return;
 
             uint timeMinimum = WorldConfig.GetUIntValue(type == SpawnObjectType.GameObject ? WorldCfg.RespawnDynamicMinimumGameObject : WorldCfg.RespawnDynamicMinimumCreature);
             if (respawnDelay <= timeMinimum)
                 return;
 
-            respawnDelay = (uint)Math.Max(Math.Ceiling(respawnDelay * adjustFactor), timeMinimum);
+            respawnDelay = (uint)Math.Max(MathF.Ceiling(respawnDelay * adjustFactor), timeMinimum);
         }
 
         public bool ShouldBeSpawnedOnGridLoad<T>(ulong spawnId) { return ShouldBeSpawnedOnGridLoad(SpawnData.TypeFor<T>(), spawnId); }
@@ -2547,7 +2547,7 @@ namespace Game.Maps
 
             //we must find visible range in cells so we unload only non-visible cells...
             float viewDist = GetVisibilityRange();
-            uint cell_range = (uint)Math.Ceiling(viewDist / MapConst.SizeofCells) + 1;
+            uint cell_range = (uint)MathF.Ceiling(viewDist / MapConst.SizeofCells) + 1;
 
             cell_min.Dec_x(cell_range);
             cell_min.Dec_y(cell_range);

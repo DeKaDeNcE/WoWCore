@@ -1246,7 +1246,7 @@ namespace Game.Entities
             uint victimLevel = GetLevelForTarget(this);
 
             // check if attack comes from behind, nobody can parry or block if attacker is behind
-            bool canParryOrBlock = victim.HasInArc((float)Math.PI, this) || victim.HasAuraType(AuraType.IgnoreHitDirection);
+            bool canParryOrBlock = victim.HasInArc(MathF.PI, this) || victim.HasAuraType(AuraType.IgnoreHitDirection);
 
             // only creatures can dodge if attacker is behind
             bool canDodge = !victim.IsTypeId(TypeId.Player) || canParryOrBlock;

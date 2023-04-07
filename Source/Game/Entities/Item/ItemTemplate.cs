@@ -230,7 +230,7 @@ namespace Game.Entities
             {
                 float avgDamage = dps * GetDelay() * 0.001f;
                 minDamage = (GetDmgVariance() * -0.5f + 1.0f) * avgDamage;
-                maxDamage = (float)Math.Floor(avgDamage * (GetDmgVariance() * 0.5f + 1.0f) + 0.5f);
+                maxDamage = MathF.Floor(avgDamage * (GetDmgVariance() * 0.5f + 1.0f) + 0.5f);
             }
         }
 

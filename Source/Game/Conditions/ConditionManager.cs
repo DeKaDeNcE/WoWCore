@@ -2411,16 +2411,16 @@ namespace Game
                 }
             }
 
-            if (condition.MinAvgItemLevel != 0 && Math.Floor(player.m_playerData.AvgItemLevel[0]) < condition.MinAvgItemLevel)
+            if (condition.MinAvgItemLevel != 0 && MathF.Floor(player.m_playerData.AvgItemLevel[0]) < condition.MinAvgItemLevel)
                 return false;
 
-            if (condition.MaxAvgItemLevel != 0 && Math.Floor(player.m_playerData.AvgItemLevel[0]) > condition.MaxAvgItemLevel)
+            if (condition.MaxAvgItemLevel != 0 && MathF.Floor(player.m_playerData.AvgItemLevel[0]) > condition.MaxAvgItemLevel)
                 return false;
 
-            if (condition.MinAvgEquippedItemLevel != 0 && Math.Floor(player.m_playerData.AvgItemLevel[1]) < condition.MinAvgEquippedItemLevel)
+            if (condition.MinAvgEquippedItemLevel != 0 && MathF.Floor(player.m_playerData.AvgItemLevel[1]) < condition.MinAvgEquippedItemLevel)
                 return false;
 
-            if (condition.MaxAvgEquippedItemLevel != 0 && Math.Floor(player.m_playerData.AvgItemLevel[1]) > condition.MaxAvgEquippedItemLevel)
+            if (condition.MaxAvgEquippedItemLevel != 0 && MathF.Floor(player.m_playerData.AvgItemLevel[1]) > condition.MaxAvgEquippedItemLevel)
                 return false;
 
             if (condition.ModifierTreeID != 0 && !player.ModifierTreeSatisfied(condition.ModifierTreeID))
