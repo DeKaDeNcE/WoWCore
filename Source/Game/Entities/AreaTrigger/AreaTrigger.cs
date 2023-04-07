@@ -570,8 +570,8 @@ namespace Game.Entities
 
             _polygonVertices = GetCreateProperties().PolygonVertices;
 
-            float angleSin = (float)Math.Sin(newOrientation);
-            float angleCos = (float)Math.Cos(newOrientation);
+            float angleSin = MathF.Sin(newOrientation);
+            float angleCos = MathF.Cos(newOrientation);
 
             // This is needed to rotate the vertices, following orientation
             for (var i = 0; i < _polygonVertices.Count; ++i)
@@ -729,8 +729,8 @@ namespace Game.Entities
 
         void InitSplineOffsets(List<Vector3> offsets, uint timeToTarget)
         {
-            float angleSin = (float)Math.Sin(GetOrientation());
-            float angleCos = (float)Math.Cos(GetOrientation());
+            float angleSin = MathF.Sin(GetOrientation());
+            float angleCos = MathF.Cos(GetOrientation());
 
             // This is needed to rotate the spline, following caster orientation
             List<Vector3> rotatedPoints = new();
@@ -866,9 +866,9 @@ namespace Game.Entities
             if (!cmi.CounterClockwise)
                 pathProgress *= -1;
 
-            float angle = cmi.InitialAngle + 2.0f * (float)Math.PI * pathProgress;
-            float x = centerPos.GetPositionX() + (radius * (float)Math.Cos(angle));
-            float y = centerPos.GetPositionY() + (radius * (float)Math.Sin(angle));
+            float angle = cmi.InitialAngle + 2.0f * MathF.PI * pathProgress;
+            float x = centerPos.GetPositionX() + radius * MathF.Cos(angle);
+            float y = centerPos.GetPositionY() + radius * MathF.Sin(angle);
             float z = centerPos.GetPositionZ() + cmi.ZOffset;
 
             return new Position(x, y, z, angle);
@@ -1078,7 +1078,7 @@ namespace Game.Entities
         public Vector3 GetTargetRollPitchYaw() { return _targetRollPitchYaw; }
 
         public bool HasSplines() { return !_spline.Empty(); }
-        public Spline<int> GetSpline() { return _spline; }
+        public Spline<float> GetSpline() { return _spline; }
         public uint GetElapsedTimeForMovement() { return GetTimeSinceCreated(); } // @todo: research the right value, in sniffs both timers are nearly identical
 
         public AreaTriggerOrbitInfo GetCircularMovementInfo() { return _orbitInfo; }
@@ -1102,7 +1102,7 @@ namespace Game.Entities
         Vector3 _rollPitchYaw;
         Vector3 _targetRollPitchYaw;
         List<Vector2> _polygonVertices;
-        Spline<int> _spline;
+        Spline<float> _spline;
 
         bool _reachedDestination;
         int _lastSplineIndex;

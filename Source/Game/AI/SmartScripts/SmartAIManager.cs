@@ -366,7 +366,7 @@ namespace Game.AI
 
         static bool IsTargetValid(SmartScriptHolder e)
         {
-            if (Math.Abs(e.Target.o) > 2 * MathFunctions.PI)
+            if (Math.Abs(e.Target.o) > 2 * MathF.PI)
                 Log.outError(LogFilter.Sql, $"SmartAIMgr: {e} has abs(`target.o` = {e.Target.o}) > 2*PI (orientation is expressed in radians)");
 
             switch (e.GetTargetType())

@@ -317,18 +317,18 @@ namespace Game.Spells
                 {
                     float speed = m_targets.GetSpeedXY();
                     if (speed > 0.0f)
-                        return (ulong)(Math.Floor((m_targets.GetDist2d() / speed + launchDelay) * 1000.0f));
+                        return (ulong)MathF.Floor((m_targets.GetDist2d() / speed + launchDelay) * 1000.0f);
                 }
                 else if (m_spellInfo.HasAttribute(SpellAttr9.SpecialDelayCalculation))
-                    return (ulong)(Math.Floor((m_spellInfo.Speed + launchDelay) * 1000.0f));
+                    return (ulong)MathF.Floor((m_spellInfo.Speed + launchDelay) * 1000.0f);
                 else if (m_spellInfo.Speed > 0.0f)
                 {
                     // We should not subtract caster size from dist calculation (fixes execution time desync with animation on client, eg. Malleable Goo cast by PP)
                     float dist = m_caster.GetExactDist(m_targets.GetDstPos());
-                    return (ulong)(Math.Floor((dist / m_spellInfo.Speed + launchDelay) * 1000.0f));
+                    return (ulong)MathF.Floor((dist / m_spellInfo.Speed + launchDelay) * 1000.0f);
                 }
 
-                return (ulong)Math.Floor(launchDelay * 1000.0f);
+                return (ulong)MathF.Floor(launchDelay * 1000.0f);
             }
 
             return 0;
@@ -930,9 +930,9 @@ namespace Game.Spells
                 {
                     float minDist = m_spellInfo.GetMinRange(true);
                     float maxDist = m_spellInfo.GetMaxRange(true);
-                    float dis = (float)RandomHelper.NextDouble() * (maxDist - minDist) + minDist;
+                    float dis = RandomHelper.NextSingle() * (maxDist - minDist) + minDist;
                     float x, y, z;
-                    float angle = (float)RandomHelper.NextDouble() * (MathFunctions.PI * 35.0f / 180.0f) - (float)(Math.PI * 17.5f / 180.0f);
+                    float angle = RandomHelper.NextSingle() * (MathF.PI * 35.0f / 180.0f) - (MathF.PI * 17.5f / 180.0f);
                     m_caster.GetClosePoint(out x, out y, out z, SharedConst.DefaultPlayerBoundingRadius, dis, angle);
 
                     float ground = m_caster.GetMapHeight(x, y, z);
@@ -1049,7 +1049,7 @@ namespace Game.Spells
                             break;
                         case Targets.DestCasterRandom:
                             if (dist > objSize)
-                                dist = objSize + (dist - objSize) * (float)RandomHelper.NextDouble();
+                                dist = objSize + (dist - objSize) * RandomHelper.NextSingle();
                             break;
                         case Targets.DestCasterFrontLeft:
                         case Targets.DestCasterBackLeft:
@@ -1098,7 +1098,7 @@ namespace Game.Spells
                     float angle = targetType.CalcDirectionAngle();
                     float dist = spellEffectInfo.CalcRadius(null);
                     if (targetType.GetTarget() == Targets.DestRandom)
-                        dist *= (float)RandomHelper.NextDouble();
+                        dist *= RandomHelper.NextSingle();
 
                     Position pos = new(dest.Position);
                     target.MovePositionToFirstCollision(pos, dist, angle);
@@ -1140,7 +1140,7 @@ namespace Game.Spells
                     float angle = targetType.CalcDirectionAngle();
                     float dist = spellEffectInfo.CalcRadius(m_caster);
                     if (targetType.GetTarget() == Targets.DestRandom)
-                        dist *= (float)RandomHelper.NextDouble();
+                        dist *= RandomHelper.NextSingle();
 
                     Position pos = new(m_targets.GetDstPos());
                     m_caster.MovePositionToFirstCollision(pos, dist, angle);
@@ -1293,7 +1293,7 @@ namespace Game.Spells
 
         public float Tangent(float x)
         {
-            x = (float)Math.Tan(x);
+            x = MathF.Tan(x);
             if (x < 100000.0f && x > -100000.0f) return x;
             if (x >= 100000.0f) return 100000.0f;
             if (x <= 100000.0f) return -100000.0f;
@@ -1359,9 +1359,9 @@ namespace Game.Spells
                 float objDist2d = srcPos.GetExactDist2d(obj);
                 float dz = obj.GetPositionZ() - srcPos.posZ;
 
-                float horizontalDistToTraj = (float)Math.Abs(objDist2d * Math.Sin(srcPos.GetRelativeAngle(obj)));
-                float sizeFactor = (float)Math.Cos((horizontalDistToTraj / size) * (Math.PI / 2.0f));
-                float distToHitPoint = (float)Math.Max(objDist2d * Math.Cos(srcPos.GetRelativeAngle(obj)) - size * sizeFactor, 0.0f);
+                float horizontalDistToTraj = Math.Abs(objDist2d * MathF.Sin(srcPos.GetRelativeAngle(obj)));
+                float sizeFactor = MathF.Cos(horizontalDistToTraj / size * (MathF.PI / 2.0f));
+                float distToHitPoint = Math.Max(objDist2d * MathF.Cos(srcPos.GetRelativeAngle(obj)) - size * sizeFactor, 0.0f);
                 float height = distToHitPoint * (a * distToHitPoint + b);
 
                 if (Math.Abs(dz - height) > size + b / 2.0f + SpellConst.TrajectoryMissileSize)
@@ -1377,8 +1377,8 @@ namespace Game.Spells
 
             if (dist2d > bestDist)
             {
-                float x = (float)(m_targets.GetSrcPos().posX + Math.Cos(unitCaster.GetOrientation()) * bestDist);
-                float y = (float)(m_targets.GetSrcPos().posY + Math.Sin(unitCaster.GetOrientation()) * bestDist);
+                float x = m_targets.GetSrcPos().posX + MathF.Cos(unitCaster.GetOrientation()) * bestDist;
+                float y = m_targets.GetSrcPos().posY + MathF.Sin(unitCaster.GetOrientation()) * bestDist;
                 float z = m_targets.GetSrcPos().posZ + bestDist * (a * bestDist + b);
 
                 SpellDestination dest = new(x, y, z, unitCaster.GetOrientation());
@@ -1871,7 +1871,7 @@ namespace Game.Spells
                     hitDelay += dist / m_spellInfo.Speed;
                 }
 
-                targetInfo.TimeDelay += (ulong)Math.Floor(hitDelay * 1000.0f);
+                targetInfo.TimeDelay += (ulong)MathF.Floor(hitDelay * 1000.0f);
             }
             else
                 targetInfo.TimeDelay = 0L;
@@ -1939,7 +1939,7 @@ namespace Game.Spells
                     hitDelay += dist / m_spellInfo.Speed;
                 }
 
-                target.TimeDelay = (ulong)Math.Floor(hitDelay * 1000.0f);
+                target.TimeDelay = (ulong)MathF.Floor(hitDelay * 1000.0f);
             }
             else
                 target.TimeDelay = 0UL;
@@ -2019,7 +2019,7 @@ namespace Game.Spells
                     hitDelay += dist / m_spellInfo.Speed;
                 }
 
-                target.TimeDelay = (ulong)Math.Floor(hitDelay * 1000.0f);
+                target.TimeDelay = (ulong)MathF.Floor(hitDelay * 1000.0f);
             }
             else
                 target.TimeDelay = 0;
@@ -3067,7 +3067,7 @@ namespace Game.Spells
 
             if (!m_launchHandled)
             {
-                ulong launchMoment = (ulong)Math.Floor(m_spellInfo.LaunchDelay * 1000.0f);
+                ulong launchMoment = (ulong)MathF.Floor(m_spellInfo.LaunchDelay * 1000.0f);
                 if (launchMoment > offset)
                     return launchMoment;
 
@@ -3873,8 +3873,8 @@ namespace Game.Spells
                 for (byte i = 0; i < player.GetMaxPower(PowerType.Runes); ++i)
                 {
                     // float casts ensure the division is performed on floats as we need float result
-                    float baseCd = (float)player.GetRuneBaseCooldown();
-                    runeData.Cooldowns.Add((byte)((baseCd - (float)player.GetRuneCooldown(i)) / baseCd * 255)); // rune cooldown passed
+                    float baseCd = player.GetRuneBaseCooldown();
+                    runeData.Cooldowns.Add((byte)((baseCd - player.GetRuneCooldown(i)) / baseCd * 255)); // rune cooldown passed
                 }
             }
 
@@ -4824,11 +4824,11 @@ namespace Game.Spells
                 if (unitTarget != m_caster)
                 {
                     // Must be behind the target
-                    if (m_spellInfo.HasAttribute(SpellCustomAttributes.ReqCasterBehindTarget) && unitTarget.HasInArc(MathFunctions.PI, m_caster))
+                    if (m_spellInfo.HasAttribute(SpellCustomAttributes.ReqCasterBehindTarget) && unitTarget.HasInArc(MathF.PI, m_caster))
                         return SpellCastResult.NotBehind;
 
                     // Target must be facing you
-                    if (m_spellInfo.HasAttribute(SpellCustomAttributes.ReqTargetFacingCaster) && !unitTarget.HasInArc(MathFunctions.PI, m_caster))
+                    if (m_spellInfo.HasAttribute(SpellCustomAttributes.ReqTargetFacingCaster) && !unitTarget.HasInArc(MathF.PI, m_caster))
                         return SpellCastResult.NotInfront;
 
                     // Ignore LOS for gameobjects casts
@@ -6112,7 +6112,7 @@ namespace Game.Spells
                     return SpellCastResult.OutOfRange;
 
                 if (m_caster.IsTypeId(TypeId.Player) &&
-                    ((m_spellInfo.FacingCasterFlags.HasAnyFlag(1u) && !m_caster.HasInArc((float)Math.PI, target))
+                    ((m_spellInfo.FacingCasterFlags.HasAnyFlag(1u) && !m_caster.HasInArc(MathF.PI, target))
                         && !m_caster.ToPlayer().IsWithinBoundaryRadius(target)))
                     return SpellCastResult.UnitNotInfront;
             }
@@ -7342,7 +7342,7 @@ namespace Game.Spells
                     m_spellValue.CriticalChance = value / 100.0f; // @todo ugly /100 remove when basepoints are double
                     break;
                 case SpellValueMod.DurationPct:
-                    m_spellValue.DurationMul = (float)value / 100.0f;
+                    m_spellValue.DurationMul = value / 100.0f;
                     break;
                 case SpellValueMod.Duration:
                     m_spellValue.Duration = value;
@@ -9048,7 +9048,7 @@ namespace Game.Spells
                         // handle effects on caster if the spell has travel time but also affects the caster in some way
                         ulong n_offset = m_Spell.HandleDelayed(0);
                         if (m_Spell.m_spellInfo.LaunchDelay != 0)
-                            Cypher.Assert(n_offset == (ulong)Math.Floor(m_Spell.m_spellInfo.LaunchDelay * 1000.0f));
+                            Cypher.Assert(n_offset == (ulong)MathF.Floor(m_Spell.m_spellInfo.LaunchDelay * 1000.0f));
                         else
                             Cypher.Assert(n_offset == m_Spell.GetDelayMoment(), $"{n_offset} == {m_Spell.GetDelayMoment()}");
 

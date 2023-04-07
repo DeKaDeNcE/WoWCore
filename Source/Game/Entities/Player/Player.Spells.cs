@@ -2896,7 +2896,7 @@ namespace Game.Entities
 
             GetSpellModValues(spellInfo, op, spell, basevalue, ref totalflat, ref totalmul);
 
-            basevalue = (int)(((float)basevalue + totalflat) * totalmul);
+            basevalue = (int)((basevalue + totalflat) * totalmul);
         }
 
         public void ApplySpellMod(SpellInfo spellInfo, SpellModOp op, ref uint basevalue, Spell spell = null)
@@ -2906,7 +2906,7 @@ namespace Game.Entities
 
             GetSpellModValues(spellInfo, op, spell, basevalue, ref totalflat, ref totalmul);
 
-            basevalue = (uint)(((float)basevalue + totalflat) * totalmul);
+            basevalue = (uint)((basevalue + totalflat) * totalmul);
         }
 
         public void ApplySpellMod(SpellInfo spellInfo, SpellModOp op, ref float basevalue, Spell spell = null)
@@ -2916,7 +2916,7 @@ namespace Game.Entities
 
             GetSpellModValues(spellInfo, op, spell, basevalue, ref totalflat, ref totalmul);
 
-            basevalue = (float)(basevalue + totalflat) * totalmul;
+            basevalue = (basevalue + totalflat) * totalmul;
         }
 
         public void ApplySpellMod(SpellInfo spellInfo, SpellModOp op, ref double basevalue, Spell spell = null)
@@ -2926,7 +2926,7 @@ namespace Game.Entities
 
             GetSpellModValues(spellInfo, op, spell, basevalue, ref totalflat, ref totalmul);
 
-            basevalue = (double)(basevalue + totalflat) * totalmul;
+            basevalue = (basevalue + totalflat) * totalmul;
         }
 
         public void GetSpellModValues<T>(SpellInfo spellInfo, SpellModOp op, Spell spell, T baseValue, ref int flat, ref float pct) where T : IComparable

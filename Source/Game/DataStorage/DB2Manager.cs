@@ -1171,7 +1171,7 @@ namespace Game.DataStorage
                     float xDiff = points[pointIndex].Pos.X - points[pointIndex - 1].Pos.X;
                     if (xDiff == 0.0)
                         return points[pointIndex].Pos.Y;
-                    return (float)((points[pointIndex].Pos.Y - points[pointIndex - 1].Pos.Y) * (1.0f - Math.Cos((x - points[pointIndex - 1].Pos.X) / xDiff * Math.PI)) * 0.5f) + points[pointIndex - 1].Pos.Y;
+                    return (points[pointIndex].Pos.Y - points[pointIndex - 1].Pos.Y) * (1.0f - MathF.Cos((x - points[pointIndex - 1].Pos.X) / xDiff * MathF.PI)) * 0.5f + points[pointIndex - 1].Pos.Y;
                 }
                 case CurveInterpolationMode.CatmullRom:
                 {

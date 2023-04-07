@@ -305,7 +305,7 @@ namespace Game.Networking.Packets
             }
         }
 
-        public static void WriteCreateObjectAreaTriggerSpline(Spline<int> spline, WorldPacket data)
+        public static void WriteCreateObjectAreaTriggerSpline(Spline<float> spline, WorldPacket data)
         {
             data.WriteBits(spline.GetPoints().Length, 16);
             foreach (var point in spline.GetPoints())
@@ -327,13 +327,13 @@ namespace Game.Networking.Packets
                     float lengthSquared = tmp.GetExactDistSq(0.0f, 0.0f, 0.0f);
                     if (lengthSquared > 0.0f)
                     {
-                        float mult = 1.0f / (float)Math.Sqrt(lengthSquared) * movementForce.Magnitude;
+                        float mult = 1.0f / MathF.Sqrt(lengthSquared) * movementForce.Magnitude;
                         tmp.posX *= mult;
                         tmp.posY *= mult;
                         tmp.posZ *= mult;
-                        float minLengthSquared = (tmp.GetPositionX() * tmp.GetPositionX() * 0.04f) +
-                            (tmp.GetPositionY() * tmp.GetPositionY() * 0.04f) +
-                            (tmp.GetPositionZ() * tmp.GetPositionZ() * 0.04f);
+                        float minLengthSquared = tmp.GetPositionX() * tmp.GetPositionX() * 0.04f +
+                            tmp.GetPositionY() * tmp.GetPositionY() * 0.04f +
+                            tmp.GetPositionZ() * tmp.GetPositionZ() * 0.04f;
                         if (lengthSquared > minLengthSquared)
                             direction = new Vector3(tmp.posX, tmp.posY, tmp.posZ);
                     }

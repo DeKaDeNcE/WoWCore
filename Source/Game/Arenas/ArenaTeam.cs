@@ -470,7 +470,7 @@ namespace Game.Arenas
         {
             // Returns the chance to win against a team with the given rating, used in the rating adjustment calculation
             // ELO system
-            return (float)(1.0f / (1.0f + Math.Exp(Math.Log(10.0f) * ((float)opponentRating - ownRating) / 650.0f)));
+            return 1.0f / (1.0f + MathF.Exp(MathF.Log(10.0f) * (opponentRating - ownRating) / 650.0f));
         }
 
         int GetMatchmakerRatingMod(uint ownRating, uint opponentRating, bool won)
@@ -478,7 +478,7 @@ namespace Game.Arenas
             // 'Chance' calculation - to beat the opponent
             // This is a simulation. Not much info on how it really works
             float chance = GetChanceAgainst(ownRating, opponentRating);
-            float won_mod = (won) ? 1.0f : 0.0f;
+            float won_mod = won ? 1.0f : 0.0f;
             float mod = won_mod - chance;
 
             // Work in progress:
@@ -496,7 +496,7 @@ namespace Game.Arenas
             // Real rating modification
             mod *= WorldConfig.GetFloatValue(WorldCfg.ArenaMatchmakerRatingModifier);
 
-            return (int)Math.Ceiling(mod);
+            return (int)MathF.Ceiling(mod);
         }
 
         int GetRatingMod(uint ownRating, uint opponentRating, bool won)
@@ -526,7 +526,7 @@ namespace Game.Arenas
             else
                 mod = WorldConfig.GetFloatValue(WorldCfg.ArenaLoseRatingModifier) * (-chance);
 
-            return (int)Math.Ceiling(mod);
+            return (int)MathF.Ceiling(mod);
         }
 
         public void FinishGame(int mod)

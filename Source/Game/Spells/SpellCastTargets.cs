@@ -372,8 +372,8 @@ namespace Game.Spells
         public void SetSpeed(float speed) { m_speed = speed; }
 
         public float GetDist2d() { return m_src.Position.GetExactDist2d(m_dst.Position); }
-        public float GetSpeedXY() { return (float)(m_speed * Math.Cos(m_pitch)); }
-        public float GetSpeedZ() { return (float)(m_speed * Math.Sin(m_pitch)); }
+        public float GetSpeedXY() { return m_speed * MathF.Cos(m_pitch); }
+        public float GetSpeedZ() { return m_speed * MathF.Sin(m_pitch); }
 
         public string GetTargetString() { return m_strTarget; }
 

@@ -2965,10 +2965,10 @@ namespace Game.Spells
             }
 
             if (power.PowerType == PowerType.Mana)
-                powerCost = (int)((float)powerCost * (1.0f + unitCaster.m_unitData.ManaCostMultiplier));
+                powerCost = (int)(powerCost * (1.0f + unitCaster.m_unitData.ManaCostMultiplier));
 
             // power cost cannot become negative if initially positive
-            if (initiallyNegative != (powerCost < 0))
+            if (initiallyNegative != powerCost < 0)
                 powerCost = 0;
 
             cost.Power = power.PowerType;
@@ -4116,9 +4116,9 @@ namespace Game.Spells
             if (Scaling.Variance != 0)
             {
                 float delta = Math.Abs(Scaling.Variance * 0.5f);
-                double valueVariance = RandomHelper.FRand(-delta, delta);
-                value += (double)basePoints * valueVariance;
-                variance = (float)valueVariance;
+                float valueVariance = RandomHelper.FRand(-delta, delta);
+                value += basePoints * valueVariance;
+                variance = valueVariance;
             }
 
             // base amount modification based on spell lvl vs caster lvl
@@ -4847,7 +4847,7 @@ namespace Game.Spells
 
         public float CalcDirectionAngle()
         {
-            float pi = MathFunctions.PI;
+            float pi = MathF.PI;
             switch (GetDirectionType())
             {
                 case SpellTargetDirectionTypes.Front:
@@ -4867,7 +4867,7 @@ namespace Game.Spells
                 case SpellTargetDirectionTypes.FrontLeft:
                     return pi / 4;
                 case SpellTargetDirectionTypes.Random:
-                    return (float)RandomHelper.NextDouble() * (2 * pi);
+                    return RandomHelper.NextSingle() * (2 * pi);
                 default:
                     return 0.0f;
             }

@@ -3382,7 +3382,7 @@ namespace Game.Entities
                 price = (ulong)(buyPricePerItem * count); //it should not exceed MAX_MONEY_AMOUNT
 
                 // reputation discount
-                price = (ulong)Math.Floor(price * GetReputationPriceDiscount(creature));
+                price = (ulong)MathF.Floor(price * GetReputationPriceDiscount(creature));
                 price = pProto.GetBuyPrice() > 0 ? Math.Max(1ul, price) : price;
 
                 int priceMod = GetTotalAuraModifier(AuraType.ModVendorItemsPrices);
@@ -3605,25 +3605,25 @@ namespace Game.Entities
                 switch ((ItemModType)statType)
                 {
                     case ItemModType.Mana:
-                        HandleStatFlatModifier(UnitMods.Mana, UnitModifierFlatType.Base, (float)val, apply);
+                        HandleStatFlatModifier(UnitMods.Mana, UnitModifierFlatType.Base, val, apply);
                         break;
                     case ItemModType.Health:                           // modify HP
-                        HandleStatFlatModifier(UnitMods.Health, UnitModifierFlatType.Base, (float)val, apply);
+                        HandleStatFlatModifier(UnitMods.Health, UnitModifierFlatType.Base,val, apply);
                         break;
                     case ItemModType.Agility:                          // modify agility
-                        HandleStatFlatModifier(UnitMods.StatAgility, UnitModifierFlatType.Base, (float)val, apply);
+                        HandleStatFlatModifier(UnitMods.StatAgility, UnitModifierFlatType.Base, val, apply);
                         UpdateStatBuffMod(Stats.Agility);
                         break;
                     case ItemModType.Strength:                         //modify strength
-                        HandleStatFlatModifier(UnitMods.StatStrength, UnitModifierFlatType.Base, (float)val, apply);
+                        HandleStatFlatModifier(UnitMods.StatStrength, UnitModifierFlatType.Base, val, apply);
                         UpdateStatBuffMod(Stats.Strength);
                         break;
                     case ItemModType.Intellect:                        //modify intellect
-                        HandleStatFlatModifier(UnitMods.StatIntellect, UnitModifierFlatType.Base, (float)val, apply);
+                        HandleStatFlatModifier(UnitMods.StatIntellect, UnitModifierFlatType.Base, val, apply);
                         UpdateStatBuffMod(Stats.Intellect);
                         break;
                     //case ItemModType.Spirit:                           //modify spirit
-                    //HandleStatModifier(UnitMods.StatSpirit, UnitModifierType.BaseValue, (float)val, apply);
+                    //HandleStatModifier(UnitMods.StatSpirit, UnitModifierType.BaseValue, val, apply);
                     //ApplyStatBuffMod(Stats.Spirit, MathFunctions.CalculatePct(val, GetModifierValue(UnitMods.StatSpirit, UnitModifierType.BasePCTExcludeCreate)), apply);
                     //break;
                     case ItemModType.Stamina:                          //modify stamina
@@ -3631,7 +3631,7 @@ namespace Game.Entities
                         if (staminaMult != null)
                             val = (int)(val * CliDB.GetIlvlStatMultiplier(staminaMult, proto.GetInventoryType()));
 
-                        HandleStatFlatModifier(UnitMods.StatStamina, UnitModifierFlatType.Base, (float)val, apply);
+                        HandleStatFlatModifier(UnitMods.StatStamina, UnitModifierFlatType.Base, val, apply);
                         UpdateStatBuffMod(Stats.Stamina);
                         break;
                     case ItemModType.DefenseSkillRating:
@@ -3698,11 +3698,11 @@ namespace Game.Entities
                         ApplyRatingMod(CombatRating.Expertise, (int)(val * combatRatingMultiplier), apply);
                         break;
                     case ItemModType.AttackPower:
-                        HandleStatFlatModifier(UnitMods.AttackPower, UnitModifierFlatType.Total, (float)val, apply);
-                        HandleStatFlatModifier(UnitMods.AttackPowerRanged, UnitModifierFlatType.Total, (float)val, apply);
+                        HandleStatFlatModifier(UnitMods.AttackPower, UnitModifierFlatType.Total, val, apply);
+                        HandleStatFlatModifier(UnitMods.AttackPowerRanged, UnitModifierFlatType.Total, val, apply);
                         break;
                     case ItemModType.RangedAttackPower:
-                        HandleStatFlatModifier(UnitMods.AttackPowerRanged, UnitModifierFlatType.Total, (float)val, apply);
+                        HandleStatFlatModifier(UnitMods.AttackPowerRanged, UnitModifierFlatType.Total, val, apply);
                         break;
                     case ItemModType.Versatility:
                         ApplyRatingMod(CombatRating.VersatilityDamageDone, (int)(val * combatRatingMultiplier), apply);
@@ -3728,25 +3728,25 @@ namespace Game.Entities
                         ApplyRatingMod(CombatRating.Mastery, (int)(val * combatRatingMultiplier), apply);
                         break;
                     case ItemModType.ExtraArmor:
-                        HandleStatFlatModifier(UnitMods.Armor, UnitModifierFlatType.Total, (float)val, apply);
+                        HandleStatFlatModifier(UnitMods.Armor, UnitModifierFlatType.Total, val, apply);
                         break;
                     case ItemModType.FireResistance:
-                        HandleStatFlatModifier(UnitMods.ResistanceFire, UnitModifierFlatType.Base, (float)val, apply);
+                        HandleStatFlatModifier(UnitMods.ResistanceFire, UnitModifierFlatType.Base, val, apply);
                         break;
                     case ItemModType.FrostResistance:
-                        HandleStatFlatModifier(UnitMods.ResistanceFrost, UnitModifierFlatType.Base, (float)val, apply);
+                        HandleStatFlatModifier(UnitMods.ResistanceFrost, UnitModifierFlatType.Base, val, apply);
                         break;
                     case ItemModType.HolyResistance:
-                        HandleStatFlatModifier(UnitMods.ResistanceHoly, UnitModifierFlatType.Base, (float)val, apply);
+                        HandleStatFlatModifier(UnitMods.ResistanceHoly, UnitModifierFlatType.Base, val, apply);
                         break;
                     case ItemModType.ShadowResistance:
-                        HandleStatFlatModifier(UnitMods.ResistanceShadow, UnitModifierFlatType.Base, (float)val, apply);
+                        HandleStatFlatModifier(UnitMods.ResistanceShadow, UnitModifierFlatType.Base, val, apply);
                         break;
                     case ItemModType.NatureResistance:
-                        HandleStatFlatModifier(UnitMods.ResistanceNature, UnitModifierFlatType.Base, (float)val, apply);
+                        HandleStatFlatModifier(UnitMods.ResistanceNature, UnitModifierFlatType.Base, val, apply);
                         break;
                     case ItemModType.ArcaneResistance:
-                        HandleStatFlatModifier(UnitMods.ResistanceArcane, UnitModifierFlatType.Base, (float)val, apply);
+                        HandleStatFlatModifier(UnitMods.ResistanceArcane, UnitModifierFlatType.Base, val, apply);
                         break;
                     case ItemModType.PvpPower:
                         ApplyRatingMod(CombatRating.PvpPower, (int)val, apply);
@@ -3801,7 +3801,7 @@ namespace Game.Entities
             uint armor = proto.GetArmor(itemLevel);
             if (armor != 0)
             {
-                HandleStatFlatModifier(UnitMods.Armor, UnitModifierFlatType.Total, (float)armor, apply);
+                HandleStatFlatModifier(UnitMods.Armor, UnitModifierFlatType.Total, armor, apply);
                 if (proto.GetClass() == ItemClass.Armor && (ItemSubClassArmor)proto.GetSubClass() == ItemSubClassArmor.Shield)
                     SetUpdateFieldValue(m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.ShieldBlock), apply ? (uint)(armor * 2.5f) : 0);
             }
@@ -6179,7 +6179,7 @@ namespace Game.Entities
 
             // It may need a better formula
             // Now it works like this: lvl10: ~6copper, lvl70: ~9silver
-            bones.loot.gold = (uint)(RandomHelper.URand(50, 150) * 0.016f * Math.Pow((float)GetLevel() / 5.76f, 2.5f) * WorldConfig.GetFloatValue(WorldCfg.RateDropMoney));
+            bones.loot.gold = (uint)(RandomHelper.URand(50, 150) * 0.016f * MathF.Pow(GetLevel() / 5.76f, 2.5f) * WorldConfig.GetFloatValue(WorldCfg.RateDropMoney));
             bones.lootRecipient = looterPlr;
             looterPlr.SendLoot(bones.loot);
         }

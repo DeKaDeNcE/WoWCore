@@ -72,7 +72,7 @@ namespace Game.Entities
                     if (uiMap1 != uiMap2)
                         continue;
 
-                    totalDist += (float)Math.Sqrt((float)Math.Pow(pos2.X - pos1.X, 2) + (float)Math.Pow(pos2.Y - pos1.Y, 2));
+                    totalDist += MathF.Sqrt(MathF.Pow(pos2.X - pos1.X, 2) + MathF.Pow(pos2.Y - pos1.Y, 2));
                 }
 
                 uint dist = (uint)(totalDist * 32767.0f);

@@ -71,7 +71,7 @@ namespace Framework.Constants
         /// <summary>
         /// Movement Const
         /// </summary>
-        public const double gravity = 19.29110527038574;
+        public const float gravity = 19.29110527038574f;
         public const float terminalVelocity = 60.148003f;
         public const float terminalSafefallVelocity = 7.0f;
         public const float terminal_length = (float)((terminalVelocity * terminalVelocity) / (2.0f * gravity));

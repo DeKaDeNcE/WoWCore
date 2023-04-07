@@ -522,17 +522,17 @@ namespace Game.BattleGrounds.Zones
             bool result = true;
             for (int i = 0; i < ABBattlegroundNodes.DynamicNodesCount; ++i)
             {
-                result &= AddObject(ABObjectTypes.BannerNeutral + 8 * i, (uint)(NodeObjectId.Banner0 + i), NodePositions[i], 0, 0, (float)Math.Sin(NodePositions[i].GetOrientation() / 2), (float)Math.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
-                result &= AddObject(ABObjectTypes.BannerContA + 8 * i, ABObjectIds.BannerContA, NodePositions[i], 0, 0, (float)Math.Sin(NodePositions[i].GetOrientation() / 2), (float)Math.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
-                result &= AddObject(ABObjectTypes.BannerContH + 8 * i, ABObjectIds.BannerContH, NodePositions[i], 0, 0, (float)Math.Sin(NodePositions[i].GetOrientation() / 2), (float)Math.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
-                result &= AddObject(ABObjectTypes.BannerAlly + 8 * i, ABObjectIds.BannerA, NodePositions[i], 0, 0, (float)Math.Sin(NodePositions[i].GetOrientation() / 2), (float)Math.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
-                result &= AddObject(ABObjectTypes.BannerHorde + 8 * i, ABObjectIds.BannerH, NodePositions[i], 0, 0, (float)Math.Sin(NodePositions[i].GetOrientation() / 2), (float)Math.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
-                result &= AddObject(ABObjectTypes.AuraAlly + 8 * i, ABObjectIds.AuraA, NodePositions[i], 0, 0, (float)Math.Sin(NodePositions[i].GetOrientation() / 2), (float)Math.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
-                result &= AddObject(ABObjectTypes.AuraHorde + 8 * i, ABObjectIds.AuraH, NodePositions[i], 0, 0, (float)Math.Sin(NodePositions[i].GetOrientation() / 2), (float)Math.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
-                result &= AddObject(ABObjectTypes.AuraContested + 8 * i, ABObjectIds.AuraC, NodePositions[i], 0, 0, (float)Math.Sin(NodePositions[i].GetOrientation() / 2), (float)Math.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
+                result &= AddObject(ABObjectTypes.BannerNeutral + 8 * i, (uint)(NodeObjectId.Banner0 + i), NodePositions[i], 0, 0, MathF.Sin(NodePositions[i].GetOrientation() / 2), MathF.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
+                result &= AddObject(ABObjectTypes.BannerContA + 8 * i, ABObjectIds.BannerContA, NodePositions[i], 0, 0, MathF.Sin(NodePositions[i].GetOrientation() / 2), MathF.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
+                result &= AddObject(ABObjectTypes.BannerContH + 8 * i, ABObjectIds.BannerContH, NodePositions[i], 0, 0, MathF.Sin(NodePositions[i].GetOrientation() / 2), MathF.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
+                result &= AddObject(ABObjectTypes.BannerAlly + 8 * i, ABObjectIds.BannerA, NodePositions[i], 0, 0, MathF.Sin(NodePositions[i].GetOrientation() / 2), MathF.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
+                result &= AddObject(ABObjectTypes.BannerHorde + 8 * i, ABObjectIds.BannerH, NodePositions[i], 0, 0, MathF.Sin(NodePositions[i].GetOrientation() / 2), MathF.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
+                result &= AddObject(ABObjectTypes.AuraAlly + 8 * i, ABObjectIds.AuraA, NodePositions[i], 0, 0, MathF.Sin(NodePositions[i].GetOrientation() / 2), MathF.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
+                result &= AddObject(ABObjectTypes.AuraHorde + 8 * i, ABObjectIds.AuraH, NodePositions[i], 0, 0, MathF.Sin(NodePositions[i].GetOrientation() / 2), MathF.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
+                result &= AddObject(ABObjectTypes.AuraContested + 8 * i, ABObjectIds.AuraC, NodePositions[i], 0, 0, MathF.Sin(NodePositions[i].GetOrientation() / 2), MathF.Cos(NodePositions[i].GetOrientation() / 2), BattlegroundConst.RespawnOneDay);
                 if (!result)
                 {
-                    Log.outError(LogFilter.Sql, "BatteGroundAB: Failed to spawn some object Battleground not created!");
+                    Log.outError(LogFilter.Sql, "BattleGroundAB: Failed to spawn some object Battleground not created!");
                     return false;
                 }
             }
@@ -541,19 +541,19 @@ namespace Game.BattleGrounds.Zones
             result &= AddObject(ABObjectTypes.GateH, ABObjectIds.GateH, DoorPositions[1][0], DoorPositions[1][1], DoorPositions[1][2], DoorPositions[1][3], DoorPositions[1][4], DoorPositions[1][5], DoorPositions[1][6], DoorPositions[1][7], BattlegroundConst.RespawnImmediately);
             if (!result)
             {
-                Log.outError(LogFilter.Sql, "BatteGroundAB: Failed to spawn door object Battleground not created!");
+                Log.outError(LogFilter.Sql, "BattleGroundAB: Failed to spawn door object Battleground not created!");
                 return false;
             }
 
             //buffs
             for (int i = 0; i < ABBattlegroundNodes.DynamicNodesCount; ++i)
             {
-                result &= AddObject(ABObjectTypes.SpeedbuffStables + 3 * i, Buff_Entries[0], BuffPositions[i][0], BuffPositions[i][1], BuffPositions[i][2], BuffPositions[i][3], 0, 0, (float)Math.Sin(BuffPositions[i][3] / 2), (float)Math.Cos(BuffPositions[i][3] / 2), BattlegroundConst.RespawnOneDay);
-                result &= AddObject(ABObjectTypes.SpeedbuffStables + 3 * i + 1, Buff_Entries[1], BuffPositions[i][0], BuffPositions[i][1], BuffPositions[i][2], BuffPositions[i][3], 0, 0, (float)Math.Sin(BuffPositions[i][3] / 2), (float)Math.Cos(BuffPositions[i][3] / 2), BattlegroundConst.RespawnOneDay);
-                result &= AddObject(ABObjectTypes.SpeedbuffStables + 3 * i + 2, Buff_Entries[2], BuffPositions[i][0], BuffPositions[i][1], BuffPositions[i][2], BuffPositions[i][3], 0, 0, (float)Math.Sin(BuffPositions[i][3] / 2), (float)Math.Cos(BuffPositions[i][3] / 2), BattlegroundConst.RespawnOneDay);
+                result &= AddObject(ABObjectTypes.SpeedbuffStables + 3 * i, Buff_Entries[0], BuffPositions[i][0], BuffPositions[i][1], BuffPositions[i][2], BuffPositions[i][3], 0, 0, MathF.Sin(BuffPositions[i][3] / 2), MathF.Cos(BuffPositions[i][3] / 2), BattlegroundConst.RespawnOneDay);
+                result &= AddObject(ABObjectTypes.SpeedbuffStables + 3 * i + 1, Buff_Entries[1], BuffPositions[i][0], BuffPositions[i][1], BuffPositions[i][2], BuffPositions[i][3], 0, 0, MathF.Sin(BuffPositions[i][3] / 2), MathF.Cos(BuffPositions[i][3] / 2), BattlegroundConst.RespawnOneDay);
+                result &= AddObject(ABObjectTypes.SpeedbuffStables + 3 * i + 2, Buff_Entries[2], BuffPositions[i][0], BuffPositions[i][1], BuffPositions[i][2], BuffPositions[i][3], 0, 0, MathF.Sin(BuffPositions[i][3] / 2), MathF.Cos(BuffPositions[i][3] / 2), BattlegroundConst.RespawnOneDay);
                 if (!result)
                 {
-                    Log.outError(LogFilter.Sql, "BatteGroundAB: Failed to spawn buff object!");
+                    Log.outError(LogFilter.Sql, "BattleGroundAB: Failed to spawn buff object!");
                     return false;
                 }
             }

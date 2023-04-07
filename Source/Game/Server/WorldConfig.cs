@@ -30,7 +30,7 @@ namespace Game
             static void SetRegenRate(WorldCfg rate, string configKey)
             {
                 Values[rate] = GetDefaultValue(configKey, 1.0f);
-                if ((float) Values[rate] < 0.0f)
+                if ((float)Values[rate] < 0.0f)
                 {
                     Log.outError(LogFilter.ServerLoading, "{0} ({1}) must be > 0. Using 1 instead.", configKey, Values[rate]);
                     Values[rate] = 1;

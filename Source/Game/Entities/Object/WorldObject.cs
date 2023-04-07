@@ -739,7 +739,7 @@ namespace Game.Entities
                     data.WriteUInt8(player.GetRunesState());
                     data.WriteUInt32(maxRunes);
                     for (byte i = 0; i < maxRunes; ++i)
-                        data.WriteUInt8((byte)((baseCd - (float)player.GetRuneCooldown(i)) / baseCd * 255));
+                        data.WriteUInt8((byte)((baseCd - player.GetRuneCooldown(i)) / baseCd * 255));
                 }
             }
 
@@ -2801,7 +2801,7 @@ namespace Game.Entities
                             else if (spellInfo.Speed > 0.0f)
                                 hitDelay += Math.Max(victim.GetDistance(this), 5.0f) / spellInfo.Speed;
 
-                            uint delay = (uint)Math.Floor(hitDelay * 1000.0f);
+                            uint delay = (uint)MathF.Floor(hitDelay * 1000.0f);
                             // Schedule charge drop
                             aurEff.GetBase().DropChargeDelayed(delay, AuraRemoveMode.Expire);
                         }
@@ -3312,7 +3312,7 @@ namespace Game.Entities
             float dist = GetExactDist2d(pos1);
 
             // not using sqrt() for performance
-            if ((dist * dist) >= pos1.GetExactDist2dSq(pos2))
+            if (dist * dist >= pos1.GetExactDist2dSq(pos2))
                 return false;
 
             if (size == 0)
@@ -3321,17 +3321,17 @@ namespace Game.Entities
             float angle = pos1.GetAbsoluteAngle(pos2);
 
             // not using sqrt() for performance
-            return (size * size) >= GetExactDist2dSq(pos1.GetPositionX() + (float)Math.Cos(angle) * dist, pos1.GetPositionY() + (float)Math.Sin(angle) * dist);
+            return size * size >= GetExactDist2dSq(pos1.GetPositionX() + MathF.Cos(angle) * dist, pos1.GetPositionY() + MathF.Sin(angle) * dist);
         }
 
-        public bool IsInFront(WorldObject target, float arc = MathFunctions.PI)
+        public bool IsInFront(WorldObject target, float arc = MathF.PI)
         {
             return HasInArc(arc, target);
         }
 
-        public bool IsInBack(WorldObject target, float arc = MathFunctions.PI)
+        public bool IsInBack(WorldObject target, float arc = MathF.PI)
         {
-            return !HasInArc(2 * MathFunctions.PI - arc, target);
+            return !HasInArc(2 * MathF.PI - arc, target);
         }
 
         public void GetRandomPoint(Position pos, float distance, out float rand_x, out float rand_y, out float rand_z)
@@ -3343,12 +3343,12 @@ namespace Game.Entities
             }
 
             // angle to face `obj` to `this`
-            float angle = (float)RandomHelper.NextDouble() * (2 * MathFunctions.PI);
-            float new_dist = (float)RandomHelper.NextDouble() + (float)RandomHelper.NextDouble();
+            float angle = RandomHelper.NextSingle() * (2 * MathF.PI);
+            float new_dist = RandomHelper.NextSingle() + RandomHelper.NextSingle();
             new_dist = distance * (new_dist > 1 ? new_dist - 2 : new_dist);
 
-            rand_x = (float)(pos.posX + new_dist * Math.Cos(angle));
-            rand_y = (float)(pos.posY + new_dist * Math.Sin(angle));
+            rand_x = pos.posX + new_dist * MathF.Cos(angle);
+            rand_y = pos.posY + new_dist * MathF.Sin(angle);
             rand_z = pos.posZ;
 
             GridDefines.NormalizeMapCoord(ref rand_x);
@@ -3486,7 +3486,7 @@ namespace Game.Entities
             float first_z = z;
 
             // loop in a circle to look for a point in LoS using small steps
-            for (float angle = MathFunctions.PI / 8; angle < Math.PI * 2; angle += MathFunctions.PI / 8)
+            for (float angle = MathF.PI / 8; angle < MathF.PI * 2; angle += MathF.PI / 8)
             {
                 GetNearPoint2D(searcher, out x, out y, distance2d, absAngle + angle);
                 z = GetPositionZ();
@@ -3524,7 +3524,7 @@ namespace Game.Entities
         public Position GetRandomNearPosition(float radius)
         {
             var pos = GetPosition();
-            MovePosition(pos, radius * (float)RandomHelper.NextDouble(), (float)RandomHelper.NextDouble() * MathFunctions.PI * 2);
+            MovePosition(pos, radius * RandomHelper.NextSingle(), RandomHelper.NextSingle() * MathF.PI * 2);
             return pos;
         }
 
@@ -3537,8 +3537,8 @@ namespace Game.Entities
         public void MovePosition(Position pos, float dist, float angle)
         {
             angle += GetOrientation();
-            float destx = pos.posX + dist * (float)Math.Cos(angle);
-            float desty = pos.posY + dist * (float)Math.Sin(angle);
+            float destx = pos.posX + dist * MathF.Cos(angle);
+            float desty = pos.posY + dist * MathF.Sin(angle);
 
             // Prevent invalid coordinates here, position is unchanged
             if (!GridDefines.IsValidMapCoord(destx, desty, pos.posZ))
@@ -3558,8 +3558,8 @@ namespace Game.Entities
                 // do not allow too big z changes
                 if (Math.Abs(pos.posZ - destz) > 6)
                 {
-                    destx -= step * (float)Math.Cos(angle);
-                    desty -= step * (float)Math.Sin(angle);
+                    destx -= step * MathF.Cos(angle);
+                    desty -= step * MathF.Sin(angle);
                     ground = GetMap().GetHeight(GetPhaseShift(), destx, desty, MapConst.MaxHeight, true);
                     floor = GetMap().GetHeight(GetPhaseShift(), destx, desty, pos.posZ, true);
                     destz = Math.Abs(ground - pos.posZ) <= Math.Abs(floor - pos.posZ) ? ground : floor;
@@ -3581,8 +3581,8 @@ namespace Game.Entities
         public void MovePositionToFirstCollision(Position pos, float dist, float angle)
         {
             angle += GetOrientation();
-            float destx = pos.posX + dist * (float)Math.Cos(angle);
-            float desty = pos.posY + dist * (float)Math.Sin(angle);
+            float destx = pos.posX + dist * MathF.Cos(angle);
+            float desty = pos.posY + dist * MathF.Sin(angle);
             float destz = pos.posZ;
 
             // Prevent invalid coordinates here, position is unchanged
@@ -3638,9 +3638,9 @@ namespace Game.Entities
             // Collided with a gameobject, move back to collision point
             if (col)
             {
-                destx -= SharedConst.ContactDistance * (float)Math.Cos(angle);
-                desty -= SharedConst.ContactDistance * (float)Math.Sin(angle);
-                dist = (float)Math.Sqrt((pos.posX - destx) * (pos.posX - destx) + (pos.posY - desty) * (pos.posY - desty));
+                destx -= SharedConst.ContactDistance * MathF.Cos(angle);
+                desty -= SharedConst.ContactDistance * MathF.Sin(angle);
+                dist = MathF.Sqrt((pos.posX - destx) * (pos.posX - destx) + (pos.posY - desty) * (pos.posY - desty));
             }
 
             float groundZ = MapConst.VMAPInvalidHeightValue;

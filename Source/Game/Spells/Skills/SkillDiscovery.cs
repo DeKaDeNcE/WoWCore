@@ -140,7 +140,7 @@ namespace Game.Spells
                         full_chance += item_iter.chance;
 
             float rate = full_chance / 100.0f;
-            float roll = (float)RandomHelper.randChance() * rate;                      // roll now in range 0..full_chance
+            float roll = RandomHelper.randFChance() * rate;                      // roll now in range 0..full_chance
 
             foreach (var item_iter in tab)
             {

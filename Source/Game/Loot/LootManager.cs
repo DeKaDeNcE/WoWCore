@@ -823,7 +823,7 @@ namespace Game.Loots
                     if (referenced == null)
                         continue;                                       // Error message already printed at loading stage
 
-                    uint maxcount = (uint)((float)item.maxcount * WorldConfig.GetFloatValue(WorldCfg.RateDropItemReferencedAmount));
+                    uint maxcount = (uint)(item.maxcount * WorldConfig.GetFloatValue(WorldCfg.RateDropItemReferencedAmount));
                     List<Player> gotLoot = new();
                     for (uint loop = 0; loop < maxcount; ++loop)      // Ref multiplicator
                     {
@@ -1224,7 +1224,7 @@ namespace Game.Loots
 
                 if (!possibleLoot.Empty())                             // First explicitly chanced entries are checked
                 {
-                    float roll = (float)RandomHelper.randChance();
+                    float roll = RandomHelper.randFChance();
 
                     foreach (var item in possibleLoot)   // check each explicitly chanced entry in the template and modify its chance based on quality.
                     {

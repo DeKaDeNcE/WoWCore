@@ -591,9 +591,9 @@ namespace Game.Chat
             {
                 handler.SendSysMessage($"Loading cell (mapId: {map.GetId()} tile: {tileX}, {tileY}). Current GameObjects {map.GetObjectsStore().Count(p => p.Value is GameObject)}, Creatures {map.GetObjectsStore().Count(p => p.Value is Creature)}");
 
-                // Some unit convertions to go from TileXY to GridXY to WorldXY
-                float x = (((float)(64 - 1 - tileX.Value) - 0.5f - MapConst.CenterGridId) * MapConst.SizeofGrids) + (MapConst.CenterGridOffset * 2);
-                float y = (((float)(64 - 1 - tileY.Value) - 0.5f - MapConst.CenterGridId) * MapConst.SizeofGrids) + (MapConst.CenterGridOffset * 2);
+                // Some unit conversions to go from TileXY to GridXY to WorldXY
+                float x = (64 - 1 - tileX.Value - 0.5f - MapConst.CenterGridId) * MapConst.SizeofGrids + MapConst.CenterGridOffset * 2;
+                float y = (64 - 1 - tileY.Value - 0.5f - MapConst.CenterGridId) * MapConst.SizeofGrids + MapConst.CenterGridOffset * 2;
                 map.LoadGrid(x, y);
 
                 handler.SendSysMessage($"Cell loaded (mapId: {map.GetId()} tile: {tileX}, {tileY}) After load - GameObject {map.GetObjectsStore().Count(p => p.Value is GameObject)}, Creatures {map.GetObjectsStore().Count(p => p.Value is Creature)}");
@@ -1179,7 +1179,7 @@ namespace Game.Chat
                     uint count = 1;
                     foreach (FlyByCamera cam in list)
                     {
-                        handler.SendSysMessage("{0} - {1}ms [{2}, {3}, {4}] Facing {5} ({6} degrees)", count, cam.timeStamp, cam.locations.X, cam.locations.Y, cam.locations.Z, cam.locations.W, cam.locations.W * (180 / Math.PI));
+                        handler.SendSysMessage("{0} - {1}ms [{2}, {3}, {4}] Facing {5} ({6} degrees)", count, cam.timeStamp, cam.locations.X, cam.locations.Y, cam.locations.Z, cam.locations.W, cam.locations.W * (180 / MathF.PI));
                         count++;
                     }
                     handler.SendSysMessage("{0} waypoints dumped", list.Count);

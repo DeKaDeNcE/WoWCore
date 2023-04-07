@@ -142,7 +142,7 @@ namespace Game.Entities
         {
             Player owner = GetOwner();
             if (owner != null)
-                return (long)(MoneyConstants.Gold * Global.DB2Mgr.GetCurveValueAt((uint)Curves.AzeriteEmpoweredItemRespecCost, (float)owner.GetNumRespecs()));
+                return (long)(MoneyConstants.Gold * Global.DB2Mgr.GetCurveValueAt((uint)Curves.AzeriteEmpoweredItemRespecCost, owner.GetNumRespecs()));
 
             return (long)PlayerConst.MaxMoneyAmount + 1;
         }

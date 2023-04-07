@@ -819,7 +819,7 @@ namespace Game
                 latencyList.Add(pair.Item2);
 
             uint latencyMedian = (uint)Math.Round(latencyList.Average(p => p));//median(latencyAccumulator));
-            uint latencyStandardDeviation = (uint)Math.Round(Math.Sqrt(latencyList.Variance()));//variance(latencyAccumulator)));
+            uint latencyStandardDeviation = (uint)Math.Round(MathF.Sqrt(latencyList.Variance()));//variance(latencyAccumulator)));
 
             //accumulator_set<long, features<tag::mean>> clockDeltasAfterFiltering;
             List<long> clockDeltasAfterFiltering = new();
