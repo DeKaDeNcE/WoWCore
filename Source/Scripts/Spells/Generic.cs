@@ -2137,7 +2137,7 @@ namespace Scripts.Spells.Generic;
 
             float healPct = GetEffectInfo(1).CalcValue() / 100.0f;
             float heal = healPct * GetCaster().GetMaxHealth();
-            int healTick = (int)Math.Floor(heal / aurEff.GetTotalTicks());
+            int healTick = (int)MathF.Floor(heal / aurEff.GetTotalTicks());
             amount += healTick;
         }
 

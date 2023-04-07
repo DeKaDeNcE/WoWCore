@@ -296,7 +296,7 @@ namespace Game.Networking.Packets
                             continue;
 
                         if (aurApp.HasEffect(aurEff.GetEffIndex()))
-                            aura.Points.Add((float)aurEff.GetAmount());
+                            aura.Points.Add(aurEff.GetAmount());
                     }
                 }
 
@@ -336,7 +336,7 @@ namespace Game.Networking.Packets
                                 continue;
 
                             if (aurApp.HasEffect(aurEff.GetEffIndex()))
-                                aura.Points.Add((float)aurEff.GetAmount());
+                                aura.Points.Add(aurEff.GetAmount());
                         }
                     }
 

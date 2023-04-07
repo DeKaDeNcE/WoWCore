@@ -642,16 +642,16 @@ namespace Game.Entities
                             if (pInfo == null)
                                 SetCreateHealth(30 + 30 * petlevel);
                             float bonusDmg = GetOwner().SpellBaseDamageBonusDone(SpellSchoolMask.Nature) * 0.15f;
-                            SetBaseWeaponDamage(WeaponAttackType.BaseAttack, WeaponDamageRange.MinDamage, petlevel * 2.5f - ((float)petlevel / 2) + bonusDmg);
-                            SetBaseWeaponDamage(WeaponAttackType.BaseAttack, WeaponDamageRange.MaxDamage, petlevel * 2.5f + ((float)petlevel / 2) + bonusDmg);
+                            SetBaseWeaponDamage(WeaponAttackType.BaseAttack, WeaponDamageRange.MinDamage, petlevel * 2.5f - (float)petlevel / 2 + bonusDmg);
+                            SetBaseWeaponDamage(WeaponAttackType.BaseAttack, WeaponDamageRange.MaxDamage, petlevel * 2.5f + (float)petlevel / 2 + bonusDmg);
                             break;
                         }
                         case 15352: //earth elemental 36213
                         {
                             if (pInfo == null)
                                 SetCreateHealth(100 + 120 * petlevel);
-                            SetBaseWeaponDamage(WeaponAttackType.BaseAttack, WeaponDamageRange.MinDamage, petlevel - (petlevel / 4));
-                            SetBaseWeaponDamage(WeaponAttackType.BaseAttack, WeaponDamageRange.MaxDamage, petlevel + (petlevel / 4));
+                            SetBaseWeaponDamage(WeaponAttackType.BaseAttack, WeaponDamageRange.MinDamage, petlevel - petlevel / 4);
+                            SetBaseWeaponDamage(WeaponAttackType.BaseAttack, WeaponDamageRange.MaxDamage, petlevel + petlevel / 4);
                             break;
                         }
                         case 15438: //fire elemental
@@ -864,8 +864,8 @@ namespace Game.Entities
                 // hunter and warlock pets gain 40% of owner's resistance
                 if (IsPet())
                 {
-                    baseValue += (float)MathFunctions.CalculatePct(m_owner.GetResistance(school), 40);
-                    bonusValue += (float)MathFunctions.CalculatePct(m_owner.GetBonusResistanceMod(school), 40);
+                    baseValue += MathFunctions.CalculatePct(m_owner.GetResistance(school), 40);
+                    bonusValue += MathFunctions.CalculatePct(m_owner.GetBonusResistanceMod(school), 40);
                 }
 
                 SetResistance(school, (int)baseValue);

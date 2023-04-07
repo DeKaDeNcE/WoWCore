@@ -103,7 +103,7 @@ namespace Game.Movement
             }
 
             // TODO: what to do in such cases? problem is in input data (all points are at same coords)
-            if (spline.Length() < 1)
+            if ((int)spline.Length() < 1)
             {
                 Log.outError(LogFilter.Unit, "MoveSpline.init_spline: zero length spline, wrong input data?");
                 spline.Set_length(spline.Last(), spline.IsCyclic() ? 1000 : 1);
@@ -122,7 +122,7 @@ namespace Game.Movement
         public Vector3[] GetPath() { return spline.GetPoints(); }
         public int TimePassed() { return time_passed; }
 
-        public int Duration() { return spline.Length(); }
+        public int Duration() { return (int)spline.Length(); }
         public int CurrentSplineIdx() { return point_Idx; }
         public uint GetId() { return m_Id; }
         public bool Finalized() { return splineflags.HasFlag(SplineFlag.Done); }
@@ -135,9 +135,9 @@ namespace Game.Movement
         public Vector4 ComputePosition(int time_point, int point_index)
         {
             float u = 1.0f;
-            int seg_time = spline.Length(point_index, point_index + 1);
+            int seg_time = (int)spline.Length(point_index, point_index + 1);
             if (seg_time > 0)
-                u = (time_point - spline.Length(point_index)) / (float)seg_time;
+                u = (time_point - (int)spline.Length(point_index)) / (float)seg_time;
 
             Vector3 c;
             float orientation = initialOrientation;
@@ -186,10 +186,10 @@ namespace Game.Movement
 
             // find point_index where spline.length(point_index) < time_point < spline.length(point_index + 1)
             int point_index = point_Idx;
-            while (time_point >= spline.Length(point_index + 1))
+            while (time_point >= (int)spline.Length(point_index + 1))
                 ++point_index;
 
-            while (time_point < spline.Length(point_index))
+            while (time_point < (int)spline.Length(point_index))
                 --point_index;
 
             return ComputePosition(time_point, point_index);
@@ -225,16 +225,16 @@ namespace Game.Movement
             if (start_velocity > termVel)
                 start_velocity = termVel;
 
-            float terminal_time = (float)((isSafeFall ? SharedConst.terminal_safeFall_fallTime : SharedConst.terminal_fallTime) - start_velocity / SharedConst.gravity); // the time that needed to reach terminalVelocity
+            float terminal_time = (isSafeFall ? SharedConst.terminal_safeFall_fallTime : SharedConst.terminal_fallTime) - start_velocity / SharedConst.gravity; // the time that needed to reach terminalVelocity
 
             if (t_passed > terminal_time)
             {
                 result = termVel * (t_passed - terminal_time) +
                     start_velocity * terminal_time +
-                    (float)SharedConst.gravity * terminal_time * terminal_time * 0.5f;
+                    SharedConst.gravity * terminal_time * terminal_time * 0.5f;
             }
             else
-                result = t_passed * (float)(start_velocity + t_passed * SharedConst.gravity * 0.5f);
+                result = t_passed * (start_velocity + t_passed * SharedConst.gravity * 0.5f);
 
             return result;
         }
@@ -330,7 +330,7 @@ namespace Game.Movement
 
             return result;
         }
-        int NextTimestamp() { return spline.Length(point_Idx + 1); }
+        int NextTimestamp() { return (int)spline.Length(point_Idx + 1); }
         int SegmentTimeElapsed() { return NextTimestamp() - time_passed; }
         public bool IsCyclic() { return splineflags.HasFlag(SplineFlag.Cyclic); }
         public bool IsFalling() { return splineflags.HasFlag(SplineFlag.Falling); }
@@ -342,7 +342,7 @@ namespace Game.Movement
 
         #region Fields
         public MoveSplineInitArgs InitArgs;
-        public Spline<int> spline = new();
+        public Spline<float> spline = new();
         public FacingInfo facing;
         public MoveSplineFlag splineflags = new();
         public bool onTransport;
@@ -359,7 +359,7 @@ namespace Game.Movement
         public AnimTierTransition anim_tier;
         #endregion
 
-        public class CommonInitializer : IInitializer<int>
+        public class CommonInitializer : IInitializer<float>
         {
             public CommonInitializer(float _velocity)
             {
@@ -369,14 +369,14 @@ namespace Game.Movement
             public float velocityInv;
             public int time;
 
-            public int Invoke(Spline<int> s, int i)
+            public int Invoke(Spline<float> s, int i)
             {
                 time += (int)(s.SegLength(i) * velocityInv);
                 return time;
             }
         }
 
-        public class FallInitializer : IInitializer<int>
+        public class FallInitializer : IInitializer<float>
         {
             public FallInitializer(float startelevation)
             {
@@ -384,7 +384,7 @@ namespace Game.Movement
             }
             float startElevation;
 
-            public int Invoke(Spline<int> s, int i)
+            public int Invoke(Spline<float> s, int i)
             {
                 return (int)(ComputeFallTime(startElevation - s.GetPoint(i + 1).Z, false) * 1000.0f);
             }
@@ -400,14 +400,14 @@ namespace Game.Movement
                     if (path_length >= SharedConst.terminal_safeFall_length)
                         time = (path_length - SharedConst.terminal_safeFall_length) / SharedConst.terminalSafefallVelocity + SharedConst.terminal_safeFall_fallTime;
                     else
-                        time = (float)Math.Sqrt(2.0f * path_length / SharedConst.gravity);
+                        time = MathF.Sqrt(2.0f * path_length / SharedConst.gravity);
                 }
                 else
                 {
                     if (path_length >= SharedConst.terminal_length)
                         time = (path_length - SharedConst.terminal_length) / SharedConst.terminalVelocity + SharedConst.terminal_fallTime;
                     else
-                        time = (float)Math.Sqrt(2.0f * path_length / SharedConst.gravity);
+                        time = MathF.Sqrt(2.0f * path_length / SharedConst.gravity);
                 }
 
                 return time;

@@ -786,9 +786,9 @@ namespace Game.Entities
 
         public int CalculateAOEAvoidance(int damage, uint schoolMask, ObjectGuid casterGuid)
         {
-            damage = (int)((float)damage * GetTotalAuraMultiplierByMiscMask(AuraType.ModAoeDamageAvoidance, schoolMask));
+            damage = (int)(damage * GetTotalAuraMultiplierByMiscMask(AuraType.ModAoeDamageAvoidance, schoolMask));
             if (casterGuid.IsAnyTypeCreature())
-                damage = (int)((float)damage * GetTotalAuraMultiplierByMiscMask(AuraType.ModCreatureAoeDamageAvoidance, schoolMask));
+                damage = (int)(damage * GetTotalAuraMultiplierByMiscMask(AuraType.ModCreatureAoeDamageAvoidance, schoolMask));
 
             return damage;
         }
@@ -1223,7 +1223,7 @@ namespace Game.Entities
 
             float versaDmgMod = 1.0f;
 
-            MathFunctions.AddPct(ref versaDmgMod, GetRatingBonusValue(CombatRating.VersatilityDamageDone) + (float)GetTotalAuraModifier(AuraType.ModVersatility));
+            MathFunctions.AddPct(ref versaDmgMod, GetRatingBonusValue(CombatRating.VersatilityDamageDone) + GetTotalAuraModifier(AuraType.ModVersatility));
 
             SpellShapeshiftFormRecord shapeshift = CliDB.SpellShapeshiftFormStorage.LookupByKey(GetShapeshiftForm());
             if (shapeshift != null && shapeshift.CombatRoundTime != 0)
@@ -1407,7 +1407,7 @@ namespace Game.Entities
                 int miscValue = aurEff.GetMiscValue();
                 Stats stat = (miscValue != -2) ? (Stats)miscValue : GetPrimaryStat();
 
-                value += MathFunctions.CalculatePct((float)GetStat(stat), aurEff.GetAmount());
+                value += MathFunctions.CalculatePct(GetStat(stat), aurEff.GetAmount());
                 return true;
             });
 

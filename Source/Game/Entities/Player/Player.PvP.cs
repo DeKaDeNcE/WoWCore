@@ -118,7 +118,7 @@ namespace Game.Entities
                     else
                         victim_guid.Clear();                        // Don't show HK: <rank> message, only log.
 
-                    honor_f = (float)Math.Ceiling(Formulas.HKHonorAtLevelF(k_level) * (v_level - k_grey) / (k_level - k_grey));
+                    honor_f = MathF.Ceiling(Formulas.HKHonorAtLevelF(k_level) * (v_level - k_grey) / (k_level - k_grey));
 
                     // count the number of playerkills in one day
                     ApplyModUpdateFieldValue(m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.TodayHonorableKills), (ushort)1, true);

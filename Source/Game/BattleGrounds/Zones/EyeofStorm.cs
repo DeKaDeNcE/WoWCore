@@ -235,8 +235,8 @@ namespace Game.BattleGrounds.Zones
                 if (!m_PlayersNearPoint[point].Empty())
                 {
                     //count new point bar status:
-                    int pointDelta = (int)(m_CurrentPointPlayersCount[2 * point]) - (int)(m_CurrentPointPlayersCount[2 * point + 1]);
-                    MathFunctions.RoundToInterval(ref pointDelta, -(int)EotSProgressBarConsts.PointMaxCapturersCount, EotSProgressBarConsts.PointMaxCapturersCount);
+                    int pointDelta = m_CurrentPointPlayersCount[2 * point] - m_CurrentPointPlayersCount[2 * point + 1];
+                    MathFunctions.RoundToInterval(ref pointDelta, -(int)EotSProgressBarConsts.PointMaxCapturersCount, (int)EotSProgressBarConsts.PointMaxCapturersCount);
                     m_PointBarStatus[point] += pointDelta;
 
                     if (m_PointBarStatus[point] > EotSProgressBarConsts.ProgressBarAliControlled)

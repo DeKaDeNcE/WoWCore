@@ -436,8 +436,8 @@ namespace Game.Entities
                 GetMotionMaster().MoveJumpTo(angle, speedXY, speedZ);
             else
             {
-                float vcos = (float)Math.Cos(angle + GetOrientation());
-                float vsin = (float)Math.Sin(angle + GetOrientation());
+                float vcos = MathF.Cos(angle + GetOrientation());
+                float vsin = MathF.Sin(angle + GetOrientation());
                 SendMoveKnockBack(ToPlayer(), speedXY, -speedZ, vcos, vsin);
             }
         }
@@ -625,12 +625,12 @@ namespace Game.Entities
             }
 
             // Check if angular distance changed
-            bool turn = MathFunctions.fuzzyGt((float)Math.PI - Math.Abs(Math.Abs(GetOrientation() - orientation) - (float)Math.PI), 0.0f);
+            bool turn = MathFunctions.fuzzyGt(MathF.PI - Math.Abs(Math.Abs(GetOrientation() - orientation) - MathF.PI), 0.0f);
             // G3D::fuzzyEq won't help here, in some cases magnitudes differ by a little more than G3D::eps, but should be considered equal
-            bool relocated = (teleport ||
+            bool relocated = teleport ||
                 Math.Abs(GetPositionX() - x) > 0.001f ||
                 Math.Abs(GetPositionY() - y) > 0.001f ||
-                Math.Abs(GetPositionZ() - z) > 0.001f);
+                Math.Abs(GetPositionZ() - z) > 0.001f;
 
             if (relocated)
             {
@@ -1126,12 +1126,12 @@ namespace Game.Entities
             return distsq < maxdist * maxdist;
         }
 
-        public bool IsInFrontInMap(Unit target, float distance, float arc = MathFunctions.PI)
+        public bool IsInFrontInMap(Unit target, float distance, float arc = MathF.PI)
         {
             return IsWithinDistInMap(target, distance) && HasInArc(arc, target);
         }
 
-        public bool IsInBackInMap(Unit target, float distance, float arc = MathFunctions.PI)
+        public bool IsInBackInMap(Unit target, float distance, float arc = MathF.PI)
         {
             return IsWithinDistInMap(target, distance) && !HasInArc(MathFunctions.TwoPi - arc, target);
         }

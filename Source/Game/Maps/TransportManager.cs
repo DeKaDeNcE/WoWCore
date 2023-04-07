@@ -171,8 +171,8 @@ namespace Game.Maps
 
             uint legTimeAccelDecel(double dist)
             {
-                double speed = (double)goInfo.MoTransport.moveSpeed;
-                double accel = (double)goInfo.MoTransport.accelRate;
+                double speed = goInfo.MoTransport.moveSpeed;
+                double accel = goInfo.MoTransport.accelRate;
                 double accelDist = 0.5 * speed * speed / accel;
                 if (accelDist >= dist * 0.5)
                     return (uint)(Math.Sqrt(dist / accel) * 2000.0);
@@ -182,8 +182,8 @@ namespace Game.Maps
 
             uint legTimeAccel(double dist)
             {
-                double speed = (double)goInfo.MoTransport.moveSpeed;
-                double accel = (double)goInfo.MoTransport.accelRate;
+                double speed = goInfo.MoTransport.moveSpeed;
+                double accel = goInfo.MoTransport.accelRate;
                 double accelDist = 0.5 * speed * speed / accel;
                 if (accelDist >= dist)
                     return (uint)(Math.Sqrt((dist + dist) / accel) * 1000.0);
@@ -210,7 +210,7 @@ namespace Game.Maps
                         if (eventPointIndex > pausePointIndex)
                             break;
 
-                        double eventLength = leg.Spline.Length(eventPointIndex) - splineLengthToPreviousNode;
+                        double eventLength = (double)leg.Spline.Length(eventPointIndex) - splineLengthToPreviousNode;
                         uint eventSplineTime = 0;
                         if (pauseItr != 0)
                             eventSplineTime = legTimeAccelDecel(eventLength);
@@ -234,7 +234,7 @@ namespace Game.Maps
                         }
                     }
 
-                    double splineLengthToCurrentNode = leg.Spline.Length(pausePointIndex);
+                    double splineLengthToCurrentNode = (double)leg.Spline.Length(pausePointIndex);
                     double length1 = splineLengthToCurrentNode - splineLengthToPreviousNode;
                     uint movementTime = 0;
                     if (pauseItr != 0)
@@ -260,7 +260,7 @@ namespace Game.Maps
                 if (eventPointIndex == -1) // last point is a "fake" spline node, events cannot happen there
                     break;
 
-                double eventLength = leg.Spline.Length(eventPointIndex) - splineLengthToPreviousNode;
+                double eventLength = (double)leg.Spline.Length(eventPointIndex) - splineLengthToPreviousNode;
                 uint eventSplineTime = 0;
                 if (pauseItr != 0)
                     eventSplineTime = legTimeAccel(eventLength);
@@ -285,7 +285,7 @@ namespace Game.Maps
             }
 
             // Add segment after last pause
-            double length = leg.Spline.Length() - splineLengthToPreviousNode;
+            double length = (double)leg.Spline.Length() - splineLengthToPreviousNode;
             uint splineTime = 0;
             if (pauseItr != 0)
                 splineTime = legTimeAccel(length);
@@ -297,7 +297,7 @@ namespace Game.Maps
             TransportPathSegment pauseSegment = new();
             pauseSegment.SegmentEndArrivalTimestamp = leg.Duration;
             pauseSegment.Delay = 0;
-            pauseSegment.DistanceFromLegStartAtEnd = leg.Spline.Length();
+            pauseSegment.DistanceFromLegStartAtEnd = (double)leg.Spline.Length();
             leg.Segments.Add(pauseSegment);
             totalTime += leg.Segments[pauseItr].SegmentEndArrivalTimestamp + leg.Segments[pauseItr].Delay;
 
@@ -559,7 +559,7 @@ namespace Game.Maps
 
             int splineIndex = 0;
             float splinePointProgress = 0;
-            leg.Spline.ComputeIndex((float)Math.Min(distanceMoved / leg.Spline.Length(), 1.0), ref splineIndex, ref splinePointProgress);
+            leg.Spline.ComputeIndex((float)Math.Min(distanceMoved / (double)leg.Spline.Length(), 1.0), ref splineIndex, ref splinePointProgress);
 
             Vector3 pos, dir;
             leg.Spline.Evaluate_Percent(splineIndex, splinePointProgress, out pos);

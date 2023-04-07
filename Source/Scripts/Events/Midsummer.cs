@@ -276,7 +276,7 @@ namespace Scripts.Events.Midsummer
 
         void HandleDummy(uint effIndex)
         {
-            Position dest = GetCaster().GetFirstCollisionPosition(30.0f, (float)RandomHelper.NextDouble() * (2 * MathF.PI));
+            Position dest = GetCaster().GetFirstCollisionPosition(30.0f, RandomHelper.NextSingle() * (2 * MathF.PI));
             GetCaster().CastSpell(dest, SpellIds.FlingTorchTriggered, new CastSpellExtraArgs(true));
             GetCaster().CastSpell(dest, SpellIds.FlingTorchShadow, new CastSpellExtraArgs(false));
         }
@@ -349,13 +349,13 @@ namespace Scripts.Events.Midsummer
 
             if (player.GetAuraCount(SpellIds.TorchesCaught) >= requiredCatches)
             {
-                player.CastSpell(player, (player.GetTeam() == Team.Alliance) ? SpellIds.TorchCatchingSuccessAlliance : SpellIds.TorchCatchingSuccessHorde);
+                player.CastSpell(player, player.GetTeam() == Team.Alliance ? SpellIds.TorchCatchingSuccessAlliance : SpellIds.TorchCatchingSuccessHorde);
                 player.CastSpell(player, SpellIds.TorchCatchingRemoveTorches);
                 player.RemoveAura(SpellIds.TorchesCaught);
             }
             else
             {
-                Position dest = player.GetFirstCollisionPosition(15.0f, (float)RandomHelper.NextDouble() * (2 * MathF.PI));
+                Position dest = player.GetFirstCollisionPosition(15.0f, RandomHelper.NextSingle() * (2 * MathF.PI));
                 player.CastSpell(player, SpellIds.TorchesCaught);
                 player.CastSpell(dest, SpellIds.FlingTorchTriggered, new CastSpellExtraArgs(true));
                 player.CastSpell(dest, SpellIds.FlingTorchShadow, new CastSpellExtraArgs(false));

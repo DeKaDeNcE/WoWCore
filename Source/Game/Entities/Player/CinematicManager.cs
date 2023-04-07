@@ -126,13 +126,13 @@ namespace Game.Entities
             float angle = lastPosition.GetAbsoluteAngle(nextPosition);
             angle -= lastPosition.GetOrientation();
             if (angle < 0)
-                angle += 2 * MathFunctions.PI;
+                angle += 2 * MathF.PI;
 
             // Look for position around 2 second ahead of us.
             int workDiff = (int)m_cinematicDiff;
 
             // Modify result based on camera direction (Humans for example, have the camera point behind)
-            workDiff += (int)((2 * Time.InMilliseconds) * Math.Cos(angle));
+            workDiff += (int)(2 * Time.InMilliseconds * MathF.Cos(angle));
 
             // Get an iterator to the last entry in the cameras, to make sure we don't go beyond the end
             var endItr = m_cinematicCamera.LastOrDefault();
@@ -166,8 +166,8 @@ namespace Game.Entities
             float xDiff = nextPosition.posX - lastPosition.posX;
             float yDiff = nextPosition.posY - lastPosition.posY;
             float zDiff = nextPosition.posZ - lastPosition.posZ;
-            Position interPosition = new(lastPosition.posX + (xDiff * ((float)interDiff / timeDiff)), lastPosition.posY +
-                (yDiff * ((float)interDiff / timeDiff)), lastPosition.posZ + (zDiff * ((float)interDiff / timeDiff)));
+            Position interPosition = new(lastPosition.posX + xDiff * ((float)interDiff / timeDiff), lastPosition.posY +
+                yDiff * ((float)interDiff / timeDiff), lastPosition.posZ + zDiff * ((float)interDiff / timeDiff));
 
             // Advance (at speed) to this position. The remote sight object is used
             // to send update information to player in cinematic

@@ -3104,7 +3104,7 @@ namespace Scripts.Spells.Items;
         void HandleDummy(uint effIndex)
         {
             Unit caster = GetCaster();
-            caster.SetFacingTo(RandomHelper.FRand(0.0f, 2.0f * (float)Math.PI));
+            caster.SetFacingTo(RandomHelper.FRand(0.0f, 2.0f * MathF.PI));
         }
 
         public override void Register()

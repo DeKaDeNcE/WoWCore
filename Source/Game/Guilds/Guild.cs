@@ -2725,7 +2725,7 @@ namespace Game.Guilds
             {
                 if (IsOnline())
                     return 0.0f;
-                return (float)((GameTime.GetGameTime() - (long)GetLogoutTime()) / (float)Time.Day);
+                return (GameTime.GetGameTime() - (long)GetLogoutTime()) / (float)Time.Day;
             }
 
             // Decreases amount of slots left for today.

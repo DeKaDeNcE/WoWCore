@@ -901,7 +901,7 @@ namespace Game.Spells
             if (_owner.HasAuraType(AuraType.ChargeRecoveryAffectedByHasteRegen))
                 recoveryTimeF *= _owner.m_unitData.ModHasteRegen;
 
-            return (int)Math.Floor(recoveryTimeF);
+            return (int)MathF.Floor(recoveryTimeF);
         }
 
         public bool HasGlobalCooldown(SpellInfo spellInfo)

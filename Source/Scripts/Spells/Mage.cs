@@ -776,7 +776,7 @@ namespace Scripts.Spells.Mage;
             if ((spellValue.CustomBasePointsMask & (1 << 1)) != 0)
             {
                 int originalDamage = GetHitDamage();
-                float targetIndex = (float)spellValue.EffectBasePoints[1];
+                float targetIndex = spellValue.EffectBasePoints[1];
                 float multiplier = MathF.Pow(GetEffectInfo().CalcDamageMultiplier(GetCaster(), GetSpell()), targetIndex);
                 SetHitDamage((int)(originalDamage * multiplier));
             }

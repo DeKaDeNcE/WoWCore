@@ -13,17 +13,17 @@ namespace Framework.Constants
         //Grids
         public const int MaxGrids = 64;
         public const float SizeofGrids = 533.33333f;
-        public const int CenterGridCellId = (MaxCells * MaxGrids / 2);
-        public const int CenterGridId = (MaxGrids / 2);
-        public const float CenterGridOffset = (SizeofGrids / 2);
-        public const float CenterGridCellOffset = (SizeofCells / 2);
+        public const int CenterGridCellId = MaxCells * MaxGrids / 2;
+        public const int CenterGridId = MaxGrids / 2;
+        public const float CenterGridOffset = SizeofGrids / 2;
+        public const float CenterGridCellOffset = SizeofCells / 2;
 
         //Cells
         public const int MaxCells = 8;
-        public const float SizeofCells = (SizeofGrids / MaxCells);
-        public const int TotalCellsPerMap = (MaxGrids * MaxCells);
-        public const float MapSize = (SizeofGrids * MaxGrids);
-        public const float MapHalfSize = (MapSize / 2);
+        public const float SizeofCells = SizeofGrids / MaxCells;
+        public const int TotalCellsPerMap = MaxGrids * MaxCells;
+        public const float MapSize = SizeofGrids * MaxGrids;
+        public const float MapHalfSize = MapSize / 2;
 
         public const uint MaxGroupSize = 5;
         public const uint MaxRaidSize = 40;
@@ -33,10 +33,10 @@ namespace Framework.Constants
         public const uint ReadycheckDuration = 35000;
 
         //Liquid
-        public const float LiquidTileSize = (533.333f / 128.0f);
+        public const float LiquidTileSize = 533.333f / 128.0f;
 
         public const int MinMapUpdateDelay = 1;
-        public const int MinGridDelay = (Time.Minute * Time.InMilliseconds);
+        public const int MinGridDelay = Time.Minute * Time.InMilliseconds;
 
         public const int MapResolution = 128;
         public const float DefaultHeightSearch = 50.0f;

@@ -90,7 +90,7 @@ namespace Game.Entities
             float baseResult = ApplyRatingDiminishing(cr, m_activePlayerData.CombatRatings[(int)cr] * GetRatingMultiplier(cr));
             if (cr != CombatRating.ResiliencePlayerDamage)
                 return baseResult;
-            return (float)(1.0f - Math.Pow(0.99f, baseResult)) * 100.0f;
+            return 1.0f - MathF.Pow(0.99f, baseResult) * 100.0f;
         }
 
         void GetDodgeFromAgility(float diminishing, float nondiminishing)
@@ -334,7 +334,7 @@ namespace Game.Entities
             float blockArmor = (float)m_activePlayerData.ShieldBlock;
             float armorConstant = Global.DB2Mgr.EvaluateExpectedStat(ExpectedStatType.ArmorConstant, attackerLevel, -2, 0, Class.None, 0);
 
-            if ((blockArmor + armorConstant) == 0)
+            if (blockArmor + armorConstant == 0)
                 return 0;
 
             return Math.Min(blockArmor / (blockArmor + armorConstant), 0.85f);

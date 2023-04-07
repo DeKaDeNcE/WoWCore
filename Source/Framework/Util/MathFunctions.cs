@@ -10,24 +10,20 @@ using Framework.Constants;
 
 public static class MathFunctions
 {
-    public const float E = 2.71828f;
-    public const float Log10E = 0.434294f;
-    public const float Log2E = 1.4427f;
-    public const float PI = 3.14159f;
-    public const float PiOver2 = 1.5708f;
-    public const float PiOver4 = 0.785398f;
-    public const float TwoPi = 6.28319f;
-    public const float Epsilon = 4.76837158203125E-7f;
+    public const float E       = 2.71828182845f;
+    public const float Log10E  = 0.434294f;
+    public const float Log2E   = 1.4427f;
+    public const float PiOver2 = 1.57079632679f;
+    public const float PiOver4 = 0.78539816339f;
+    public const float TwoPi   = 6.28318530718f;
 
     public static float wrap(float t, float lo, float hi)
     {
-        if ((t >= lo) && (t < hi))
-        {
+        if (t >= lo && t < hi)
             return t;
-        }
 
         float interval = hi - lo;
-        return (float)(t - interval * Math.Floor((t - lo) / interval));
+        return t - interval * MathF.Floor((t - lo) / interval);
     }
 
     public static void Swap<T>(ref T lhs, ref T rhs)
@@ -50,7 +46,7 @@ public static class MathFunctions
     /// </returns>
     public static float Clamp(float value, float calmpedValue, float tolerance)
     {
-        return (tolerance > Math.Abs(value - calmpedValue)) ? calmpedValue : value;
+        return tolerance > Math.Abs(value - calmpedValue) ? calmpedValue : value;
     }
     /// <summary>
     /// Clamp a <paramref name="value"/> to <paramref name="calmpedValue"/> using the default tolerance value.
@@ -61,10 +57,10 @@ public static class MathFunctions
     /// Returns the clamped value.
     /// result = (EpsilonF > Abs(value-calmpedValue)) ? calmpedValue : value;
     /// </returns>
-    /// <remarks><see cref="MathFunctions.Epsilon"/> is used for tolerance.</remarks>
+    /// <remarks><see cref="float.Epsilon"/> is used for tolerance.</remarks>
     public static float Clamp(float value, float calmpedValue)
     {
-        return (Epsilon > Math.Abs(value - calmpedValue)) ? calmpedValue : value;
+        return float.Epsilon > Math.Abs(value - calmpedValue) ? calmpedValue : value;
     }
     #endregion
 
@@ -84,13 +80,13 @@ public static class MathFunctions
 
     public static float DegToRad(float degrees)
     {
-        return degrees * (2.0f * PI / 360.0f);
+        return degrees * (2.0f * MathF.PI / 360.0f);
     }
 
     #region Fuzzy
     public static bool fuzzyEq(float a, float b)
     {
-        return (a == b) || (Math.Abs(a - b) <= eps(a, b));
+        return a == b || Math.Abs(a - b) <= eps(a, b);
     }
     public static bool fuzzyGt(float a, float b)
     {
@@ -166,15 +162,15 @@ public static class MathFunctions
         return value / max * 100.0f;
     }
 
-    public static int RoundToInterval(ref int num, dynamic floor, dynamic ceil)
-    {
-        return num = (int)Math.Min(Math.Max(num, floor), ceil);
-    }
-    public static uint RoundToInterval(ref uint num, dynamic floor, dynamic ceil)
+    public static int RoundToInterval(ref int num, int floor, int ceil)
     {
         return num = Math.Min(Math.Max(num, floor), ceil);
     }
-    public static float RoundToInterval(ref float num, dynamic floor, dynamic ceil)
+    public static uint RoundToInterval(ref uint num, uint floor, uint ceil)
+    {
+        return num = Math.Min(Math.Max(num, floor), ceil);
+    }
+    public static float RoundToInterval(ref float num, float floor, float ceil)
     {
         return num = Math.Min(Math.Max(num, floor), ceil);
     }
@@ -183,7 +179,8 @@ public static class MathFunctions
     {
         if (val == -100.0f)     // prevent set var to zero
             val = -99.99f;
-        value *= (apply ? (100.0f + val) / 100.0f : 100.0f / (100.0f + val));
+
+        value *= apply ? (100.0f + val) / 100.0f : 100.0f / (100.0f + val);
     }
 
     public static bool CompareValues(ComparisionType type, uint val1, uint val2)
@@ -257,17 +254,17 @@ public static class MathFunctions
         return (ushort)((byte)l | (ushort)h << 8);
     }
 
-    public static double Variance(this IEnumerable<uint> source)
+    public static float Variance(this IEnumerable<uint> source)
     {
         int n = 0;
-        double mean = 0;
-        double M2 = 0;
+        float mean = 0;
+        float M2 = 0;
 
         foreach (var x in source)
         {
-            n = n + 1;
-            double delta = x - mean;
-            mean = mean + delta / n;
+            n += 1;
+            float delta = x - mean;
+            mean += delta / n;
             M2 += delta * (x - mean);
         }
         return M2 / (n - 1);

@@ -170,7 +170,7 @@ namespace Game.Maps
         void VisitCircle(Visitor visitor, Map map, ICoord begin_cell, ICoord end_cell)
         {
             //here is an algorithm for 'filling' circum-squared octagon
-            uint x_shift = (uint)Math.Ceiling((end_cell.X_coord - begin_cell.X_coord) * 0.3f - 0.5f);
+            uint x_shift = (uint)MathF.Ceiling((end_cell.X_coord - begin_cell.X_coord) * 0.3f - 0.5f);
             //lets calculate x_start/x_end coords for central strip...
             uint x_start = begin_cell.X_coord + x_shift;
             uint x_end = end_cell.X_coord - x_shift;

@@ -114,7 +114,7 @@ namespace System.Collections.Generic;
             var list = sequence.ToList();
             var totalWeight = list.Sum(weightSelector);
             // The weight we are after...
-            var itemWeightIndex = (float)RandomHelper.NextDouble() * totalWeight;
+            var itemWeightIndex = RandomHelper.NextSingle() * totalWeight;
             var currentWeightIndex = 0.0f;
 
             foreach (var item in list.Select(weightedItem => new { Value = weightedItem, Weight = weightSelector(weightedItem) }))

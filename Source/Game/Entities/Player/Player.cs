@@ -6769,8 +6769,8 @@ namespace Game.Entities
             if (npc != null)
             {
                 float discount = GetReputationPriceDiscount(npc);
-                totalcost = (uint)Math.Ceiling(totalcost * discount);
-                firstcost = (uint)Math.Ceiling(firstcost * discount);
+                totalcost = (uint)MathF.Ceiling(totalcost * discount);
+                firstcost = (uint)MathF.Ceiling(firstcost * discount);
                 m_taxi.SetFlightMasterFactionTemplateId(npc.GetFaction());
             }
             else

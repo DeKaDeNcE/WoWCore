@@ -69,8 +69,8 @@ public static partial class Detour
         // Check for horizontal overlap.
         // The segment is shrunken a little so that slabs which touch
         // at end points are not connected.
-        float minx = (float)Math.Max(amin[0] + px, bmin[0] + px);
-        float maxx = (float)Math.Min(amax[0] - px, bmax[0] - px);
+        float minx = Math.Max(amin[0] + px, bmin[0] + px);
+        float maxx = Math.Min(amax[0] - px, bmax[0] - px);
         if (minx > maxx)
             return false;
 
@@ -1344,8 +1344,8 @@ public static partial class Detour
         ///  @param[out]	ty		The tile's y-location. (x, y)
         public void calcTileLoc(float[] pos, ref int tx, ref int ty)
         {
-            tx = (int)Math.Floor((pos[0] - m_orig[0]) / m_tileWidth);
-            ty = (int)Math.Floor((pos[2] - m_orig[2]) / m_tileHeight);
+            tx = (int)MathF.Floor((pos[0] - m_orig[0]) / m_tileWidth);
+            ty = (int)MathF.Floor((pos[2] - m_orig[2]) / m_tileHeight);
         }
 
         /// Gets the tile and polygon for the specified polygon reference.

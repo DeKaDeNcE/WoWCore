@@ -91,7 +91,7 @@ namespace Game.Entities
                 if (member.LeaderSpawnId != memberSpawnId)
                 {
                     member.FollowDist = result.Read<float>(2);
-                    member.FollowAngle = result.Read<float>(3) * MathFunctions.PI / 180;
+                    member.FollowAngle = result.Read<float>(3) * MathF.PI / 180;
                 }
 
                 member.GroupAI = result.Read<uint>(4);

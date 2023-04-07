@@ -429,7 +429,7 @@ namespace Scripts.Spells.Monk;
 
         public override bool Load()
         {
-            _period = (float)Global.SpellMgr.GetSpellInfo(SpellIds.StaggerDamageAura, GetCastDifficulty()).GetEffect(0).ApplyAuraPeriod;
+            _period = Global.SpellMgr.GetSpellInfo(SpellIds.StaggerDamageAura, GetCastDifficulty()).GetEffect(0).ApplyAuraPeriod;
             return true;
         }
 
@@ -437,7 +437,7 @@ namespace Scripts.Spells.Monk;
         {
             // Calculate damage per tick
             float total = aurEff.GetAmount();
-            float perTick = total * _period / (float)GetDuration(); // should be same as GetMaxDuration() TODO: verify
+            float perTick = total * _period / GetDuration(); // should be same as GetMaxDuration() TODO: verify
 
             // Set amount on effect for tooltip
             AuraEffect effInfo = GetAura().GetEffect(0);

@@ -163,7 +163,7 @@ namespace Game.Movement
 
         bool IsNodeIncludedInShortenedPath(TaxiPathNodeRecord p1, TaxiPathNodeRecord p2)
         {
-            return p1.ContinentID != p2.ContinentID || Math.Pow(p1.Loc.X - p2.Loc.X, 2) + Math.Pow(p1.Loc.Y - p2.Loc.Y, 2) > (40.0f * 40.0f);
+            return p1.ContinentID != p2.ContinentID || MathF.Pow(p1.Loc.X - p2.Loc.X, 2) + MathF.Pow(p1.Loc.Y - p2.Loc.Y, 2) > 40.0f * 40.0f;
         }
 
         public void LoadPath(Player player, uint startNode = 0)
@@ -206,7 +206,7 @@ namespace Game.Movement
                     }
                 }
 
-                _pointsForPathSwitch.Add(new TaxiNodeChangeInfo((uint)(_path.Count - 1), (long)Math.Ceiling(cost * discount)));
+                _pointsForPathSwitch.Add(new TaxiNodeChangeInfo((uint)(_path.Count - 1), (long)MathF.Ceiling(cost * discount)));
             }
         }
 

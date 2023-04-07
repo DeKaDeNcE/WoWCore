@@ -12,38 +12,39 @@ public class RandomHelper
 {
     private static readonly Random rand;
 
-    static RandomHelper()
-    {
-        rand = new Random();
-    }
+    static RandomHelper() { rand = new Random(); }
 
     /// <summary>
     /// Returns a random number between 0.0 and 1.0.
     /// </summary>
     /// <returns></returns>
-    public static double NextDouble()
-    {
-        return rand.NextDouble();
-    }
+    public static float NextSingle() => rand.NextSingle();
+
+    /// <summary>
+    /// Returns a random number between 0.0 and 1.0.
+    /// </summary>
+    /// <returns></returns>
+    public static double NextDouble() => rand.NextDouble();
 
     /// <summary>
     /// Returns a nonnegative random number.
     /// </summary>
     /// <returns></returns>
-    public static uint Rand32()
-    {
-        return (uint)rand.Next();
-    }
+    public static uint Rand32() => (uint)rand.Next();
 
     /// <summary>
     /// Returns a nonnegative random number less than the specified maximum.
     /// </summary>
     /// <param name="maxValue"></param>
     /// <returns></returns>
-    public static uint Rand32(dynamic maxValue)
-    {
-        return (uint)rand.Next(maxValue);
-    }
+    public static uint Rand32(dynamic maxValue) => (uint)rand.Next(maxValue);
+
+    /// <summary>
+    /// Returns a random number within a specified range.
+    /// </summary>
+    /// <param name="maxValue"></param>
+    /// <returns></returns>
+    public static int IRand(int maxValue) => rand.Next(maxValue);
 
     /// <summary>
     /// Returns a random number within a specified range.
@@ -51,17 +52,14 @@ public class RandomHelper
     /// <param name="minValue"></param>
     /// <param name="maxValue"></param>
     /// <returns></returns>
-    public static int IRand(int minValue, int maxValue)
-    {
-        return rand.Next(minValue, maxValue);
-    }
-    public static uint URand(dynamic minValue, dynamic maxValue)
-    {
-        return (uint)rand.Next(Convert.ToInt32(minValue), Convert.ToInt32(maxValue));
-    }
+    public static int IRand(int minValue, int maxValue) => rand.Next(minValue, maxValue);
+
+    public static uint URand(dynamic minValue, dynamic maxValue) => (uint)rand.Next(Convert.ToInt32(minValue), Convert.ToInt32(maxValue));
+
     public static float FRand(float min, float max)
     {
         Cypher.Assert(max >= min);
+
         return (float)(rand.NextDouble() * (max - min) + min);
     }
 
@@ -70,37 +68,27 @@ public class RandomHelper
     /// </summary>
     /// <param name="i"></param>
     /// <returns></returns>
-    public static bool randChance(float i)
-    {
-        return i > randChance();
-    }
+    public static bool randChance(float i) => i > randFChance();
 
-    public static double randChance()
-    {
-        return rand.NextDouble() * 100.0;
-    }
+    public static float randFChance() => rand.NextSingle() * 100.0f;
+
+    public static double randChance() => rand.NextDouble() * 100.0;
 
     /// <summary>
     /// Fills the elements of a specified array of bytes with random numbers.
     /// </summary>
     /// <param name="buffer"></param>
-    public static void NextBytes(byte[] buffer)
-    {
-        rand.NextBytes(buffer);
-    }
+    public static void NextBytes(byte[] buffer) { rand.NextBytes(buffer); }
 
-    public static T RAND<T>(params T[] args)
-    {
-        int randIndex = IRand(0, args.Length - 1);
-
-        return args[randIndex];
-    }
+    public static T RAND<T>(params T[] args) => args[IRand(0, args.Length - 1)];
 
     public static TimeSpan RandTime(TimeSpan min, TimeSpan max)
     {
-        double diff = max.TotalMilliseconds - min.TotalMilliseconds;
+        var diff = max.TotalMilliseconds - min.TotalMilliseconds;
+
         Cypher.Assert(diff >= 0);
         Cypher.Assert(diff <= 0xFFFFFFFF);
+
         return min + TimeSpan.FromMilliseconds(URand(0, (uint)diff));
     }
 }

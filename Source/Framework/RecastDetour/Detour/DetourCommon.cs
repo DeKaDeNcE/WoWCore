@@ -258,7 +258,7 @@ public static partial class Detour
 
         // Compute scaled barycentric coordinates
         float denom = v0[0] * v1[2] - v0[2] * v1[0];
-        if (MathF.Abs(denom) < EPS)
+        if (Math.Abs(denom) < EPS)
             return false;
 
         float u = v1[2] * v2[0] - v1[0] * v2[2];
@@ -409,7 +409,7 @@ public static partial class Detour
             acc += dacc;
         }
 
-        float v = (float)Math.Sqrt(t);
+        float v = MathF.Sqrt(t);
 
         float a = 1 - v;
         float b = (1 - u) * v;
@@ -687,11 +687,11 @@ public static partial class Detour
     // @return The scalar length of the vector.
     public static float dtVlen(float[] v)
     {
-        return (float)Math.Sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+        return MathF.Sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
     }
     public static float dtVlen(float[] v, int vStart)
     {
-        return (float)Math.Sqrt(v[0 + vStart] * v[0 + vStart] + v[1 + vStart] * v[1 + vStart] + v[2 + vStart] * v[2 + vStart]);
+        return MathF.Sqrt(v[0 + vStart] * v[0 + vStart] + v[1 + vStart] * v[1 + vStart] + v[2 + vStart] * v[2 + vStart]);
     }
 
     /// Derives the square of the scalar length of the vector. (len * len)
@@ -715,14 +715,14 @@ public static partial class Detour
         float dx = v2[0] - v1[0];
         float dy = v2[1] - v1[1];
         float dz = v2[2] - v1[2];
-        return (float)Math.Sqrt(dx * dx + dy * dy + dz * dz);
+        return MathF.Sqrt(dx * dx + dy * dy + dz * dz);
     }
     public static float dtVdist(float[] v1, int v1Start, float[] v2, int v2Start)
     {
         float dx = v2[v2Start + 0] - v1[v1Start + 0];
         float dy = v2[v2Start + 1] - v1[v1Start + 1];
         float dz = v2[v2Start + 2] - v1[v1Start + 2];
-        return (float)Math.Sqrt(dx * dx + dy * dy + dz * dz);
+        return MathF.Sqrt(dx * dx + dy * dy + dz * dz);
     }
 
     /// Returns the square of the distance between two points.
@@ -754,13 +754,13 @@ public static partial class Detour
     {
         float dx = v2[0] - v1[0];
         float dz = v2[2] - v1[2];
-        return (float)Math.Sqrt(dx * dx + dz * dz);
+        return MathF.Sqrt(dx * dx + dz * dz);
     }
     public static float dtVdist2D(float[] v1, int v1Start, float[] v2, int v2Start)
     {
         float dx = v2[v2Start + 0] - v1[v1Start + 0];
         float dz = v2[v2Start + 2] - v1[v1Start + 2];
-        return (float)Math.Sqrt(dx * dx + dz * dz);
+        return MathF.Sqrt(dx * dx + dz * dz);
     }
     /// Derives the square of the distance between the specified points on the xz-plane.
     ///  @param[in]		v1	A point. [(x, y, z)]
@@ -782,14 +782,14 @@ public static partial class Detour
     ///  @param[in,out]	v	The vector to normalize. [(x, y, z)]
     public static void dtVnormalize(float[] v)
     {
-        float d = 1.0f / (float)Math.Sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+        float d = 1.0f / MathF.Sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
         v[0] *= d;
         v[1] *= d;
         v[2] *= d;
     }
     public static void dtVnormalize(float[] v, int vStart)
     {
-        float d = 1.0f / (float)Math.Sqrt(v[vStart + 0] * v[vStart + 0] + v[vStart + 1] * v[vStart + 1] + v[vStart + 2] * v[vStart + 2]);
+        float d = 1.0f / MathF.Sqrt(v[vStart + 0] * v[vStart + 0] + v[vStart + 1] * v[vStart + 1] + v[vStart + 2] * v[vStart + 2]);
         v[vStart + 0] *= d;
         v[vStart + 1] *= d;
         v[vStart + 2] *= d;

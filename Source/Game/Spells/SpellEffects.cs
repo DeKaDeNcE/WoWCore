@@ -3109,7 +3109,7 @@ namespace Game.Spells
             if (currentDrunk + drunkMod > 100)
             {
                 currentDrunk = 100;
-                if (RandomHelper.randChance() < 25.0f)
+                if (RandomHelper.randFChance() < 25.0f)
                     player.CastSpell(player, 67468, new CastSpellExtraArgs().SetTriggeringSpell(this));    // Drunken Vomit
             }
             else
@@ -3760,7 +3760,7 @@ namespace Game.Spells
 
             float distZ = pos.GetPositionZ() - unitTarget.GetPositionZ();
             float speedXY = effectInfo.MiscValue != 0 ? effectInfo.MiscValue / 10.0f : 30.0f;
-            float speedZ = (float)((2 * speedXY * speedXY * distZ + MotionMaster.gravity * distXY * distXY) / (2 * speedXY * distXY));
+            float speedZ = (2 * speedXY * speedXY * distZ + SharedConst.gravity * distXY * distXY) / (2 * speedXY * distXY);
 
             if (!float.IsFinite(speedZ))
             {
@@ -3797,7 +3797,7 @@ namespace Game.Spells
             float distZ = pos.GetPositionZ() - unitTarget.GetPositionZ();
 
             float speedXY = effectInfo.MiscValue != 0 ? effectInfo.MiscValue / 10.0f : 30.0f;
-            float speedZ = (float)((2 * speedXY * speedXY * distZ + MotionMaster.gravity * distXY * distXY) / (2 * speedXY * distXY));
+            float speedZ = (2 * speedXY * speedXY * distZ + SharedConst.gravity * distXY * distXY) / (2 * speedXY * distXY);
 
             if (!float.IsFinite(speedZ))
             {
@@ -4092,7 +4092,7 @@ namespace Game.Spells
                 //GO is always friendly to it's creator, get range for friends
                 float min_dis = m_spellInfo.GetMinRange(true);
                 float max_dis = m_spellInfo.GetMaxRange(true);
-                float dis = (float)RandomHelper.NextDouble() * (max_dis - min_dis) + min_dis;
+                float dis = RandomHelper.NextSingle() * (max_dis - min_dis) + min_dis;
 
                 unitCaster.GetClosePoint(out fx, out fy, out fz, SharedConst.DefaultPlayerBoundingRadius, dis);
                 fo = unitCaster.GetOrientation();
