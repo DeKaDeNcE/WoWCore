@@ -223,8 +223,12 @@ namespace Game
                 return Expansion.MistsOfPandaria;
             else if (level < 100)
                 return Expansion.WarlordsOfDraenor;
-            else
+            else if (level < 110)
                 return Expansion.Legion;
+            else if (level < 120)
+                return Expansion.BattleForAzeroth;
+            else
+                return Expansion.Dragonflight;
         }
 
         public static uint ConquestRatingCalculator(uint rate)
