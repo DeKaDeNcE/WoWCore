@@ -689,7 +689,7 @@ namespace Game.Maps
                 return null;
 
             int reqIndex = Path.IndexOfKey(time);
-            if (reqIndex != -1)
+            if (reqIndex > 0)
                 return Path.GetValueAtIndex(reqIndex - 1);
 
             return Path.LastOrDefault().Value;
@@ -701,7 +701,7 @@ namespace Game.Maps
                 return null;
 
             int reqIndex = Rotations.IndexOfKey(time);
-            if (reqIndex != -1)
+            if (reqIndex > 0)
                 return Rotations.GetValueAtIndex(reqIndex - 1);
 
             return Rotations.LastOrDefault().Value;
