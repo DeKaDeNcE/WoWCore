@@ -79,7 +79,7 @@ namespace Game.Networking.Packets
         public ushort TodayHK;
         public ushort YesterdayHK;
         public byte LifetimeMaxRank;
-        public TraitInspectInfo TalentTraits;
+        public TraitInspectInfo TalentTraits = new();
     }
 
     public class QueryInspectAchievements : ClientPacket
@@ -321,11 +321,11 @@ namespace Game.Networking.Packets
         public bool Disqualified;
     }
 
-    public struct TraitInspectInfo
+    public class TraitInspectInfo
     {
         public int Level;
         public int ChrSpecializationID;
-        public TraitConfigPacket Config;
+        public TraitConfigPacket Config = new();
 
         public void Write(WorldPacket data)
         {
