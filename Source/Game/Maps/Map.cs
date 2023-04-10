@@ -2512,7 +2512,9 @@ namespace Game.Maps
                         // in case triggered sequence some spell can continue casting after prev CleanupsBeforeDelete call
                         // make sure that like sources auras/etc removed before destructor start
                         obj.ToCreature().CleanupsBeforeDelete();
-                        RemoveFromMap(obj.ToCreature(), true);
+
+                        if (obj.ToCreature().IsInWorld && obj.ToCreature().GetMap() != null)
+                            RemoveFromMap(obj.ToCreature(), true);
                         break;
                     default:
                         Log.outError(LogFilter.Maps, "Non-grid object (TypeId: {0}) is in grid object remove list, ignored.", obj.GetTypeId());
