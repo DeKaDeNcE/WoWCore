@@ -803,7 +803,7 @@ namespace Game
                 }
             }
 
-            Log.outError(LogFilter.Sql, "{0} Area {1} does not have phase {2}.", cond.ToString(), cond.SourceGroup, cond.SourceEntry);
+            Log.outError(LogFilter.Sql, "{0} Area {1} does not have phase {2}.", cond.ToString(), cond.SourceEntry, cond.SourceGroup);
             return false;
         }
 
