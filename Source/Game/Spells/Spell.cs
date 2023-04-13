@@ -8474,6 +8474,12 @@ namespace Game.Spells
                         hitMask |= Unit.CreateProcHitMask(damageInfo, MissCondition);
                         procVictim.Or(ProcFlags.TakeAnyDamage);
 
+                        // sparring
+                        Creature victimCreature = damageInfo.target.ToCreature();
+
+                        if (victimCreature)
+                            damageInfo.damage = victimCreature.CalculateDamageForSparring(damageInfo.attacker, damageInfo.damage);
+
                         spell.m_damage = (int)damageInfo.damage;
 
                         caster.DealSpellDamage(damageInfo, true);

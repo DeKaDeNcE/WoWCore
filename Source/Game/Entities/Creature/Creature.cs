@@ -412,6 +412,7 @@ namespace Game.Entities
             InitializeMovementFlags();
 
             LoadCreaturesAddon();
+            LoadCreaturesSparringHealth();
 
             LoadTemplateImmunities();
             GetThreatManager().EvaluateSuppressed();
@@ -1572,6 +1573,57 @@ namespace Game.Entities
             }
         }
 
+        public void OverrideSparringHealthPct(List<float> healthPct)
+        {
+            _sparringHealthPct = healthPct.SelectRandom();
+        }
+
+        public float GetSparringHealthPct()
+        {
+            return _sparringHealthPct;
+        }
+
+        public uint CalculateDamageForSparring(Unit attacker, uint damage)
+        {
+            if (GetSparringHealthPct() == 0)
+                return damage;
+
+            if (!attacker.IsCreature() || attacker.IsCharmedOwnedByPlayerOrPlayer() || IsCharmedOwnedByPlayerOrPlayer())
+                return damage;
+
+            if (GetHealthPct() <= GetSparringHealthPct())
+                return 0;
+
+            uint sparringHealth = (uint)(GetMaxHealth() * GetSparringHealthPct() / 100);
+            if (GetHealth() - damage <= sparringHealth)
+                return (uint)(GetHealth() - sparringHealth);
+
+            if (damage >= GetHealth())
+                return (uint)(GetHealth() - 1);
+
+            return damage;
+        }
+
+        public bool ShouldFakeDamageFrom(Unit attacker)
+        {
+            if (GetSparringHealthPct() == 0)
+                return false;
+
+            if (!attacker)
+                return false;
+
+            if (!attacker.IsCreature())
+                return false;
+
+            if (attacker.IsCharmedOwnedByPlayerOrPlayer() || IsCharmedOwnedByPlayerOrPlayer())
+                return false;
+
+            if (GetHealthPct() > GetSparringHealthPct())
+                return false;
+
+            return true;
+        }
+
         bool CreateFromProto(ulong guidlow, uint entry, CreatureData data = null, uint vehId = 0)
         {
             SetZoneScript();
@@ -1962,6 +2014,7 @@ namespace Game.Entities
                 InitializeMovementAI();
                 base.SetDeathState(DeathState.Alive);
                 LoadCreaturesAddon();
+                LoadCreaturesSparringHealth();
             }
         }
 
@@ -2462,6 +2515,14 @@ namespace Game.Entities
                 }
             }
             return true;
+        }
+
+        public void LoadCreaturesSparringHealth()
+        {
+            List<float> templateValues = Global.ObjectMgr.GetCreatureTemplateSparringValues(GetCreatureTemplate().Entry);
+
+            if (templateValues != null && templateValues.Count > 0)
+                _sparringHealthPct = templateValues.SelectRandom();
         }
 
         // Send a message to LocalDefense channel for players opposition team in the zone
