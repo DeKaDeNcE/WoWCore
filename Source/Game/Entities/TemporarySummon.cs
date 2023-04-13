@@ -51,6 +51,10 @@ namespace Game.Entities
             return null;
         }
 
+        public override float GetHealthMultiplierForTarget(WorldObject target) { return 1.0f; }
+        public override float GetDamageMultiplierForTarget(WorldObject target) { return 1.0f; }
+        public override float GetArmorMultiplierForTarget(WorldObject target) { return 1.0f; }
+
         public override void Update(uint diff)
         {
             base.Update(diff);
