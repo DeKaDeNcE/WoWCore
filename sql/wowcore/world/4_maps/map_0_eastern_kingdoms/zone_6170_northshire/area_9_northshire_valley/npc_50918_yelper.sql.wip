@@ -1,0 +1,20 @@
+##########################
+# NPC Yelper             #
+# ENTRY 50918            #
+# GUID 3530203330003113  #
+##########################
+
+SET @ENTRY = 50918;
+SET @CGUID = 3530203330003113;
+
+# TODO: Sniff data instead of manual spawn
+DELETE FROM `creature` WHERE `guid` = @CGUID;
+INSERT INTO `creature`
+(`guid`,    `id`, `map`, `zoneId`, `areaId`, `spawnDifficulties`, `phaseUseFlags`, `PhaseId`, `PhaseGroup`, `terrainSwapMap`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `wander_distance`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `unit_flags2`, `unit_flags3`, `ScriptName`, `StringId`, `VerifiedBuild`) VALUES
+(@CGUID,  @ENTRY,     0,        0,        0,                 '0',               0,         0,            0,               -1,         0,              0,     -8925.57,     -152.092,      81.9392,       2.32961,             300,                 0,                 0,          34,         0,              0,         0,            0,             0,             0,           '',       NULL,               0);
+
+# Make it sit
+DELETE FROM `creature_template_addon` WHERE `entry` = @ENTRY;
+INSERT INTO `creature_template_addon`
+(`entry`, `path_id`, `mount`, `MountCreatureID`, `StandState`, `AnimTier`, `VisFlags`, `SheathState`, `PvPFlags`, `emote`, `aiAnimKit`, `movementAnimKit`, `meleeAnimKit`, `visibilityDistanceType`, `auras`) VALUES
+( @ENTRY,         0,       0,                 0,            1,          1,          0,             0,        0,         0,           0,                 0,              0,                        0,      '');

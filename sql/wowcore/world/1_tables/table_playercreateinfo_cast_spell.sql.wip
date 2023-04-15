@@ -1,0 +1,138 @@
+SOURCE ../0_includes/race_masks.sql
+SOURCE ../0_includes/class_masks.sql
+SOURCE ../0_includes/spells.sql
+
+SET @ALL_UNDEAD_CLASSES_EXCEPT_DEATHKNIGHT = @CLASS_MASK_WARRIOR + @CLASS_MASK_HUNTER + @CLASS_MASK_MAGE + @CLASS_MASK_ROGUE + @CLASS_MASK_PRIEST + @CLASS_MASK_WARLOCK + @CLASS_MASK_MONK;  # Warrior, Hunter, Mage, Rogue, Priest, Warlock, Monk = 1 + 4 + 128 + 8 + 16 + 256 + 512 = 925
+SET @ALL_GNOME_CLASSES_EXCEPT_DEATHKNIGHT  = @CLASS_MASK_WARRIOR + @CLASS_MASK_HUNTER + @CLASS_MASK_MAGE + @CLASS_MASK_ROGUE + @CLASS_MASK_PRIEST + @CLASS_MASK_WARLOCK + @CLASS_MASK_MONK;  # Warrior, Hunter, Mage, Rogue, Priest, Warlock, Monk = 1 + 4 + 128 + 8 + 16 + 256 + 512 = 925
+SET @ALL_WORGEN_CLASSES_EXCEPT_DEATHKNIGHT = @CLASS_MASK_WARRIOR + @CLASS_MASK_HUNTER + @CLASS_MASK_MAGE + @CLASS_MASK_ROGUE + @CLASS_MASK_PRIEST + @CLASS_MASK_WARLOCK + @CLASS_MASK_DRUID; # Warrior, Hunter, Mage, Rogue, Priest, Warlock, Druid = 1 + 4 + 128 + 8 + 16 + 256 + 1024 = 1437
+SET @ALL_DEMON_HUNTER_RACES                = @RACE_MASK_NIGHT_ELF + @RACE_MASK_BLOOD_ELF;                                                                                                    # Night Elf, Blood Elf = 8 + 512 = 520
+
+DELETE FROM `playercreateinfo_cast_spell`;
+INSERT INTO `playercreateinfo_cast_spell`
+(                    `raceMask`,                            `classMask`, `createMode`,               `spell`,                                                  `note`) VALUES
+
+######################################################
+# Race 16 Undead Classes 925 All except Death Knight #
+######################################################
+
+(             @RACE_MASK_UNDEAD, @ALL_UNDEAD_CLASSES_EXCEPT_DEATHKNIGHT,            0,   @SPELL_RIGOR_MORTIS,                           'Undead - 73523 Rigor Mortis'), # Applies Aura 73523 Rigor Mortis
+
+#####################################################
+# Race 64 Gnome Classes 925 All except Death Knight #
+#####################################################
+
+(              @RACE_MASK_GNOME, @ALL_GNOME_CLASSES_EXCEPT_DEATHKNIGHT,             0,                 80653,                              'Gnome - 80653 Irradiated'), # Applies Aura 80653 Irradiated
+
+############################################################
+# Race 2097152 Worgen Classes 1437 All except Death Knight #
+############################################################
+
+(             @RACE_MASK_WORGEN, @ALL_WORGEN_CLASSES_EXCEPT_DEATHKNIGHT,            0,                 95834,        'Worgen - 95834 Worgen Enabler Cheat [INTERNAl]'), # Learns Spells 94293 Altered Form (Racial Passive), 68996 Two Forms (Racial), Learns 68992 Darkflight (Racial)
+(             @RACE_MASK_WORGEN, @ALL_WORGEN_CLASSES_EXCEPT_DEATHKNIGHT,            0,                 72792,                 'Worgen - 72792 Learn Worgen Racials 1'), # Learns Spells 68975 Viciousness (Racial Passive), 68978 Flayer (Racial Passive), 68976 Aberration (Racial Passive)
+(             @RACE_MASK_WORGEN, @ALL_WORGEN_CLASSES_EXCEPT_DEATHKNIGHT,            0,                 94098,                  'Worgen - 94098 Running Wild (Racial)'), # Learns Spells 87840 Running Wild (Racial), 33388 Apprentice Riding
+
+#########################
+# Race 8388608 Pandaren #
+#########################
+
+(           @RACE_MASK_PANDAREN,                    @CLASS_MASK_WARRIOR,            0,                108059,             'Pandaren - Warrior - 108059 Remove weapon'), # Removes Item 73210 Trainee's Sword
+(           @RACE_MASK_PANDAREN,                     @CLASS_MASK_HUNTER,            0,                108061,              'Pandaren - Hunter - 108061 Remove weapon'), # Removes Item 73211 Trainee's Crossbow
+(           @RACE_MASK_PANDAREN,                      @CLASS_MASK_ROGUE,            0,                108058,               'Pandaren - Rogue - 108058 Remove weapon'), # Removes Item 73208 Trainee's Dagger, 73212 Trainee's Dagger
+(           @RACE_MASK_PANDAREN,                     @CLASS_MASK_PRIEST,            0,                108057,              'Pandaren - Priest - 108057 Remove weapon'), # Removes Item 73207 Trainee's Mace, 76393 Trainee's Book of Prayers
+(           @RACE_MASK_PANDAREN,                     @CLASS_MASK_SHAMAN,            0,                108056,              'Pandaren - Shaman - 108056 Remove weapon'), # Removes Item 76391 Trainee's Axe, 73213 Trainee's Shield
+(           @RACE_MASK_PANDAREN,                       @CLASS_MASK_MAGE,            0,                108055,                'Pandaren - Mage - 108055 Remove weapon'), # Removes Item 76390 Trainee's Spellblade, 76392 Trainee's Hand Fan
+(           @RACE_MASK_PANDAREN,                       @CLASS_MASK_MONK,            0,                108060,                'Pandaren - Monk - 108060 Remove weapon'), # Removes Item 73209 Trainee's Staff
+
+####################################
+# Race 520 Class 2048 Demon Hunter #
+####################################
+
+(       @ALL_DEMON_HUNTER_RACES,               @CLASS_MASK_DEMON_HUNTER,            0,                 90266,                          'Demon Hunter - Master Riding'),
+(       @ALL_DEMON_HUNTER_RACES,               @CLASS_MASK_DEMON_HUNTER,            0,                200749,              'Demon Hunter - Activating Specialization'),
+(       @ALL_DEMON_HUNTER_RACES,               @CLASS_MASK_DEMON_HUNTER,            0,                200175,                        'Demon Hunter - 200175 Felsaber'), # Learn Mount 200175 Felsaber
+(         @RACE_MASK_NIGHTBORNE,                        @CLASS_MASK_ALL,            0,                258845,              'Nightborne - 258845 Nightborne Manasaber'), # Learn Mount 258845 Nightborne Manasaber
+(@RACE_MASK_HIGHMOUNTAIN_TAUREN,                        @CLASS_MASK_ALL,            0,                258060, 'Highmountain Tauren - 258060 Highmountain Thunderhoof'), # Learn Mount 258060 Highmountain Thunderhoof
+(           @RACE_MASK_VOID_ELF,                        @CLASS_MASK_ALL,            0,                259202,              'Void Elf - 259202 Starcursed Voidstrider'), # Learn Mount 259202 Starcursed Voidstrider
+(@RACE_MASK_LIGHTFORGED_DRAENEI,                        @CLASS_MASK_ALL,            0,                258022,   'Lightforged Draenei - 258022 Lightforged Felcrusher'), # Learn Mount 258022 Lightforged Felcrusher
+(    @RACE_MASK_ZANDALARI_TROLL,                        @CLASS_MASK_ALL,            0,                263707,           'Zandalari Troll - 263707 Zandalari Direhorn'), # Learn Mount 263707 Zandalari Direhorn
+(          @RACE_MASK_KUL_TIRAN,                        @CLASS_MASK_ALL,            0,                282682,                  'Kul Tiran - 282682 Kul Tiran Charger'), # Learn Mount 282682 Kul Tiran Charger
+(    @RACE_MASK_DARK_IRON_DWARF,                        @CLASS_MASK_ALL,            0,                271646,         'Dark Iron Dwarf - 271646 Dark Iron Core Hound'), # Learn Mount 271646 Dark Iron Core Hound
+(            @RACE_MASK_VULPERA,                        @CLASS_MASK_ALL,            0,                306423,                        'Vulpera - 306423 Caravan Hyena'), # Learn Mount 306423 Caravan Hyena
+(         @RACE_MASK_MAGHAR_ORC,                        @CLASS_MASK_ALL,            0,                267274,               'Mag\'har Orc - 267274 Mag\'har Direwolf'), # Learn Mount 267274 Mag'har Direwolf
+(         @RACE_MASK_MECHAGNOME,                        @CLASS_MASK_ALL,            0,                305592,           'Mechagnome - 305592 Mechagon Mechanostrider'), # Learn Mount 305592 Mechagon Mechanostrider
+
+#########################################
+# Race 98304 Dracthyr Class 4096 Evoker #
+#########################################
+# General: 6603 Auto Attack, 358733 Glide (Racial), 368970 Tail Swipe (Racial), 357214 Wing Buffet (Racial), 366522 Armor Skills (Passive), 365575 Awakened (Racial Passive), 366489 Discerning Eye (Racial Passive), 360009 Familiar Skies (Racial Passive), 362633 Languages (Racial Passive), 352372 Weapon Skills, 33388 Apprentice Riding, 33391 Journeyman Riding, 34090 Expert Riding, 90265 Master Riding
+# Evoker: 362969 Azure Strike (Blue), 361469 Living Flame (Red), 400006 Energizing Flame, 396571 Tempered Scales, 356995 Disintegrate (Blue), 361227 Return (Bronze), 364342 Blessing of the Bronze (Bronze), 390386 Fury of the Aspects
+# Action Bar: [1] 361469 Living Flame (Red), [2] 362969 Azure Strike (Blue), [3] 357214 Wing Buffet (Racial), [4] 368970 Tail Swipe (Racial), [5] 356995 Disintegrate (Blue), [-] 358733 Glide (Racial)
+(           @RACE_MASK_DRACTHYR,                          @CLASS_EVOKER,            0,                 97709,       'Dracthyr - Evoker - 97709 Altered Form (Racial)'),
+(           @RACE_MASK_DRACTHYR,                          @CLASS_EVOKER,            0,                365560,                     'Dracthyr - Evoker - 365560 Stasis'),
+(           @RACE_MASK_DRACTHYR,                          @CLASS_EVOKER,            0,                369728,             'Dracthyr - Evoker - 369728 Dracthyr Login'),
+
+##################################
+# Class 32 Death Knight Race Any #
+##################################
+
+(               @RACE_MASK_NONE,                    @CLASS_DEATH_KNIGHT,            0,                 48778,             'Death Knight - 48778 Acherus Deathcharger'), # Learn Mount 48778 Acherus Deathcharger
+
+##################################
+# Race Any Class Any             #
+##################################
+
+(               @RACE_MASK_NONE,                        @CLASS_MASK_ALL,            0,                376777,                             'All - Dragonriding Basics'),
+#(              @RACE_MASK_NONE,                        @CLASS_MASK_ALL,            0,                372608,                       'All - Dragonriding SurgeForward'),
+#(              @RACE_MASK_NONE,                        @CLASS_MASK_ALL,            0,                372610,                      'All - Dragonriding SkywardAscent'),
+(               @RACE_MASK_NONE,                        @CLASS_MASK_ALL,            0,                383363,                            'All - Dragonriding LiftOff'),
+(               @RACE_MASK_NONE,                        @CLASS_MASK_ALL,            0,                383349,                              'All - Dragonriding Vigor'),
+(               @RACE_MASK_NONE,                        @CLASS_MASK_ALL,            0,                383366,                'All - Dragonriding Thrill Of The Skies'),
+
+# 68638 Worgen Intro Completion, 68643 Worgen Intro Completion, 68639 Forcecast Worgen Intro Completion, 95834 Worgen Enabler Cheat [INTERNAl], 72799 Last Stand Complete, 72788 Last Stand Complete, 95758 Learn Enable Worgen Altered Form [INTERNAl], 95759 Learn Darkflight [INTERNAL], 72792 Learn Worgen Racials 1, 1645 Worgen Form, 72857 Learn Two Forms, 94098 Learn Running Wild (Racial)
+# Learns 94293 Altered Form (Racial Passive), 68996 Two Forms (Racial), 68975 Viciousness (Racial Passive), 68978 Flayer (Racial Passive), 68976 Aberration (Racial Passive)
+# (           @RACE_MASK_WORGEN, @ALL_WORGEN_CLASSES_EXCEPT_DEATHKNIGHT,            0,                  1645,                            'Worgen -  1645 Worgen Form'),
+# Learns 68992 Darkflight (Racial)
+# (           @RACE_MASK_WORGEN, @ALL_WORGEN_CLASSES_EXCEPT_DEATHKNIGHT,            0,                 95759,            'Worgen - 95759 Learn Darkflight [INTERNAL]'),
+
+######################
+# Summon Hunter Pets #
+######################
+
+#(              @RACE_MASK_HUMAN,                    @CLASS_MASK_HUNTER,            0,                 79597,                           'Human - Hunter - Young Wolf'), # Summons Pet Young Wolf 42717
+#(                @RACE_MASK_ORC,                    @CLASS_MASK_HUNTER,            0,                 79598,                             'Orc - Hunter - Young Boar'), # Summons Pet Young Boar 42719
+#(              @RACE_MASK_DWARF,                    @CLASS_MASK_HUNTER,            0,                 79593,                           'Dwarf - Hunter - Young Bear'), # Summons Pet Young Bear 42713
+#(          @RACE_MASK_NIGHT_ELF,                    @CLASS_MASK_HUNTER,            0,                 79602,                        'Night Elf - Hunter - Young Cat'), # Summons Pet Young Cat 42718
+#(             @RACE_MASK_UNDEAD,                    @CLASS_MASK_HUNTER,            0,                 79600,                         'Undead - Hunter - Young Widow'), # Summons Pet Young Widow 51107
+#(             @RACE_MASK_TAUREN,                    @CLASS_MASK_HUNTER,            0,                 79603,                   'Tauren - Hunter - Young Tallstrider'), # Summons Pet Young Tallstrider 42720
+#(              @RACE_MASK_GNOME,                    @CLASS_MASK_HUNTER,            0,                153724,                     'Gnome - Hunter - Mechanical Bunny'), # Summons Pet Mechanical Bunny 76199
+#(              @RACE_MASK_TROLL,                    @CLASS_MASK_HUNTER,            0,                 79599,                         'Troll - Hunter - Young Raptor'), # Summons Pet Young Raptor 42721
+#(             @RACE_MASK_GOBLIN,                    @CLASS_MASK_HUNTER,            0,                 79595,                          'Goblin - Hunter - Young Crab'), # Summons Pet Young Crab 42715
+#(          @RACE_MASK_BLOOD_ELF,                    @CLASS_MASK_HUNTER,            0,                 79594,                 'Blood Elf - Hunter - Young Dragonhawk'), # Summons Pet Young Dragonhawk 42710
+#(            @RACE_MASK_DRAENEI,                    @CLASS_MASK_HUNTER,            0,                 79601,                         'Draenei - Hunter - Young Moth'), # Summons Pet Young Moth 42712
+#(             @RACE_MASK_WORGEN,                    @CLASS_MASK_HUNTER,            0,                 68234,                     'Worgen - Hunter - Gilnean Mastiff'), # Summons Pet Gilnean Mastiff 35631 / 38844
+##(            @RACE_MASK_WORGEN,                    @CLASS_MASK_HUNTER,            0,                 79596,                       'Worgen - Hunter - Young Mastiff'), # Summons Pet Young Mastiff 42722
+#(    @RACE_MASK_DARK_IRON_DWARF,                    @CLASS_MASK_HUNTER,            0,                274907,                 'Dark Iron Dwarf - Hunter - Blazehound'), # Summons Pet Blazehound 141729
+#(            @RACE_MASK_VULPERA,                    @CLASS_MASK_HUNTER,            0,                312338,                      'Vulpera - Hunter - Crimson Cobra'), # Summons Pet Crimson Cobra 160413
+#(         @RACE_MASK_MAGHAR_ORC,                    @CLASS_MASK_HUNTER,            0,                274905,            'Mag\'har Orc - Hunter - Shadowmoon Stalker'), # Summons Pet Shadowmoon Stalker 82308
+#(         @RACE_MASK_MECHAGNOME,                    @CLASS_MASK_HUNTER,            0,                312339,                        'Mechagnome - Hunter - Robowolf'), # Summons Pet Robowolf 160414
+#(           @RACE_MASK_PANDAREN,                    @CLASS_MASK_HUNTER,            0,                107924,                       'Pandaren - Hunter - Wise Turtle'), # Summons Pet Wise Turtle 57239, Triggers Remove Weapon 108061, Removes item Trainee's Crossbow 73211
+#(         @RACE_MASK_NIGHTBORNE,                    @CLASS_MASK_HUNTER,            0,                259087,                       'Nightborne - Hunter - Manasaber'), # Summons Pet Manasaber 131069
+#(@RACE_MASK_HIGHMOUNTAIN_TAUREN,                    @CLASS_MASK_HUNTER,            0,                259084,            'Highmountain Tauren - Hunter - Great Eagle'), # Summons Pet Great Eagle 131076
+#(           @RACE_MASK_VOID_ELF,                    @CLASS_MASK_HUNTER,            0,                259086,                       'Void Elf - Hunter - Voidstalker'), # Summons Pet Voidstalker 131072
+#(@RACE_MASK_LIGHTFORGED_DRAENEI,                    @CLASS_MASK_HUNTER,            0,                259085,     'Lightforged Draenei - Hunter - Lightforged Talbuk'), # Summons Pet Lightforged Talbuk 131074
+#(    @RACE_MASK_ZANDALARI_TROLL,                    @CLASS_MASK_HUNTER,            0,                294659,             'Zandalari Troll - Hunter - Slate Direhorn'), # Summons Pet Slate Direhorn 151993
+#(          @RACE_MASK_KUL_TIRAN,                    @CLASS_MASK_HUNTER,            0,                294662,                    'Kul Tiran - Hunter - Alpine Falcon'), # Summons Pet Alpine Falcon 151994
+
+########
+# Misc #
+########
+
+(               @RACE_MASK_NONE,               @CLASS_MASK_DEMON_HUNTER,            0,                 90266,                                    'Demon Hunter - Fly'), # Races all 0 Class Demon Hunter 2048 (Learns Master Riding Rank 3 90265, NOTE: is this really necessary?)
+(               @RACE_MASK_NONE,               @CLASS_MASK_DEMON_HUNTER,            0,                200749,                                    'Demon Hunter - Fly'), # Races all 0 Class Demon Hunter 2048 (Learns Activating Specialization 200749, NOTE: hackfix to allow selecting specialization at level 10)
+(             @RACE_MASK_GOBLIN,                                    477,            0,                 77534,                               'Goblin - Pack Hobgoblin'), # Race Goblin 256 Classes all except ??? 477 (Learns Pack Hobgoblin 69046 Summons NPC Gobber 36613)
+(              @RACE_MASK_TROLL,                                   2015,            0,                 71033,                            'Troll - Calm of the Novice'), # Race Troll 128 Classes all except??? 2015 (Summons NPC Zuni 37988)
+(                @RACE_MASK_ALL,               @CLASS_MASK_DEATH_KNIGHT,            0,                 51915,                    'Deathknight - Undying Resolve Aura'), # Races all 137438953472 Class Deathknight 32 (Procs Undying Resolve 51916 on 10 min GCD, Summons NPC Val'kyr Battle-maiden 28534, Casts Revive 51918)
+(           @RACE_MASK_PANDAREN,                        @CLASS_MASK_ALL,            0,                107027,                    'Pandaren - See Quest Invis 20 Aura'), # Races Pandaren 8388608 Classes all 0 (Applies Invisibility Detection 28 Aura)
+(    @RACE_MASK_ZANDALARI_TROLL,                                    925,            0,                292361,              'Zandalari Troll - Embrace of Pa\'ku Aura'), # Race Zandalari Troll 1073741824 Classes all except Deathknight 925 (Applies Embrace of Pa'ku 292463 Racial, Procs Embrace of Pa'ku 292361 Racial Passive on 1 min GCD)
+(    @RACE_MASK_DARK_IRON_DWARF,                    @CLASS_MASK_PALADIN,            0,                270562,       'Dark Iron Dwarf - Paladin - Darkforge Ram Mount'), # Race Dark Iron Dwarf 2048 Paladin 2 (NOTE: Should this really be here?)
+(               @RACE_MASK_NONE,                        @CLASS_MASK_ALL,            0,                125610,                                   'Battle Pet Training'); # Race All (NOTE: Should this really be here?)
