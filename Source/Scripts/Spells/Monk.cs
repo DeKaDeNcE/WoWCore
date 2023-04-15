@@ -608,3 +608,53 @@ namespace Scripts.Spells.Monk;
             AfterCast.Add(new CastHandler(AfterCasted));
         }
     }
+
+    // 116680 Thunder Focus Tea
+    // 197895 Focused Thunder
+    // 124682 Enveloping Mist
+    // 115151 Renewing Mist
+    // 116670 Vivify
+    // 107428 Rising Sun Kick
+    // 191837 Essence Font
+
+    [Script] // 124682 Enveloping Mist 115151 Renewing Mist 116670 Vivify 107428 Rising Sun Kick 191837 Essence Font 116680 Thunder Focus Tea
+    class spell_monk_talent_thunder_focus_tea : SpellScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return ValidateSpellInfo(SpellIds.EnvelopingMist, SpellIds.RenewingMist, SpellIds.Vivify, SpellIds.RisingSunKick, SpellIds.EssenceFont, SpellIds.ThunderFocusTea);
+        }
+
+        void AfterCasted()
+        {
+            Unit caster = GetCaster();
+
+            if (caster != null)
+            {
+                if (caster.HasAura(SpellIds.ThunderFocusTea))
+                {
+                    Aura aura = caster.GetAura(SpellIds.ThunderFocusTea);
+
+                    if (aura != null)
+                    {
+                        // might have stacks from 197895 Focused Thunder
+                        uint remaining = aura.GetStackAmount();
+
+                        if (remaining > 1)
+                        {
+                            aura.SetStackAmount((byte)(remaining - 1));
+                        }
+                        else
+                        {
+                            caster.RemoveAura(SpellIds.ThunderFocusTea);
+                        }
+                    }
+                }
+            }
+        }
+
+        public override void Register()
+        {
+            AfterCast.Add(new CastHandler(AfterCasted));
+        }
+    }
