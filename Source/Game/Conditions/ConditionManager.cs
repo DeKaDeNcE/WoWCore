@@ -1499,6 +1499,12 @@ namespace Game
                     }
                     break;
                 }
+                case ConditionTypes.ObjectEntryGuidLegacy:
+                {
+                    cond.ConditionType = ConditionTypes.ObjectEntryGuid;
+                    cond.ConditionValue1 = Legacy.ConvertLegacyTypeID(cond.ConditionValue1);
+                    goto case ConditionTypes.ObjectEntryGuid;
+                }
                 case ConditionTypes.ObjectEntryGuid:
                 {
                     switch ((TypeId)cond.ConditionValue1)
@@ -1563,6 +1569,12 @@ namespace Game
                             return false;
                     }
                     break;
+                }
+                case ConditionTypes.TypeMaskLegacy:
+                {
+                    cond.ConditionType = ConditionTypes.TypeMask;
+                    cond.ConditionValue1 = Legacy.ConvertLegacyTypeMask(cond.ConditionValue1);
+                    goto case ConditionTypes.TypeMask;
                 }
                 case ConditionTypes.TypeMask:
                 {

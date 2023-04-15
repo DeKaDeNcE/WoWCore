@@ -1028,4 +1028,65 @@ namespace Game.Entities
             return ObjectGuidFactory.CreateWorldLayer(arg1, arg2, arg3, arg4);
         }
     }
+
+    public class Legacy
+    {
+        public enum TypeID
+        {
+            Object          = 0,
+            Item            = 1,
+            Container       = 2,
+            Unit            = 3,
+            Player          = 4,
+            GameObject      = 5,
+            DynamicObject   = 6,
+            Corpse          = 7,
+            AreaTrigger     = 8,
+            SceneObject     = 9,
+            Conversation    = 10,
+            Max = 11
+        }
+
+        public static uint ConvertLegacyTypeID(uint legacyTypeID)
+        {
+            switch (legacyTypeID)
+            {
+                case (uint)TypeID.Object:
+                    return (uint)TypeId.Object;
+                case (uint)TypeID.Item:
+                    return (uint)TypeId.Item;
+                case (uint)TypeID.Container:
+                    return (uint)TypeId.Container;
+                case (uint)TypeID.Unit:
+                    return (uint)TypeId.Unit;
+                case (uint)TypeID.Player:
+                    return (uint)TypeId.Player;
+                case (uint)TypeID.GameObject:
+                    return (uint)TypeId.GameObject;
+                case (uint)TypeID.DynamicObject:
+                    return (uint)TypeId.DynamicObject;
+                case (uint)TypeID.Corpse:
+                    return (uint)TypeId.Corpse;
+                case (uint)TypeID.AreaTrigger:
+                    return (uint)TypeId.AreaTrigger;
+                case (uint)TypeID.SceneObject:
+                    return (uint)TypeId.SceneObject;
+                case (uint)TypeID.Conversation:
+                    return (uint)TypeId.Conversation;
+                default:
+                    return (uint)TypeId.Object;
+            }
+        }
+
+        public static uint ConvertLegacyTypeMask(uint legacyTypeMask)
+        {
+            int typeMask = 0;
+
+            for (var i = (uint)TypeID.Object; i < (uint)TypeID.Max; i++)
+                if ((legacyTypeMask & (1 << (int)i)) != 0)
+                    typeMask |= 1 << (int)ConvertLegacyTypeID(i);
+
+            return (uint)typeMask;
+        }
+    }
 }
