@@ -42,6 +42,11 @@ namespace Scripts.Spells.Monk
         public const uint BlackoutKick = 100784;
         public const uint SpiritOfTheCrane = 210802;
         public const uint SpiritOfTheCraneEnergize = 210803;
+        public const uint Vivify = 116670;
+        public const uint Lifecycles = 197915;
+        public const uint VivifyLifecycles = 197916;
+        public const uint EnvelopingMist = 124682;
+        public const uint EnvelopingMistLifecycles = 197919;
     }
 
     [Script] // 117952 - Crackling Jade Lightning
@@ -502,6 +507,99 @@ namespace Scripts.Spells.Monk
         public override void Register()
         {
             OnEffectHit.Add(new EffectHandler(HandleDummy, 2, SpellEffectName.Dummy));
+        }
+    }
+
+    // 116670 Vivify
+    // 274586 Invigorating Mists
+    // 197915 Lifecycles
+    // 197916 Lifecycles (Vivify)
+    // 197919 Lifecycles (Enveloping Mist)
+    // 124682 Enveloping Mist
+    // 388847 Rapid Diffusion
+
+    [Script] // 116670 Vivify 197915 Lifecycles 197919 Lifecycles (Enveloping Mist)
+    class spell_monk_vivify_talent_lifecycles : SpellScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return ValidateSpellInfo(SpellIds.Vivify, SpellIds.Lifecycles, SpellIds.EnvelopingMistLifecycles);
+        }
+
+        void BeforeCasted()
+        {
+            Unit caster = GetCaster();
+
+            if (caster != null)
+            {
+                if (caster.HasAura(SpellIds.Lifecycles))
+                {
+                    if (caster.HasAura(SpellIds.VivifyLifecycles))
+                    {
+                        caster.RemoveAura(SpellIds.VivifyLifecycles);
+                    }
+                }
+            }
+        }
+
+        void AfterCasted()
+        {
+            Unit caster = GetCaster();
+
+            if (caster != null)
+            {
+                if (caster.HasAura(SpellIds.Lifecycles))
+                {
+                    caster.CastSpell(caster, SpellIds.EnvelopingMistLifecycles, true);
+                }
+            }
+        }
+
+        public override void Register()
+        {
+            BeforeCast.Add(new CastHandler(BeforeCasted));
+            AfterCast.Add(new CastHandler(AfterCasted));
+        }
+    }
+
+    [Script] // 124682 Enveloping Mist 197915 Lifecycles 197916 Lifecycles (Vivify)
+    class spell_monk_enveloping_mist_talent_lifecycles : SpellScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return ValidateSpellInfo(SpellIds.EnvelopingMist, SpellIds.Lifecycles, SpellIds.VivifyLifecycles);
+        }
+
+        void BeforeCasted()
+        {
+            Unit caster = GetCaster();
+
+            if (caster != null)
+            {
+                if (caster.HasAura(SpellIds.EnvelopingMistLifecycles))
+                {
+                    caster.RemoveAura(SpellIds.EnvelopingMistLifecycles);
+                }
+            }
+        }
+
+        void AfterCasted()
+        {
+            Unit caster = GetCaster();
+
+            if (caster != null)
+            {
+                if (caster.HasAura(SpellIds.Lifecycles))
+                {
+                    caster.CastSpell(caster, SpellIds.VivifyLifecycles, true);
+                }
+            }
+        }
+
+        public override void Register()
+        {
+            BeforeCast.Add(new CastHandler(BeforeCasted));
+            AfterCast.Add(new CastHandler(AfterCasted));
         }
     }
 }
