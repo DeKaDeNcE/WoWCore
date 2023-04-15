@@ -479,3 +479,37 @@ namespace Scripts.Spells.Monk;
             }
         }
     }
+
+    // 137025 Windwalker Monk
+    // 261917 Blackout Kick (Rank 3)
+    // 387638 Shadowboxing Treads
+    // 387625 Staggering Strikes
+    // 387624 Staggering Strikes
+    // 387046 Elusive Footwork
+
+    [Script] // 100784 Blackout Kick 210802 Spirit Of The Crane 210803 Spirit Of The Crane Energize
+    class spell_monk_blackout_kick_talent_spirit_of_the_crane : SpellScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return ValidateSpellInfo(SpellIds.BlackoutKick, SpellIds.SpiritOfTheCrane, SpellIds.SpiritOfTheCraneEnergize);
+        }
+
+        void HandleDummy(uint effIndex)
+        {
+            Unit caster = GetCaster();
+
+            if (caster != null)
+            {
+                if (caster.HasAura(SpellIds.SpiritOfTheCrane))
+                {
+                    caster.CastSpell(caster, SpellIds.SpiritOfTheCraneEnergize, true);
+                }
+            }
+        }
+
+        public override void Register()
+        {
+            OnEffectHit.Add(new EffectHandler(HandleDummy, 2, SpellEffectName.Dummy));
+        }
+    }
