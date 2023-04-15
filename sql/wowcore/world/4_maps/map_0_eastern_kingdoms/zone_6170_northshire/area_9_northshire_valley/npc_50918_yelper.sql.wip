@@ -1,0 +1,13 @@
+##########################
+# NPC Yelper             #
+# ENTRY 50918            #
+# GUID  1217500000000    #
+##########################
+
+# Manual Spawn
+DELETE FROM `creature` WHERE `guid` = '3530203330003113';
+INSERT INTO `creature` VALUES ('3530203330003113', '50918', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '-8925.57', '-152.092', '81.9392', '2.32961', '300', '0', '0', '34', '0', '0', '0', '0', '0', '0', '0', '', '0');
+
+# Make it sit
+DELETE FROM `creature_template_addon` WHERE `entry` = '50918';
+INSERT INTO `creature_template_addon` VALUES ('50918', '0', '0', '1', '1', '0', '0', '0', '0', '0', '');
