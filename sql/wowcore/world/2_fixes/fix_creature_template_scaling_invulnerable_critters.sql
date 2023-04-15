@@ -1,0 +1,6 @@
+# Fixes invulnerable critters
+# Affected creatures by this change
+# Creature IDs  :   385,     620,    721,  883,  890,   1352,     1412,    1419, 1420,  1933,      2110, 2442,        2620,  2914,  3300,               3680,     3835, 4075,  4076,    4166,        4953,             5736, 5951,           6145,  6271, 6368,      6653,   6728,        6827,       8881,   9600,        9699,      9700,       10016,             10017, 10685,             10779,         10780,       13016,      13321,  14881,        15107,  15475,   15476,  16030, 16068, 16998
+# Creature Names: Horse, Chicken, Rabbit, Deer, Fawn, Fluffy, Squirrel, Fizzles, Toad, Sheep, Black Rat,  Cow, Prairie Dog, Snake, Adder, Serpentbloom Snake, Biletoad,  Rat, Roach, Gazelle, Water Snake, Caged Human Male, Hare, School of Fish, Mouse,  Cat, Huge Toad, Narnie, Strand Crab, Riding Ram, Parrot, Fire Beetle, Lava Crab, Tainted Rat, Tainted Cockroach, Swine, Infected Squirrel, Infected Deer, Deeprun Rat, Small Frog, Spider, Arathi Horse, Beetle, Scorpid, Maggot, Larva, Mr. Bigglesworth
+
+DELETE FROM `creature_template_scaling` WHERE `ContentTuningID` = 81; # NOTE: ContentTuningID 81 seems wrong
