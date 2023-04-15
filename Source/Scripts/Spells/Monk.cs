@@ -2,6 +2,14 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
 using System;
 using System.Collections.Generic;
 using Framework.Constants;
@@ -31,6 +39,9 @@ namespace Scripts.Spells.Monk
         public const uint StaggerLight = 124275;
         public const uint StaggerModerate = 124274;
         public const uint SurgingMistHeal = 116995;
+        public const uint BlackoutKick = 100784;
+        public const uint SpiritOfTheCrane = 210802;
+        public const uint SpiritOfTheCraneEnergize = 210803;
     }
 
     [Script] // 117952 - Crackling Jade Lightning
@@ -457,6 +468,40 @@ namespace Scripts.Spells.Monk
                 if (eff != null)
                     eff.ChangeAmount((int)tickDamage);
             }
+        }
+    }
+
+    // 137025 Windwalker Monk
+    // 261917 Blackout Kick (Rank 3)
+    // 387638 Shadowboxing Treads
+    // 387625 Staggering Strikes
+    // 387624 Staggering Strikes
+    // 387046 Elusive Footwork
+
+    [Script] // 100784 Blackout Kick 210802 Spirit Of The Crane 210803 Spirit Of The Crane Energize
+    class spell_monk_blackout_kick_talent_spirit_of_the_crane : SpellScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return ValidateSpellInfo(SpellIds.BlackoutKick, SpellIds.SpiritOfTheCrane, SpellIds.SpiritOfTheCraneEnergize);
+        }
+
+        void HandleDummy(uint effIndex)
+        {
+            Unit caster = GetCaster();
+
+            if (caster != null)
+            {
+                if (caster.HasAura(SpellIds.SpiritOfTheCrane))
+                {
+                    caster.CastSpell(caster, SpellIds.SpiritOfTheCraneEnergize, true);
+                }
+            }
+        }
+
+        public override void Register()
+        {
+            OnEffectHit.Add(new EffectHandler(HandleDummy, 2, SpellEffectName.Dummy));
         }
     }
 }
