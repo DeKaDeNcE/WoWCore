@@ -1,0 +1,6 @@
+##########
+# Quests #
+##########
+
+SET @QUEST_ALLIANCE_STAND_YOUR_GROUND = 58209;
+SET @QUEST_HORDE_STAND_YOUR_GROUND    = 59927;
