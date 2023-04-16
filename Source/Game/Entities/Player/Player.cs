@@ -2675,7 +2675,7 @@ namespace Game.Entities
             if (source == null)
                 return SharedConst.DefaultGossipMessage;
 
-            return GetGossipTextId(GetDefaultGossipMenuForSource(source), source);
+            return GetGossipTextId(GetGossipMenuForSource(source), source);
         }
 
         public uint GetGossipTextId(uint menuId, WorldObject source)
@@ -2689,22 +2689,54 @@ namespace Game.Entities
 
             foreach (var menu in menuBounds)
             {
+                // continue if only checks menuid instead of text
+                if (menu.TextId == 0)
+                    continue;
+
                 if (Global.ConditionMgr.IsObjectMeetToConditions(this, source, menu.Conditions))
                     textId = menu.TextId;
             }
 
             return textId;
         }
-        public static uint GetDefaultGossipMenuForSource(WorldObject source)
+        public uint GetGossipMenuForSource(WorldObject source)
         {
             switch (source.GetTypeId())
             {
                 case TypeId.Unit:
-                    return source.ToCreature().GetGossipMenuId();
+                {
+                    uint menuIdToShow = source.ToCreature().GetGossipMenuId();
+
+                    // if menu id is set by script
+                    if (menuIdToShow != 0)
+                        return menuIdToShow;
+
+                    // otherwise pick from db based on conditions
+                    List<uint> gossipMenuIds = source.ToCreature().GetCreatureTemplate().GossipMenuIds;
+
+                    if (gossipMenuIds != null && gossipMenuIds.Count > 0)
+                    {
+                        foreach (var menuId in gossipMenuIds)
+                        {
+                            List<GossipMenus> menuBounds = Global.ObjectMgr.GetGossipMenusMapBounds(menuId);
+
+                            if (menuBounds != null && menuBounds.Count > 0)
+                            {
+                                foreach (var menuBound in menuBounds)
+                                {
+                                    if (!Global.ConditionMgr.IsObjectMeetToConditions(this, source, menuBound.Conditions))
+                                        continue;
+
+                                    menuIdToShow = menuId;
+                                }
+                            }
+                        }
+                    }
+
+                    return menuIdToShow;
+                }
                 case TypeId.GameObject:
                     return source.ToGameObject().GetGoInfo().GetGossipMenuId();
-                default:
-                    break;
             }
 
             return 0;

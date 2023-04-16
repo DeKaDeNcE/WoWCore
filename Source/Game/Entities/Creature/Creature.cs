@@ -1138,15 +1138,9 @@ namespace Game.Entities
         public bool HasFlag(CreatureStaticFlags7 flag)  { return _staticFlags.HasFlag(flag); }
         public bool HasFlag(CreatureStaticFlags8 flag)  { return _staticFlags.HasFlag(flag); }
 
-        public uint GetGossipMenuId()
-        {
-            if (_gossipMenuId.HasValue)
-                return _gossipMenuId.Value;
+        public uint GetGossipMenuId() { return _gossipMenuId; }
 
-            return GetCreatureTemplate().GossipMenuId;
-        }
-
-        public void SetGossipMenuId(uint? gossipMenuId)
+        public void SetGossipMenuId(uint gossipMenuId)
         {
             _gossipMenuId = gossipMenuId;
         }

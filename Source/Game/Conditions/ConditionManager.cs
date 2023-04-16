@@ -627,14 +627,14 @@ namespace Game
 
             foreach (var menu in pMenuBounds)
             {
-                if (menu.MenuId == cond.SourceGroup && menu.TextId == cond.SourceEntry)
+                if (menu.MenuId == cond.SourceGroup && (menu.TextId == cond.SourceEntry || cond.SourceEntry == 0))
                 {
                     menu.Conditions.Add(cond);
                     return true;
                 }
             }
 
-            Log.outError(LogFilter.Sql, "{0} GossipMenu {1} not found.", cond.ToString(), cond.SourceGroup);
+            Log.outError(LogFilter.Sql, $"{cond} GossipMenu {cond.SourceGroup} not found.");
             return false;
         }
 
