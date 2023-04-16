@@ -428,7 +428,6 @@ namespace Scripts.Spells.Quest;
         }
     }
 
-
     [Script] // 43874 - Scourge Mur'gul Camp: Force Shield Arcane Purple x3
     class spell_q11396_11399_force_shield_arcane_purple_x3 : AuraScript
     {
@@ -1458,96 +1457,6 @@ namespace Scripts.Spells.Quest;
         public override void Register()
         {
             OnDestinationTargetSelect.Add(new DestinationTargetSelectHandler(ModDest, 0, Targets.DestCasterSummon));
-        }
-    }
-
-    [Script] // 51858 - Siphon of Acherus
-    class spell_q12641_death_comes_from_on_high : SpellScript
-    {
-        public override bool Validate(SpellInfo spellInfo)
-        {
-            return ValidateSpellInfo(SpellIds.ForgeCredit, SpellIds.TownHallCredit, SpellIds.ScarletHoldCredit, SpellIds.ChapelCredit);
-        }
-
-        void HandleDummy(uint effIndex)
-        {
-            uint spellId;
-
-            switch (GetHitCreature().GetEntry())
-            {
-                case CreatureIds.NewAvalonForge:
-                    spellId = SpellIds.ForgeCredit;
-                    break;
-                case CreatureIds.NewAvalonTownHall:
-                    spellId = SpellIds.TownHallCredit;
-                    break;
-                case CreatureIds.ScarletHold:
-                    spellId = SpellIds.ScarletHoldCredit;
-                    break;
-                case CreatureIds.ChapelOfTheCrimsonFlame:
-                    spellId = SpellIds.ChapelCredit;
-                    break;
-                default:
-                    return;
-            }
-
-            GetCaster().CastSpell((Unit)null, spellId, true);
-        }
-
-        public override void Register()
-        {
-            OnEffectHitTarget.Add(new EffectHandler(HandleDummy, 0, SpellEffectName.Dummy));
-        }
-    }
-
-    [Script] // 52694 - Recall Eye of Acherus
-    class spell_q12641_recall_eye_of_acherus : SpellScript
-    {
-        void HandleDummy(uint effIndex)
-        {
-            Player player = GetCaster().GetCharmerOrOwner().ToPlayer();
-            if (player)
-            {
-                player.StopCastingCharm();
-                player.StopCastingBindSight();
-                player.RemoveAura(SpellIds.TheEyeOfAcherus);
-            }
-        }
-
-        public override void Register()
-        {
-            OnEffectHitTarget.Add(new EffectHandler(HandleDummy, 0, SpellEffectName.ScriptEffect));
-        }
-    }
-
-    [Script] // 51769 - Emblazon Runeblade
-    class spell_q12619_emblazon_runeblade_AuraScript : AuraScript
-    {
-        void HandleEffectPeriodic(AuraEffect aurEff)
-        {
-            PreventDefaultAction();
-            Unit caster = GetCaster();
-            if (caster)
-                caster.CastSpell(caster, aurEff.GetSpellEffectInfo().TriggerSpell, new CastSpellExtraArgs(aurEff));
-        }
-
-        public override void Register()
-        {
-            OnEffectPeriodic.Add(new EffectPeriodicHandler(HandleEffectPeriodic, 0, AuraType.PeriodicTriggerSpell));
-        }
-    }
-
-    [Script] // 51770 - Emblazon Runeblade
-    class spell_q12619_emblazon_runeblade : SpellScript
-    {
-        void HandleScript(uint effIndex)
-        {
-            GetCaster().CastSpell(GetCaster(), (uint)GetEffectValue(), false);
-        }
-
-        public override void Register()
-        {
-            OnEffectHit.Add(new EffectHandler(HandleScript, 0, SpellEffectName.ScriptEffect));
         }
     }
 
