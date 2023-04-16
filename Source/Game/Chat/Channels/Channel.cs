@@ -47,18 +47,26 @@ namespace Game.Chat
             _channelGuid = guid;
             _channelName = name;
 
-            StringArray tokens = new(banList, ' ');
-            foreach (string token in tokens)
+            if (!String.IsNullOrEmpty(banList))
             {
-                // legacy db content might not have 0x prefix, account for that
-                string bannedGuidStr = token.Contains("0x") ? token.Substring(2) : token;
-                ObjectGuid banned = new();
-                banned.SetRawValue(ulong.Parse(bannedGuidStr.Substring(0, 16)), ulong.Parse(bannedGuidStr.Substring(16)));
-                if (banned.IsEmpty())
-                    continue;
+                StringArray tokens = new(banList, ' ');
 
-                Log.outDebug(LogFilter.ChatSystem, $"Channel({name}) loaded player {banned} into bannedStore");
-                _bannedStore.Add(banned);
+                if (!tokens.IsEmpty())
+                {
+                    foreach (string token in tokens)
+                    {
+                        // legacy db content might not have 0x prefix, account for that
+                        string bannedGuidStr = token.Contains("0x") ? token.Substring(2) : token;
+                        ObjectGuid banned = new();
+                        banned.SetRawValue(ulong.Parse(bannedGuidStr.Substring(0, 16)), ulong.Parse(bannedGuidStr.Substring(16)));
+
+                        if (banned.IsEmpty())
+                            continue;
+
+                        Log.outDebug(LogFilter.ChatSystem, $"Channel({name}) loaded player {banned} into bannedStore");
+                        _bannedStore.Add(banned);
+                    }
+                }
             }
         }
 
