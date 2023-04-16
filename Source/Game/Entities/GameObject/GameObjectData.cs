@@ -713,6 +713,19 @@ namespace Game.Entities
             }
         }
 
+        public bool IsDisplayMandatory()
+        {
+            switch (type)
+            {
+                case GameObjectTypes.SpellFocus:
+                case GameObjectTypes.Multi:
+                case GameObjectTypes.SiegeableMulti:
+                    return false;
+            }
+
+            return true;
+        }
+
         public void InitializeQueryData()
         {
             QueryData = new QueryGameObjectResponse();
