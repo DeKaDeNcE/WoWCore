@@ -2,6 +2,14 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
 using System;
 using System.Collections.Generic;
 using Framework.Constants;
@@ -33,7 +41,6 @@ namespace Scripts.Spells.Hunter;
         public const uint PosthasteTalent = 109215;
         public const uint SteadyShotFocus = 77443;
         public const uint T94PGreatness = 68130;
-        public const uint DraeneiGiftOfTheNaaru = 59543;
         public const uint RoarOfSacrificeTriggered = 67481;
     }
 
@@ -155,8 +162,7 @@ namespace Scripts.Spells.Hunter;
         }
     }
 
-    // 53478 - Last Stand Pet
-    [Script]
+    [Script] // 53478 - Last Stand Pet
     class spell_hun_last_stand_pet : SpellScript
     {
         public override bool Validate(SpellInfo spellInfo)
@@ -178,8 +184,7 @@ namespace Scripts.Spells.Hunter;
         }
     }
 
-    // 53271 - Masters Call
-    [Script]
+    [Script] // 53271 - Masters Call
     class spell_hun_masters_call : SpellScript
     {
         public override bool Validate(SpellInfo spellInfo)
@@ -241,8 +246,7 @@ namespace Scripts.Spells.Hunter;
         }
     }
 
-    // 34477 - Misdirection
-    [Script]
+    [Script] // 34477 - Misdirection
     class spell_hun_misdirection : AuraScript
     {
         public override bool Validate(SpellInfo spellInfo)
@@ -272,8 +276,7 @@ namespace Scripts.Spells.Hunter;
         }
     }
 
-    // 35079 - Misdirection (Proc)
-    [Script]
+    [Script] // 35079 - Misdirection (Proc)
     class spell_hun_misdirection_proc : AuraScript
     {
         void OnRemove(AuraEffect aurEff, AuraEffectHandleModes mode)
@@ -287,8 +290,7 @@ namespace Scripts.Spells.Hunter;
         }
     }
 
-    // 55709 - Pet Heart of the Phoenix
-    [Script]
+    [Script] // 55709 - Pet Heart of the Phoenix
     class spell_hun_pet_heart_of_the_phoenix : SpellScript
     {
         public override bool Load()
@@ -384,8 +386,7 @@ namespace Scripts.Spells.Hunter;
         }
     }
 
-    // 37506 - Scatter Shot
-    [Script]
+    [Script] // 37506 - Scatter Shot
     class spell_hun_scatter_shot : SpellScript
     {
         public override bool Load()
@@ -408,8 +409,7 @@ namespace Scripts.Spells.Hunter;
         }
     }
 
-    // 56641 - Steady Shot
-    [Script]
+    [Script] // 56641 - Steady Shot
     class spell_hun_steady_shot : SpellScript
     {
         public override bool Validate(SpellInfo spellInfo)
@@ -433,8 +433,7 @@ namespace Scripts.Spells.Hunter;
         }
     }
 
-    // 1515 - Tame Beast
-    [Script]
+    [Script] // 1515 - Tame Beast
     class spell_hun_tame_beast : SpellScript
     {
         static uint[] CallPetSpellIds = { 883, 83242, 83243, 83244, 83245, };
