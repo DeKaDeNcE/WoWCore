@@ -335,17 +335,24 @@ struct SpellIds
     public const uint MightOfTheBlackrock = 274742;
 
     // SkinningLearningSpell
-    public const uint ClassicSkinning      = 265856;
-    public const uint OutlandSkinning      = 265858;
-    public const uint NorthrendSkinning    = 265860;
-    public const uint CataclysmSkinning    = 265862;
-    public const uint PandariaSkinning     = 265864;
-    public const uint DraenorSkinning      = 265866;
-    public const uint LegionSkinning       = 265868;
-    public const uint KulTiranSkinning     = 265870;
-    public const uint ZandalariSkinning    = 265872;
-    public const uint ShadowlandsSkinning  = 308570;
-    public const uint DragonIslesSkinning  = 366263;
+    public const uint ClassicSkinning     = 265856;
+    public const uint OutlandSkinning     = 265858;
+    public const uint NorthrendSkinning   = 265860;
+    public const uint CataclysmSkinning   = 265862;
+    public const uint PandariaSkinning    = 265864;
+    public const uint DraenorSkinning     = 265866;
+    public const uint LegionSkinning      = 265868;
+    public const uint KulTiranSkinning    = 265870;
+    public const uint ZandalariSkinning   = 265872;
+    public const uint ShadowlandsSkinning = 308570;
+    public const uint DragonIslesSkinning = 366263;
+
+    // BloodlustExhaustionSpell
+    public const uint ShamanSated              = 57724; // Bloodlust
+    public const uint ShamanExhaustion         = 57723; // Heroism, Drums
+    public const uint MageTemporalDisplacement = 80354;
+    public const uint HunterFatigued           = 264689;
+    public const uint EvokerExhaustion         = 390435;
 }
 
 struct CreatureIds
@@ -4994,6 +5001,60 @@ class spell_gen_skinning : SpellScript
         OnEffectHitTarget.Add(new EffectHandler(HandleSkinningEffect, 0, SpellEffectName.Skinning));
     }
 }
+
+[Script] // 2825 - Bloodlust
+// 32182 - Heroism
+// 80353 - Time Warp
+// 264667 - Primal Rage
+// 390386 - Fury of the Aspects
+// 146555 - Drums of Rage
+// 178207 - Drums of Fury
+// 230935 - Drums of the Mountain
+// 256740 - Drums of the Maelstrom
+// 309658 - Drums of Deathly Ferocity
+// 381301 - Feral Hide Drums
+class spell_gen_bloodlust : SpellScript
+{
+    uint _exhaustionSpellId;
+
+    public spell_gen_bloodlust(uint exhaustionSpellId)
+    {
+        _exhaustionSpellId = exhaustionSpellId;
+    }
+
+    public override bool Validate(SpellInfo spell)
+    {
+        return ValidateSpellInfo(SpellIds.ShamanSated, SpellIds.ShamanExhaustion, SpellIds.MageTemporalDisplacement, SpellIds.HunterFatigued, SpellIds.EvokerExhaustion);
+    }
+
+    void FilterTargets(List<WorldObject> targets)
+    {
+        targets.RemoveAll(target =>
+        {
+            Unit unit = target.ToUnit();
+
+            if (!unit)
+                return true;
+
+            return unit.HasAura(SpellIds.ShamanSated) || unit.HasAura(SpellIds.ShamanExhaustion) || unit.HasAura(SpellIds.MageTemporalDisplacement) || unit.HasAura(SpellIds.HunterFatigued) || unit.HasAura(SpellIds.EvokerExhaustion);
+        });
+    }
+
+    void HandleHit(uint effIndex)
+    {
+        Unit target = GetHitUnit();
+
+        if (target != null)
+            target.CastSpell(target, _exhaustionSpellId, true);
+    }
+
+    public override void Register()
+    {
+        OnObjectAreaTargetSelect.Add(new ObjectAreaTargetSelectHandler(FilterTargets, 0, Targets.UnitCasterAreaRaid));
+        OnObjectAreaTargetSelect.Add(new ObjectAreaTargetSelectHandler(FilterTargets, 1, Targets.UnitCasterAreaRaid));
+        OnEffectHitTarget.Add(new EffectHandler(HandleHit, 0, SpellEffectName.ApplyAura));
+    }
+};
 
 // 40307 - Stasis Field
 class StasisFieldSearcher : ICheck<Unit>

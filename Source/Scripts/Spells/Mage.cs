@@ -2,10 +2,18 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
 using System;
 using System.Collections.Generic;
-using Framework.Constants;
 using Framework.Dynamic;
+using Framework.Constants;
 using Game.AI;
 using Game.Maps;
 using Game.Spells;
@@ -62,7 +70,6 @@ namespace Scripts.Spells.Mage
         public const uint SerpentForm = 32817;
         public const uint SheepForm = 32820;
         public const uint SquirrelForm = 32813;
-        public const uint TemporalDisplacement = 80354;
         public const uint WorgenForm = 32819;
         public const uint IceLanceTrigger = 228598;
         public const uint ThermalVoid = 155149;
@@ -70,12 +77,6 @@ namespace Scripts.Spells.Mage
         public const uint ChainReactionDummy = 278309;
         public const uint ChainReaction = 278310;
         public const uint TouchOfTheMagiExplode = 210833;
-
-        //Misc
-        public const uint HunterInsanity = 95809;
-        public const uint ShamanExhaustion = 57723;
-        public const uint ShamanSated = 57724;
-        public const uint PetNetherwindsFatigued = 160455;
     }
 
     // 110909 - Alter Time Aura
@@ -1114,7 +1115,7 @@ namespace Scripts.Spells.Mage
         ObjectGuid _ringOfFrostGUID;
     }
 
-    [Script] // 82691 - Ring of Frost (freeze efect)
+    [Script] // 82691 - Ring of Frost (freeze effect)
     class spell_mage_ring_of_frost_freeze : SpellScript
     {
         public override bool Validate(SpellInfo spellInfo)
@@ -1181,36 +1182,6 @@ namespace Scripts.Spells.Mage
         public override void Register()
         {
             OnEffectHitTarget.Add(new EffectHandler(HandleDamage, 1, SpellEffectName.SchoolDamage));
-        }
-    }
-
-    [Script] // 80353 - Time Warp
-    class spell_mage_time_warp : SpellScript
-    {
-        public override bool Validate(SpellInfo spellInfo)
-        {
-            return ValidateSpellInfo(SpellIds.TemporalDisplacement, SpellIds.HunterInsanity, SpellIds.ShamanExhaustion, SpellIds.ShamanSated, SpellIds.PetNetherwindsFatigued);
-        }
-
-        void RemoveInvalidTargets(List<WorldObject> targets)
-        {
-            targets.RemoveAll(new UnitAuraCheck<WorldObject>(true, SpellIds.TemporalDisplacement));
-            targets.RemoveAll(new UnitAuraCheck<WorldObject>(true, SpellIds.HunterInsanity));
-            targets.RemoveAll(new UnitAuraCheck<WorldObject>(true, SpellIds.ShamanExhaustion));
-            targets.RemoveAll(new UnitAuraCheck<WorldObject>(true, SpellIds.ShamanSated));
-        }
-
-        void ApplyDebuff()
-        {
-            Unit target = GetHitUnit();
-            if (target)
-                target.CastSpell(target, SpellIds.TemporalDisplacement, true);
-        }
-
-        public override void Register()
-        {
-            OnObjectAreaTargetSelect.Add(new ObjectAreaTargetSelectHandler(RemoveInvalidTargets, SpellConst.EffectAll, Targets.UnitCasterAreaRaid));
-            AfterHit.Add(new HitHandler(ApplyDebuff));
         }
     }
 
