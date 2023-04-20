@@ -104,8 +104,8 @@ struct GameObjectIds
 
 struct MiscConst
 {
-    public const uint NefariusPath2 = 1379671;
-    public const uint NefariusPath3 = 1379672;
+    public const uint NefariusPath2 = 11037368;
+    public const uint NefariusPath3 = 11037376;
 
     public static Position[] DrakeSpawnLoc = // drakonid
     {

@@ -80,6 +80,7 @@ namespace Framework.Constants;
         All                                  = Phase1Bit + Phase2Bit + Phase3Bit + Phase4Bit + Phase5Bit + Phase6Bit + Phase7Bit + Phase8Bit + Phase9Bit + Phase10Bit + Phase11Bit + Phase12Bit
     }
 
+    [Flags]
     public enum SmartEventFlags
     {
         NotRepeatable                        = 0x01,       //Event can not repeat

@@ -13,7 +13,6 @@ using Game.Maps;
 using Game.Spells;
 using Game.Groups;
 using Game.Entities;
-using Game.Movement;
 using Game.DataStorage;
 
 namespace Game.AI
