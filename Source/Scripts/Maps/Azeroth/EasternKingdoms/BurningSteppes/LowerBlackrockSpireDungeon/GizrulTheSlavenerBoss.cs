@@ -18,7 +18,7 @@ struct SpellIds
 
 struct PathIds
 {
-    public const uint Gizrul = 402450;
+    public const uint Gizrul = 3219600;
 }
 
 [Script]

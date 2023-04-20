@@ -13,7 +13,6 @@ using Game.Maps;
 using Game.Spells;
 using Game.Groups;
 using Game.Entities;
-using Game.Movement;
 using Game.DataStorage;
 
 namespace Game.AI
@@ -1290,7 +1289,6 @@ namespace Game.AI
                     if (!IsSmart())
                         break;
 
-                    bool run = e.Action.wpStart.run != 0;
                     uint entry = e.Action.wpStart.pathID;
                     bool repeat = e.Action.wpStart.repeat != 0;
 
@@ -1303,7 +1301,7 @@ namespace Game.AI
                         }
                     }
 
-                    _me.GetAI<SmartAI>().StartPath(run, entry, repeat, unit);
+                    _me.GetAI<SmartAI>().StartPath(entry, repeat, unit);
 
                     uint quest = e.Action.wpStart.quest;
                     uint DespawnTime = e.Action.wpStart.despawnTime;
@@ -2027,7 +2025,7 @@ namespace Game.AI
                             {
                                 foreach (uint pathId in waypoints)
                                 {
-                                    WaypointPath path = Global.SmartAIMgr.GetPath(pathId);
+                                    WaypointPath path = Global.WaypointMgr.GetPath(pathId);
                                     if (path == null || path.nodes.Empty())
                                         continue;
 
@@ -2044,7 +2042,7 @@ namespace Game.AI
                                 }
 
                                 if (closestPathId != 0)
-                                    ((SmartAI)creature.GetAI()).StartPath(false, closestPathId, true, null, closestWaypointId);
+                                    ((SmartAI)creature.GetAI()).StartPath(closestPathId, true, null, closestWaypointId);
                             }
                         }
                     }

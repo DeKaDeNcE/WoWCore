@@ -81,6 +81,7 @@ namespace Framework.Constants
                                          Phase11Bit + Phase12Bit
     }
 
+    [Flags]
     public enum SmartEventFlags
     {
         NotRepeatable = 0x01,           //Event can not repeat
