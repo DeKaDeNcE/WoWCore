@@ -11,8 +11,8 @@
 // ReSharper disable InvertIf
 
 using System;
-using System.Numerics;
 using System.Collections.Generic;
+using System.Numerics;
 using Framework.Constants;
 using Game.Spells;
 using Game.Entities;
@@ -37,7 +37,7 @@ namespace Scripts.Spells.Warrior;
         public const uint GlyphOfTheBlazingTrail = 123779;
         public const uint GlyphOfHeroicLeap = 159708;
         public const uint GlyphOfHeroicLeapBuff = 133278;
-        public const uint HeroicLeapJump = 178368;
+        public const uint HeroicLeapJump = 162052;
         public const uint ImpendingVictory = 202168;
         public const uint ImpendingVictoryHeal = 202166;
         public const uint ImprovedHeroicLeap = 157449;
@@ -54,6 +54,13 @@ namespace Scripts.Spells.Warrior;
         public const uint TraumaEffect = 215537;
         public const uint Victorious = 32216;
         public const uint VictoriousRushHeal = 118779;
+
+        public const uint HeroicLeap = 6544;
+        public const uint HeroicLeapJumpOld = 178368;
+        public const uint CosmeticHeroicLeapJump = 94954;
+        public const uint HeroicLeapJumpDamage = 52174;
+        public const uint BoundingStride = 202163;
+        public const uint BoundingStrideSpeed = 202164;
     }
 
     struct Misc
@@ -171,7 +178,9 @@ namespace Scripts.Spells.Warrior;
         }
     }
 
-    [Script] // 6544 Heroic leap
+    [Script] // 6544 Heroic Leap
+    // 162052 Heroic Leap (Jump)
+    // 52174 Heroic Leap (Damage)
     class spell_warr_heroic_leap : SpellScript
     {
         public override bool Validate(SpellInfo spellInfo)
@@ -181,26 +190,36 @@ namespace Scripts.Spells.Warrior;
 
         SpellCastResult CheckElevation()
         {
+            Unit caster = GetCaster();
             WorldLocation dest = GetExplTargetDest();
-            if (dest != null)
+
+            if (caster != null && dest != null)
             {
-                if (GetCaster().HasUnitMovementFlag(MovementFlag.Root))
+                if (caster.HasUnitMovementFlag(MovementFlag.Root))
                     return SpellCastResult.Rooted;
 
-                if (GetCaster().GetMap().Instanceable())
+                if (caster.GetMap().Instanceable())
                 {
-                    float range = GetSpellInfo().GetMaxRange(true, GetCaster()) * 1.5f;
+                    float range = GetSpellInfo().GetMaxRange(true, caster) * 1.5f;
 
-                    PathGenerator generatedPath = new(GetCaster());
+                    PathGenerator generatedPath = new(caster);
                     generatedPath.SetPathLengthLimit(range);
 
                     bool result = generatedPath.CalculatePath(dest.GetPositionX(), dest.GetPositionY(), dest.GetPositionZ(), false);
+
                     if (generatedPath.GetPathType().HasAnyFlag(PathType.Short))
                         return SpellCastResult.OutOfRange;
                     else if (!result || generatedPath.GetPathType().HasAnyFlag(PathType.NoPath))
-                        return SpellCastResult.NoPath;
+                    {
+                        result = generatedPath.CalculatePath(dest.GetPositionX(), dest.GetPositionY(), dest.GetPositionZ(), true);
+
+                        if (generatedPath.GetPathType().HasAnyFlag(PathType.Short))
+                            return SpellCastResult.OutOfRange;
+                        else if (!result || generatedPath.GetPathType().HasAnyFlag(PathType.NoPath))
+                            return SpellCastResult.NoPath;
+                    }
                 }
-                else if (dest.GetPositionZ() > GetCaster().GetPositionZ() + 4.0f)
+                else if (dest.GetPositionZ() > caster.GetPositionZ() + 10.0f)
                     return SpellCastResult.NoPath;
 
                 return SpellCastResult.SpellCastOk;
@@ -211,9 +230,11 @@ namespace Scripts.Spells.Warrior;
 
         void HandleDummy(uint effIndex)
         {
+            Unit caster = GetCaster();
             WorldLocation dest = GetHitDest();
-            if (dest != null)
-                GetCaster().CastSpell(dest.GetPosition(), SpellIds.HeroicLeapJump, new CastSpellExtraArgs(true));
+
+            if (caster != null && dest != null)
+                caster.CastSpell(dest.GetPosition(), SpellIds.HeroicLeapJump, new CastSpellExtraArgs(true));
         }
 
         public override void Register()
@@ -223,28 +244,56 @@ namespace Scripts.Spells.Warrior;
         }
     }
 
-    [Script] // Heroic Leap (triggered by Heroic Leap (6544)) - 178368
+    [Script] // 162052 Heroic Leap (Jump)
+    // DEPRECATED 178368 Heroic Leap
+    // DEPRECATED 94954 [DND] Cosmetic Heroic Leap (Dest)
     class spell_warr_heroic_leap_jump : SpellScript
     {
         public override bool Validate(SpellInfo spellInfo)
         {
-            return ValidateSpellInfo(SpellIds.GlyphOfHeroicLeap,
-                SpellIds.GlyphOfHeroicLeapBuff,
-                SpellIds.ImprovedHeroicLeap,
-                SpellIds.Taunt);
+            return ValidateSpellInfo(SpellIds.GlyphOfHeroicLeap, SpellIds.GlyphOfHeroicLeapBuff, SpellIds.ImprovedHeroicLeap, SpellIds.Taunt);
         }
 
         void AfterJump(uint effIndex)
         {
-            if (GetCaster().HasAura(SpellIds.GlyphOfHeroicLeap))
-                GetCaster().CastSpell(GetCaster(), SpellIds.GlyphOfHeroicLeapBuff, true);
-            if (GetCaster().HasAura(SpellIds.ImprovedHeroicLeap))
-                GetCaster().GetSpellHistory().ResetCooldown(SpellIds.Taunt, true);
+            Unit caster = GetCaster();
+
+            if (caster != null)
+            {
+                if (caster.HasAura(SpellIds.GlyphOfHeroicLeap))
+                    caster.CastSpell(caster, SpellIds.GlyphOfHeroicLeapBuff, true);
+
+                if (caster.HasAura(SpellIds.ImprovedHeroicLeap))
+                    caster.GetSpellHistory().ResetCooldown(SpellIds.Taunt, true);
+            }
         }
 
         public override void Register()
         {
             OnEffectHit.Add(new EffectHandler(AfterJump, 1, SpellEffectName.JumpDest));
+        }
+    }
+
+    [Script] // 52174 Heroic Leap (Damage)
+    class spell_warr_heroic_leap_damage : SpellScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return ValidateSpellInfo(SpellIds.BoundingStride, SpellIds.BoundingStrideSpeed);
+        }
+
+        void AfterDamage(uint effIndex)
+        {
+            Unit caster = GetCaster();
+
+            if (caster != null)
+                if (caster.HasAura(SpellIds.BoundingStride))
+                    caster.CastSpell(caster, SpellIds.BoundingStrideSpeed, true);
+        }
+
+        public override void Register()
+        {
+            OnEffectHit.Add(new EffectHandler(AfterDamage, 0, SpellEffectName.SchoolDamage));
         }
     }
 
@@ -269,8 +318,7 @@ namespace Scripts.Spells.Warrior;
         }
     }
 
-    // 5246 - Intimidating Shout
-    [Script]
+    [Script] // 5246 - Intimidating Shout
     class spell_warr_intimidating_shout : SpellScript
     {
         void FilterTargets(List<WorldObject> unitList)
@@ -285,8 +333,7 @@ namespace Scripts.Spells.Warrior;
         }
     }
 
-    // 70844 - Item - Warrior T10 Protection 4P Bonus
-    [Script] // 7.1.5
+    [Script] // 7.1.5 70844 - Item - Warrior T10 Protection 4P Bonus
     class spell_warr_item_t10_prot_4p_bonus : AuraScript
     {
         public override bool Validate(SpellInfo spellInfo)
@@ -416,8 +463,7 @@ namespace Scripts.Spells.Warrior;
         }
     }
 
-    // 52437 - Sudden Death
-    [Script]
+    [Script] // 52437 - Sudden Death
     class spell_warr_sudden_death : AuraScript
     {
         public override bool Validate(SpellInfo spellInfo)
@@ -439,8 +485,7 @@ namespace Scripts.Spells.Warrior;
         }
     }
 
-    // 12328, 18765, 35429 - Sweeping Strikes
-    [Script]
+    [Script] // 12328, 18765, 35429 - Sweeping Strikes
     class spell_warr_sweeping_strikes : AuraScript
     {
         public override bool Validate(SpellInfo spellInfo)
