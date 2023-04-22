@@ -2,6 +2,8 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+using System;
+
 namespace Framework.Constants
 {
     public enum MovementGeneratorMode
@@ -49,6 +51,7 @@ namespace Framework.Constants
         Max
     }
 
+    [Flags]
     public enum MotionMasterFlags
     {
         None = 0x0,
@@ -72,6 +75,7 @@ namespace Framework.Constants
         Initialize
     }
 
+    [Flags]
     public enum MovementGeneratorFlags
     {
         None = 0x000,

@@ -4385,7 +4385,7 @@ namespace Game.Entities
                         case SpellEffectName.JumpDest:
                         case SpellEffectName.LeapBack:
                             if (spellInfo.Speed == 0 && spellInfo.SpellFamilyName == 0 && !spellInfo.HasAttribute(SpellAttr9.SpecialDelayCalculation))
-                                spellInfo.Speed = MotionMaster.SPEED_CHARGE;
+                                spellInfo.Speed = MotionMaster.SpeedCharge;
                             break;
                     }
 
@@ -4862,7 +4862,7 @@ namespace Game.Entities
         public uint Charges { get; set; }                                   // if nonzero - owerwrite procCharges field for given Spell.dbc entry, defines how many times proc can occur before aura remove, 0 - infinite
     }
 
-    struct ServersideSpellName
+    public struct ServersideSpellName
     {
         public SpellNameRecord Name;
 

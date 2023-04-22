@@ -68,7 +68,7 @@ namespace Game.Movement
             return true;
         }
 
-        ulong GetPathPolyByPosition(ulong[] polyPath, uint polyPathSize, float[] point, ref float distance)
+        public ulong GetPathPolyByPosition(ulong[] polyPath, uint polyPathSize, float[] point, ref float distance)
         {
             if (polyPath == null || polyPathSize == 0)
                 return 0;
@@ -99,7 +99,7 @@ namespace Game.Movement
             return minDist < 3.0f ? nearestPoly : 0u;
         }
 
-        ulong GetPolyByLocation(float[] point, ref float distance)
+        public ulong GetPolyByLocation(float[] point, ref float distance)
         {
             // first we check the current path
             // if the current path doesn't contain the current poly,
@@ -133,7 +133,7 @@ namespace Game.Movement
             return 0;
         }
 
-        void BuildPolyPath(Vector3 startPos, Vector3 endPos)
+        public void BuildPolyPath(Vector3 startPos, Vector3 endPos)
         {
             // *** getting start/end poly logic ***
 
@@ -507,7 +507,7 @@ namespace Game.Movement
             BuildPointPath(startPoint, endPoint);
         }
 
-        void BuildPointPath(float[] startPoint, float[] endPoint)
+        public void BuildPointPath(float[] startPoint, float[] endPoint)
         {
             float[] pathPoints = new float[74 * 3];
             int pointCount = 0;
@@ -601,7 +601,7 @@ namespace Game.Movement
             Log.outDebug(LogFilter.Maps, "PathGenerator.BuildPointPath path type {0} size {1} poly-size {2}\n", pathType, pointCount, _polyLength);
         }
 
-        uint FixupCorridor(ulong[] path, uint npath, uint maxPath, ulong[] visited, int nvisited)
+        public uint FixupCorridor(ulong[] path, uint npath, uint maxPath, ulong[] visited, int nvisited)
         {
             int furthestPath = -1;
             int furthestVisited = -1;
@@ -646,7 +646,7 @@ namespace Game.Movement
             return req + size;
         }
 
-        bool GetSteerTarget(float[] startPos, float[] endPos, float minTargetDist, ulong[] path, uint pathSize, out float[] steerPos, out Detour.dtStraightPathFlags steerPosFlag, out ulong steerPosRef)
+        public bool GetSteerTarget(float[] startPos, float[] endPos, float minTargetDist, ulong[] path, uint pathSize, out float[] steerPos, out Detour.dtStraightPathFlags steerPosFlag, out ulong steerPosRef)
         {
             steerPosRef = 0;
             steerPos = new float[3];
@@ -684,7 +684,7 @@ namespace Game.Movement
             return true;
         }
 
-        uint FindSmoothPath(float[] startPos, float[] endPos, ulong[] polyPath, uint polyPathSize, out float[] smoothPath, out int smoothPathSize, uint maxSmoothPathSize)
+        public uint FindSmoothPath(float[] startPos, float[] endPos, ulong[] polyPath, uint polyPathSize, out float[] smoothPath, out int smoothPathSize, uint maxSmoothPathSize)
         {
             smoothPathSize = 0;
             int nsmoothPath = 0;
@@ -819,13 +819,13 @@ namespace Game.Movement
             return nsmoothPath < 74 ? Detour.DT_SUCCESS : Detour.DT_FAILURE;
         }
 
-        void NormalizePath()
+        public void NormalizePath()
         {
             for (uint i = 0; i < _pathPoints.Length; ++i)
                 _source.UpdateAllowedPositionZ(_pathPoints[i].X, _pathPoints[i].Y, ref _pathPoints[i].Z);
         }
 
-        void BuildShortcut()
+        public void BuildShortcut()
         {
             Log.outDebug(LogFilter.Maps, "BuildShortcut : making shortcut\n");
 
@@ -843,7 +843,7 @@ namespace Game.Movement
             pathType = PathType.Shortcut;
         }
 
-        void CreateFilter()
+        public void CreateFilter()
         {
             NavTerrainFlag includeFlags = 0;
             NavTerrainFlag excludeFlags = 0;
@@ -867,7 +867,7 @@ namespace Game.Movement
             UpdateFilter();
         }
 
-        void UpdateFilter()
+        public void UpdateFilter()
         {
             // allow creatures to cheat and use different movement types if they are moved
             // forcefully into terrain they can't normally move in
@@ -889,7 +889,7 @@ namespace Game.Movement
             }
         }
 
-        NavTerrainFlag GetNavTerrain(float x, float y, float z)
+        public NavTerrainFlag GetNavTerrain(float x, float y, float z)
         {
             LiquidData data;
             ZLiquidStatus liquidStatus = _source.GetMap().GetLiquidStatus(_source.GetPhaseShift(), x, y, z, LiquidHeaderTypeFlags.AllLiquids, out data, _source.GetCollisionHeight());
@@ -910,15 +910,25 @@ namespace Game.Movement
             }
         }
 
-        bool InRange(Vector3 p1, Vector3 p2, float r, float h)
+        public bool InRange(Vector3 p1, Vector3 p2, float r, float h)
         {
             Vector3 d = p1 - p2;
             return (d.X * d.X + d.Y * d.Y) < r * r && Math.Abs(d.Z) < h;
         }
 
-        float Dist3DSqr(Vector3 p1, Vector3 p2)
+        public float Dist3DSqr(Vector3 p1, Vector3 p2)
         {
             return (p1 - p2).LengthSquared();
+        }
+
+        public float GetPathLength()
+        {
+            float length = 0.0f;
+
+            for (uint i = 0; i < _pathPoints.Length - 1; ++i)
+                length += (_pathPoints[i + 1] - _pathPoints[i]).Length();
+
+            return length;
         }
 
         public void ShortenPathUntilDist(Position pos, float dist) { ShortenPathUntilDist(new Vector3(pos.posX, pos.posY, pos.posZ), dist); }
@@ -987,7 +997,7 @@ namespace Game.Movement
             return (target.GetPositionZ() - GetActualEndPosition().Z) > 5.0f;
         }
 
-        void AddFarFromPolyFlags(bool startFarFromPoly, bool endFarFromPoly)
+        public void AddFarFromPolyFlags(bool startFarFromPoly, bool endFarFromPoly)
         {
             if (startFarFromPoly)
                 pathType |= PathType.FarFromPolyStart;
@@ -995,13 +1005,13 @@ namespace Game.Movement
                 pathType |= PathType.FarFromPolyEnd;
         }
 
-        void Clear()
+        public void Clear()
         {
             _polyLength = 0;
             _pathPoints = null;
         }
 
-        bool HaveTile(Vector3 p)
+        public bool HaveTile(Vector3 p)
         {
             int tx = -1, ty = -1;
             float[] point = { p.Y, p.Z, p.X };
@@ -1017,7 +1027,7 @@ namespace Game.Movement
             return (_navMesh.getTileAt(tx, ty, 0) != null);
         }
 
-        bool InRangeYZX(float[] v1, float[] v2, float r, float h)
+        public bool InRangeYZX(float[] v1, float[] v2, float r, float h)
         {
             float dx = v2[0] - v1[0];
             float dy = v2[1] - v1[1]; // elevation
@@ -1036,9 +1046,9 @@ namespace Game.Movement
 
         public PathType GetPathType() { return pathType; }
 
-        void SetStartPosition(Vector3 point) { _startPosition = point; }
-        void SetEndPosition(Vector3 point) { _actualEndPosition = point; _endPosition = point; }
-        void SetActualEndPosition(Vector3 point) { _actualEndPosition = point; }
+        public void SetStartPosition(Vector3 point) { _startPosition = point; }
+        public void SetEndPosition(Vector3 point) { _actualEndPosition = point; _endPosition = point; }
+        public void SetActualEndPosition(Vector3 point) { _actualEndPosition = point; }
 
         public void SetUseStraightPath(bool useStraightPath) { _useStraightPath = useStraightPath; }
 
@@ -1094,6 +1104,7 @@ namespace Game.Movement
         // ground is the highest value to make recast choose ground over water when merging surfaces very close to each other (shallow water would be walkable)
     }
 
+    [Flags]
     public enum NavTerrainFlag
     {
         Empty = 0x00,

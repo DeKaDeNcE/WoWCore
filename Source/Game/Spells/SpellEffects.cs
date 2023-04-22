@@ -3517,7 +3517,7 @@ namespace Game.Spells
                 if (unitCaster.IsPlayer())
                     unitCaster.ToPlayer().SetFallInformation(0, m_caster.GetPositionZ());
 
-                float speed = MathFunctions.fuzzyGt(m_spellInfo.Speed, 0.0f) ? m_spellInfo.Speed : MotionMaster.SPEED_CHARGE;
+                float speed = MathFunctions.fuzzyGt(m_spellInfo.Speed, 0.0f) ? m_spellInfo.Speed : MotionMaster.SpeedCharge;
                 SpellEffectExtraData spellEffectExtraData = null;
                 if (effectInfo.MiscValueB != 0)
                 {
@@ -3529,20 +3529,19 @@ namespace Game.Spells
                 if (m_preGeneratedPath == null)
                 {
                     Position pos = unitTarget.GetFirstCollisionPosition(unitTarget.GetCombatReach(), unitTarget.GetRelativeAngle(m_caster.GetPosition()));
-                    if (MathFunctions.fuzzyGt(m_spellInfo.Speed, 0.0f) && m_spellInfo.HasAttribute(SpellAttr9.SpecialDelayCalculation))
-                        speed = pos.GetExactDist(m_caster) / speed;
 
-                    unitCaster.GetMotionMaster().MoveCharge(pos.posX, pos.posY, pos.posZ, speed, EventId.Charge, false, unitTarget, spellEffectExtraData);
+                    m_preGeneratedPath = new(unitCaster);
+                    m_preGeneratedPath.CalculatePath(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), false);
                 }
                 else
                 {
                     if (MathFunctions.fuzzyGt(m_spellInfo.Speed, 0.0f) && m_spellInfo.HasAttribute(SpellAttr9.SpecialDelayCalculation))
-                    {
-                        Vector3 pos = m_preGeneratedPath.GetActualEndPosition();
-                        speed = new Position(pos.X, pos.Y, pos.Z).GetExactDist(m_caster) / speed;
-                    }
+                        speed = m_preGeneratedPath.GetPathLength() / speed;
 
                     unitCaster.GetMotionMaster().MoveCharge(m_preGeneratedPath, speed, unitTarget, spellEffectExtraData);
+
+                    // abuse implementation detail of MoveCharge accepting PathGenerator argument (instantly started spline)
+                    UpdateDelayMomentForUnitTarget(unitTarget, (ulong)unitCaster.MoveSpline.Duration());
                 }
             }
 
@@ -3579,7 +3578,18 @@ namespace Game.Spells
                     pos = unitCaster.GetFirstCollisionPosition(dist, angle);
                 }
 
-                unitCaster.GetMotionMaster().MoveCharge(pos.posX, pos.posY, pos.posZ);
+                PathGenerator path = new(unitCaster);
+                path.CalculatePath(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), false);
+
+                float speed = MathFunctions.fuzzyGt(m_spellInfo.Speed, 0.0f) ? m_spellInfo.Speed : MotionMaster.SpeedCharge;
+
+                if (MathFunctions.fuzzyGt(m_spellInfo.Speed, 0.0f) && m_spellInfo.HasAttribute(SpellAttr9.SpecialDelayCalculation))
+                    speed = path.GetPathLength() / speed;
+
+                unitCaster.GetMotionMaster().MoveCharge(path, speed);
+
+                // abuse implementation detail of MoveCharge accepting PathGenerator argument (instantly started spline)
+                UpdateDelayMomentForDst((ulong)unitCaster.MoveSpline.Duration());
             }
             else if (effectHandleMode == SpellEffectHandleMode.Hit)
             {
@@ -5795,7 +5805,7 @@ namespace Game.Spells
         byte _charges;
     }
 
-    class DelayedSpellTeleportEvent : BasicEvent
+    public class DelayedSpellTeleportEvent : BasicEvent
     {
         Unit _target;
         WorldLocation _targetDest;

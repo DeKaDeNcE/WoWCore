@@ -62,7 +62,7 @@ namespace Game
             else
                 return new ExtendedPlayerName(name, "");
         }
-        static LanguageType GetRealmLanguageType(bool create)
+        public static LanguageType GetRealmLanguageType(bool create)
         {
             switch ((RealmZones)WorldConfig.GetIntValue(WorldCfg.RealmZone))
             {
@@ -179,7 +179,7 @@ namespace Game
                 value = data[(int)locale];
         }
 
-        static bool IsValidString(string str, uint strictMask, bool numericOrSpace, bool create = false)
+        public static bool IsValidString(string str, uint strictMask, bool numericOrSpace, bool create = false)
         {
             if (strictMask == 0)                                       // any language, ignore realm
             {
@@ -220,7 +220,7 @@ namespace Game
 
             return false;
         }
-        static bool IsCultureString(LanguageType culture, string str, bool numericOrSpace)
+        public static bool IsCultureString(LanguageType culture, string str, bool numericOrSpace)
         {
             foreach (var wchar in str)
             {
@@ -1146,7 +1146,7 @@ namespace Game
 
             Log.outInfo(LogFilter.ServerLoading, "Loaded {0} areatrigger scripts in {1} ms", count, Time.GetMSTimeDiffToNow(oldMSTime));
         }
-        void LoadScripts(ScriptsType type)
+        public void LoadScripts(ScriptsType type)
         {
             uint oldMSTime = Time.GetMSTime();
 
@@ -1725,7 +1725,7 @@ namespace Game
 
             return "";
         }
-        bool IsScriptDatabaseBound(uint id)
+        public bool IsScriptDatabaseBound(uint id)
         {
             var entry = _scriptNamesStorage.Find(id);
             if (entry != null)
@@ -1986,7 +1986,7 @@ namespace Game
             Log.outInfo(LogFilter.ServerLoading, $"Loaded {count} creature template resistances in {Time.GetMSTimeDiffToNow(oldMSTime)} ms");
         }
 
-        void LoadCreatureTemplateSpells()
+        public void LoadCreatureTemplateSpells()
         {
             uint oldMSTime = Time.GetMSTime();
 
@@ -2025,7 +2025,7 @@ namespace Game
 
             Log.outInfo(LogFilter.ServerLoading, $"Loaded {count} creature template spells in {Time.GetMSTimeDiffToNow(oldMSTime)} ms");
         }
-        void LoadCreatureTemplateModels()
+        public void LoadCreatureTemplateModels()
         {
             uint oldMSTime = Time.GetMSTime();
             //                                         0           1                  2             3
@@ -2072,7 +2072,7 @@ namespace Game
 
             Log.outInfo(LogFilter.ServerLoading, $"Loaded {count} creature template models in {Time.GetMSTimeDiffToNow(oldMSTime)} ms");
         }
-        void LoadCreatureSummonedData()
+        public void LoadCreatureSummonedData()
         {
             uint oldMSTime = Time.GetMSTime();
 
@@ -3082,7 +3082,7 @@ namespace Game
             else if (cInfo.GossipMenuIds.Empty() && cInfo.Npcflag.HasAnyFlag((ulong)NPCFlags.Gossip))
                 Log.outInfo(LogFilter.Sql, $"Creature (Entry: {cInfo.Entry}) has npcflag UNIT_NPC_FLAG_GOSSIP, but gossip menu is unassigned.");
         }
-        void CheckCreatureMovement(string table, ulong id, CreatureMovementData creatureMovement)
+        public void CheckCreatureMovement(string table, ulong id, CreatureMovementData creatureMovement)
         {
             if (creatureMovement.Ground >= CreatureGroundMovementType.Max)
             {
@@ -3573,7 +3573,7 @@ namespace Game
 
             Log.outInfo(LogFilter.ServerLoading, "Loaded {0} Vendors in {1} ms", count, Time.GetMSTimeDiffToNow(time));
         }
-        uint LoadReferenceVendor(int vendor, int item, List<uint> skip_vendors)
+        public uint LoadReferenceVendor(int vendor, int item, List<uint> skip_vendors)
         {
             // find all items from the reference vendor
             PreparedStatement stmt = WorldDatabase.GetPreparedStatement(WorldStatements.SEL_NPC_VENDOR_REF);
@@ -3882,7 +3882,7 @@ namespace Game
             return null;
         }
 
-        void AddSpawnDataToGrid(SpawnData data)
+        public void AddSpawnDataToGrid(SpawnData data)
         {
             uint cellId = GridDefines.ComputeCellCoord(data.SpawnPoint.GetPositionX(), data.SpawnPoint.GetPositionY()).GetId();
             bool isPersonalPhase = PhasingHandler.IsPersonalPhase(data.PhaseId);
@@ -4899,14 +4899,14 @@ namespace Game
         {
             return _gameObjectForQuestStorage.Contains(entry);
         }
-        void CheckGOLockId(GameObjectTemplate goInfo, uint dataN, uint N)
+        public void CheckGOLockId(GameObjectTemplate goInfo, uint dataN, uint N)
         {
             if (CliDB.LockStorage.ContainsKey(dataN))
                 return;
 
             Log.outError(LogFilter.Sql, "Gameobject (Entry: {0} GoType: {1}) have data{2}={3} but lock (Id: {4}) not found.", goInfo.entry, goInfo.type, N, goInfo.Door.open, goInfo.Door.open);
         }
-        void CheckGOLinkedTrapId(GameObjectTemplate goInfo, uint dataN, uint N)
+        public void CheckGOLinkedTrapId(GameObjectTemplate goInfo, uint dataN, uint N)
         {
             GameObjectTemplate trapInfo = GetGameObjectTemplate(dataN);
             if (trapInfo != null)
@@ -4915,14 +4915,14 @@ namespace Game
                     Log.outError(LogFilter.Sql, "Gameobject (Entry: {0} GoType: {1}) have data{2}={3} but GO (Entry {4}) have not GAMEOBJECT_TYPE_TRAP type.", goInfo.entry, goInfo.type, N, dataN, dataN);
             }
         }
-        void CheckGOSpellId(GameObjectTemplate goInfo, uint dataN, uint N)
+        public void CheckGOSpellId(GameObjectTemplate goInfo, uint dataN, uint N)
         {
             if (Global.SpellMgr.HasSpellInfo(dataN, Difficulty.None))
                 return;
 
             Log.outError(LogFilter.Sql, "Gameobject (Entry: {0} GoType: {1}) have data{2}={3} but Spell (Entry {4}) not exist.", goInfo.entry, goInfo.type, N, dataN, dataN);
         }
-        void CheckAndFixGOChairHeightId(GameObjectTemplate goInfo, ref uint dataN, uint N)
+        public void CheckAndFixGOChairHeightId(GameObjectTemplate goInfo, ref uint dataN, uint N)
         {
             if (dataN <= (UnitStandStateType.SitHighChair - UnitStandStateType.SitLowChair))
                 return;
@@ -4932,7 +4932,7 @@ namespace Game
             // prevent client and server unexpected work
             dataN = 0;
         }
-        void CheckGONoDamageImmuneId(GameObjectTemplate goTemplate, uint dataN, uint N)
+        public void CheckGONoDamageImmuneId(GameObjectTemplate goTemplate, uint dataN, uint N)
         {
             // 0/1 correct values
             if (dataN <= 1)
@@ -4940,7 +4940,7 @@ namespace Game
 
             Log.outError(LogFilter.Sql, "Gameobject (Entry: {0} GoType: {1}) have data{2}={3} but expected boolean (0/1) noDamageImmune field value.", goTemplate.entry, goTemplate.type, N, dataN);
         }
-        void CheckGOConsumable(GameObjectTemplate goInfo, uint dataN, uint N)
+        public void CheckGOConsumable(GameObjectTemplate goInfo, uint dataN, uint N)
         {
             // 0/1 correct values
             if (dataN <= 1)
@@ -4950,7 +4950,7 @@ namespace Game
                 goInfo.entry, goInfo.type, N, dataN);
         }
 
-        List<Difficulty> ParseSpawnDifficulties(string difficultyString, string table, ulong spawnId, uint mapId, List<Difficulty> mapDifficulties)
+        public List<Difficulty> ParseSpawnDifficulties(string difficultyString, string table, ulong spawnId, uint mapId, List<Difficulty> mapDifficulties)
         {
             List<Difficulty> difficulties = new();
             StringArray tokens = new(difficultyString, ',');
@@ -5143,7 +5143,7 @@ namespace Game
             0.66f, // ITEM_SUBCLASS_WEAPON_FISHING_POLE
         };
 
-        uint FillMaxDurability(ItemClass itemClass, uint itemSubClass, InventoryType inventoryType, ItemQuality quality, uint itemLevel)
+        public uint FillMaxDurability(ItemClass itemClass, uint itemSubClass, InventoryType inventoryType, ItemQuality quality, uint itemLevel)
         {
             if (itemClass != ItemClass.Armor && itemClass != ItemClass.Weapon)
                 return 0;
@@ -5914,7 +5914,7 @@ namespace Game
 
             Log.outInfo(LogFilter.ServerLoading, $"Loaded {count} instance spawn groups in {Time.GetMSTimeDiffToNow(oldMSTime)} ms");
         }
-        void OnDeleteSpawnData(SpawnData data)
+        public void OnDeleteSpawnData(SpawnData data)
         {
             var templateIt = _spawnGroupDataStorage.LookupByKey(data.spawnGroupData.groupId);
             Cypher.Assert(templateIt != null, $"Creature data for ({data.type},{data.SpawnId}) is being deleted and has invalid spawn group index {data.spawnGroupData.groupId}!");
@@ -6672,7 +6672,7 @@ namespace Game
                 Log.outInfo(LogFilter.ServerLoading, "Loaded {0} xp for level definition(s) from database in {1} ms", count, Time.GetMSTimeDiffToNow(time));
             }
         }
-        void PlayerCreateInfoAddItemHelper(uint race, uint class_, uint itemId, int count)
+        public void PlayerCreateInfoAddItemHelper(uint race, uint class_, uint itemId, int count)
         {
             var playerInfo = _playerInfo.LookupByKey(Tuple.Create((Race)race, (Class)class_));
             if (playerInfo == null)
@@ -6736,7 +6736,7 @@ namespace Game
                 return BuildPlayerLevelInfo(race, _class, level);
         }
 
-        PlayerLevelInfo BuildPlayerLevelInfo(Race race, Class _class, uint level)
+        public PlayerLevelInfo BuildPlayerLevelInfo(Race race, Class _class, uint level)
         {
             // base data (last known level)
             var info = _playerInfo.LookupByKey(Tuple.Create(race, _class)).levelInfo[WorldConfig.GetIntValue(WorldCfg.MaxPlayerLevel) - 1];
@@ -8479,7 +8479,7 @@ namespace Game
             foreach (var pair in _phaseInfoByArea)
                 pair.Value.Conditions.Clear();
         }
-        void LoadTerrainWorldMaps()
+        public void LoadTerrainWorldMaps()
         {
             uint oldMSTime = Time.GetMSTime();
 
@@ -8522,7 +8522,7 @@ namespace Game
 
             Log.outInfo(LogFilter.ServerLoading, "Loaded {0} terrain world maps in {1} ms.", count, Time.GetMSTimeDiffToNow(oldMSTime));
         }
-        void LoadTerrainSwapDefaults()
+        public void LoadTerrainSwapDefaults()
         {
             uint oldMSTime = Time.GetMSTime();
 
@@ -8559,7 +8559,7 @@ namespace Game
 
             Log.outInfo(LogFilter.ServerLoading, "Loaded {0} terrain swap defaults in {1} ms.", count, Time.GetMSTimeDiffToNow(oldMSTime));
         }
-        void LoadAreaPhases()
+        public void LoadAreaPhases()
         {
             uint oldMSTime = Time.GetMSTime();
 
@@ -10291,8 +10291,8 @@ namespace Game
 
                 if (speed <= 0.0f)
                 {
-                    Log.outError(LogFilter.Sql, $"Table `jump_charge_params` uses invalid speed {speed} for id {id}, set to default charge speed {MotionMaster.SPEED_CHARGE}.");
-                    speed = MotionMaster.SPEED_CHARGE;
+                    Log.outError(LogFilter.Sql, $"Table `jump_charge_params` uses invalid speed {speed} for id {id}, set to default charge speed {MotionMaster.SpeedCharge}.");
+                    speed = MotionMaster.SpeedCharge;
                 }
 
                 if (jumpGravity <= 0.0f)
@@ -10502,7 +10502,7 @@ namespace Game
 
             return GetGuidSequenceGenerator(high);
         }
-        ObjectGuidGenerator GetGuidSequenceGenerator(HighGuid high)
+        public ObjectGuidGenerator GetGuidSequenceGenerator(HighGuid high)
         {
             if (!_guidGenerators.ContainsKey(high))
                 _guidGenerators[high] = new ObjectGuidGenerator(high);
@@ -10572,7 +10572,7 @@ namespace Game
             return 0;
         }
 
-        CellObjectGuids CreateCellObjectGuids(uint mapid, Difficulty difficulty, uint cellid)
+        public CellObjectGuids CreateCellObjectGuids(uint mapid, Difficulty difficulty, uint cellid)
         {
             var key = (mapid, difficulty);
 
@@ -11744,7 +11744,7 @@ namespace Game
         }
     }
 
-    class ItemSpecStats
+    public class ItemSpecStats
     {
         public ItemSpecStats(ItemRecord item, ItemSparseRecord sparse)
         {
@@ -12176,7 +12176,7 @@ namespace Game
         }
     }
 
-    class ScriptNameContainer
+    public class ScriptNameContainer
     {
         Dictionary<string, Entry> NameToIndex = new();
         List<Entry> IndexToName = new();
