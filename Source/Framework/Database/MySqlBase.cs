@@ -4,6 +4,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.Transactions;
@@ -19,7 +20,7 @@ namespace Framework.Database
     {
         public MySqlConnection GetConnection()
         {
-            return new MySqlConnection($"Server={Host};Port={PortOrSocket};User Id={Username};Password={Password};Database={Database};Allow User Variables=True;Pooling=true;ConnectionIdleTimeout=1800;Command Timeout=0");
+            return new MySqlConnection($"Server={Host};Port={PortOrSocket};User Id={Username};Password={Password};Database={Database};AllowUserVariables=True;Pooling=True;Keepalive=120;ConnectionTimeout=60;ConnectionIdleTimeout=1800;DefaultCommandTimeout=300;SslMode=Required");
         }
 
         public string Host;
@@ -309,7 +310,8 @@ namespace Framework.Database
             {
                 Log.outFatal(LogFilter.SqlUpdates, $"{process.StandardError.ReadToEnd()}\n" +
                     $"Applying of file \'{path}\' to database \'{GetDatabaseName()}\' failed!\n" +
-                    " If you are a user, please pull the latest revision from the repository.\n" +
+                    "If you are a user, please pull the latest revision from the repository.\n" +
+                    "You can use this command: git fetch && git reset origin/master --hard\n" +
                     "Also make sure you have not applied any of the databases with your sql client.\n" +
                     "You cannot use auto-update system and import sql files from WoWCore repository with your sql client.\n" +
                     "If you are a developer, please fix your sql query.\n" +
@@ -318,6 +320,7 @@ namespace Framework.Database
                 throw new Exception($"{process.StandardError.ReadToEnd()}\n" +
                     $"Applying of file \'{path}\' to database \'{GetDatabaseName()}\' failed!\n" +
                     "If you are a user, please pull the latest revision from the repository.\n" +
+                    "You can use this command: git fetch && git reset origin/master --hard\n" +
                     "Also make sure you have not applied any of the databases with your sql client.\n" +
                     "You cannot use auto-update system and import sql files from WoWCore repository with your sql client.\n" +
                     "If you are a developer, please fix your sql query.\n" +
@@ -356,7 +359,7 @@ namespace Framework.Database
                     {
                         using (var scope = new TransactionScope())
                         {
-                            foreach (var cmd in transaction.commands)
+                            foreach (var cmd in transaction.commands.ToList())
                             {
                                 cmd.Transaction = trans;
                                 cmd.Connection = Connection;
