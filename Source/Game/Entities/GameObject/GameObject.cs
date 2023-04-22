@@ -78,7 +78,7 @@ namespace Game.Entities
             RemoveFromOwner();
         }
 
-        void RemoveFromOwner()
+        public void RemoveFromOwner()
         {
             ObjectGuid ownerGUID = GetOwnerGUID();
             if (ownerGUID.IsEmpty())
@@ -106,7 +106,9 @@ namespace Game.Entities
                 if (m_zoneScript != null)
                     m_zoneScript.OnGameObjectCreate(this);
 
-                GetMap().GetObjectsStore().Add(GetGUID(), this);
+                if (!GetMap().GetObjectsStore().ContainsKey(GetGUID()))
+                    GetMap().GetObjectsStore().Add(GetGUID(), this);
+
                 if (m_spawnId != 0)
                     GetMap().GetGameObjectBySpawnIdStore().Add(m_spawnId, this);
 
@@ -174,7 +176,7 @@ namespace Game.Entities
             return go;
         }
 
-        bool Create(uint entry, Map map, Position pos, Quaternion rotation, uint animProgress, GameObjectState goState, uint artKit, bool dynamic, ulong spawnid)
+        public bool Create(uint entry, Map map, Position pos, Quaternion rotation, uint animProgress, GameObjectState goState, uint artKit, bool dynamic, ulong spawnid)
         {
             Cypher.Assert(map);
             SetMap(map);
@@ -920,7 +922,7 @@ namespace Game.Entities
             }
         }
 
-        void DespawnForPlayer(Player seer, TimeSpan respawnTime)
+        public void DespawnForPlayer(Player seer, TimeSpan respawnTime)
         {
             PerPlayerState perPlayerState = GetOrCreatePerPlayerStates(seer.GetGUID());
             perPlayerState.ValidUntil = GameTime.GetSystemTime() + respawnTime;
@@ -1409,7 +1411,7 @@ namespace Game.Entities
                 trapGO.CastSpell(target, trapSpell.Id);
         }
 
-        GameObject LookupFishingHoleAround(float range)
+        public GameObject LookupFishingHoleAround(float range)
         {
             var u_check = new NearestGameObjectFishingHole(this, range);
             var checker = new GameObjectSearcher(this, u_check);
@@ -1605,7 +1607,7 @@ namespace Game.Entities
                 data.artKit = artkit;
         }
 
-        void SwitchDoorOrButton(bool activate, bool alternative = false)
+        public void SwitchDoorOrButton(bool activate, bool alternative = false)
         {
             if (activate)
                 SetFlag(GameObjectFlags.InUse);
@@ -2655,7 +2657,7 @@ namespace Game.Entities
             return IsAtInteractDistance(player, GetInteractionDistance());
         }
 
-        bool IsAtInteractDistance(Position pos, float radius)
+        public bool IsAtInteractDistance(Position pos, float radius)
         {
             var displayInfo = CliDB.GameObjectDisplayInfoStorage.LookupByKey(GetGoInfo().displayId);
             if (displayInfo != null)
@@ -2904,7 +2906,7 @@ namespace Game.Entities
             }
         }
 
-        void ClearLoot()
+        public void ClearLoot()
         {
             // Unlink loot objects from this GameObject before destroying to avoid accessing freed memory from Loot destructor
             loot = null;
@@ -2994,7 +2996,7 @@ namespace Game.Entities
             return GetGoState();
         }
 
-        void SetGoStateFor(GameObjectState state, Player viewer)
+        public void SetGoStateFor(GameObjectState state, Player viewer)
         {
             PerPlayerState perPlayerState = GetOrCreatePerPlayerStates(viewer.GetGUID());
             perPlayerState.ValidUntil = GameTime.GetSystemTime() + TimeSpan.FromSeconds(m_respawnDelayTime);
@@ -3043,7 +3045,7 @@ namespace Game.Entities
             return 0;
         }
 
-        void EnableCollision(bool enable)
+        public void EnableCollision(bool enable)
         {
             if (m_model == null)
                 return;
@@ -3051,7 +3053,7 @@ namespace Game.Entities
             m_model.EnableCollision(enable);
         }
 
-        void UpdateModel()
+        public void UpdateModel()
         {
             if (!IsInWorld)
                 return;
@@ -3385,7 +3387,7 @@ namespace Game.Entities
             }
         }
 
-        void UpdateCapturePoint()
+        public void UpdateCapturePoint()
         {
             if (GetGoType() != GameObjectTypes.CapturePoint)
                 return;
@@ -3479,7 +3481,7 @@ namespace Game.Entities
             return true;
         }
 
-        PerPlayerState GetOrCreatePerPlayerStates(ObjectGuid guid)
+        public PerPlayerState GetOrCreatePerPlayerStates(ObjectGuid guid)
         {
             if (m_perPlayerState == null)
                 m_perPlayerState = new();
@@ -3573,11 +3575,11 @@ namespace Game.Entities
 
         public LootState GetLootState() { return m_lootState; }
         public LootModes GetLootMode() { return m_LootMode; }
-        bool HasLootMode(LootModes lootMode) { return Convert.ToBoolean(m_LootMode & lootMode); }
-        void SetLootMode(LootModes lootMode) { m_LootMode = lootMode; }
-        void AddLootMode(LootModes lootMode) { m_LootMode |= lootMode; }
-        void RemoveLootMode(LootModes lootMode) { m_LootMode &= ~lootMode; }
-        void ResetLootMode() { m_LootMode = LootModes.Default; }
+        public bool HasLootMode(LootModes lootMode) { return Convert.ToBoolean(m_LootMode & lootMode); }
+        public void SetLootMode(LootModes lootMode) { m_LootMode = lootMode; }
+        public void AddLootMode(LootModes lootMode) { m_LootMode |= lootMode; }
+        public void RemoveLootMode(LootModes lootMode) { m_LootMode &= ~lootMode; }
+        public void ResetLootMode() { m_LootMode = LootModes.Default; }
 
         public void AddToSkillupList(ObjectGuid PlayerGuid) { m_SkillupList.Add(PlayerGuid); }
         public bool IsInSkillupList(ObjectGuid PlayerGuid)
@@ -3588,17 +3590,17 @@ namespace Game.Entities
 
             return false;
         }
-        void ClearSkillupList() { m_SkillupList.Clear(); }
+        public void ClearSkillupList() { m_SkillupList.Clear(); }
 
         public void AddUse() { ++m_usetimes; }
 
         public uint GetUseCount() { return m_usetimes; }
-        uint GetUniqueUseCount() { return (uint)m_unique_users.Count; }
+        public uint GetUniqueUseCount() { return (uint)m_unique_users.Count; }
 
-        List<ObjectGuid> GetTapList() { return m_tapList; }
-        void SetTapList(List<ObjectGuid> tapList) { m_tapList = tapList; }
+        public List<ObjectGuid> GetTapList() { return m_tapList; }
+        public void SetTapList(List<ObjectGuid> tapList) { m_tapList = tapList; }
 
-        bool HasLootRecipient() { return !m_tapList.Empty(); }
+        public bool HasLootRecipient() { return !m_tapList.Empty(); }
 
         public override uint GetLevelForTarget(WorldObject target)
         {
@@ -3624,7 +3626,7 @@ namespace Game.Entities
             return 1;
         }
 
-        GameObjectDestructibleState GetDestructibleState()
+        public GameObjectDestructibleState GetDestructibleState()
         {
             if ((m_gameObjectData.Flags & (uint)GameObjectFlags.Destroyed) != 0)
                 return GameObjectDestructibleState.Destroyed;
@@ -3657,13 +3659,13 @@ namespace Game.Entities
             return IsInRange(obj.GetPositionX(), obj.GetPositionY(), obj.GetPositionZ(), dist2compare);
         }
 
-        void UpdateDynamicFlagsForNearbyPlayers()
+        public void UpdateDynamicFlagsForNearbyPlayers()
         {
             m_values.ModifyValue(m_objectData).ModifyValue(m_objectData.DynamicFlags);
             AddToObjectUpdateIfNeeded();
         }
 
-        void HandleCustomTypeCommand(GameObjectTypeBase.CustomCommand command)
+        public void HandleCustomTypeCommand(GameObjectTypeBase.CustomCommand command)
         {
             if (m_goTypeImpl != null)
                 command.Execute(m_goTypeImpl);
@@ -3677,7 +3679,7 @@ namespace Game.Entities
         }
 
         // There's many places not ready for dynamic spawns. This allows them to live on for now.
-        void SetRespawnCompatibilityMode(bool mode = true) { m_respawnCompatibilityMode = mode; }
+        public void SetRespawnCompatibilityMode(bool mode = true) { m_respawnCompatibilityMode = mode; }
         public bool GetRespawnCompatibilityMode() { return m_respawnCompatibilityMode; }
 
         #region Fields
@@ -3730,7 +3732,7 @@ namespace Game.Entities
         ObjectGuid m_linkedTrap;
         #endregion
 
-        class ValuesUpdateForPlayerWithMaskSender : IDoWork<Player>
+        public class ValuesUpdateForPlayerWithMaskSender : IDoWork<Player>
         {
             public GameObject Owner;
             public ObjectFieldData ObjectMask = new();
@@ -3753,7 +3755,7 @@ namespace Game.Entities
         }
     }
 
-    class GameObjectModelOwnerImpl : GameObjectModelOwnerBase
+    public class GameObjectModelOwnerImpl : GameObjectModelOwnerBase
     {
         public GameObjectModelOwnerImpl(GameObject owner)
         {
@@ -3772,7 +3774,7 @@ namespace Game.Entities
     }
 
     // Base class for GameObject type specific implementations
-    class GameObjectTypeBase
+    public class GameObjectTypeBase
     {
         protected GameObject _owner;
 
@@ -3835,7 +3837,7 @@ namespace Game.Entities
     namespace GameObjectType
     {
         //11 GAMEOBJECT_TYPE_TRANSPORT
-        class Transport : GameObjectTypeBase, ITransport
+        public class Transport : GameObjectTypeBase, ITransport
         {
             TransportAnimation _animationInfo;
             uint _pathProgress;
@@ -4218,7 +4220,7 @@ namespace Game.Entities
             }
         }
 
-        class SetTransportAutoCycleBetweenStopFrames : GameObjectTypeBase.CustomCommand
+        public class SetTransportAutoCycleBetweenStopFrames : GameObjectTypeBase.CustomCommand
         {
             bool _on;
 
