@@ -4,6 +4,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.Transactions;
@@ -349,7 +350,7 @@ namespace Framework.Database
                     {
                         using (var scope = new TransactionScope())
                         {
-                            foreach (var cmd in transaction.commands)
+                            foreach (var cmd in transaction.commands.ToList())
                             {
                                 cmd.Transaction = trans;
                                 cmd.Connection = Connection;
