@@ -7400,11 +7400,11 @@ namespace Game.Entities
 
             WorldPacket buffer = new();
 
-            UpdateMask mask = new(191);
+            UpdateMask mask = new(UnitData.Size);
             m_unitData.AppendAllowedFieldsMaskForFlag(mask, flags);
             m_unitData.WriteUpdate(buffer, mask, true, this, target);
 
-            UpdateMask mask2 = new(161);
+            UpdateMask mask2 = new(PlayerData.Size);
             m_playerData.AppendAllowedFieldsMaskForFlag(mask2, flags);
             m_playerData.WriteUpdate(buffer, mask2, true, this, target);
 
