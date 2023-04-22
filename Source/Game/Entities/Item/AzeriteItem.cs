@@ -444,18 +444,18 @@ namespace Game.Entities
 
         public override void BuildValuesUpdateWithFlag(WorldPacket data, UpdateFieldFlag flags, Player target)
         {
-            UpdateMask valuesMask = new(14);
+            UpdateMask valuesMask = new((int)TypeId.Max);
             valuesMask.Set((int)TypeId.Item);
             valuesMask.Set((int)TypeId.AzeriteItem);
 
             WorldPacket buffer = new();
             buffer.WriteUInt32(valuesMask.GetBlock(0));
 
-            UpdateMask mask = new(40);
+            UpdateMask mask = new(ItemData.Size);
             m_itemData.AppendAllowedFieldsMaskForFlag(mask, flags);
             m_itemData.WriteUpdate(buffer, mask, true, this, target);
 
-            UpdateMask mask2 = new(9);
+            UpdateMask mask2 = new(AzeriteItemData.Size);
             m_azeriteItemData.AppendAllowedFieldsMaskForFlag(mask2, flags);
             m_azeriteItemData.WriteUpdate(buffer, mask2, true, this, target);
 
