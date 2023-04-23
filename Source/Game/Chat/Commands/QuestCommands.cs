@@ -157,9 +157,10 @@ namespace Game.Chat
                 }
 
                 QuestObjective obj = Global.ObjectMgr.GetQuestObjective(objectiveId);
+
                 if (obj == null)
                 {
-                    handler.SendSysMessage(CypherStrings.QuestObjectiveNotfound);
+                    handler.SendSysMessage(CypherStrings.QuestObjectiveNotfound, objectiveId);
                     return false;
                 }
 
