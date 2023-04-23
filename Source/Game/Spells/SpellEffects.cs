@@ -2615,7 +2615,7 @@ namespace Game.Spells
                     switch (m_spellInfo.Id)
                     {
                         case 45204: // Clone Me!
-                            m_caster.CastSpell(unitTarget, (uint)damage, new CastSpellExtraArgs(true));
+                            m_caster.CastSpell(unitTarget, (uint)damage, true);
                             break;
                         // Shadow Flame (All script effects, not just end ones to prevent player from dodging the last triggered spell)
                         case 22539:
@@ -2693,7 +2693,7 @@ namespace Game.Spells
                             if (m_originalCaster == null)
                                 return;
 
-                            m_originalCaster.CastSpell(m_originalCaster, (uint)damage, new CastSpellExtraArgs(false));
+                            m_originalCaster.CastSpell(m_originalCaster, (uint)damage);
                             break;
                         }
                         // Summon Ghouls On Scarlet Crusade
@@ -2736,18 +2736,18 @@ namespace Game.Spells
                             {
                                 for (uint i = 0; i < 3; ++i)
                                 {
-                                    m_originalCaster.CastSpell(unitTarget, 58689, new CastSpellExtraArgs(true));
-                                    m_originalCaster.CastSpell(unitTarget, 58692, new CastSpellExtraArgs(true));
+                                    m_originalCaster.CastSpell(unitTarget, 58689, true);
+                                    m_originalCaster.CastSpell(unitTarget, 58692, true);
                                 }
                                 if (m_originalCaster.GetMap().GetDifficultyID() == Difficulty.None)
                                 {
-                                    m_originalCaster.CastSpell(unitTarget, 58695, new CastSpellExtraArgs(true));
-                                    m_originalCaster.CastSpell(unitTarget, 58696, new CastSpellExtraArgs(true));
+                                    m_originalCaster.CastSpell(unitTarget, 58695, true);
+                                    m_originalCaster.CastSpell(unitTarget, 58696, true);
                                 }
                                 else
                                 {
-                                    m_originalCaster.CastSpell(unitTarget, 60883, new CastSpellExtraArgs(true));
-                                    m_originalCaster.CastSpell(unitTarget, 60884, new CastSpellExtraArgs(true));
+                                    m_originalCaster.CastSpell(unitTarget, 60883, true);
+                                    m_originalCaster.CastSpell(unitTarget, 60884, true);
                                 }
                             }
                             return;

@@ -1431,7 +1431,7 @@ namespace Game.Spells
                             if (apply)
                             {
                                 if ((GetSpellInfo().Id == 31821 && target.HasAura(19746, GetCasterGUID())) || (GetSpellInfo().Id == 19746 && target.HasAura(31821)))
-                                    target.CastSpell(target, 64364, new CastSpellExtraArgs(true));
+                                    target.CastSpell(target, 64364, true);
                             }
                             else
                                 target.RemoveAurasDueToSpell(64364, GetCasterGUID());
@@ -1457,7 +1457,7 @@ namespace Game.Spells
                         if (apply)
                         {
                             if (target != caster && !target.HealthAbovePct(25))
-                                caster.CastSpell(caster, 100001, new CastSpellExtraArgs(true));
+                                caster.CastSpell(caster, 100001, true);
                         }
                         else
                         {

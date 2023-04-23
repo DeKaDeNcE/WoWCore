@@ -113,7 +113,7 @@ namespace Scripts.Spells.Hunter;
         void HandleOnHit()
         {
             if (GetCaster().HasAura(SpellIds.ExhilarationR2) && !GetCaster().HasAura(SpellIds.Lonewolf))
-                GetCaster().CastSpell(null, SpellIds.ExhilarationPet, true);
+                GetCaster().CastSpell((SpellCastTargets)null, SpellIds.ExhilarationPet, true);
         }
 
         public override void Register()

@@ -294,7 +294,7 @@ namespace Scripts.Spells.DeathKnight;
             {
                 WorldLocation pos = GetExplTargetDest();
                 if (pos != null)
-                    GetCaster().CastSpell(pos, SpellIds.TighteningGraspSlow, new CastSpellExtraArgs(true));
+                    GetCaster().CastSpell(pos, SpellIds.TighteningGraspSlow, true);
             }
         }
 

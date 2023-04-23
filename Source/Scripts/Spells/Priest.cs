@@ -668,7 +668,7 @@ namespace Scripts.Spells.Priest;
         void RemoveEffect(AuraEffect aurEff, AuraEffectHandleModes mode)
         {
             if (GetTargetApplication().GetRemoveMode() == AuraRemoveMode.Death || GetTargetApplication().GetRemoveMode() == AuraRemoveMode.Expire)
-                GetCaster()?.CastSpell(GetTarget().GetPosition(), SpellIds.MindBombStun, new CastSpellExtraArgs(true));
+                GetCaster()?.CastSpell(GetTarget().GetPosition(), SpellIds.MindBombStun, true);
         }
 
         public override void Register()

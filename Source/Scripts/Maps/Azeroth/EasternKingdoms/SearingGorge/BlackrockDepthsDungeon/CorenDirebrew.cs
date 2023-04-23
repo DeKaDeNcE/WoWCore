@@ -352,7 +352,7 @@ class go_direbrew_mole_machine : GameObjectAI
         _scheduler.Schedule(TimeSpan.FromSeconds(1), context =>
         {
             me.UseDoorOrButton(10000);
-            me.CastSpell(null, SpellIds.MoleMachineEmerge, true);
+            me.CastSpell((SpellCastTargets)null, SpellIds.MoleMachineEmerge, true);
         });
         _scheduler.Schedule(TimeSpan.FromSeconds(4), context =>
         {
@@ -475,7 +475,7 @@ class spell_barreled_control_aura : AuraScript
     void PeriodicTick(AuraEffect aurEff)
     {
         PreventDefaultAction();
-        GetTarget().CastSpell(null, SpellIds.Barreled, true);
+        GetTarget().CastSpell((SpellCastTargets)null, SpellIds.Barreled, true);
     }
 
     public override void Register()

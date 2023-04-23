@@ -9,6 +9,7 @@ using Game.AI;
 using Game.Entities;
 using Game.Maps;
 using Game.Scripting;
+using Game.Spells;
 
 namespace Scripts.Maps.Azeroth.EasternKingdoms.BurningSteppes.BlackwingLairRaid.BroodlordLashlayer;
 
@@ -134,7 +135,7 @@ class go_suppression_device : GameObjectAI
                 case EventIds.SuppressionCast:
                     if (me.GetGoState() == GameObjectState.Ready)
                     {
-                        me.CastSpell(null, SpellIds.SuppressionAura, true);
+                        me.CastSpell((SpellCastTargets)null, SpellIds.SuppressionAura, true);
                         me.SendCustomAnim(0);
                     }
                     _events.ScheduleEvent(EventIds.SuppressionCast, TimeSpan.FromSeconds(5));

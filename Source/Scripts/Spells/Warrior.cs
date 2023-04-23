@@ -11,8 +11,8 @@
 // ReSharper disable InvertIf
 
 using System;
-using System.Collections.Generic;
 using System.Numerics;
+using System.Collections.Generic;
 using Framework.Constants;
 using Game.Spells;
 using Game.Entities;
@@ -234,7 +234,7 @@ namespace Scripts.Spells.Warrior;
             WorldLocation dest = GetHitDest();
 
             if (caster != null && dest != null)
-                caster.CastSpell(dest.GetPosition(), SpellIds.HeroicLeapJump, new CastSpellExtraArgs(true));
+                caster.CastSpell(dest.GetPosition(), SpellIds.HeroicLeapJump, true);
         }
 
         public override void Register()

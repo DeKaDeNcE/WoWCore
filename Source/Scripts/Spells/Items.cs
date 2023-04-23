@@ -1956,7 +1956,7 @@ namespace Scripts.Spells.Items;
 
         void OnApply(AuraEffect aurEff, AuraEffectHandleModes mode)
         {
-            GetTarget().CastSpell(null, SpellIds.LimitlessPower, true);
+            GetTarget().CastSpell((SpellCastTargets)null, SpellIds.LimitlessPower, true);
             Aura buff = GetTarget().GetAura(SpellIds.LimitlessPower);
             if (buff != null)
                 buff.SetDuration(GetDuration());

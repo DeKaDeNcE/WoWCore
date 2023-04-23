@@ -311,7 +311,7 @@ namespace Scripts.Events.LunarFestival
             }
             else
                 //me.CastSpell(me, GetFireworkSpell(me.GetEntry()), true);
-                me.CastSpell(me.GetPosition(), GetFireworkSpell(me.GetEntry()), new CastSpellExtraArgs(true));
+                me.CastSpell(me.GetPosition(), GetFireworkSpell(me.GetEntry()), true);
         }
     }
 
