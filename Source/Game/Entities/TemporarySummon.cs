@@ -368,7 +368,7 @@ namespace Game.Entities
 
         public ObjectGuid GetSummonerGUID() { return m_summonerGUID; }
 
-        TempSummonType GetSummonType() { return m_type; }
+        public TempSummonType GetSummonType() { return m_type; }
 
         public uint GetTimer() { return m_timer; }
 
@@ -464,10 +464,10 @@ namespace Game.Entities
         public bool IsPetImp() { return GetEntry() == (uint)PetEntry.Imp; }
         public bool IsPetFelhunter() { return GetEntry() == (uint)PetEntry.FelHunter; }
         public bool IsPetVoidwalker() { return GetEntry() == (uint)PetEntry.VoidWalker; }
-        public bool IsPetSuccubus() { return GetEntry() == (uint)PetEntry.Succubus; }
+        public bool IsPetSayaad() { return GetEntry() == (uint)PetEntry.Succubus || GetEntry() == (uint)PetEntry.Incubus; }
         public bool IsPetDoomguard() { return GetEntry() == (uint)PetEntry.Doomguard; }
         public bool IsPetFelguard() { return GetEntry() == (uint)PetEntry.Felguard; }
-
+        public bool IsWarlockPet() { return IsPetImp() || IsPetFelhunter() || IsPetVoidwalker() || IsPetSayaad() || IsPetDoomguard() || IsPetFelguard(); }
         // Death Knight pets
         public bool IsPetGhoul() { return GetEntry() == (uint)PetEntry.Ghoul; } // Ghoul may be guardian or pet
         public bool IsPetAbomination() { return GetEntry() == (uint)PetEntry.Abomination; } // Sludge Belcher dk talent
@@ -603,7 +603,7 @@ namespace Game.Entities
                 SetPowerType(PowerType.Energy);
                 SetFullPower(PowerType.Energy);
             }
-            else if (IsPetImp() || IsPetFelhunter() || IsPetVoidwalker() || IsPetSuccubus() || IsPetDoomguard() || IsPetFelguard()) // Warlock pets have energy (since 5.x)
+            else if (IsWarlockPet()) // Warlock pets have energy (since 5.x)
                 SetPowerType(PowerType.Energy);
             else
                 SetPowerType(PowerType.Mana);
@@ -1073,7 +1073,7 @@ namespace Game.Entities
             SetUpdateFieldStatValue(m_values.ModifyValue(m_unitData).ModifyValue(m_unitData.MaxDamage), maxdamage);
         }
 
-        void SetBonusDamage(int damage)
+        public void SetBonusDamage(int damage)
         {
             m_bonusSpellDamage = damage;
             Player playerOwner = GetOwner().ToPlayer();
@@ -1158,6 +1158,7 @@ namespace Game.Entities
         Succubus = 1863,
         Doomguard = 18540,
         Felguard = 30146,
+        Incubus = 184600,
 
         // Death Knight pets
         Ghoul = 26125,

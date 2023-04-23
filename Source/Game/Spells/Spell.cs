@@ -5334,9 +5334,7 @@ namespace Game.Spells
                                     Pet pet = unitCaster.ToPlayer().GetPet();
                                     if (pet != null)
                                     {
-                                        pet.CastSpell(pet, 32752, new CastSpellExtraArgs(TriggerCastFlags.FullMask)
-                                            .SetOriginalCaster(pet.GetGUID())
-                                            .SetTriggeringSpell(this));
+                                        pet.CastSpell(pet, SharedConst.PetSummoningDisorientation, new CastSpellExtraArgs(TriggerCastFlags.FullMask).SetOriginalCaster(pet.GetGUID()).SetTriggeringSpell(this));
                                     }
                                 }
                             }
