@@ -232,8 +232,8 @@ namespace Scripts.Events.Midsummer
                 torchShadowSpellID = SpellIds.JuggleTorchShadowFast;
             }
 
-            GetCaster().CastSpell(spellDest, torchSpellID, new CastSpellExtraArgs(false));
-            GetCaster().CastSpell(spellDest, torchShadowSpellID, new CastSpellExtraArgs(false));
+            GetCaster().CastSpell(spellDest, torchSpellID);
+            GetCaster().CastSpell(spellDest, torchShadowSpellID);
         }
 
         public override void Register()
@@ -277,8 +277,8 @@ namespace Scripts.Events.Midsummer
         void HandleDummy(uint effIndex)
         {
             Position dest = GetCaster().GetFirstCollisionPosition(30.0f, RandomHelper.NextSingle() * (2 * MathF.PI));
-            GetCaster().CastSpell(dest, SpellIds.FlingTorchTriggered, new CastSpellExtraArgs(true));
-            GetCaster().CastSpell(dest, SpellIds.FlingTorchShadow, new CastSpellExtraArgs(false));
+            GetCaster().CastSpell(dest, SpellIds.FlingTorchTriggered, true);
+            GetCaster().CastSpell(dest, SpellIds.FlingTorchShadow);
         }
 
         public override void Register()
@@ -299,11 +299,11 @@ namespace Scripts.Events.Midsummer
         {
             Position pos = GetHitDest();
             if (pos != null)
-        {
+            {
                 if (GetCaster().GetExactDist2d(pos) > 3.0f)
                 {
                     PreventHitEffect(effIndex);
-                    GetCaster().CastSpell(GetExplTargetDest(), SpellIds.JuggleTorchMissed, new CastSpellExtraArgs(false));
+                    GetCaster().CastSpell(GetExplTargetDest(), SpellIds.JuggleTorchMissed);
                     GetCaster().RemoveAura(SpellIds.TorchesCaught);
                 }
             }
@@ -357,8 +357,8 @@ namespace Scripts.Events.Midsummer
             {
                 Position dest = player.GetFirstCollisionPosition(15.0f, RandomHelper.NextSingle() * (2 * MathF.PI));
                 player.CastSpell(player, SpellIds.TorchesCaught);
-                player.CastSpell(dest, SpellIds.FlingTorchTriggered, new CastSpellExtraArgs(true));
-                player.CastSpell(dest, SpellIds.FlingTorchShadow, new CastSpellExtraArgs(false));
+                player.CastSpell(dest, SpellIds.FlingTorchTriggered, true);
+                player.CastSpell(dest, SpellIds.FlingTorchShadow);
             }
         }
 

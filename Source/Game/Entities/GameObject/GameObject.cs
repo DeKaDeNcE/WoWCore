@@ -731,7 +731,7 @@ namespace Game.Entities
                             if (goInfo.Trap.charges == 2 && goInfo.Trap.spell != 0)
                             {
                                 //todo NULL target won't work for target type 1
-                                CastSpell(null, goInfo.Trap.spell);
+                                CastSpell((SpellCastTargets)null, goInfo.Trap.spell);
                                 SetLootState(LootState.JustDeactivated);
                             }
                             else if (target)

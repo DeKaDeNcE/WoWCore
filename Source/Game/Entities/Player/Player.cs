@@ -2581,7 +2581,7 @@ namespace Game.Entities
                     break;
                 case GossipOptionNpc.DisableXPGain:
                     PlayerTalkClass.SendCloseGossip();
-                    CastSpell(null, PlayerConst.SpellExperienceEliminated, true);
+                    CastSpell((SpellCastTargets)null, PlayerConst.SpellExperienceEliminated, true);
                     SetPlayerFlag(PlayerFlags.NoXPGain);
                     break;
                 case GossipOptionNpc.EnableXPGain:

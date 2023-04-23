@@ -1070,7 +1070,7 @@ namespace Scripts.Spells.Mage;
         {
             TempSummon ringOfFrost = GetRingOfFrostMinion();
             if (ringOfFrost)
-                GetTarget().CastSpell(ringOfFrost.GetPosition(), SpellIds.RingOfFrostFreeze, new CastSpellExtraArgs(true));
+                GetTarget().CastSpell(ringOfFrost.GetPosition(), SpellIds.RingOfFrostFreeze, true);
         }
 
         void Apply(AuraEffect aurEff, AuraEffectHandleModes mode)

@@ -8,6 +8,7 @@ using Framework.Constants;
 using Game.AI;
 using Game.Entities;
 using Game.Scripting;
+using Game.Spells;
 
 namespace Scripts.Maps.Azeroth.EasternKingdoms.BurningSteppes.BlackwingLairRaid.Nefarian;
 
@@ -348,7 +349,7 @@ class boss_victor_nefarius : BossAI
                                     nefarian.SetFarVisible(true);
                                     nefarian.SetCanFly(true);
                                     nefarian.SetDisableGravity(true);
-                                    nefarian.CastSpell(null, SpellIds.ShadowflameInitial);
+                                    nefarian.CastSpell((SpellCastTargets)null, SpellIds.ShadowflameInitial);
                                     nefarian.GetMotionMaster().MovePoint(1, MiscConst.NefarianLoc[1]);
                                 }
                                 _events.CancelEvent(EventIds.MindControl);

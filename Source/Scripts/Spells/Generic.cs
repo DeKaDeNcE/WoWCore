@@ -749,7 +749,7 @@ class spell_gen_aura_of_fear : AuraScript
         if (!RandomHelper.randChance(GetSpellInfo().ProcChance))
             return;
 
-        GetTarget().CastSpell(null, aurEff.GetSpellEffectInfo().TriggerSpell, true);
+        GetTarget().CastSpell((SpellCastTargets)null, aurEff.GetSpellEffectInfo().TriggerSpell, true);
     }
 
     public override void Register()
@@ -3256,7 +3256,7 @@ class spell_gen_seaforium_blast : SpellScript
             GameObject go = GetHitGObj();
             if (go)
                 if (go.GetGoInfo().type == GameObjectTypes.DestructibleBuilding)
-                    owner.CastSpell(null, SpellIds.PlantChargesCreditAchievement, true);
+                    owner.CastSpell((SpellCastTargets)null, SpellIds.PlantChargesCreditAchievement, true);
         }
     }
 
@@ -4992,7 +4992,7 @@ class spell_gen_skinning : SpellScript
             uint spellId = getSkinningLearningSpellBySkill(skinningSkill);
 
             if (spellId != 0)
-                player.CastSpell(null, spellId, true);
+                player.CastSpell((SpellCastTargets)null, spellId, true);
         }
     }
 
