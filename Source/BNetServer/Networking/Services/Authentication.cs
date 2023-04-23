@@ -103,7 +103,7 @@ namespace BNetServer.Networking
                 } while (lastPlayerCharactersResult.NextRow());
             }
 
-            string ip_address = GetRemoteIpEndPoint().ToString();
+            string ip_address = GetRemoteIpEndPoint().Address.ToString();
 
             // If the IP is 'locked', check that the player comes indeed from the correct IP address
             if (accountInfo.IsLockedToIP)
