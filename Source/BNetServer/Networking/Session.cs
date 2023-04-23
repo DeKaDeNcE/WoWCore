@@ -44,7 +44,7 @@ namespace BNetServer.Networking;
 
         public override void Accept()
         {
-            string ipAddress = GetRemoteIpEndPoint().ToString();
+            string ipAddress = GetRemoteIpEndPoint().Address.ToString();
             Log.outInfo(LogFilter.Network, $"{GetClientInfo()} Connection Accepted.");
 
             // Verify that this IP is not in the ip_banned table
@@ -52,7 +52,7 @@ namespace BNetServer.Networking;
 
             PreparedStatement stmt = LoginDatabase.GetPreparedStatement(LoginStatements.SelIpInfo);
             stmt.AddValue(0, ipAddress);
-            stmt.AddValue(1, BitConverter.ToUInt32(GetRemoteIpEndPoint().Address.GetAddressBytes(), 0));
+            stmt.AddValue(1, GetRemoteIpEndPoint().Address.ToString());
 
             queryProcessor.AddCallback(DB.Login.AsyncQuery(stmt).WithCallback(async result =>
             {
@@ -208,7 +208,7 @@ namespace BNetServer.Networking;
 
         public string GetClientInfo()
         {
-            string stream = '[' + GetRemoteIpEndPoint().ToString();
+            string stream = '[' + GetRemoteIpEndPoint().Address.ToString();
             if (accountInfo != null && !accountInfo.Login.IsEmpty())
                 stream += ", Account: " + accountInfo.Login;
 
