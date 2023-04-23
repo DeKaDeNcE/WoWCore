@@ -12,6 +12,7 @@ using Game.Maps;
 using Game.Scripting;
 using System;
 using System.Collections.Generic;
+using Game.Spells;
 
 namespace Scripts.Maps.Azeroth.EasternKingdoms.BurningSteppes.LowerBlackrockSpireDungeon;
 
@@ -229,7 +230,7 @@ class instance_blackrock_spire : InstanceMapScript
             switch (go.GetEntry())
             {
                 case GameObjectsIds.WhelpSpawner:
-                    go.CastSpell(null, BRSMiscConst.SpellSummonRookeryWhelp);
+                    go.CastSpell((SpellCastTargets)null, BRSMiscConst.SpellSummonRookeryWhelp);
                     break;
                 case GameObjectsIds.EmberseerIn:
                     go_emberseerin = go.GetGUID();

@@ -414,7 +414,7 @@ namespace Game.Entities
             if (IsAIEnabled() && triggerJustAppeared && m_deathState != DeathState.Dead)
             {
                 if (IsAreaSpiritHealer() && !IsAreaSpiritHealerIndividual())
-                    CastSpell(null, BattlegroundConst.SpellSpiritHealChannelAoE, false);
+                    CastSpell((SpellCastTargets)null, BattlegroundConst.SpellSpiritHealChannelAoE, false);
 
                 if (m_respawnCompatibilityMode && VehicleKit != null)
                     VehicleKit.Reset();

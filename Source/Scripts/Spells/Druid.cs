@@ -774,7 +774,7 @@ namespace Scripts.Spells.Druid;
         {
             Unit target = GetTarget();
             if (target.HasAura(SpellIds.BalanceT10Bonus))
-                target.CastSpell(null, SpellIds.BalanceT10BonusProc, true);
+                target.CastSpell((SpellCastTargets)null, SpellIds.BalanceT10BonusProc, true);
         }
 
         public override void Register()

@@ -2592,7 +2592,7 @@ namespace Game.Entities
                     break;
                 case GossipOptionNpc.DisableXPGain:
                     PlayerTalkClass.SendCloseGossip();
-                    CastSpell(null, PlayerConst.SpellExperienceEliminated, true);
+                    CastSpell((SpellCastTargets)null, PlayerConst.SpellExperienceEliminated, true);
                     SetPlayerFlag(PlayerFlags.NoXPGain);
                     break;
                 case GossipOptionNpc.EnableXPGain:
@@ -4067,7 +4067,7 @@ namespace Game.Entities
                 return;
 
             _areaSpiritHealerGUID = creature.GetGUID();
-            CastSpell(null, BattlegroundConst.SpellWaitingForResurrect);
+            CastSpell((SpellCastTargets)null, BattlegroundConst.SpellWaitingForResurrect);
         }
 
         public void SendAreaSpiritHealerTime(Unit spiritHealer)

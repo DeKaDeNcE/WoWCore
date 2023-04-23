@@ -308,8 +308,8 @@ namespace Scripts.Spells.DemonHunter;
             WorldLocation loc = GetExplTargetDest();
             if (loc != null)
             {
-                GetCaster().CastSpell(GetHitUnit(), SpellIds.SigilOfChainsSlow, new CastSpellExtraArgs(true));
-                GetHitUnit().CastSpell(loc.GetPosition(), SpellIds.SigilOfChainsGrip, new CastSpellExtraArgs(true));
+                GetCaster().CastSpell(GetHitUnit(), SpellIds.SigilOfChainsSlow, true);
+                GetHitUnit().CastSpell(loc.GetPosition(), SpellIds.SigilOfChainsGrip, true);
             }
         }
 

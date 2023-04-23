@@ -115,7 +115,7 @@ namespace Scripts.Spells.Hunter;
         void HandleOnHit()
         {
             if (GetCaster().HasAura(SpellIds.ExhilarationR2) && !GetCaster().HasAura(SpellIds.Lonewolf))
-                GetCaster().CastSpell(null, SpellIds.ExhilarationPet, true);
+                GetCaster().CastSpell((SpellCastTargets)null, SpellIds.ExhilarationPet, true);
         }
 
         public override void Register()
@@ -383,7 +383,7 @@ namespace Scripts.Spells.Hunter;
 
         void HandleHit(uint effIndex)
         {
-            GetCaster().CastSpell(null, SpellIds.RapidFireEnergize, true);
+            GetCaster().CastSpell((SpellCastTargets)null, SpellIds.RapidFireEnergize, true);
         }
 
         public override void Register()
@@ -391,7 +391,7 @@ namespace Scripts.Spells.Hunter;
             OnEffectHitTarget.Add(new EffectHandler(HandleHit, 0, SpellEffectName.SchoolDamage));
         }
     }
-    
+
     [Script] // 53480 - Roar of Sacrifice
     class spell_hun_roar_of_sacrifice : AuraScript
     {

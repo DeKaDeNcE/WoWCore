@@ -1068,7 +1068,7 @@ namespace Scripts.Spells.Quest;
         {
             WorldLocation pos = GetExplTargetDest();
             if (pos != null)
-                GetCaster().CastSpell(pos.GetPosition(), (uint)GetEffectValue(), new CastSpellExtraArgs(true));
+                GetCaster().CastSpell(pos.GetPosition(), (uint)GetEffectValue(), true);
         }
 
         public override void Register()

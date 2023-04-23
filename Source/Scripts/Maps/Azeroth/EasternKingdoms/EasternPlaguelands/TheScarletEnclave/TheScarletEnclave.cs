@@ -310,7 +310,7 @@ class spell_chapter1_runeforging_credit : SpellScript
             if (player != null)
             {
                 if (player.GetQuestStatus(QuestIds.RuneforgingPreparationForBattle) == QuestStatus.Incomplete)
-                    player.CastSpell(player, SpellIds.RuneforgingCredit, new CastSpellExtraArgs(true));
+                    player.CastSpell(player, SpellIds.RuneforgingCredit, true);
             }
         }
     }
@@ -782,7 +782,7 @@ class spell_q12641_death_comes_from_on_high : SpellScript
                 return;
         }
 
-        GetCaster().CastSpell(null, spellId, true);
+        GetCaster().CastSpell((SpellCastTargets)null, spellId, true);
     }
 
     public override void Register()

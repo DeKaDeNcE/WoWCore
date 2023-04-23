@@ -647,7 +647,7 @@ namespace Game
                     {
                         spiritHealer.CastSpell(player, BattlegroundConst.SpellSpiritHealPlayerAura);
                         player.SendAreaSpiritHealerTime(spiritHealer.GetGUID(), spellInfo.GetDuration());
-                        spiritHealer.CastSpell(null, BattlegroundConst.SpellSpiritHealChannelSelf);
+                        spiritHealer.CastSpell((SpellCastTargets)null, BattlegroundConst.SpellSpiritHealChannelSelf);
                     }
                 }
             }

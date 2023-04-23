@@ -737,7 +737,7 @@ namespace Scripts.Spells.Generic;
             if (!RandomHelper.randChance(GetSpellInfo().ProcChance))
                 return;
 
-            GetTarget().CastSpell(null, aurEff.GetSpellEffectInfo().TriggerSpell, true);
+        GetTarget().CastSpell((SpellCastTargets)null, aurEff.GetSpellEffectInfo().TriggerSpell, true);
         }
 
         public override void Register()
@@ -3277,7 +3277,7 @@ namespace Scripts.Spells.Generic;
                 GameObject go = GetHitGObj();
                 if (go)
                     if (go.GetGoInfo().type == GameObjectTypes.DestructibleBuilding)
-                        owner.CastSpell(null, SpellIds.PlantChargesCreditAchievement, true);
+                    owner.CastSpell((SpellCastTargets)null, SpellIds.PlantChargesCreditAchievement, true);
             }
         }
 
@@ -5012,7 +5012,7 @@ namespace Scripts.Spells.Generic;
             {
                 uint spellId = (uint)getSkinningLearningSpellBySkill();
                 if (spellId != 0)
-                    player.CastSpell(null, spellId, true);
+                player.CastSpell((SpellCastTargets)null, spellId, true);
             }
         }
 
@@ -5145,7 +5145,7 @@ namespace Scripts.Spells.Generic;
         public override bool Execute(ulong e_time, uint p_time)
         {
             if (_caster.GetChannelSpellId() == 0)
-                _caster.CastSpell(null, BattlegroundConst.SpellSpiritHealChannelAoE, false);
+                _caster.CastSpell((SpellCastTargets)null, BattlegroundConst.SpellSpiritHealChannelAoE, false);
 
             return true;
         }

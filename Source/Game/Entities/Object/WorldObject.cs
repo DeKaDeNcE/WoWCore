@@ -812,6 +812,7 @@ namespace Game.Entities
         public virtual Loot GetLootForPlayer(Player player) { return null; }
 
         public abstract void BuildValuesCreate(WorldPacket data, Player target);
+
         public abstract void BuildValuesUpdate(WorldPacket data, Player target);
 
         public void SetUpdateFieldValue<T>(IUpdateField<T> updateField, T newValue)
@@ -996,7 +997,7 @@ namespace Game.Entities
                 map.RemoveFromActive(this);
         }
 
-        bool IsFarVisible() { return m_isFarVisible; }
+        public bool IsFarVisible() { return m_isFarVisible; }
 
         public void SetFarVisible(bool on)
         {
@@ -1006,7 +1007,7 @@ namespace Game.Entities
             m_isFarVisible = on;
         }
 
-        bool IsVisibilityOverridden() { return m_visibilityDistanceOverride.HasValue; }
+        public bool IsVisibilityOverridden() { return m_visibilityDistanceOverride.HasValue; }
 
         public void SetVisibilityDistanceOverride(VisibilityDistanceType type)
         {
@@ -1048,6 +1049,7 @@ namespace Game.Entities
         }
 
         public uint GetZoneId() { return m_zoneId; }
+
         public uint GetAreaId() { return m_areaId; }
 
         public void GetZoneAndAreaId(out uint zoneid, out uint areaid) { zoneid = m_zoneId; areaid = m_areaId; }
@@ -1271,7 +1273,7 @@ namespace Game.Entities
 
         public virtual bool CanAlwaysSee(WorldObject obj) { return false; }
 
-        bool CanDetect(WorldObject obj, bool implicitDetect, bool checkAlert = false)
+        public bool CanDetect(WorldObject obj, bool implicitDetect, bool checkAlert = false)
         {
             WorldObject seer = this;
 
@@ -1306,7 +1308,7 @@ namespace Game.Entities
             return true;
         }
 
-        bool CanDetectInvisibilityOf(WorldObject obj)
+        public bool CanDetectInvisibilityOf(WorldObject obj)
         {
             ulong mask = obj.m_invisibility.GetFlags() & m_invisibilityDetect.GetFlags();
 
@@ -1330,7 +1332,7 @@ namespace Game.Entities
             return true;
         }
 
-        bool CanDetectStealthOf(WorldObject obj, bool checkAlert = false)
+        public bool CanDetectStealthOf(WorldObject obj, bool checkAlert = false)
         {
             // Combat reach is the minimal distance (both in front and behind),
             //   and it is also used in the range calculation.
@@ -1792,6 +1794,7 @@ namespace Game.Entities
 
             return null;
         }
+
         public int CalculateSpellDamage(Unit target, SpellEffectInfo spellEffectInfo, int? basePoints = null, uint castItemId = 0, int itemLevel = -1)
         {
             return CalculateSpellDamage(out _, target, spellEffectInfo, basePoints, castItemId, itemLevel);
@@ -2007,7 +2010,7 @@ namespace Game.Entities
             return SpellMissInfo.None;
         }
 
-        SpellMissInfo MagicSpellHitResult(Unit victim, SpellInfo spellInfo)
+        public SpellMissInfo MagicSpellHitResult(Unit victim, SpellInfo spellInfo)
         {
             // Can`t miss on dead target (on skinning for example)
             if (!victim.IsAlive() && !victim.IsPlayer())
@@ -2397,10 +2400,9 @@ namespace Game.Entities
             return my_faction.IsNeutralToAll();
         }
 
-        public SpellCastResult CastSpell(WorldObject target, uint spellId, bool triggered = false)
+        public SpellCastResult CastSpell(SpellCastTargets targets, uint spellId, bool triggered = false)
         {
-            CastSpellExtraArgs args = new(triggered);
-            return CastSpell(target, spellId, args);
+            return CastSpell(new CastSpellTargetArg(targets), spellId, new CastSpellExtraArgs(triggered));
         }
 
         public SpellCastResult CastSpell(SpellCastTargets targets, uint spellId, CastSpellExtraArgs args)
@@ -2408,9 +2410,19 @@ namespace Game.Entities
             return CastSpell(new CastSpellTargetArg(targets), spellId, args);
         }
 
+        public SpellCastResult CastSpell(WorldObject target, uint spellId, bool triggered = false)
+        {
+            return CastSpell(target, spellId, new CastSpellExtraArgs(triggered));
+        }
+
         public SpellCastResult CastSpell(WorldObject target, uint spellId, CastSpellExtraArgs args)
         {
             return CastSpell(new CastSpellTargetArg(target), spellId, args);
+        }
+
+        public SpellCastResult CastSpell(Position dest, uint spellId, bool triggered = false)
+        {
+            return CastSpell(new CastSpellTargetArg(dest), spellId, new CastSpellExtraArgs(triggered));
         }
 
         public SpellCastResult CastSpell(Position dest, uint spellId, CastSpellExtraArgs args)
@@ -2458,7 +2470,7 @@ namespace Game.Entities
             return spell.Prepare(targets.Targets, args.TriggeringAura);
         }
 
-        void SendPlayOrphanSpellVisual(ObjectGuid target, uint spellVisualId, float travelSpeed, bool speedAsTime = false, bool withSourceOrientation = false)
+        public void SendPlayOrphanSpellVisual(ObjectGuid target, uint spellVisualId, float travelSpeed, bool speedAsTime = false, bool withSourceOrientation = false)
         {
             PlayOrphanSpellVisual playOrphanSpellVisual = new();
             playOrphanSpellVisual.SourceLocation = GetPosition();
@@ -2483,7 +2495,7 @@ namespace Game.Entities
             SendMessageToSet(playOrphanSpellVisual, true);
         }
 
-        void SendPlayOrphanSpellVisual(Position targetLocation, uint spellVisualId, float travelSpeed, bool speedAsTime = false, bool withSourceOrientation = false)
+        public void SendPlayOrphanSpellVisual(Position targetLocation, uint spellVisualId, float travelSpeed, bool speedAsTime = false, bool withSourceOrientation = false)
         {
             PlayOrphanSpellVisual playOrphanSpellVisual = new();
             playOrphanSpellVisual.SourceLocation = GetPosition();
@@ -2508,7 +2520,7 @@ namespace Game.Entities
             SendMessageToSet(playOrphanSpellVisual, true);
         }
 
-        void SendCancelOrphanSpellVisual(uint id)
+        public void SendCancelOrphanSpellVisual(uint id)
         {
             CancelOrphanSpellVisual cancelOrphanSpellVisual = new();
             cancelOrphanSpellVisual.SpellVisualID = id;
@@ -2855,7 +2867,6 @@ namespace Game.Entities
             Cell.VisitGridObjects(this, searcher, maxSearchRange);
             return creatureList;
         }
-
 
         public List<Unit> GetPlayerListInGrid(float maxSearchRange, bool alive = true)
         {

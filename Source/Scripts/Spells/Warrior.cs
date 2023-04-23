@@ -364,7 +364,7 @@ namespace Scripts.Spells.Warrior;
             WorldLocation dest = GetHitDest();
 
             if (caster != null && dest != null)
-                caster.CastSpell(dest.GetPosition(), SpellIds.HeroicLeapJumpNew, new CastSpellExtraArgs(true));
+                caster.CastSpell(dest.GetPosition(), SpellIds.HeroicLeapJumpNew, true);
         }
 
         public override void Register()
