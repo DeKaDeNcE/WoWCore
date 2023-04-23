@@ -100,32 +100,39 @@ namespace BNetServer.Networking
                 var headerLength = (ushort)IPAddress.HostToNetworkOrder(BitConverter.ToInt16(data, readPos));
                 readPos += 2;
 
-                Header header = new();
-                header.MergeFrom(data, readPos, headerLength);
-                readPos += headerLength;
-
-                var stream = new CodedInputStream(data, readPos, (int)header.Size);
-                readPos += (int)header.Size;
-
-                if (header.ServiceId != 0xFE && header.ServiceHash != 0)
+                try
                 {
-                    var handler = Global.LoginServiceMgr.GetHandler(header.ServiceHash, header.MethodId);
-                    if (handler != null)
-                        handler.Invoke(this, header.Token, stream);
+                    Header header = new();
+                    header.MergeFrom(data, readPos, headerLength);
+                    readPos += headerLength;
+
+                    var stream = new CodedInputStream(data, readPos, (int)header.Size);
+                    readPos += (int)header.Size;
+
+                    if (header.ServiceId != 0xFE && header.ServiceHash != 0)
+                    {
+                        var handler = Global.LoginServiceMgr.GetHandler(header.ServiceHash, header.MethodId);
+                        if (handler != null)
+                            handler.Invoke(this, header.Token, stream);
+                        else
+                        {
+                            Log.outWarn(LogFilter.ServiceProtobuf, $"{GetClientInfo()} tried to call not implemented methodId: {header.MethodId} for servicehash: {header.ServiceHash}");
+                            SendResponse(header.Token, BattlenetRpcErrorCode.RpcNotImplemented);
+                        }
+                    }
                     else
                     {
-                        Log.outError(LogFilter.ServiceProtobuf, $"{GetClientInfo()} tried to call not implemented methodId: {header.MethodId} for servicehash: {header.ServiceHash}");
-                        SendResponse(header.Token, BattlenetRpcErrorCode.RpcNotImplemented);
+                        var handler = responseCallbacks.LookupByKey(header.Token);
+                        if (handler != null)
+                        {
+                            handler(stream);
+                            responseCallbacks.Remove(header.Token);
+                        }
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    var handler = responseCallbacks.LookupByKey(header.Token);
-                    if (handler != null)
-                    {
-                        handler(stream);
-                        responseCallbacks.Remove(header.Token);
-                    }
+                    Log.outWarn(LogFilter.ServiceProtobuf, $"Session.ReadHandler() {GetClientInfo()} triggered a BadRPC Exception: {e.Message}");
                 }
             }
 
@@ -215,29 +222,38 @@ namespace BNetServer.Networking
         public string LastIP;
         public uint LoginTicketExpiry;
         public bool IsBanned;
-        public bool IsPermanenetlyBanned;
+        public bool IsPermanentlyBanned;
 
         public Dictionary<uint, GameAccountInfo> GameAccounts;
 
         public AccountInfo(SQLResult result)
         {
-            Id = result.Read<uint>(0);
-            Login = result.Read<string>(1);
-            IsLockedToIP = result.Read<bool>(2);
-            LockCountry = result.Read<string>(3);
-            LastIP = result.Read<string>(4);
-            LoginTicketExpiry = result.Read<uint>(5);
-            IsBanned = result.Read<ulong>(6) != 0;
-            IsPermanenetlyBanned = result.Read<ulong>(7) != 0;
-
-            GameAccounts = new Dictionary<uint, GameAccountInfo>();
-            const int GameAccountFieldsOffset = 8;
-            do
+            try
             {
-                var account = new GameAccountInfo(result.GetFields(), GameAccountFieldsOffset);
-                GameAccounts[result.Read<uint>(GameAccountFieldsOffset)] = account;
+                Log.outDebug(LogFilter.Session, $"Session.AccountInfo() Id {result.Read<uint>(0)} Login {result.Read<string>(1)} Name {result.Read<string>(9)}");
 
-            } while (result.NextRow());
+                Id = result.Read<uint>(0);
+                Login = result.Read<string>(1);
+                IsLockedToIP = result.Read<bool>(2);
+                LockCountry = result.Read<string>(3);
+                LastIP = result.Read<string>(4);
+                LoginTicketExpiry = result.Read<uint>(5);
+                IsBanned = result.Read<ulong>(6) != 0;
+                IsPermanentlyBanned = result.Read<ulong>(7) != 0;
+
+                GameAccounts = new Dictionary<uint, GameAccountInfo>();
+                const int GameAccountFieldsOffset = 8;
+                do
+                {
+                    var account = new GameAccountInfo(result.GetFields(), GameAccountFieldsOffset);
+                    GameAccounts[result.Read<uint>(GameAccountFieldsOffset)] = account;
+
+                } while (result.NextRow());
+            }
+            catch (Exception e)
+            {
+                Log.outFatal(LogFilter.Crash, $"Session.AccountInfo() NotACrash Id {result.Read<uint>(0)} Login {result.Read<string>(1)} Name {result.Read<string>(9)} Exception: {e}");
+            }
         }
     }
 
@@ -248,7 +264,7 @@ namespace BNetServer.Networking
         public string DisplayName;
         public uint UnbanDate;
         public bool IsBanned;
-        public bool IsPermanenetlyBanned;
+        public bool IsPermanentlyBanned;
         public AccountTypes SecurityLevel;
 
         public Dictionary<uint, byte> CharacterCounts;
@@ -259,8 +275,8 @@ namespace BNetServer.Networking
             Id = fields.Read<uint>(startColumn + 0);
             Name = fields.Read<string>(startColumn + 1);
             UnbanDate = fields.Read<uint>(startColumn + 2);
-            IsPermanenetlyBanned = fields.Read<uint>(startColumn + 3) != 0;
-            IsBanned = IsPermanenetlyBanned || UnbanDate > Time.UnixTime;
+            IsPermanentlyBanned = fields.Read<uint>(startColumn + 3) != 0;
+            IsBanned = IsPermanentlyBanned || UnbanDate > Time.UnixTime;
             SecurityLevel = (AccountTypes)fields.Read<byte>(startColumn + 4);
 
             int hashPos = Name.IndexOf('#');

@@ -46,8 +46,18 @@ namespace BNetServer.Networking
 
         public void HandleLoginRequest(HttpHeader request)
         {
-            LogonData loginForm = Json.CreateObject<LogonData>(request.Content);
+            LogonData loginForm = null;
             LogonResult loginResult = new();
+
+            try
+            {
+                loginForm = Json.CreateObject<LogonData>(request.Content);
+            }
+            catch (Exception e)
+            {
+                Log.outFatal(LogFilter.Crash, $"RestSession.HandleLoginRequest() NotACrash BadJSON {request.Content} Exception: {e}");
+            }
+
             if (loginForm == null)
             {
                 loginResult.AuthenticationState = "LOGIN";

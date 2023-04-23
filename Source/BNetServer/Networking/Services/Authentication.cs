@@ -130,7 +130,7 @@ namespace BNetServer.Networking
             // If the account is banned, reject the logon attempt
             if (accountInfo.IsBanned)
             {
-                if (accountInfo.IsPermanenetlyBanned)
+                if (accountInfo.IsPermanentlyBanned)
                 {
                     Log.outDebug(LogFilter.Session, $"{GetClientInfo()} Session.HandleVerifyWebCredentials: Banned account {accountInfo.Login} tried to login!");
                     return BattlenetRpcErrorCode.GameAccountBanned;
