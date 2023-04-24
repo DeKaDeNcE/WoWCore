@@ -38,6 +38,12 @@ namespace Scripts.Spells.Priest;
         public const uint BodyAndSoul = 64129;
         public const uint BodyAndSoulSpeed = 65081;
         public const uint DivineBlessing = 40440;
+        public const uint DivineStarHoly = 110744;
+        public const uint DivineStarShadow = 122121;
+        public const uint DivineStarHolyDamage = 122128;
+        public const uint DivineStarHolyHeal = 110745;
+        public const uint DivineStarShadowDamage = 390845;
+        public const uint DivineStarShadowHeal = 390981;
         public const uint DivineStarDamage = 122128;
         public const uint DivineStarHeal = 110745;
         public const uint DivineWrath = 40441;
@@ -333,35 +339,65 @@ namespace Scripts.Spells.Priest;
         }
     }
 
-    [Script] // 110744 - Divine Star
+    [Script] // 122121 - Divine Star (Shadow)
+    class spell_pri_divine_star_shadow : SpellScript
+    {
+        void HandleHitTarget(uint effIndex)
+        {
+            Unit caster = GetCaster();
+
+            if (caster != null)
+                if ((int)caster.GetPowerType() != GetEffectInfo().MiscValue)
+                    PreventHitDefaultEffect(effIndex);
+        }
+
+        public override void Register()
+        {
+            OnEffectHitTarget.Add(new EffectHandler(HandleHitTarget, 2, SpellEffectName.Energize));
+        }
+    }
+
+    [Script] // 110744 - Divine Star (Holy)
+    // 122121 - Divine Star (Shadow)
     class areatrigger_pri_divine_star : AreaTriggerAI
     {
         TaskScheduler _scheduler = new();
-        Position _casterCurrentPosition = new();
+        Position _casterCurrentPosition;
         List<ObjectGuid> _affectedUnits = new();
+        float _maxTravelDistance;
 
         public areatrigger_pri_divine_star(AreaTrigger areatrigger) : base(areatrigger) { }
 
         public override void OnInitialize()
         {
-            Unit caster = at.GetCaster();
-            if (caster != null)
+            SpellInfo spellInfo = Global.SpellMgr.GetSpellInfo(at.GetSpellId(), Difficulty.None);
+
+            if (spellInfo != null)
             {
-                _casterCurrentPosition = caster.GetPosition();
+                if (spellInfo.GetEffects().Count > 1)
+                {
 
-                // Note: max. distance at which the Divine Star can travel to is 24 yards.
-                float divineStarXOffSet = 24.0f;
+                    Unit caster = at.GetCaster();
 
-                Position destPos = _casterCurrentPosition;
-                at.MovePositionToFirstCollision(destPos, divineStarXOffSet, 0.0f);
+                    if (caster != null)
+                    {
+                        _casterCurrentPosition = caster.GetPosition();
 
-                PathGenerator firstPath = new(at);
-                firstPath.CalculatePath(destPos.GetPositionX(), destPos.GetPositionY(), destPos.GetPositionZ(), false);
+                        // Note: max. distance at which the Divine Star can travel to is EFFECT_1's BasePoints yards.
+                        _maxTravelDistance = spellInfo.GetEffect(1).CalcValue(caster);
 
-                Vector3 endPoint = firstPath.GetPath().Last();
+                        Position destPos = _casterCurrentPosition;
+                        at.MovePositionToFirstCollision(destPos, _maxTravelDistance, 0.0f);
 
-                // Note: it takes 1000ms to reach 24 yards, so it takes 41.67ms to run 1 yard.
-                at.InitSplines(firstPath.GetPath().ToList(), (uint)(at.GetDistance(endPoint.X, endPoint.Y, endPoint.Z) * 41.67f));
+                        PathGenerator firstPath = new(at);
+                        firstPath.CalculatePath(destPos.GetPositionX(), destPos.GetPositionY(), destPos.GetPositionZ());
+
+                        Vector3 endPoint = firstPath.GetPath().Last();
+
+                        // Note: it takes 1000ms to reach EFFECT_1's BasePoints yards, so it takes (1000 / EFFECT_1's BasePoints)ms to run 1 yard.
+                        at.InitSplines(firstPath.GetPath().ToList(), (uint)(at.GetDistance(endPoint.X, endPoint.Y, endPoint.Z) * (1000 / _maxTravelDistance)));
+                    }
+                }
             }
         }
 
@@ -372,33 +408,27 @@ namespace Scripts.Spells.Priest;
 
         public override void OnUnitEnter(Unit unit)
         {
-            Unit caster = at.GetCaster();
-            if (caster != null)
-            {
-                if (!_affectedUnits.Contains(unit.GetGUID()))
-                {
-                    if (caster.IsValidAttackTarget(unit))
-                        caster.CastSpell(unit, SpellIds.DivineStarDamage, new CastSpellExtraArgs(TriggerCastFlags.IgnoreGCD | TriggerCastFlags.IgnoreCastInProgress));
-                    else if (caster.IsValidAssistTarget(unit))
-                        caster.CastSpell(unit, SpellIds.DivineStarHeal, new CastSpellExtraArgs(TriggerCastFlags.IgnoreGCD | TriggerCastFlags.IgnoreCastInProgress));
-
-                    _affectedUnits.Add(unit.GetGUID());
-                }
-            }
+            HandleUnitEnterExit(unit);
         }
 
         public override void OnUnitExit(Unit unit)
         {
             // Note: this ensures any unit receives a second hit if they happen to be inside the AT when Divine Star starts its return path.
+            HandleUnitEnterExit(unit);
+        }
+
+        void HandleUnitEnterExit(Unit unit)
+        {
             Unit caster = at.GetCaster();
+
             if (caster != null)
             {
                 if (!_affectedUnits.Contains(unit.GetGUID()))
                 {
                     if (caster.IsValidAttackTarget(unit))
-                        caster.CastSpell(unit, SpellIds.DivineStarDamage, new CastSpellExtraArgs(TriggerCastFlags.IgnoreGCD | TriggerCastFlags.IgnoreCastInProgress));
+                        caster.CastSpell(unit, at.GetSpellId() == SpellIds.DivineStarShadow ? SpellIds.DivineStarShadowDamage : SpellIds.DivineStarHolyDamage, new CastSpellExtraArgs(TriggerCastFlags.IgnoreGCD | TriggerCastFlags.IgnoreCastInProgress));
                     else if (caster.IsValidAssistTarget(unit))
-                        caster.CastSpell(unit, SpellIds.DivineStarHeal, new CastSpellExtraArgs(TriggerCastFlags.IgnoreGCD | TriggerCastFlags.IgnoreCastInProgress));
+                        caster.CastSpell(unit, at.GetSpellId() == SpellIds.DivineStarShadow ? SpellIds.DivineStarShadowHeal : SpellIds.DivineStarHolyHeal, new CastSpellExtraArgs(TriggerCastFlags.IgnoreGCD | TriggerCastFlags.IgnoreCastInProgress));
 
                     _affectedUnits.Add(unit.GetGUID());
                 }
@@ -408,40 +438,41 @@ namespace Scripts.Spells.Priest;
         public override void OnDestinationReached()
         {
             Unit caster = at.GetCaster();
-            if (caster == null)
-                return;
 
-            if (at.GetDistance(_casterCurrentPosition) > 0.05f)
+            if (caster != null)
             {
-                _affectedUnits.Clear();
+                if (at.GetDistance(_casterCurrentPosition) > 0.05f)
+                {
+                    _affectedUnits.Clear();
 
-                ReturnToCaster();
+                    ReturnToCaster();
+                }
+                else at.Remove();
             }
-            else
-                at.Remove();
         }
 
         void ReturnToCaster()
         {
             _scheduler.Schedule(TimeSpan.FromMilliseconds(0), task =>
+            {
+                Unit caster = at.GetCaster();
+
+                if (caster != null)
                 {
-                    Unit caster = at.GetCaster();
-                    if (caster != null)
-                    {
-                        _casterCurrentPosition = caster.GetPosition();
+                    _casterCurrentPosition = caster.GetPosition();
 
-                        List<Vector3> returnSplinePoints = new();
+                    List<Vector3> returnSplinePoints = new();
 
-                        returnSplinePoints.Add(at.GetPosition());
-                        returnSplinePoints.Add(at.GetPosition());
-                        returnSplinePoints.Add(caster.GetPosition());
-                        returnSplinePoints.Add(caster.GetPosition());
+                    returnSplinePoints.Add(at.GetPosition());
+                    returnSplinePoints.Add(at.GetPosition());
+                    returnSplinePoints.Add(caster.GetPosition());
+                    returnSplinePoints.Add(caster.GetPosition());
 
-                        at.InitSplines(returnSplinePoints, (uint)at.GetDistance(caster) / 24 * 1000);
+                    at.InitSplines(returnSplinePoints, (uint)(at.GetDistance(caster) / _maxTravelDistance * 1000));
 
-                        task.Repeat(TimeSpan.FromMilliseconds(250));
-                    }
-                });
+                    task.Repeat(TimeSpan.FromMilliseconds(250));
+                }
+            });
         }
     }
 
