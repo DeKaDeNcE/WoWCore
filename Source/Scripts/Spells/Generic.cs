@@ -1888,6 +1888,7 @@ class spell_gen_feast : SpellScript
  * and UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT. Some auras can apply only 2 flags
  *
  * spell_gen_feign_death_all_flags applies all 3 flags
+ * spell_gen_feign_death_all_flags_uninteractible applies all 3 flags and additionally sets UNIT_FLAG_IMMUNE_TO_PC | UNIT_FLAG_IMMUNE_TO_NPC | UNIT_FLAG_UNINTERACTIBLE
  * spell_gen_feign_death_no_dyn_flag applies no UNIT_DYNFLAG_DEAD (does not make the creature appear dead)
  * spell_gen_feign_death_no_prevent_emotes applies no UNIT_FLAG_PREVENT_EMOTES_FROM_CHAT_TEXT
  *
@@ -1916,6 +1917,40 @@ class spell_gen_feign_death_all_flags : AuraScript
         target.RemoveUnitFlag3(UnitFlags3.FakeDead);
         target.RemoveUnitFlag2(UnitFlags2.FeignDeath);
         target.RemoveUnitFlag(UnitFlags.PreventEmotesFromChatText);
+
+        Creature creature = target.ToCreature();
+        if (creature != null)
+            creature.InitializeReactState();
+    }
+
+    public override void Register()
+    {
+        OnEffectApply.Add(new EffectApplyHandler(HandleEffectApply, 0, AuraType.Dummy, AuraEffectHandleModes.Real));
+        OnEffectRemove.Add(new EffectApplyHandler(OnRemove, 0, AuraType.Dummy, AuraEffectHandleModes.Real));
+    }
+}
+
+[Script]
+class spell_gen_feign_death_all_flags_uninteractible : AuraScript
+{
+    void HandleEffectApply(AuraEffect aurEff, AuraEffectHandleModes mode)
+    {
+        Unit target = GetTarget();
+        target.SetUnitFlag3(UnitFlags3.FakeDead);
+        target.SetUnitFlag2(UnitFlags2.FeignDeath);
+        target.SetUnitFlag(UnitFlags.PreventEmotesFromChatText | UnitFlags.ImmuneToPc | UnitFlags.ImmuneToNpc | UnitFlags.Uninteractible);
+
+        Creature creature = target.ToCreature();
+        if (creature != null)
+            creature.SetReactState(ReactStates.Passive);
+    }
+
+    void OnRemove(AuraEffect aurEff, AuraEffectHandleModes mode)
+    {
+        Unit target = GetTarget();
+        target.RemoveUnitFlag3(UnitFlags3.FakeDead);
+        target.RemoveUnitFlag2(UnitFlags2.FeignDeath);
+        target.RemoveUnitFlag(UnitFlags.PreventEmotesFromChatText | UnitFlags.ImmuneToPc | UnitFlags.ImmuneToNpc | UnitFlags.Uninteractible);
 
         Creature creature = target.ToCreature();
         if (creature != null)
