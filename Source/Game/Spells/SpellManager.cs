@@ -3432,9 +3432,11 @@ namespace Game.Entities
             });
 
             ApplySpellFix(new[] {
-                51597, // Summon Scourged Captive
-                56606, // Ride Jokkum
-                61791  // Ride Vehicle (Yogg-Saron)
+                51597,  // Summon Scourged Captive
+                56606,  // Ride Jokkum
+                61791,  // Ride Vehicle (Yogg-Saron)
+                190456, // Warrior - Ignore Pain
+                394352  // Warrior - Shattering Throw
             }, spellInfo =>
             {
                 /// @todo: remove this when basepoints of all Ride Vehicle auras are calculated correctly
@@ -4621,7 +4623,7 @@ namespace Game.Entities
             }
             return false;
         }
-        ProcFlagsSpellType GetSpellTypeMask(AuraType type)
+        public ProcFlagsSpellType GetSpellTypeMask(AuraType type)
         {
             switch (type)
             {
