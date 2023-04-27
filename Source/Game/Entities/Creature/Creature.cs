@@ -294,8 +294,6 @@ namespace Game.Entities
 
             SetObjectScale(GetNativeObjectScale());
 
-            SetHoverHeight(cInfo.HoverHeight);
-
             SetCanDualWield(cInfo.FlagsExtra.HasAnyFlag(CreatureFlagsExtra.UseOffhandAttack));
 
             // checked at loading

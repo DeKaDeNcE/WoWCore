@@ -1885,25 +1885,24 @@ namespace Game
             if (!fields.IsNull(50))
                 creature.Movement.InteractionPauseTimer = fields.Read<uint>(50);
 
-            creature.HoverHeight = fields.Read<float>(51);
-            creature.ModHealth = fields.Read<float>(52);
-            creature.ModHealthExtra = fields.Read<float>(53);
-            creature.ModMana = fields.Read<float>(54);
-            creature.ModManaExtra = fields.Read<float>(55);
-            creature.ModArmor = fields.Read<float>(56);
-            creature.ModDamage = fields.Read<float>(57);
-            creature.ModExperience = fields.Read<float>(58);
-            creature.RacialLeader = fields.Read<bool>(59);
-            creature.MovementId = fields.Read<uint>(60);
-            creature.CreatureDifficultyID = fields.Read<int>(61);
-            creature.WidgetSetID = fields.Read<int>(62);
-            creature.WidgetSetUnitConditionID = fields.Read<int>(63);
-            creature.RegenHealth = fields.Read<bool>(64);
-            creature.MechanicImmuneMask = fields.Read<ulong>(65);
-            creature.SpellSchoolImmuneMask = fields.Read<uint>(66);
-            creature.FlagsExtra = (CreatureFlagsExtra)fields.Read<uint>(67);
-            creature.ScriptID = GetScriptId(fields.Read<string>(68));
-            creature.StringId = fields.Read<string>(69);
+            creature.ModHealth = fields.Read<float>(51);
+            creature.ModHealthExtra = fields.Read<float>(52);
+            creature.ModMana = fields.Read<float>(53);
+            creature.ModManaExtra = fields.Read<float>(54);
+            creature.ModArmor = fields.Read<float>(55);
+            creature.ModDamage = fields.Read<float>(56);
+            creature.ModExperience = fields.Read<float>(57);
+            creature.RacialLeader = fields.Read<bool>(58);
+            creature.MovementId = fields.Read<uint>(59);
+            creature.CreatureDifficultyID = fields.Read<int>(60);
+            creature.WidgetSetID = fields.Read<int>(61);
+            creature.WidgetSetUnitConditionID = fields.Read<int>(62);
+            creature.RegenHealth = fields.Read<bool>(63);
+            creature.MechanicImmuneMask = fields.Read<ulong>(64);
+            creature.SpellSchoolImmuneMask = fields.Read<uint>(65);
+            creature.FlagsExtra = (CreatureFlagsExtra)fields.Read<uint>(66);
+            creature.ScriptID = GetScriptId(fields.Read<string>(67));
+            creature.StringId = fields.Read<string>(68);
 
             creatureTemplateStorage[entry] = creature;
         }
@@ -2926,12 +2925,6 @@ namespace Game
             }
 
             CheckCreatureMovement("creature_template_movement", cInfo.Entry, cInfo.Movement);
-
-            if (cInfo.HoverHeight < 0.0f)
-            {
-                Log.outError(LogFilter.Sql, "Creature (Entry: {0}) has wrong value ({1}) in `HoverHeight`", cInfo.Entry, cInfo.HoverHeight);
-                cInfo.HoverHeight = 1.0f;
-            }
 
             if (cInfo.VehicleId != 0)
             {

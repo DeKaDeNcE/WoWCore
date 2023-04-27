@@ -2918,8 +2918,7 @@ namespace Game.Entities
                     SetUpdateFieldFlagValue(m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.KnownTitles, i / 2), (ulong)((long.Parse(knownTitlesStrings[i])) << (32 * (i % 2))));
             }
 
-            SetObjectScale(1.0f);
-            SetHoverHeight(1.0f);
+            SetObjectScale(SharedConst.DefaultPlayerDisplayScale);
 
             // load achievements before anything else to prevent multiple gains for the same achievement/criteria on every loading (as loading does call UpdateAchievementCriteria)
             m_achievementSys.LoadFromDB(holder.GetResult(PlayerLoginQueryLoad.Achievements), holder.GetResult(PlayerLoginQueryLoad.CriteriaProgress));

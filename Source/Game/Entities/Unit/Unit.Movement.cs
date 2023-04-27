@@ -1410,6 +1410,8 @@ namespace Game.Entities
 
             SetUnitFlag(UnitFlags.Mount);
 
+            CalculateHoverHeight();
+
             Player player = ToPlayer();
             if (player != null)
             {
@@ -1460,6 +1462,8 @@ namespace Game.Entities
             Player thisPlayer = ToPlayer();
             if (thisPlayer != null)
                 thisPlayer.SendMovementSetCollisionHeight(thisPlayer.GetCollisionHeight(), UpdateCollisionHeightReason.Mount);
+
+            CalculateHoverHeight();
 
             // dismount as a vehicle
             if (IsTypeId(TypeId.Player) && GetVehicleKit() != null)
@@ -1687,6 +1691,35 @@ namespace Game.Entities
             data.PlayHoverAnim = enable;
 
             SendMessageToSet(data, true);
+        }
+
+        void CalculateHoverHeight()
+        {
+            float hoverHeight = SharedConst.DefaultPlayerHoverHeight;
+            float displayScale = SharedConst.DefaultPlayerDisplayScale;
+
+            uint displayId = IsMounted() ? GetMountDisplayId() : GetDisplayId();
+
+            // Get DisplayScale for creatures
+            if (IsCreature())
+            {
+                CreatureModel model = ToCreature().GetCreatureTemplate().GetModelWithDisplayId(displayId);
+
+                if (model != null)
+                    displayScale = model.DisplayScale;
+            }
+
+            CreatureDisplayInfoRecord displayInfo = CliDB.CreatureDisplayInfoStorage.LookupByKey(displayId);
+
+            if (displayInfo != null)
+            {
+                CreatureModelDataRecord modelData = CliDB.CreatureModelDataStorage.LookupByKey(displayInfo.ModelID);
+
+                if (modelData != null)
+                    hoverHeight = modelData.HoverHeight * modelData.ModelScale * displayInfo.CreatureModelScale * displayScale;
+            }
+
+            SetHoverHeight(hoverHeight != 0 ? hoverHeight : SharedConst.DefaultPlayerHoverHeight);
         }
 
         public Unit GetUnitBeingMoved() { return m_unitMovedByMe; }
