@@ -32,7 +32,7 @@ namespace Game.Movement
         public float parabolic_amplitude;
         public float vertical_acceleration;
         public float effect_start_time_percent; // fraction of total spline duration
-        public TimeSpan effect_start_time;  // absolute value
+        public TimeSpan effect_start_time; // absolute value
         public uint splineId;
         public float initialOrientation;
         public SpellEffectExtraData spellEffectExtra;
@@ -44,36 +44,32 @@ namespace Game.Movement
         // Returns true to show that the arguments were configured correctly and MoveSpline initialization will succeed.
         public bool Validate(Unit unit)
         {
-            bool CHECK(bool exp, bool verbose)
+            bool CHECK(bool exp, string exps, bool verbose)
             {
                 if (!exp)
                 {
                     if (unit)
-                        Log.outError(LogFilter.Movement, $"MoveSplineInitArgs::Validate: expression '{exp}' failed for {(verbose ? unit.GetDebugInfo() : unit.GetGUID().ToString())}");
+                        Log.outError(LogFilter.Movement, $"MoveSplineInitArgs::Validate: expression '{exps}' failed for {(verbose ? unit.GetDebugInfo() : unit.GetGUID().ToString())}");
                     else
-                        Log.outError(LogFilter.Movement, $"MoveSplineInitArgs::Validate: expression '{exp}' failed for cyclic spline continuation");
+                        Log.outError(LogFilter.Movement, $"MoveSplineInitArgs::Validate: expression '{exps}' failed for cyclic spline continuation");
                     return false;
                 }
                 return true;
             }
 
-            if (!CHECK(path.Count > 1, true))
+            if (!CHECK(path.Count > 1, "path.Count > 1", true))
                 return false;
-            if (!CHECK(velocity >= 0.01f, true))
+            if (!CHECK(velocity >= 0.01f, "velocity >= 0.01f", true))
                 return false;
-            if (!CHECK(effect_start_time_percent >= 0.0f && effect_start_time_percent <= 1.0f, true))
+            if (!CHECK(effect_start_time_percent >= 0.0f && effect_start_time_percent <= 1.0f, "effect_start_time_percent >= 0.0f && effect_start_time_percent <= 1.0f", true))
                 return false;
-            if (!CHECK(_checkPathLengths(), false))
+            if (!CHECK(_checkPathLengths(), "_checkPathLengths()", false))
                 return false;
             if (spellEffectExtra != null)
             {
-                if (!CHECK(spellEffectExtra.ProgressCurveId == 0 || CliDB.CurveStorage.ContainsKey(spellEffectExtra.ProgressCurveId), false))
+                if (!CHECK(spellEffectExtra.ProgressCurveId == 0 || CliDB.CurveStorage.ContainsKey(spellEffectExtra.ProgressCurveId), "ProgressCurveId == 0", false))
                     return false;
-                if (!CHECK(spellEffectExtra.ParabolicCurveId == 0 || CliDB.CurveStorage.ContainsKey(spellEffectExtra.ParabolicCurveId), false))
-                    return false;
-                if (!CHECK(spellEffectExtra.ProgressCurveId == 0 || CliDB.CurveStorage.ContainsKey(spellEffectExtra.ProgressCurveId), true))
-                    return false;
-                if (!CHECK(spellEffectExtra.ParabolicCurveId == 0 || CliDB.CurveStorage.ContainsKey(spellEffectExtra.ParabolicCurveId), true))
+                if (!CHECK(spellEffectExtra.ParabolicCurveId == 0 || CliDB.CurveStorage.ContainsKey(spellEffectExtra.ParabolicCurveId), "ParabolicCurveId == 0", false))
                     return false;
             }
             return true;
