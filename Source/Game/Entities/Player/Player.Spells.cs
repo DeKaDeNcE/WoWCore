@@ -1342,6 +1342,8 @@ namespace Game.Entities
             switch ((SkillType)skillEntry.ParentSkillLineID)
             {
                 case SkillType.Herbalism:
+                case SkillType.Jewelcrafting:
+                case SkillType.Inscription:
                     return UpdateSkillPro(skillId, SkillGainChance(skillValue, grayLevel, greenLevel, yellowLevel) * (int)multiplicator, gatheringSkillGain);
                 case SkillType.Skinning:
                     if (WorldConfig.GetIntValue(WorldCfg.SkillChanceSkinningSteps) == 0)
