@@ -15,15 +15,14 @@ using System.Collections.Generic;
 using Framework.Dynamic;
 using Framework.Constants;
 using Game.AI;
-using Game.Maps;
 using Game.Spells;
 using Game.Groups;
 using Game.Entities;
 using Game.Scripting;
 using Game.DataStorage;
 
-namespace Scripts.Spells.Mage
-{
+namespace Scripts.Spells.Mage;
+
     struct SpellIds
     {
         public const uint AlterTimeAura = 110909;
@@ -1247,4 +1246,3 @@ namespace Scripts.Spells.Mage
             AfterHit.Add(new HitHandler(HandleImprovedFreeze));
         }
     }
-}

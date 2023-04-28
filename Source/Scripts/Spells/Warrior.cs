@@ -2,17 +2,25 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
 using System;
-using System.Collections.Generic;
 using System.Numerics;
+using System.Collections.Generic;
 using Framework.Constants;
 using Game.Spells;
 using Game.Entities;
 using Game.Movement;
 using Game.Scripting;
 
-namespace Scripts.Spells.Warrior
-{
+namespace Scripts.Spells.Warrior;
+
     struct SpellIds
     {
         public const uint BladestormPeriodicWhirlwind = 50622;
@@ -565,4 +573,3 @@ namespace Scripts.Spells.Warrior
             AfterCast.Add(new CastHandler(HandleHeal));
         }
     }
-}

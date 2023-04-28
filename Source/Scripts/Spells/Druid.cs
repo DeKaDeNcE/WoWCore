@@ -12,8 +12,16 @@ using Game.Entities;
 using Game.Scripting;
 using Game.DataStorage;
 
-namespace Scripts.Spells.Druid
-{
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
+namespace Scripts.Spells.Druid;
+
     struct SpellIds
     {
         public const uint BalanceT10Bonus = 70718;
@@ -1519,4 +1527,3 @@ namespace Scripts.Spells.Druid
             OnEffectUpdatePeriodic.Add(new EffectUpdatePeriodicHandler(HandleTickUpdate, 0, AuraType.PeriodicHeal));
         }
     }
-}

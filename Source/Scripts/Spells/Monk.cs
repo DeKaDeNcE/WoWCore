@@ -17,8 +17,8 @@ using Game.Spells;
 using Game.Entities;
 using Game.Scripting;
 
-namespace Scripts.Spells.Monk
-{
+namespace Scripts.Spells.Monk;
+
     struct SpellIds
     {
         public const uint CracklingJadeLightningChannel = 117952;
@@ -656,4 +656,3 @@ namespace Scripts.Spells.Monk
             AfterCast.Add(new CastHandler(AfterCasted));
         }
     }
-}

@@ -2,6 +2,14 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -11,8 +19,8 @@ using Game.Entities;
 using Game.Scripting;
 using Game.Networking.Packets;
 
-namespace Scripts.Spells.DeathKnight
-{
+namespace Scripts.Spells.DeathKnight;
+
     struct SpellIds
     {
         public const uint ArmyFleshBeastTransform = 127533;
@@ -41,8 +49,11 @@ namespace Scripts.Spells.DeathKnight
         public const uint GlyphOfFoulMenagerie = 58642;
         public const uint GlyphOfTheGeist = 58640;
         public const uint GlyphOfTheSkeleton = 146652;
+        public const uint KillingMachineProc = 51124;
         public const uint MarkOfBloodHeal = 206945;
         public const uint NecrosisEffect = 216974;
+        public const uint Obliteration = 281238;
+        public const uint ObliterationRuneEnergize = 281327;
         public const uint RaiseDeadSummon = 52150;
         public const uint RecentlyUsedDeathStrike = 180612;
         public const uint RunicPowerEnergize = 49088;
@@ -640,6 +651,36 @@ namespace Scripts.Spells.DeathKnight
         }
     }
 
+    [Script] // 207256 - Obliteration
+    class spell_dk_obliteration : AuraScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return ValidateSpellInfo(SpellIds.Obliteration, SpellIds.ObliterationRuneEnergize, SpellIds.KillingMachineProc) && Global.SpellMgr.GetSpellInfo(SpellIds.Obliteration, Difficulty.None).GetEffects().Count > 1;
+        }
+
+        void HandleProc(AuraEffect aurEff, ProcEventInfo eventInfo)
+        {
+            Unit target = GetTarget();
+
+            if (target != null)
+            {
+                target.CastSpell(target, SpellIds.KillingMachineProc, new CastSpellExtraArgs(aurEff));
+
+                AuraEffect obliteration = target.GetAuraEffect(SpellIds.Obliteration, 1);
+
+                if (obliteration != null)
+                    if (RandomHelper.randChance(obliteration.GetAmount()))
+                        target.CastSpell(target, SpellIds.ObliterationRuneEnergize, new CastSpellExtraArgs(aurEff));
+            }
+        }
+
+        public override void Register()
+        {
+            AfterEffectProc.Add(new EffectProcHandler(HandleProc, 0, AuraType.Dummy));
+        }
+    };
+
     [Script] // 121916 - Glyph of the Geist (Unholy)
     class spell_dk_pet_geist_transform : SpellScript
     {
@@ -782,4 +823,3 @@ namespace Scripts.Spells.DeathKnight
             DoEffectCalcAmount.Add(new EffectCalcAmountHandler(CalculateAmount, 1, AuraType.ModIncreaseHealth2));
         }
     }
-}

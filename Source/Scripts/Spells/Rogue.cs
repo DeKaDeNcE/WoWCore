@@ -11,18 +11,18 @@
 // ReSharper disable SuggestVarOrType_SimpleTypes
 // ReSharper disable InvertIf
 
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Framework.Dynamic;
 using Framework.Constants;
 using Game.Spells;
 using Game.Entities;
 using Game.Scripting;
 using Game.DataStorage;
-using System;
-using System.Linq;
-using System.Collections.Generic;
 
-namespace Scripts.Spells.Rogue
-{
+namespace Scripts.Spells.Rogue;
+
     public struct SpellIds
     {
         public const uint AdrenalineRush = 13750;
@@ -57,6 +57,7 @@ namespace Scripts.Spells.Rogue
         public const uint SymbolsOfDeathCritAura = 227151;
         public const uint SymbolsOfDeathRank2 = 328077;
         public const uint TrueBearing = 193359;
+        public const uint TurnTheTablesBuff = 198027;
         public const uint Vanish = 1856;
         public const uint VanishAura = 11327;
         public const uint TricksOfTheTrade = 57934;
@@ -890,6 +891,46 @@ namespace Scripts.Spells.Rogue
         }
     }
 
+    [Script] // 198020 - Turn the Tables (PvP Talent)
+    class spell_rog_turn_the_tables : AuraScript
+    {
+        bool CheckForStun(AuraEffect aurEff, ProcEventInfo eventInfo)
+        {
+            return eventInfo.GetProcSpell() && eventInfo.GetProcSpell().GetSpellInfo().HasAura(AuraType.ModStun);
+        }
+
+        public override void Register()
+        {
+            DoCheckEffectProc.Add(new CheckEffectProcHandler(CheckForStun, 0, AuraType.ProcTriggerSpell));
+        }
+    }
+
+    [Script] // 198023 - Turn the Tables (periodic)
+    class spell_rog_turn_the_tables_periodic_check : AuraScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return ValidateSpellInfo(SpellIds.TurnTheTablesBuff);
+        }
+
+        void CheckForStun(AuraEffect aurEff)
+        {
+            Unit target = GetTarget();
+
+            if (target != null && !target.HasAuraType(AuraType.ModStun))
+            {
+                target.CastSpell(target, SpellIds.TurnTheTablesBuff, new CastSpellExtraArgs(aurEff));
+                PreventDefaultAction();
+                Remove();
+            }
+        }
+
+        public override void Register()
+        {
+            OnEffectPeriodic.Add(new EffectPeriodicHandler(CheckForStun, 0, AuraType.PeriodicDummy));
+        }
+    }
+
     [Script] // 1856 - Vanish - SPELL_ROGUE_VANISH
     class spell_rog_vanish : SpellScript
     {
@@ -955,4 +996,3 @@ namespace Scripts.Spells.Rogue
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 1, AuraType.Dummy));
         }
     }
-}

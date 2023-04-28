@@ -17,8 +17,8 @@ using Game.Spells;
 using Game.Entities;
 using Game.Scripting;
 
-namespace Scripts.Spells.Hunter
-{
+namespace Scripts.Spells.Hunter;
+
     struct SpellIds
     {
         public const uint AMurderOfCrowsDamage = 131900;
@@ -528,4 +528,3 @@ namespace Scripts.Spells.Hunter
             OnEffectProc.Add(new EffectProcHandler(HandleProc, 0, AuraType.ProcTriggerSpell));
         }
     }
-}

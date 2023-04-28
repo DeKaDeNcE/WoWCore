@@ -15,13 +15,12 @@ using System.Collections.Generic;
 using Framework.Dynamic;
 using Framework.Constants;
 using Game.AI;
-using Game.Maps;
 using Game.Spells;
 using Game.Entities;
 using Game.Scripting;
 
-namespace Scripts.Spells.Shaman
-{
+namespace Scripts.Spells.Shaman;
+
     struct SpellIds
     {
         public const uint AftershockEnergize = 210712;
@@ -1633,4 +1632,3 @@ namespace Scripts.Spells.Shaman
             }
         }
     }
-}

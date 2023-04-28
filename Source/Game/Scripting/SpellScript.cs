@@ -439,7 +439,7 @@ namespace Game.Scripting
             return m_currentScriptState == (byte)SpellScriptHookType.CheckCast;
         }
 
-        bool IsAfterTargetSelectionPhase()
+        public bool IsAfterTargetSelectionPhase()
         {
             return IsInHitPhase()
                 || IsInEffectHook()
@@ -463,7 +463,7 @@ namespace Game.Scripting
             return false;
         }
 
-        bool IsInModifiableHook()
+        public bool IsInModifiableHook()
         {
             // after hit hook executed after damage/healing is already done
             // modifying it at this point has no effect
@@ -785,7 +785,7 @@ namespace Game.Scripting
             }
             m_spell.m_healing = heal;
         }
-        void PreventHitHeal() { SetHitHeal(0); }
+        public void PreventHitHeal() { SetHitHeal(0); }
         public Spell GetSpell() { return m_spell; }
 
         /// <summary>
@@ -1679,7 +1679,7 @@ namespace Game.Scripting
         // returns owner if it's unit or unit derived object, null otherwise (only for persistent area auras null is returned)
         public Unit GetUnitOwner() { return m_aura.GetUnitOwner(); }
         // returns owner if it's dynobj, null otherwise
-        DynamicObject GetDynobjOwner() { return m_aura.GetDynobjOwner(); }
+        public DynamicObject GetDynobjOwner() { return m_aura.GetDynobjOwner(); }
 
         // removes aura with remove mode (see AuraRemoveMode enum)
         public void Remove(AuraRemoveMode removeMode = 0) { m_aura.Remove(removeMode); }
@@ -1687,39 +1687,39 @@ namespace Game.Scripting
         public Aura GetAura() { return m_aura; }
 
         // returns type of the aura, may be dynobj owned aura or unit owned aura
-        AuraObjectType GetAuraType() { return m_aura.GetAuraType(); }
+        public AuraObjectType GetAuraType() { return m_aura.GetAuraType(); }
 
         // aura duration manipulation - when duration goes to 0 aura is removed
         public int GetDuration() { return m_aura.GetDuration(); }
         public void SetDuration(int duration, bool withMods = false) { m_aura.SetDuration(duration, withMods); }
         // sets duration to maxduration
-        void RefreshDuration() { m_aura.RefreshDuration(); }
-        long GetApplyTime() { return m_aura.GetApplyTime(); }
+        public void RefreshDuration() { m_aura.RefreshDuration(); }
+        public long GetApplyTime() { return m_aura.GetApplyTime(); }
         public int GetMaxDuration() { return m_aura.GetMaxDuration(); }
         public void SetMaxDuration(int duration) { m_aura.SetMaxDuration(duration); }
-        int CalcMaxDuration() { return m_aura.CalcMaxDuration(); }
+        public int CalcMaxDuration() { return m_aura.CalcMaxDuration(); }
         // expired - duration just went to 0
         public bool IsExpired() { return m_aura.IsExpired(); }
         // permament - has infinite duration
-        bool IsPermanent() { return m_aura.IsPermanent(); }
+        public bool IsPermanent() { return m_aura.IsPermanent(); }
 
         // charges manipulation - 0 - not charged aura
-        byte GetCharges() { return m_aura.GetCharges(); }
-        void SetCharges(byte charges) { m_aura.SetCharges(charges); }
-        byte CalcMaxCharges() { return m_aura.CalcMaxCharges(); }
-        bool ModCharges(sbyte num, AuraRemoveMode removeMode = AuraRemoveMode.Default) { return m_aura.ModCharges(num, removeMode); }
+        public byte GetCharges() { return m_aura.GetCharges(); }
+        public void SetCharges(byte charges) { m_aura.SetCharges(charges); }
+        public byte CalcMaxCharges() { return m_aura.CalcMaxCharges(); }
+        public bool ModCharges(sbyte num, AuraRemoveMode removeMode = AuraRemoveMode.Default) { return m_aura.ModCharges(num, removeMode); }
         // returns true if last charge dropped
-        bool DropCharge(AuraRemoveMode removeMode = AuraRemoveMode.Default) { return m_aura.DropCharge(removeMode); }
+        public bool DropCharge(AuraRemoveMode removeMode = AuraRemoveMode.Default) { return m_aura.DropCharge(removeMode); }
 
         // stack amount manipulation
         public byte GetStackAmount() { return m_aura.GetStackAmount(); }
-        void SetStackAmount(byte num) { m_aura.SetStackAmount(num); }
+        public void SetStackAmount(byte num) { m_aura.SetStackAmount(num); }
         public bool ModStackAmount(int num, AuraRemoveMode removeMode = AuraRemoveMode.Default) { return m_aura.ModStackAmount(num, removeMode); }
 
         // passive - "working in background", not saved, not removed by immunities, not seen by player
-        bool IsPassive() { return m_aura.IsPassive(); }
+        public bool IsPassive() { return m_aura.IsPassive(); }
         // death persistent - not removed on death
-        bool IsDeathPersistent() { return m_aura.IsDeathPersistent(); }
+        public bool IsDeathPersistent() { return m_aura.IsDeathPersistent(); }
 
         // check if aura has effect of given effindex
         public bool HasEffect(byte effIndex) { return m_aura.HasEffect(effIndex); }
@@ -1727,7 +1727,7 @@ namespace Game.Scripting
         public AuraEffect GetEffect(byte effIndex) { return m_aura.GetEffect(effIndex); }
 
         // check if aura has effect of given aura type
-        bool HasEffectType(AuraType type)
+        public bool HasEffectType(AuraType type)
         {
             return m_aura.HasEffectType(type);
         }

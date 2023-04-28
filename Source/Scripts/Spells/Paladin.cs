@@ -2,6 +2,14 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
 using System;
 using System.Collections.Generic;
 using Framework.Dynamic;
@@ -12,8 +20,8 @@ using Game.Entities;
 using Game.Scripting;
 using Game.DataStorage;
 
-namespace Scripts.Spells.Paladin
-{
+namespace Scripts.Spells.Paladin;
+
     struct SpellIds
     {
         public const uint ArtOfWarTriggered = 231843;
@@ -431,36 +439,36 @@ namespace Scripts.Spells.Paladin
         {
             Unit caster = GetCaster();
 
-            uint spellId = SpellIds.DivineSteedHuman;
-            switch (caster.GetRace())
-            {
-                case Race.Human:
-                    spellId = SpellIds.DivineSteedHuman;
-                    break;
-                case Race.Dwarf:
-                    spellId = SpellIds.DivineSteedDwarf;
-                    break;
-                case Race.Draenei:
-                    spellId = SpellIds.DivineSteedDraenei;
-                    break;
-                case Race.LightforgedDraenei:
-                    spellId = SpellIds.DivineSteedLfDraenei;
-                    break;
-                case Race.DarkIronDwarf:
-                    spellId = SpellIds.DivineSteedDarkIronDwarf;
-                    break;
-                case Race.BloodElf:
-                    spellId = SpellIds.DivineSteedBloodelf;
-                    break;
-                case Race.Tauren:
-                    spellId = SpellIds.DivineSteedTauren;
-                    break;
-                case Race.ZandalariTroll:
-                    spellId = SpellIds.DivineSteedZandalariTroll;
-                    break;
-                default:
-                    break;
-            }
+                uint spellId = SpellIds.DivineSteedHuman;
+                switch (caster.GetRace())
+                {
+                    case Race.Human:
+                        spellId = SpellIds.DivineSteedHuman;
+                        break;
+                    case Race.Dwarf:
+                        spellId = SpellIds.DivineSteedDwarf;
+                        break;
+                    case Race.Draenei:
+                        spellId = SpellIds.DivineSteedDraenei;
+                        break;
+                    case Race.LightforgedDraenei:
+                        spellId = SpellIds.DivineSteedLfDraenei;
+                        break;
+                    case Race.DarkIronDwarf:
+                        spellId = SpellIds.DivineSteedDarkIronDwarf;
+                        break;
+                    case Race.BloodElf:
+                        spellId = SpellIds.DivineSteedBloodelf;
+                        break;
+                    case Race.Tauren:
+                        spellId = SpellIds.DivineSteedTauren;
+                        break;
+                    case Race.ZandalariTroll:
+                        spellId = SpellIds.DivineSteedZandalariTroll;
+                        break;
+                    default:
+                        break;
+                }
 
             caster.CastSpell(caster, spellId, true);
         }
@@ -1289,4 +1297,3 @@ namespace Scripts.Spells.Paladin
             OnEffectProc.Add(new EffectProcHandler(HandleEffectProc, 0, AuraType.ProcTriggerSpell));
         }
     }
-}

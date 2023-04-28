@@ -275,7 +275,7 @@ namespace Game.Entities
             return mSpellLearnSpells.LookupByKey(spell_id);
         }
 
-        bool IsSpellLearnSpell(uint spell_id)
+        public bool IsSpellLearnSpell(uint spell_id)
         {
             return mSpellLearnSpells.ContainsKey(spell_id);
         }
@@ -310,7 +310,7 @@ namespace Game.Entities
             return false;
         }
 
-        List<int> GetSpellGroupSpellMapBounds(SpellGroup group_id)
+        public List<int> GetSpellGroupSpellMapBounds(SpellGroup group_id)
         {
             return mSpellGroupSpell.LookupByKey(group_id);
         }
@@ -321,7 +321,7 @@ namespace Game.Entities
             GetSetOfSpellsInSpellGroup(group_id, out foundSpells, ref usedGroups);
         }
 
-        void GetSetOfSpellsInSpellGroup(SpellGroup group_id, out List<int> foundSpells, ref List<SpellGroup> usedGroups)
+        public void GetSetOfSpellsInSpellGroup(SpellGroup group_id, out List<int> foundSpells, ref List<SpellGroup> usedGroups)
         {
             foundSpells = new List<int>();
             if (usedGroups.Find(p => p == group_id) == 0)
@@ -644,7 +644,7 @@ namespace Game.Entities
                 callback(spellInfo);
         }
 
-        void UnloadSpellInfoChains()
+        public void UnloadSpellInfoChains()
         {
             foreach (var pair in mSpellChains)
                 foreach (SpellInfo spellInfo in _GetSpellInfo(pair.Key))
@@ -1882,7 +1882,7 @@ namespace Game.Entities
             Log.outInfo(LogFilter.ServerLoading, "Loaded {0} summonable creature templates in {1} ms", countCreature, Time.GetMSTimeDiffToNow(oldMSTime));
         }
 
-        bool LoadPetDefaultSpells_helper(CreatureTemplate cInfo, PetDefaultSpellsEntry petDefSpells)
+        public bool LoadPetDefaultSpells_helper(CreatureTemplate cInfo, PetDefaultSpellsEntry petDefSpells)
         {
             // skip empty list;
             bool have_spell = false;
@@ -2961,7 +2961,7 @@ namespace Game.Entities
             Log.outInfo(LogFilter.ServerLoading, "Loaded SpellInfo custom attributes in {0} ms", Time.GetMSTimeDiffToNow(oldMSTime));
         }
 
-        void ApplySpellFix(int[] spellIds, Action<SpellInfo> fix)
+        public void ApplySpellFix(int[] spellIds, Action<SpellInfo> fix)
         {
             foreach (uint spellId in spellIds)
             {
@@ -2977,7 +2977,7 @@ namespace Game.Entities
             }
         }
 
-        void ApplySpellEffectFix(SpellInfo spellInfo, uint effectIndex, Action<SpellEffectInfo> fix)
+        public void ApplySpellEffectFix(SpellInfo spellInfo, uint effectIndex, Action<SpellEffectInfo> fix)
         {
             if (spellInfo.GetEffects().Count <= effectIndex)
             {
@@ -3052,7 +3052,7 @@ namespace Game.Entities
                 {
                     ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
                     {
-                        spellEffectInfo.TriggerSpell = 23171;
+                        spellEffectInfo.TriggerSpell = 23171; // 23171 Time Stop
                     });
                 });
 
@@ -3061,7 +3061,7 @@ namespace Game.Entities
                 {
                     ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
                     {
-                        spellEffectInfo.TriggerSpell = 29916;
+                        spellEffectInfo.TriggerSpell = 29916; // 29916 Feed Captured Animal
                     });
                 });
 
@@ -3070,7 +3070,7 @@ namespace Game.Entities
                 {
                     ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
                     {
-                        spellEffectInfo.TriggerSpell = 37029;
+                        spellEffectInfo.TriggerSpell = 37029; // 37029 Remote Toy
                     });
                 });
 
@@ -3079,7 +3079,7 @@ namespace Game.Entities
                 {
                     ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
                     {
-                        spellEffectInfo.TriggerSpell = 38530;
+                        spellEffectInfo.TriggerSpell = 38530; // 38530 Quest Credit for Eye of Grillok
                     });
                 });
 
@@ -3088,7 +3088,7 @@ namespace Game.Entities
                 {
                     ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
                     {
-                        spellEffectInfo.TriggerSpell = 39856;
+                        spellEffectInfo.TriggerSpell = 39856; // 39856 Tear of Azzinoth Summon Trigger
                     });
                 });
 
@@ -3097,7 +3097,7 @@ namespace Game.Entities
                 {
                     ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
                     {
-                        spellEffectInfo.TriggerSpell = 46737;
+                        spellEffectInfo.TriggerSpell = 46737; // 46737 Personalized Weather
                         spellEffectInfo.ApplyAuraName = AuraType.PeriodicTriggerSpell;
                     });
                 });
@@ -4048,7 +4048,7 @@ namespace Game.Entities
                 ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
                 {
                     spellEffectInfo.RadiusEntry = CliDB.SpellRadiusStorage.LookupByKey(EffectRadiusIndex.Yards10); // 10yd
-            spellEffectInfo.MiscValue = 190;
+                    spellEffectInfo.MiscValue = 190;
                 });
             });
 
@@ -4342,6 +4342,16 @@ namespace Game.Entities
                 });
             });
 
+            // 265057 Bleeding Crescent (Level 70)
+            ApplySpellFix(new[] { 265057 }, spellInfo =>
+            {
+                ApplySpellEffectFix(spellInfo, 0, spellEffectInfo =>
+                {
+                    // Fix incorrect spell id (it has self in TriggerSpell)
+                    spellEffectInfo.TriggerSpell = 16403; // 16403 Rend (Level 70)
+                });
+            });
+
             // Ray of Frost (Fingers of Frost charges)
             ApplySpellFix(new []{ 269748 }, spellInfo =>
             {
@@ -4543,7 +4553,7 @@ namespace Game.Entities
         }
         #endregion
 
-        bool IsTriggerAura(AuraType type)
+        public bool IsTriggerAura(AuraType type)
         {
             switch (type)
             {
@@ -4598,7 +4608,7 @@ namespace Game.Entities
             }
             return false;
         }
-        bool IsAlwaysTriggeredAura(AuraType type)
+        public bool IsAlwaysTriggeredAura(AuraType type)
         {
             switch (type)
             {
@@ -4866,7 +4876,6 @@ namespace Game.Entities
                 Name.Name[i] = name;
         }
     }
-
 
     public class PetDefaultSpellsEntry
     {

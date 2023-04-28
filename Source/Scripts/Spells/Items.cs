@@ -2,6 +2,14 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedType.Global
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ArrangeTypeMemberModifiers
+// ReSharper disable SuggestVarOrType_SimpleTypes
+// ReSharper disable InvertIf
+
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -14,11 +22,11 @@ using Game.Scripting;
 using Game.DataStorage;
 using Game.BattleGrounds;
 
-namespace Scripts.Spells.Items
-{
+namespace Scripts.Spells.Items;
+
     struct SpellIds
     {
-        //Aegisofpreservation
+        //AegisOfPreservation
         public const uint AegisHeal = 23781;
 
         //ZezzaksShard
@@ -30,16 +38,16 @@ namespace Scripts.Spells.Items
         public const uint BlessingOfLowerCityPriest = 37880;
         public const uint BlessingOfLowerCityShaman = 37881;
 
-        //Alchemiststone
+        // AlchemistStone
         public const uint AlchemistStoneExtraHeal = 21399;
         public const uint AlchemistStoneExtraMana = 21400;
 
-        //Angercapacitor
+        // AngerCapacitor
         public const uint MoteOfAnger = 71432;
         public const uint ManifestAngerMainHand = 71433;
         public const uint ManifestAngerOffHand = 71434;
 
-        //Auraofmadness
+        // AuraOfMadness
         public const uint Sociopath = 39511; // Sociopath: +35 Strength(Paladin; Rogue; Druid; Warrior)
         public const uint Delusional = 40997; // Delusional: +70 Attack Power(Rogue; Hunter; Paladin; Warrior; Druid)
         public const uint Kleptomania = 40998; // Kleptomania: +35 Agility(Warrior; Rogue; Paladin; Hunter; Druid)
@@ -55,13 +63,13 @@ namespace Scripts.Spells.Items
         // BrittleArmor
         public const uint BrittleArmor = 24575;
 
-        //Blessingofancientkings
+        // BlessingOfAncientKings
         public const uint ProtectionOfAncientKings = 64413;
 
-        //Deadlyprecision
+        // DeadlyPrecision
         public const uint DeadlyPrecision = 71564;
 
-        //Deathbringerswill
+        // DeathbringerSwill
         public const uint StrengthOfTheTaunka = 71484; // +600 Strength
         public const uint AgilityOfTheVrykul = 71485; // +600 Agility
         public const uint PowerOfTheTaunka = 71486; // +1200 Attack Power
@@ -73,24 +81,24 @@ namespace Scripts.Spells.Items
         public const uint SpeedOfTheVrykulHero = 71560; // +700 Haste
         public const uint StrengthOfTheTaunkaHero = 71561;  // +700 Strength
 
-        //GoblinBombDispenser
+        // GoblinBombDispenser
         public const uint SummonGoblinBomb = 13258;
         public const uint MalfunctionExplosion = 13261;
 
-        //GoblinWeatherMachine
+        // GoblinWeatherMachine
         public const uint PersonalizedWeather1 = 46740;
         public const uint PersonalizedWeather2 = 46739;
         public const uint PersonalizedWeather3 = 46738;
         public const uint PersonalizedWeather4 = 46736;
 
-        //Defibrillate
+        // Defibrillate
         public const uint GoblinJumperCablesFail = 8338;
         public const uint GoblinJumperCablesXlFail = 23055;
 
-        //Desperatedefense
+        // DesperateDefense
         public const uint DesperateRage = 33898;
 
-        //Deviatefishspells
+        // DeviateFishSpells
         public const uint Sleepy = 8064;
         public const uint Invigorate = 8065;
         public const uint Shrink = 8066;
@@ -98,25 +106,28 @@ namespace Scripts.Spells.Items
         public const uint HealthySpirit = 8068;
         public const uint Rejuvenation = 8070;
 
-        //Discerningeyebeastmisc
+        // DiscerningEyeBeastMisc
         public const uint DiscerningEyeBeast = 59914;
 
-        //Fateruneofunsurpassedvigor
+        // FateRuneOfUnsurpassedVigor
         public const uint UnsurpassedVigor = 25733;
 
-        //Flaskofthenorthspells
+        // FlaskOfTheNorthSpells
         public const uint FlaskOfTheNorthSp = 67016;
         public const uint FlaskOfTheNorthAp = 67017;
         public const uint FlaskOfTheNorthStr = 67018;
 
-        //Frozenshadoweave
+        // FrozenShadoweave
         public const uint Shadowmend = 39373;
 
-        //Gnomishdeathray
+        // GnomishDeathRay
         public const uint GnomishDeathRaySelf = 13493;
         public const uint GnomishDeathRayTarget = 13279;
 
-        //Heartpierce
+        // HarmPreventionBelt
+        public const uint ForcefieldCollapse = 13235;
+
+        // HeartPierce
         public const uint InvigorationMana = 71881;
         public const uint InvigorationEnergy = 71882;
         public const uint InvigorationRage = 71883;
@@ -126,23 +137,23 @@ namespace Scripts.Spells.Items
         public const uint InvigorationEnergyHero = 71887;
         public const uint InvigorationManaHero = 71888;
 
-        //HourglassSand
+        // HourglassSand
         public const uint BroodAfflictionBronze = 23170;
 
-        //Makeawish
+        // MakeAWish
         public const uint MrPinchysBlessing = 33053;
         public const uint SummonMightyMrPinchy = 33057;
         public const uint SummonFuriousMrPinchy = 33059;
         public const uint TinyMagicalCrawdad = 33062;
         public const uint MrPinchysGift = 33064;
 
-        //Markofconquest
+        // MarkOfConquest
         public const uint MarkOfConquestEnergize = 39599;
 
         // MercurialShield
         public const uint MercurialShield = 26464;
 
-        //MingoFortune
+        // MingoFortune
         public const uint CreateFortune1 = 40804;
         public const uint CreateFortune2 = 40805;
         public const uint CreateFortune3 = 40806;
@@ -164,35 +175,35 @@ namespace Scripts.Spells.Items
         public const uint CreateFortune19 = 40922;
         public const uint CreateFortune20 = 40923;
 
-        //Necrotictouch
+        // NecroticTouch
         public const uint ItemNecroticTouchProc = 71879;
 
-        //Netomaticspells
+        // NetOMaticSpells
         public const uint NetOMaticTriggered1 = 16566;
         public const uint NetOMaticTriggered2 = 13119;
         public const uint NetOMaticTriggered3 = 13099;
 
-        //Noggenfoggerelixirspells
+        // NoggenfoggerElixirSpells
         public const uint NoggenfoggerElixirTriggered1 = 16595;
         public const uint NoggenfoggerElixirTriggered2 = 16593;
         public const uint NoggenfoggerElixirTriggered3 = 16591;
 
-        //Persistentshieldmisc
+        // PersistentShieldMisc
         public const uint PersistentShieldTriggered = 26470;
 
-        //Pethealing
+        // PetHealing
         public const uint HealthLink = 37382;
 
-        //PowerCircle
+        // PowerCircle
         public const uint LimitlessPower = 45044;
 
-        //Savorydeviatedelight
+        // SavoryDeviatedDelight
         public const uint FlipOutMale = 8219;
         public const uint FlipOutFemale = 8220;
         public const uint YaaarrrrMale = 8221;
         public const uint YaaarrrrFemale = 8222;
 
-        //Scrollofrecall
+        // ScrollOfRecall
         public const uint ScrollOfRecallI = 48129;
         public const uint ScrollOfRecallII = 60320;
         public const uint ScrollOfRecallIII = 60321;
@@ -211,17 +222,17 @@ namespace Scripts.Spells.Items
         public const uint SoulSplitEvil = 36900;
         public const uint SoulSplitGood = 36901;
 
-        //Shadowsfate
+        // ShadowsFate
         public const uint SoulFeast = 71203;
 
-        //Shadowmourne
+        // Shadowmourne
         public const uint ShadowmourneChaosBaneDamage = 71904;
         public const uint ShadowmourneSoulFragment = 71905;
         public const uint ShadowmourneVisualLow = 72521;
         public const uint ShadowmourneVisualHigh = 72523;
         public const uint ShadowmourneChaosBaneBuff = 73422;
 
-        //Sixdemonbagspells
+        // SixDemonBagSpells
         public const uint Frostbolt = 11538;
         public const uint Polymorph = 14621;
         public const uint SummonFelhoundMinion = 14642;
@@ -229,42 +240,42 @@ namespace Scripts.Spells.Items
         public const uint ChainLightning = 21179;
         public const uint EnvelopingWinds = 25189;
 
-        //Swifthandjusticemisc
+        // SwiftHandOfJusticeMisc
         public const uint SwiftHandOfJusticeHeal = 59913;
 
-        //Underbellyelixirspells
+        // UnderbellyElixirSpells
         public const uint UnderbellyElixirTriggered1 = 59645;
         public const uint UnderbellyElixirTriggered2 = 59831;
         public const uint UnderbellyElixirTriggered3 = 59843;
 
-        //Wormholegeneratorpandariaspell
-        public const uint Wormholepandariaisleofreckoning = 126756;
-        public const uint Wormholepandariakunlaiunderwater = 126757;
-        public const uint Wormholepandariasravess = 126758;
-        public const uint Wormholepandariarikkitunvillage = 126759;
-        public const uint Wormholepandariazanvesstree = 126760;
-        public const uint Wormholepandariaanglerswharf = 126761;
-        public const uint Wormholepandariacranestatue = 126762;
-        public const uint Wormholepandariaemperorsomen = 126763;
-        public const uint Wormholepandariawhitepetallake = 126764;
+        // WormholeGeneratorPandariaSpell
+        public const uint WormholePandariaIsleOfReckoning = 126756;
+        public const uint WormholePandariaKunLaiUnderwater = 126757;
+        public const uint WormholePandariaSravess = 126758;
+        public const uint WormholePandariaRikkitunVillage = 126759;
+        public const uint WormholePandariaZanvessTree = 126760;
+        public const uint WormholePandariaAnglersWharf = 126761;
+        public const uint WormholePandariaCraneStatue = 126762;
+        public const uint WormholePandariaEmperorsOmen = 126763;
+        public const uint WormholePandariaWhitepetalLake = 126764;
 
-        //Airriflespells
+        // AirRifleSpells
         public const uint AirRifleHoldVisual = 65582;
         public const uint AirRifleShoot = 67532;
         public const uint AirRifleShootSelf = 65577;
 
-        //Genericdata
+        // GenericData
         public const uint ArcaniteDragonling = 19804;
         public const uint BattleChicken = 13166;
         public const uint MechanicalDragonling = 4073;
         public const uint MithrilMechanicalDragonling = 12749;
 
-        //Vanquishedclutchesspells
+        // VanquishedClutchesSpells
         public const uint Crusher = 64982;
         public const uint Constrictor = 64983;
         public const uint Corruptor = 64984;
 
-        //Magiceater
+        // MagicEater
         public const uint WildMagic = 58891;
         public const uint WellFed1 = 57288;
         public const uint WellFed2 = 57139;
@@ -272,71 +283,71 @@ namespace Scripts.Spells.Items
         public const uint WellFed4 = 57286;
         public const uint WellFed5 = 57291;
 
-        //Purifyhelboarmeat
+        // PurifyHelboarMeat
         public const uint SummonPurifiedHelboarMeat = 29277;
         public const uint SummonToxicHelboarMeat = 29278;
 
-        //Nighinvulnerability
+        // NighInvulnerability
         public const uint NighInvulnerability = 30456;
         public const uint CompleteVulnerability = 30457;
 
-        //Poultryzer
+        // Poultryizer
         public const uint PoultryizerSuccess = 30501;
         public const uint PoultryizerBackfire = 30504;
 
-        //Socretharsstone
+        // SocretharsStone
         public const uint SocretharToSeat = 35743;
         public const uint SocretharFromSeat = 35744;
 
-        //Demonbroiledsurprise
+        // DemonBroiledSurprise
         public const uint CreateDemonBroiledSurprise = 43753;
 
-        //Completeraptorcapture
+        // CompleteRaptorCapture
         public const uint RaptorCaptureCredit = 42337;
 
-        //Impaleleviroth
+        // ImpaleLeviroth
         public const uint LevirothSelfImpale = 49882;
 
-        //LifegivingGem
+        // LifegivingGem
         public const uint GiftOfLife1 = 23782;
         public const uint GiftOfLife2 = 23783;
 
-        //Nitroboots
+        // NitroBoots
         public const uint NitroBoostsSuccess = 54861;
         public const uint NitroBoostsBackfire = 46014;
         public const uint NitroBoostsParachute = 54649;
 
-        //Teachlanguage
+        // TeachLanguage
         public const uint LearnGnomishBinary = 50242;
         public const uint LearnGoblinBinary = 50246;
 
-        //Rocketboots
+        // RocketBoots
         public const uint RocketBootsProc = 30452;
 
-        //Pygmyoil
+        // PygmyOil
         public const uint PygmyOilPygmyAura = 53806;
         public const uint PygmyOilSmallerAura = 53805;
 
-        //Chickencover
+        // ChickenCover
         public const uint ChickenNet = 51959;
         public const uint CaptureChickenEscape = 51037;
 
-        //Greatmotherssoulcather
+        // GreatMothersSoulcatcher
         public const uint ForceCastSummonGnomeSoul = 46486;
 
-        //Shardofthescale
+        // ShardOfTheScale
         public const uint PurifiedCauterizingHeal = 69733;
         public const uint PurifiedSearingFlames = 69729;
         public const uint ShinyCauterizingHeal = 69734;
         public const uint ShinySearingFlames = 69730;
 
-        //Soulpreserver
+        // SoulPreserver
         public const uint SoulPreserverDruid = 60512;
         public const uint SoulPreserverPaladin = 60513;
         public const uint SoulPreserverPriest = 60514;
         public const uint SoulPreserverShaman = 60515;
 
-        //ExaltedSunwellNeck
+        // ExaltedSunwellNeck
         public const uint LightsWrath = 45479; // Light'S Wrath If Exalted By Aldor
         public const uint ArcaneBolt = 45429; // Arcane Bolt If Exalted By Scryers
 
@@ -349,7 +360,7 @@ namespace Scripts.Spells.Items
         public const uint LightsSalvation = 45478; // Light'S Salvation If Exalted By Aldor
         public const uint ArcaneSurge = 45430; // Arcane Surge If Exalted By Scryers
 
-        //Deathchoicespells
+        // DeathChoiceSpells
         public const uint DeathChoiceNormalAura = 67702;
         public const uint DeathChoiceNormalAgility = 67703;
         public const uint DeathChoiceNormalStrength = 67708;
@@ -357,7 +368,7 @@ namespace Scripts.Spells.Items
         public const uint DeathChoiceHeroicAgility = 67772;
         public const uint DeathChoiceHeroicStrength = 67773;
 
-        //Trinketstackspells
+        // TrinketStackSpells
         public const uint LightningCapacitorAura = 37657;  // Lightning Capacitor
         public const uint LightningCapacitorStack = 37658;
         public const uint LightningCapacitorTrigger = 37661;
@@ -371,38 +382,38 @@ namespace Scripts.Spells.Items
         public const uint Toc25CasterTrinketHeroicStack = 67759;
         public const uint Toc25CasterTrinketHeroicTrigger = 67760;
 
-        //Darkmooncardspells
-        public const uint DarkmoonCardStrenght = 60229;
+        // DarkmoonCardSpells
+        public const uint DarkmoonCardStrength = 60229;
         public const uint DarkmoonCardAgility = 60233;
         public const uint DarkmoonCardIntellect = 60234;
         public const uint DarkmoonCardVersatility = 60235;
 
-        //Manadrainspells
+        // ManaDrainSpells
         public const uint ManaDrainEnergize = 29471;
         public const uint ManaDrainLeech = 27526;
 
-        //Tauntflag
+        // TauntFlag
         public const uint TauntFlag = 51657;
 
-        //MirrensDrinkingHat
+        // MirrensDrinkingHat
         public const uint LochModanLager = 29827;
         public const uint StouthammerLite = 29828;
         public const uint AeriePeakPaleAle = 29829;
 
-        //MindControlCap
+        // MindControlCap
         public const uint GnomishMindControlCap = 13181;
         public const uint Dullard = 67809;
 
-        //UniversalRemote
+        // UniversalRemote
         public const uint ControlMachine = 8345;
         public const uint MobilityMalfunction = 8346;
         public const uint TargetLock = 8347;
 
-        //Zandalariancharms
+        // ZandalarianCharms
         public const uint UnstablePowerAuraStack = 24659;
         public const uint RestlessStrengthAuraStack = 24662;
 
-        // AuraprocRemovespells
+        // AuraProcRemoveSpells
         public const uint TalismanOfAscendance = 28200;
         public const uint JomGabbar = 29602;
         public const uint BattleTrance = 45040;
@@ -413,23 +424,39 @@ namespace Scripts.Spells.Items
         // Eggnog
         public const uint EggNogReindeer = 21936;
         public const uint EggNogSnowman = 21980;
+
+        // AmalgamsSeventhSpine
+        public const uint FragileEchoesMonk             = 225281;
+        public const uint FragileEchoesShaman           = 225292;
+        public const uint FragileEchoesPriestDiscipline = 225294;
+        public const uint FragileEchoesPaladin          = 225297;
+        public const uint FragileEchoesDruid            = 225298;
+        public const uint FragileEchoesPriestHoly       = 225366;
+        public const uint FragileEchoEnergize           = 215270;
+
+        // HighfathersMachination
+        public const uint HighfathersTimekeepingHeal    = 253288;
+
+        // SeepingScourgewing
+        public const uint ShadowStrikeAOECheck          = 255861;
+        public const uint IsolatedStrike                = 255609;
     }
 
     struct TextIds
     {
-        //Auraofmadness
+        // AuraOfMadness
         public const uint SayMadness = 21954;
 
-        //Roll Dice
+        // Roll Dice
         public const uint DecahedralDwarvenDice = 26147;
 
-        //Roll 'dem Bones
+        // Roll 'dem Bones
         public const uint WornTrollDice = 26152;
 
-        //TauntFlag
+        // TauntFlag
         public const uint EmotePlantsFlag = 28008;
 
-        //Feast
+        // Feast
         public const uint GreatFeast = 31843;
         public const uint TextFishFeast = 31844;
         public const uint TextGiganticFeast = 31846;
@@ -439,41 +466,41 @@ namespace Scripts.Spells.Items
 
     struct FactionIds
     {
-        //ExaltedSunwellNeck
+        // ExaltedSunwellNeck
         public const uint Aldor = 932;
         public const uint Scryers = 934;
     }
 
     struct ObjectIds
     {
-        //Crystalprison
+        // CrystalPrison
         public const uint ImprisonedDoomguard = 179644;
     }
 
     struct CreatureIds
     {
-        //Shadowsfate
+        // ShadowsFate
         public const uint Sindragosa = 36853;
 
-        //Giftoftheharvester
+        // GiftOfTheHarvester
         public const uint Ghoul = 28845;
         public const uint MaxGhouls = 5;
 
-        //Sinkholes
+        // Sinkholes
         public const uint SouthSinkhole = 25664;
         public const uint NortheastSinkhole = 25665;
         public const uint NorthwestSinkhole = 25666;
 
-        //Demonbroiledsurprise
+        // DemonBroiledSurprise
         public const uint AbyssalFlamebringer = 19973;
 
-        //Impaleleviroth
+        // ImpaleLeviroth
         public const uint Leviroth = 26452;
     }
 
     struct ItemIds
     {
-        //Createheartcandy
+        // CreateHeartCandy
         public const uint HeartCandy1 = 21818;
         public const uint HeartCandy2 = 21817;
         public const uint HeartCandy3 = 21821;
@@ -486,17 +513,17 @@ namespace Scripts.Spells.Items
 
     struct QuestIds
     {
-        //Demonbroiledsurprise
+        // DemonBroiledSurprise
         public const uint SuperHotStew = 11379;
 
-        //Chickencover
+        // ChickenCover
         public const uint ChickenParty = 12702;
         public const uint FlownTheCoop = 12532;
     }
 
     struct SoundIds
     {
-        //Ashbringersounds
+        // AshbringerSounds
         public const uint Ashbringer1 = 8906;                             // "I Was Pure Once"
         public const uint Ashbringer2 = 8907;                             // "Fought For Righteousness"
         public const uint Ashbringer3 = 8908;                             // "I Was Once Called Ashbringer"
@@ -506,9 +533,9 @@ namespace Scripts.Spells.Items
         public const uint Ashbringer7 = 8923;                             // "My Son Watched Me Die"
         public const uint Ashbringer8 = 8924;                             // "Crusades Fed His Rage"
         public const uint Ashbringer9 = 8925;                             // "Truth Is Unknown To Him"
-        public const uint Ashbringer10 = 8926;                             // "Scarlet Crusade  Is Pure No Longer"
-        public const uint Ashbringer11 = 8927;                             // "Balnazzar'S Crusade Corrupted My Son"
-        public const uint Ashbringer12 = 8928;                             // "Kill Them All!"
+        public const uint Ashbringer10 = 8926;                            // "Scarlet Crusade  Is Pure No Longer"
+        public const uint Ashbringer11 = 8927;                            // "Balnazzar's Crusade Corrupted My Son"
+        public const uint Ashbringer12 = 8928;                            // "Kill Them All!"
     }
 
     struct ModelIds
@@ -772,39 +799,44 @@ namespace Scripts.Spells.Items
     {
         public override bool Validate(SpellInfo spellInfo)
         {
-            return CliDB.BroadcastTextStorage.ContainsKey(TextIds.SayMadness) && ValidateSpellInfo(SpellIds.Sociopath, SpellIds.Delusional, SpellIds.Kleptomania,
-                SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia);
+            return CliDB.BroadcastTextStorage.ContainsKey(TextIds.SayMadness) && ValidateSpellInfo(SpellIds.Sociopath, SpellIds.Delusional, SpellIds.Kleptomania, SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia);
         }
 
         void HandleProc(AuraEffect aurEff, ProcEventInfo eventInfo)
         {
             uint[][] triggeredSpells =
             {
-                    //CLASS_NONE
-                    Array.Empty<uint>(),
-                    //CLASS_WARRIOR
-                    new uint[] {SpellIds.Sociopath, SpellIds.Delusional, SpellIds.Kleptomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.MartyrComplex },
-                    //CLASS_PALADIN
-                    new uint[] {SpellIds.Sociopath, SpellIds.Delusional, SpellIds.Kleptomania, SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia },
-                    //CLASS_HUNTER
-                    new uint[] {SpellIds.Delusional, SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia },
-                    //CLASS_ROGUE
-                    new uint[] {SpellIds.Sociopath, SpellIds.Delusional, SpellIds.Kleptomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.MartyrComplex },
-                    //CLASS_PRIEST
-                    new uint[] {SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia },
-                    //CLASS_DEATH_KNIGHT
-                    new uint[] {SpellIds.Sociopath, SpellIds.Delusional, SpellIds.Kleptomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.MartyrComplex },
-                    //CLASS_SHAMAN
-                    new uint[] {SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia },
-                    //CLASS_MAGE
-                    new uint[] {SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia },
-                    //CLASS_WARLOCK
-                    new uint[] {SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia },
-                    //CLASS_UNK
-                    Array.Empty<uint>(),
-                    //CLASS_DRUID
-                    new uint[] {SpellIds.Sociopath, SpellIds.Delusional, SpellIds.Kleptomania, SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia }
-                };
+                //0 CLASS_NONE
+                Array.Empty<uint>(),
+                //1 CLASS_WARRIOR
+                new uint[] {SpellIds.Sociopath, SpellIds.Delusional, SpellIds.Kleptomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.MartyrComplex },
+                //2 CLASS_PALADIN
+                new uint[] {SpellIds.Sociopath, SpellIds.Delusional, SpellIds.Kleptomania, SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia },
+                //3 CLASS_HUNTER
+                new uint[] {SpellIds.Delusional, SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia },
+                //4 CLASS_ROGUE
+                new uint[] {SpellIds.Sociopath, SpellIds.Delusional, SpellIds.Kleptomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.MartyrComplex },
+                //5 CLASS_PRIEST
+                new uint[] {SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia },
+                //6 CLASS_DEATH_KNIGHT
+                new uint[] {SpellIds.Sociopath, SpellIds.Delusional, SpellIds.Kleptomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.MartyrComplex },
+                //7 CLASS_SHAMAN
+                new uint[] {SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia },
+                //8 CLASS_MAGE
+                new uint[] {SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia },
+                //9 CLASS_WARLOCK
+                new uint[] {SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia },
+                //10 CLASS_MONK
+                Array.Empty<uint>(),
+                //11 CLASS_DRUID
+                new uint[] {SpellIds.Sociopath, SpellIds.Delusional, SpellIds.Kleptomania, SpellIds.Megalomania, SpellIds.Paranoia, SpellIds.Manic, SpellIds.Narcissism, SpellIds.MartyrComplex, SpellIds.Dementia },
+                //12 CLASS_DEMON_HUNTER
+                Array.Empty<uint>(),
+                //13 CLASS_EVOKER
+                Array.Empty<uint>(),
+                //14 CLASS_ADVENTURER
+                Array.Empty<uint>(),
+            };
 
             PreventDefaultAction();
             Unit caster = eventInfo.GetActor();
@@ -885,7 +917,7 @@ namespace Scripts.Spells.Items
             AuraEffect protEff = eventInfo.GetProcTarget().GetAuraEffect(SpellIds.ProtectionOfAncientKings, 0, eventInfo.GetActor().GetGUID());
             if (protEff != null)
             {
-                // The shield can grow to a maximum size of 20,000 damage absorbtion
+                // The shield can grow to a maximum size of 20,000 damage absorption
                 protEff.SetAmount(Math.Min(protEff.GetAmount() + absorb, 20000));
 
                 // Refresh and return to prevent replacing the aura
@@ -1488,6 +1520,26 @@ namespace Scripts.Spells.Items
         public override void Register()
         {
             OnEffectHitTarget.Add(new EffectHandler(HandleDummy, 0, SpellEffectName.Dummy));
+        }
+    }
+
+    // Item 10721: Gnomish Harm Prevention Belt
+    [Script] // 13234 - Harm Prevention Belt
+    class spell_item_harm_prevention_belt : AuraScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return ValidateSpellInfo(SpellIds.ForcefieldCollapse);
+        }
+
+        void HandleProc(ProcEventInfo procInfo)
+        {
+            GetTarget().CastSpell(null, SpellIds.ForcefieldCollapse, true);
+        }
+
+        public override void Register()
+        {
+            OnProc.Add(new AuraProcHandler(HandleProc));
         }
     }
 
@@ -2436,17 +2488,17 @@ namespace Scripts.Spells.Items
     [Script] // 126755 - Wormhole: Pandaria
     class spell_item_wormhole_pandaria : SpellScript
     {
-        uint[] WormholeTargetLocations =
+        readonly uint[] WormholeTargetLocations =
         {
-            SpellIds.Wormholepandariaisleofreckoning,
-            SpellIds. Wormholepandariakunlaiunderwater,
-            SpellIds.Wormholepandariasravess,
-            SpellIds.Wormholepandariarikkitunvillage,
-            SpellIds.Wormholepandariazanvesstree,
-            SpellIds.Wormholepandariaanglerswharf,
-            SpellIds.Wormholepandariacranestatue,
-            SpellIds.Wormholepandariaemperorsomen,
-            SpellIds.Wormholepandariawhitepetallake
+            SpellIds.WormholePandariaIsleOfReckoning,
+            SpellIds.WormholePandariaKunLaiUnderwater,
+            SpellIds.WormholePandariaSravess,
+            SpellIds.WormholePandariaRikkitunVillage,
+            SpellIds.WormholePandariaZanvessTree,
+            SpellIds.WormholePandariaAnglersWharf,
+            SpellIds.WormholePandariaCraneStatue,
+            SpellIds.WormholePandariaEmperorsOmen,
+            SpellIds.WormholePandariaWhitepetalLake
         };
 
         public override bool Validate(SpellInfo spellInfo)
@@ -3422,7 +3474,7 @@ namespace Scripts.Spells.Items
     {
         public override bool Validate(SpellInfo spellInfo)
         {
-            return ValidateSpellInfo(SpellIds.DarkmoonCardStrenght, SpellIds.DarkmoonCardAgility, SpellIds.DarkmoonCardIntellect, SpellIds.DarkmoonCardVersatility);
+            return ValidateSpellInfo(SpellIds.DarkmoonCardStrength, SpellIds.DarkmoonCardAgility, SpellIds.DarkmoonCardIntellect, SpellIds.DarkmoonCardVersatility);
         }
 
         void HandleProc(AuraEffect aurEff, ProcEventInfo eventInfo)
@@ -3436,11 +3488,11 @@ namespace Scripts.Spells.Items
             float vers = 0.0f; // caster.GetStat(STAT_VERSATILITY);
             float stat = 0.0f;
 
-            uint spellTrigger = SpellIds.DarkmoonCardStrenght;
+            uint spellTrigger = SpellIds.DarkmoonCardStrength;
 
             if (str > stat)
             {
-                spellTrigger = SpellIds.DarkmoonCardStrenght;
+                spellTrigger = SpellIds.DarkmoonCardStrength;
                 stat = str;
             }
 
@@ -3972,7 +4024,8 @@ namespace Scripts.Spells.Items
         void HandleScript(uint effIndex)
         {
             if (RandomHelper.randChance(40))
-                GetCaster().CastSpell(GetHitUnit(), RandomHelper.randChance(50) ? SpellIds.EggNogReindeer : SpellIds.EggNogSnowman, GetCastItem());
+                GetCaster().CastSpell(GetHitUnit(),
+                    RandomHelper.randChance(50) ? SpellIds.EggNogReindeer : SpellIds.EggNogSnowman, GetCastItem());
         }
 
         public override void Register()
@@ -3981,24 +4034,12 @@ namespace Scripts.Spells.Items
         }
     }
 
-    enum AmalgamsSeventhSpineSpellIds
-    {
-        FragileEchoesMonk = 225281,
-        FragileEchoesShaman = 225292,
-        FragileEchoesPriestDiscipline = 225294,
-        FragileEchoesPaladin = 225297,
-        FragileEchoesDruid = 225298,
-        FragileEchoesPriestHoly = 225366,
-        FragileEchoEnergize = 215270,
-    }
-
-    [Script] // 215266
+    [Script] // 215266 - Fragile Echoes
     class spell_item_amalgams_seventh_spine : AuraScript
     {
         public override bool Validate(SpellInfo spellInfo)
         {
-            return ValidateSpellInfo((uint)AmalgamsSeventhSpineSpellIds.FragileEchoesMonk, (uint)AmalgamsSeventhSpineSpellIds.FragileEchoesShaman, (uint)AmalgamsSeventhSpineSpellIds.FragileEchoesPriestDiscipline,
-                (uint)AmalgamsSeventhSpineSpellIds.FragileEchoesPaladin, (uint)AmalgamsSeventhSpineSpellIds.FragileEchoesDruid, (uint)AmalgamsSeventhSpineSpellIds.FragileEchoesPriestHoly);
+            return ValidateSpellInfo(SpellIds.FragileEchoesMonk, SpellIds.FragileEchoesShaman, SpellIds.FragileEchoesPriestDiscipline, SpellIds.FragileEchoesPaladin, SpellIds.FragileEchoesDruid, SpellIds.FragileEchoesPriestHoly);
         }
 
         void ForcePeriodic(AuraEffect aurEff, ref bool isPeriodic, ref int amplitude)
@@ -4008,40 +4049,39 @@ namespace Scripts.Spells.Items
             amplitude = 5000;
         }
 
+        void updateAuraIfInCorrectSpec(Player target, AuraEffect aurEff, TalentSpecialization spec, uint aura)
+        {
+            if (target.GetPrimarySpecialization() != (uint)spec)
+                target.RemoveAurasDueToSpell(aura);
+            else if (!target.HasAura(aura))
+                target.CastSpell(target, aura, new CastSpellExtraArgs(aurEff));
+        }
+
         void UpdateSpecAura(AuraEffect aurEff)
         {
             PreventDefaultAction();
             Player target = GetTarget().ToPlayer();
+
             if (!target)
                 return;
-
-            void updateAuraIfInCorrectSpec(TalentSpecialization spec, AmalgamsSeventhSpineSpellIds aura)
-            {
-                if (target.GetPrimarySpecialization() != (uint)spec)
-                    target.RemoveAurasDueToSpell((uint)aura);
-                else if (!target.HasAura((uint)aura))
-                    target.CastSpell(target, (uint)aura, new CastSpellExtraArgs(aurEff));
-            };
 
             switch (target.GetClass())
             {
                 case Class.Monk:
-                    updateAuraIfInCorrectSpec(TalentSpecialization.MonkMistweaver, AmalgamsSeventhSpineSpellIds.FragileEchoesMonk);
+                    updateAuraIfInCorrectSpec(target, aurEff, TalentSpecialization.MonkMistweaver, SpellIds.FragileEchoesMonk);
                     break;
                 case Class.Shaman:
-                    updateAuraIfInCorrectSpec(TalentSpecialization.ShamanRestoration, AmalgamsSeventhSpineSpellIds.FragileEchoesShaman);
+                    updateAuraIfInCorrectSpec(target, aurEff, TalentSpecialization.ShamanRestoration, SpellIds.FragileEchoesShaman);
                     break;
                 case Class.Priest:
-                    updateAuraIfInCorrectSpec(TalentSpecialization.PriestDiscipline, AmalgamsSeventhSpineSpellIds.FragileEchoesPriestDiscipline);
-                    updateAuraIfInCorrectSpec(TalentSpecialization.PriestHoly, AmalgamsSeventhSpineSpellIds.FragileEchoesPriestHoly);
+                    updateAuraIfInCorrectSpec(target, aurEff, TalentSpecialization.PriestDiscipline, SpellIds.FragileEchoesPriestDiscipline);
+                    updateAuraIfInCorrectSpec(target, aurEff, TalentSpecialization.PriestHoly, SpellIds.FragileEchoesPriestHoly);
                     break;
                 case Class.Paladin:
-                    updateAuraIfInCorrectSpec(TalentSpecialization.PaladinHoly, AmalgamsSeventhSpineSpellIds.FragileEchoesPaladin);
+                    updateAuraIfInCorrectSpec(target, aurEff, TalentSpecialization.PaladinHoly, SpellIds.FragileEchoesPaladin);
                     break;
                 case Class.Druid:
-                    updateAuraIfInCorrectSpec(TalentSpecialization.DruidRestoration, AmalgamsSeventhSpineSpellIds.FragileEchoesDruid);
-                    break;
-                default:
+                    updateAuraIfInCorrectSpec(target, aurEff, TalentSpecialization.DruidRestoration, SpellIds.FragileEchoesDruid);
                     break;
             }
         }
@@ -4053,12 +4093,12 @@ namespace Scripts.Spells.Items
         }
     }
 
-    [Script] // 215267
+    [Script] // 215267 - Fragile Echo
     class spell_item_amalgams_seventh_spine_mana_restore : AuraScript
     {
         public override bool Validate(SpellInfo spellInfo)
         {
-            return ValidateSpellInfo((uint)AmalgamsSeventhSpineSpellIds.FragileEchoEnergize);
+            return ValidateSpellInfo(SpellIds.FragileEchoEnergize);
         }
 
         void TriggerManaRestoration(AuraEffect aurEff, AuraEffectHandleModes mode)
@@ -4067,12 +4107,14 @@ namespace Scripts.Spells.Items
                 return;
 
             Unit caster = GetCaster();
+
             if (!caster)
                 return;
 
             AuraEffect trinketEffect = caster.GetAuraEffect(aurEff.GetSpellEffectInfo().TriggerSpell, 0);
+
             if (trinketEffect != null)
-                caster.CastSpell(caster, (uint)AmalgamsSeventhSpineSpellIds.FragileEchoEnergize, new CastSpellExtraArgs(aurEff).AddSpellMod(SpellValueMod.BasePoint0, trinketEffect.GetAmount()));
+                caster.CastSpell(caster, SpellIds.FragileEchoEnergize, new CastSpellExtraArgs(aurEff).AddSpellBP0(trinketEffect.GetAmount()));
         }
 
         public override void Register()
@@ -4080,4 +4122,142 @@ namespace Scripts.Spells.Items
             AfterEffectRemove.Add(new EffectApplyHandler(TriggerManaRestoration, 1, AuraType.Dummy, AuraEffectHandleModes.Real));
         }
     }
-}
+
+    [Script] // 228445 - March of the Legion
+    class spell_item_set_march_of_the_legion : AuraScript
+    {
+        bool IsDemon(AuraEffect aurEff, ProcEventInfo eventInfo)
+        {
+            return eventInfo.GetProcTarget() && eventInfo.GetProcTarget().GetCreatureType() == CreatureType.Demon;
+        }
+
+        public override void Register()
+        {
+            DoCheckEffectProc.Add(new CheckEffectProcHandler(IsDemon, 0, AuraType.ProcTriggerSpell));
+        }
+    }
+
+    [Script] // 234113 - Arrogance (used by item 142171 - Seal of Darkshire Nobility)
+    class spell_item_seal_of_darkshire_nobility : AuraScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return spellInfo.GetEffects().Count > 1 && ValidateSpellInfo(spellInfo.GetEffect(1).TriggerSpell);
+        }
+
+        bool CheckCooldownAura(ProcEventInfo eventInfo)
+        {
+            return eventInfo.GetProcTarget() && !eventInfo.GetProcTarget().HasAura(GetEffectInfo(1).TriggerSpell, GetTarget().GetGUID());
+        }
+
+        public override void Register()
+        {
+            DoCheckProc.Add(new CheckProcHandler(CheckCooldownAura));
+        }
+    }
+
+    [Script] // 247625 - Lightblood Elixir
+    class spell_item_lightblood_elixir : AuraScript
+    {
+        bool IsDemon(AuraEffect aurEff, ProcEventInfo eventInfo)
+        {
+            return eventInfo.GetProcTarget() && eventInfo.GetProcTarget().GetCreatureType() == CreatureType.Demon;
+        }
+
+        public override void Register()
+        {
+            DoCheckEffectProc.Add(new CheckEffectProcHandler(IsDemon, 0, AuraType.ProcTriggerSpell));
+        }
+    }
+
+    [Script] // 253287 - Highfather's Timekeeping
+    class spell_item_highfathers_machination : AuraScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return ValidateSpellInfo(SpellIds.HighfathersTimekeepingHeal);
+        }
+
+        bool CheckHealth(AuraEffect aurEff, ProcEventInfo eventInfo)
+        {
+            return eventInfo.GetDamageInfo() != null && GetTarget().HealthBelowPctDamaged(aurEff.GetAmount(), eventInfo.GetDamageInfo().GetDamage());
+        }
+
+        void Heal(AuraEffect aurEff, ProcEventInfo eventInfo)
+        {
+            PreventDefaultAction();
+
+            Unit caster = GetCaster();
+
+            if (caster != null)
+                caster.CastSpell(GetTarget(), SpellIds.HighfathersTimekeepingHeal, new CastSpellExtraArgs(aurEff));
+        }
+
+        public override void Register()
+        {
+            DoCheckEffectProc.Add(new CheckEffectProcHandler(CheckHealth, 0, AuraType.Dummy));
+            OnEffectProc.Add(new EffectProcHandler(Heal, 0, AuraType.Dummy));
+        }
+    }
+
+    [Script] // 253323 - Shadow Strike
+    class spell_item_seeping_scourgewing : AuraScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return ValidateSpellInfo(SpellIds.ShadowStrikeAOECheck);
+        }
+
+        void TriggerIsolatedStrikeCheck(AuraEffect aurEff, ProcEventInfo eventInfo)
+        {
+            GetTarget().CastSpell(eventInfo.GetProcTarget(), SpellIds.ShadowStrikeAOECheck, new CastSpellExtraArgs(aurEff).SetTriggeringSpell(eventInfo.GetProcSpell()));
+        }
+
+        public override void Register()
+        {
+            AfterEffectProc.Add(new EffectProcHandler(TriggerIsolatedStrikeCheck, 0, AuraType.ProcTriggerSpell));
+        }
+    }
+
+    [Script] // 255861 - Shadow Strike
+    class spell_item_seeping_scourgewing_aoe_check : SpellScript
+    {
+        void TriggerAdditionalDamage()
+        {
+            if (GetUnitTargetCountForEffect(0) > 1)
+                return;
+
+            CastSpellExtraArgs args = new();
+            args.TriggerFlags = TriggerCastFlags.FullMask;
+            args.OriginalCastId = GetSpell().m_originalCastId;
+
+            if (GetSpell().m_castItemLevel >= 0)
+                args.OriginalCastItemLevel = GetSpell().m_castItemLevel;
+
+            GetCaster().CastSpell(GetHitUnit(), SpellIds.IsolatedStrike, args);
+        }
+
+        public override void Register()
+        {
+            AfterHit.Add(new HitHandler(TriggerAdditionalDamage));
+        }
+    }
+
+    [Script] // 295175 - Spiteful Binding
+    class spell_item_grips_of_forsaken_sanity : AuraScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return spellInfo.GetEffects().Count > 1;
+        }
+
+        bool CheckHealth(AuraEffect aurEff, ProcEventInfo eventInfo)
+        {
+            return eventInfo.GetActor().GetHealthPct() >= GetEffectInfo(1).CalcValue();
+        }
+
+        public override void Register()
+        {
+            DoCheckEffectProc.Add(new CheckEffectProcHandler(CheckHealth, 0, AuraType.ProcTriggerSpell));
+        }
+    }
