@@ -71,6 +71,8 @@ namespace Scripts.Spells.Warrior;
         public const uint ShieldBlock = 2565;
         public const uint LastStand = 12975;
         public const uint Bolster = 280001;
+        public const uint Devastator = 236282;
+        public const uint ShieldSlam = 23922;
     }
 
     struct Misc
@@ -826,5 +828,26 @@ namespace Scripts.Spells.Warrior;
         public override void Register()
         {
             AfterEffectApply.Add(new EffectApplyHandler(AfterApply, 0, AuraType.ModIncreaseHealthPercent, AuraEffectHandleModes.Real));
+        }
+    }
+
+    [Script] // 236279 Devastator
+    // 236282 Devastator
+    class spell_warr_devastator : AuraScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return ValidateSpellInfo(SpellIds.ShieldSlam);
+        }
+
+        void HandleOnProc(AuraEffect aurEff, ProcEventInfo eventInfo)
+        {
+            if (RandomHelper.randChance(GetSpellInfo().GetEffect(1).CalcValue()))
+                eventInfo.GetActor().GetSpellHistory().ResetCooldown(SpellIds.ShieldSlam, true);
+        }
+
+        public override void Register()
+        {
+            OnEffectProc.Add(new EffectProcHandler(HandleOnProc, 0, AuraType.ProcTriggerSpell));
         }
     }
