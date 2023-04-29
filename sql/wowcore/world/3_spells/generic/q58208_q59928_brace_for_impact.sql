@@ -1,0 +1,1 @@
+﻿UPDATE `quest_template_addon` SET `ScriptName` = 'quest_brace_for_impact' WHERE `ID` IN (58208, 59928);
