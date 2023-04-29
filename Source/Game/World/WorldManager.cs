@@ -1106,9 +1106,6 @@ namespace Game
             Log.outInfo(LogFilter.ServerLoading, "Loading character templates...");
             Global.CharacterTemplateDataStorage.LoadCharacterTemplates();
 
-            Log.outInfo(LogFilter.ServerLoading, "Loading realm names...");
-            Global.ObjectMgr.LoadRealmNames();
-
             Log.outInfo(LogFilter.ServerLoading, "Loading battle pets info...");
             BattlePetMgr.Initialize();
 

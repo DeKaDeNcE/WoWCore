@@ -140,6 +140,18 @@ public class RealmManager : Singleton<RealmManager>
         return _realms.LookupByKey(id);
     }
 
+    public bool GetRealmNames(uint realmId, ref string name, ref string normalizedName)
+    {
+        var realm = _realms.LookupByKey(realmId);
+        if (realm != null)
+        {
+            name = realm.Name;
+            normalizedName = realm.NormalizedName;
+            return true;
+        }
+        return false;
+    }
+
     public RealmBuildInfo GetBuildInfo(uint build)
     {
         foreach (var clientBuild in _builds)
