@@ -737,16 +737,27 @@ namespace Scripts.Spells.Mage;
 
             int index = _orderedTargets.IndexOf(target.GetGUID());
 
-            if (index == 0 // only primary target triggers these benefits
-                && target.HasAuraState(AuraStateType.Frozen, GetSpellInfo(), caster))
+            // only primary target triggers these benefits
+            if (index == 0 && target.HasAuraState(AuraStateType.Frozen, GetSpellInfo(), caster))
             {
                 // Thermal Void
                 Aura thermalVoid = caster.GetAura(SpellIds.ThermalVoid);
-                if (!thermalVoid.GetSpellInfo().GetEffects().Empty())
+
+                if (thermalVoid != null)
                 {
-                    Aura icyVeins = caster.GetAura(SpellIds.IcyVeins);
-                    if (icyVeins != null)
-                        icyVeins.SetDuration(icyVeins.GetDuration() + thermalVoid.GetSpellInfo().GetEffect(0).CalcValue(caster) * Time.InMilliseconds);
+                    if (thermalVoid.GetSpellInfo() != null)
+                    {
+                        if (thermalVoid.GetSpellInfo().GetEffects() != null)
+                        {
+                            if (!thermalVoid.GetSpellInfo().GetEffects().Empty())
+                            {
+                                Aura icyVeins = caster.GetAura(SpellIds.IcyVeins);
+
+                                if (icyVeins != null)
+                                    icyVeins.SetDuration(icyVeins.GetDuration() + thermalVoid.GetSpellInfo().GetEffect(0).CalcValue(caster) * Time.InMilliseconds);
+                            }
+                        }
+                    }
                 }
 
                 // Chain Reaction
