@@ -2226,24 +2226,38 @@ namespace Game.Entities
             Player targetPlayerOwner = target.GetAffectingPlayer();
 
             // check forced reputation to support SPELL_AURA_FORCE_REACTION
-            if (selfPlayerOwner)
+            if (selfPlayerOwner != null)
             {
                 var targetFactionTemplateEntry = target.GetFactionTemplateEntry();
+
                 if (targetFactionTemplateEntry != null)
                 {
-                    var repRank = selfPlayerOwner.GetReputationMgr().GetForcedRankIfAny(targetFactionTemplateEntry);
-                    if (repRank != ReputationRank.None)
-                        return repRank;
+                    var repMgr = selfPlayerOwner.GetReputationMgr();
+
+                    if (repMgr != null)
+                    {
+                        var repRank = repMgr.GetForcedRankIfAny(targetFactionTemplateEntry);
+
+                        if (repRank != ReputationRank.None)
+                            return repRank;
+                    }
                 }
             }
-            else if (targetPlayerOwner)
+            else if (targetPlayerOwner != null)
             {
                 var selfFactionTemplateEntry = GetFactionTemplateEntry();
+
                 if (selfFactionTemplateEntry != null)
                 {
-                    ReputationRank repRank = targetPlayerOwner.GetReputationMgr().GetForcedRankIfAny(selfFactionTemplateEntry);
-                    if (repRank != ReputationRank.None)
-                        return repRank;
+                    var repMgr = targetPlayerOwner.GetReputationMgr();
+
+                    if (repMgr != null)
+                    {
+                        var repRank = repMgr.GetForcedRankIfAny(selfFactionTemplateEntry);
+
+                        if (repRank != ReputationRank.None)
+                            return repRank;
+                    }
                 }
             }
 
