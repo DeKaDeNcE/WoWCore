@@ -69,6 +69,8 @@ namespace Scripts.Spells.Warrior;
         public const uint BoundingStride = 202163;
         public const uint BoundingStrideSpeed = 202164;
         public const uint ShieldBlock = 2565;
+        public const uint LastStand = 12975;
+        public const uint Bolster = 280001;
     }
 
     struct Misc
@@ -788,5 +790,41 @@ namespace Scripts.Spells.Warrior;
         public override void Register()
         {
             AfterCast.Add(new CastHandler(HandleHeal));
+        }
+    }
+
+    [Script] // 12975 - Last Stand
+    // 280001 Bolster
+    class spell_warr_last_stand : AuraScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return ValidateSpellInfo(SpellIds.Bolster, SpellIds.ShieldBlockAura);
+        }
+
+        void AfterApply(AuraEffect aurEff, AuraEffectHandleModes mode)
+        {
+            Unit caster = GetCaster();
+
+            if (caster != null && caster.HasAura(SpellIds.Bolster))
+            {
+                Aura lastStandAura = aurEff.GetBase();
+
+                if (lastStandAura != null)
+                {
+                    Aura shieldBlockAura = caster.AddAura(SpellIds.ShieldBlockAura, caster);
+
+                    if (shieldBlockAura != null)
+                    {
+                        shieldBlockAura.SetMaxDuration(lastStandAura.GetMaxDuration());
+                        shieldBlockAura.SetDuration(lastStandAura.GetDuration());
+                    }
+                }
+            }
+        }
+
+        public override void Register()
+        {
+            AfterEffectApply.Add(new EffectApplyHandler(AfterApply, 0, AuraType.ModIncreaseHealthPercent, AuraEffectHandleModes.Real));
         }
     }
