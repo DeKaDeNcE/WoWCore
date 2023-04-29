@@ -61,6 +61,8 @@ namespace Scripts.Spells.Warrior;
         public const uint HeroicLeapJumpDamage = 52174;
         public const uint BoundingStride = 202163;
         public const uint BoundingStrideSpeed = 202164;
+        public const uint ShieldBlock = 2565;
+        public const uint ShieldBlockAura = 132404;
     }
 
     struct Misc
@@ -616,5 +618,30 @@ namespace Scripts.Spells.Warrior;
         public override void Register()
         {
             AfterCast.Add(new CastHandler(HandleHeal));
+        }
+    }
+
+    [Script] // 2565 - Shield block
+    // 132404 Shield Block (Raise your shield, blocking all melee attacks against you for $?s) (Block chance increased by $s1%.) (23922 - Shield Slam)
+    // 76857 Mastery: Critical Block (These blocks can be critical blocks.)
+    // 231847 Shield Block (Shield Block has ${$s1+1} charges.)
+    class spell_warr_shield_block : SpellScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return ValidateSpellInfo(SpellIds.ShieldBlock, SpellIds.ShieldBlockAura);
+        }
+
+        void HandleDummy()
+        {
+            Unit caster = GetCaster();
+
+            if (caster != null)
+                caster.CastSpell(caster, SpellIds.ShieldBlockAura, true);
+        }
+
+        public override void Register()
+        {
+            AfterCast.Add(new CastHandler(HandleDummy));
         }
     }
