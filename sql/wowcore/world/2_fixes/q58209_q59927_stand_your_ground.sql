@@ -1,0 +1,1 @@
+﻿UPDATE `quest_template_addon` SET `ScriptName` = 'quest_stand_your_ground' WHERE `ID` IN (58209, 59927);
