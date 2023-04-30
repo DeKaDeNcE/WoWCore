@@ -301,14 +301,14 @@ namespace Game.DataStorage
         public uint CreatureDisplayInfoId;
     }
 
-    public struct ConversationActorTemplate
+    public class ConversationActorTemplate
     {
         public int Id;
         public uint Index;
-        public ConversationActorWorldObjectTemplate WorldObjectTemplate;
-        public ConversationActorNoObjectTemplate NoObjectTemplate;
-        public ConversationActorActivePlayerTemplate ActivePlayerTemplate;
-        public ConversationActorTalkingHeadTemplate TalkingHeadTemplate;
+        public ConversationActorWorldObjectTemplate WorldObjectTemplate = new();
+        public ConversationActorNoObjectTemplate NoObjectTemplate = new();
+        public ConversationActorActivePlayerTemplate ActivePlayerTemplate = new();
+        public ConversationActorTalkingHeadTemplate TalkingHeadTemplate = new();
     }
 
     public class ConversationLineTemplate
