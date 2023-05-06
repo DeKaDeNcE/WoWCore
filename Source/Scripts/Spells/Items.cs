@@ -124,7 +124,10 @@ namespace Scripts.Spells.Items;
         public const uint GnomishDeathRaySelf = 13493;
         public const uint GnomishDeathRayTarget = 13279;
 
-        //HeartPierce
+        // HarmPreventionBelt
+        public const uint ForcefieldCollapse = 13235;
+
+        // HeartPierce
         public const uint InvigorationMana = 71881;
         public const uint InvigorationEnergy = 71882;
         public const uint InvigorationRage = 71883;
@@ -1508,6 +1511,27 @@ namespace Scripts.Spells.Items;
         public override void Register()
         {
             OnEffectHitTarget.Add(new EffectHandler(HandleDummy, 0, SpellEffectName.Dummy));
+        }
+    }
+
+    // Item 10721: Gnomish Harm Prevention Belt
+    [Script] // 13234 - Harm Prevention Belt
+    // 13235 - Harm Prevention Belt
+    class spell_item_harm_prevention_belt : AuraScript
+    {
+        public override bool Validate(SpellInfo spellInfo)
+        {
+            return ValidateSpellInfo(SpellIds.ForcefieldCollapse);
+        }
+
+        void HandleProc(ProcEventInfo procInfo)
+        {
+            GetTarget().CastSpell((SpellCastTargets)null, SpellIds.ForcefieldCollapse, true);
+        }
+
+        public override void Register()
+        {
+            OnProc.Add(new AuraProcHandler(HandleProc));
         }
     }
 
