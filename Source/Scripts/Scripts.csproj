@@ -4,4 +4,10 @@
     <ItemGroup>
         <ProjectReference Include="..\Game\Game.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Maps\Azeroth\EasternKingdoms\TwilightHighlands\GrimBatol\" />
+      <Folder Include="Maps\Azeroth\EasternKingdoms\TwilightHighlands\TheBastionofTwilight\" />
+      <Folder Include="Maps\Azeroth\EasternKingdoms\Vashjir\ThroneofTheTides\" />
+    </ItemGroup>
 </Project>
