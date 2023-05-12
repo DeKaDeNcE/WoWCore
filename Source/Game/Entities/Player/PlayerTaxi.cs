@@ -14,21 +14,21 @@ namespace Game.Entities
 {
     public class PlayerTaxi
     {
-        public byte[] m_taximask;
+        public byte[] m_taximask = new byte[((CliDB.TaxiNodesStorage.GetNumRows() - 1) / (1 * 64) + 1) * 8];
         List<uint> m_TaxiDestinations = new();
         uint m_flightMasterFactionId;
 
         public void InitTaxiNodesForLevel(Race race, Class chrClass, uint level)
         {
-            m_taximask = new byte[((CliDB.TaxiNodesStorage.GetNumRows() - 1) / (1 * 64) + 1) * 8];
+            var factionMask = Player.TeamForRace(race) == Team.Horde ? CliDB.HordeTaxiNodesMask : CliDB.AllianceTaxiNodesMask;
 
             // class specific initial known nodes
-            if (chrClass == Class.Deathknight)
+            switch (chrClass)
             {
-                var factionMask = Player.TeamForRace(race) == Team.Horde ? CliDB.HordeTaxiNodesMask : CliDB.AllianceTaxiNodesMask;
-                m_taximask = new byte[factionMask.Length];
-                for (int i = 0; i < factionMask.Length; ++i)
-                    m_taximask[i] |= (byte)(CliDB.OldContinentsNodesMask[i] & factionMask[i]);
+                case Class.Deathknight:
+                    for (int i = 0; i < factionMask.Length; ++i)
+                        m_taximask[i] |= (byte)(CliDB.OldContinentsNodesMask[i] & factionMask[i]);
+                    break;
             }
 
             // race specific initial known nodes: capital and taxi hub masks
@@ -92,19 +92,31 @@ namespace Game.Entities
                 SetTaximaskNode(213);                               //Shattered Sun Staging Area
         }
 
-        public void LoadTaxiMask(string data)
+        public bool LoadTaxiMask(string data)
         {
-            m_taximask = new byte[((CliDB.TaxiNodesStorage.GetNumRows() - 1) / (1 * 64) + 1) * 8];
-
+            bool warn = false;
             var split = new StringArray(data, ' ');
 
             int index = 0;
+
             for (var i = 0; index < m_taximask.Length && i != split.Length; ++i, ++index)
             {
                 // load and set bits only for existing taxi nodes
-                if (uint.TryParse(split[i], out uint id))
+                if (uint.TryParse(split[i], out var id))
+                {
                     m_taximask[index] = (byte)(CliDB.TaxiNodesMask[index] & id);
+
+                    if (m_taximask[index] != id)
+                        warn = true;
+                }
+                else
+                {
+                    m_taximask[index] = 0;
+                    warn = true;
+                }
             }
+
+            return !warn;
         }
 
         public void AppendTaximaskTo(ShowTaxiNodes data, bool all)

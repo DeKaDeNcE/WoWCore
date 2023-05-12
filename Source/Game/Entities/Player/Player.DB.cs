@@ -2763,7 +2763,7 @@ namespace Game.Entities
             if (result.IsEmpty())
             {
                 Global.CharacterCacheStorage.GetCharacterNameByGuid(guid, out string cacheName);
-                Log.outError(LogFilter.Player, "Player {0} {1} not found in table `characters`, can't load. ", cacheName, guid.ToString());
+                Log.outError(LogFilter.Player, "Player '{0}' (GUID: {1}) not found in table `characters`, can't load.", cacheName, guid.ToString());
                 return false;
             }
 
@@ -2843,14 +2843,14 @@ namespace Game.Entities
             // player should be able to load/delete character only with correct account!
             if (accountId != GetSession().GetAccountId())
             {
-                Log.outError(LogFilter.Player, "Player (GUID: {0}) loading from wrong account (is: {1}, should be: {2})", GetGUID().ToString(), GetSession().GetAccountId(), accountId);
+                Log.outError(LogFilter.Player, "Player (GUID: {1}) loading from wrong account (is: {2}, should be: {3})", guid.ToString(), GetSession().GetAccountId(), accountId);
                 return false;
             }
 
             SQLResult banResult = holder.GetResult(PlayerLoginQueryLoad.Banned);
             if (!banResult.IsEmpty())
             {
-                Log.outError(LogFilter.Player, "{0} is banned, can't load.", guid.ToString());
+                Log.outError(LogFilter.Player, "Player (GUID: {1}) is banned, can't load.", guid.ToString());
                 return false;
             }
 
@@ -2869,13 +2869,12 @@ namespace Game.Entities
                 return false;
             }
 
-
             SetUpdateFieldValue(m_values.ModifyValue(m_playerData).ModifyValue(m_playerData.WowAccount), GetSession().GetAccountGUID());
             SetUpdateFieldValue(m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.BnetAccount), GetSession().GetBattlenetAccountGUID());
 
             if (gender >= Gender.None)
             {
-                Log.outError(LogFilter.Player, "Player {0} has wrong gender ({1}), can't be loaded.", guid.ToString(), gender);
+                Log.outError(LogFilter.Player, "Player {0} has wrong gender ({1}), can't load.", guid.ToString(), gender);
                 return false;
             }
 
@@ -2887,7 +2886,7 @@ namespace Game.Entities
             PlayerInfo info = Global.ObjectMgr.GetPlayerInfo(GetRace(), GetClass());
             if (info == null)
             {
-                Log.outError(LogFilter.Player, "Player {0} has wrong race/class ({1}/{2}), can't be loaded.", guid.ToString(), GetRace(), GetClass());
+                Log.outError(LogFilter.Player, "Player {0} has wrong race/class ({1}/{2}), can't load.", guid.ToString(), GetRace(), GetClass());
                 return false;
             }
 
@@ -2896,14 +2895,11 @@ namespace Game.Entities
 
             StringArray exploredZonesStrings = new(exploredZones, ' ');
             for (int i = 0; i < exploredZonesStrings.Length && i / 2 < ActivePlayerData.ExploredZonesSize; ++i)
-                SetUpdateFieldFlagValue(ref m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.ExploredZones, i / 2), (ulong)((long.Parse(exploredZonesStrings[i])) << (32 * (i % 2))));
+                SetUpdateFieldFlagValue(ref m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.ExploredZones, i / 2), (ulong)(long.Parse(exploredZonesStrings[i]) << (32 * (i % 2))));
 
             StringArray knownTitlesStrings = new(knownTitles, ' ');
-            if ((knownTitlesStrings.Length % 2) == 0)
-            {
-                for (int i = 0; i < knownTitlesStrings.Length; ++i)
-                    SetUpdateFieldFlagValue(m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.KnownTitles, i / 2), (ulong)((long.Parse(knownTitlesStrings[i])) << (32 * (i % 2))));
-            }
+            for (int i = 0; i < knownTitlesStrings.Length; ++i)
+                SetUpdateFieldFlagValue(m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.KnownTitles, i / 2), (ulong)(long.Parse(knownTitlesStrings[i]) << (32 * (i % 2))));
 
             SetObjectScale(SharedConst.DefaultPlayerDisplayScale);
 
@@ -2919,7 +2915,6 @@ namespace Game.Entities
             {
                 do
                 {
-
                     ChrCustomizationChoice choice = new();
                     choice.ChrCustomizationOptionID = customizationsResult.Read<uint>(0);
                     choice.ChrCustomizationChoiceID = customizationsResult.Read<uint>(1);
@@ -2941,7 +2936,7 @@ namespace Game.Entities
 
             if (!GetSession().ValidateAppearance(GetRace(), GetClass(), gender, customizations))
             {
-                Log.outError(LogFilter.Player, "Player {0} has wrong Appearance values (Hair/Skin/Color), can't be loaded.", guid.ToString());
+                Log.outError(LogFilter.Player, "Player {0} has wrong Appearance values (Hair/Skin/Color), can't load.", guid.ToString());
                 return false;
             }
 
@@ -3266,9 +3261,16 @@ namespace Game.Entities
             SetTalentResetCost(resettalents_cost);
             SetTalentResetTime(resettalents_time);
 
-            m_taxi.LoadTaxiMask(taximask);            // must be before InitTaxiNodesForLevel
+            if (!m_taxi.LoadTaxiMask(taximask))            // must be before InitTaxiNodesForLevel
+                Log.outDebug(LogFilter.Player, "Player.LoadFromDB: Player ({0}) has invalid taximask ({1}) in DB. Forced partial load.", GetGUID().ToString(), taximask);
 
             _LoadPetStable(summonedPetNumber, holder.GetResult(PlayerLoginQueryLoad.PetSlots));
+
+            if (HasAtLoginFlag(AtLoginFlags.Rename))
+            {
+                Log.outError(LogFilter.Player, "Player.LoadFromDB: Player ({0}) tried to login while forced to rename, can't load.", GetGUID().ToString());
+                return false;
+            }
 
             // Honor system
             // Update Honor kills data
