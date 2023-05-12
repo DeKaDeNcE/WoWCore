@@ -244,7 +244,7 @@ namespace Game.Entities
 
             InitRunes();
 
-            SetUpdateFieldValue(m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.Coinage), (ulong)WorldConfig.GetIntValue(WorldCfg.StartPlayerMoney));
+            SetUpdateFieldValue(m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.Coinage), (ulong)WorldConfig.GetUInt64Value(WorldCfg.StartPlayerMoney));
 
             // Played time
             m_Last_tick = GameTime.GetGameTime();
@@ -4861,7 +4861,7 @@ namespace Game.Entities
             bool loading = GetSession().PlayerLoading();
 
             if (!loading)
-                MoneyChanged((uint)value);
+                MoneyChanged(value);
 
             SetUpdateFieldValue(m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.Coinage), value);
 
