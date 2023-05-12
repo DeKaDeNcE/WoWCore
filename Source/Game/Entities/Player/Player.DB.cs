@@ -1690,7 +1690,7 @@ namespace Game.Entities
             // the client auto counts down in real time after having received the initial played time on the first
             // SMSG_ITEM_REFUND_INFO_RESPONSE packet.
             // Item.UpdatePlayedTime is only called when needed, which is in DB saves, and item refund info requests.
-            foreach (var guid in m_refundableItems)
+            foreach (var guid in m_refundableItems.ToList())
             {
                 Item item = GetItemByGuid(guid);
                 if (item != null)

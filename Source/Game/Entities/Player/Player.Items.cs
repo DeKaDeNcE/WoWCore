@@ -2545,7 +2545,7 @@ namespace Game.Entities
 
             Log.outDebug(LogFilter.Player, "Player:UpdateItemDuration({0}, {1})", time, realtimeonly);
 
-            foreach (var item in m_itemDuration)
+            foreach (var item in m_itemDuration.ToList())
             {
                 if (!realtimeonly || item.GetTemplate().HasFlag(ItemFlags.RealDuration))
                     item.UpdateDuration(this, time);

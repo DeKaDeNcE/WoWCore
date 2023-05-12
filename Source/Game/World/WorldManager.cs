@@ -2095,15 +2095,12 @@ namespace Game
             Log.outInfo(LogFilter.Misc, "Weekly quests for all characters have been reset.");
         }
 
-        static long GetNextMonthlyResetTime(long t)
+        private static long GetNextMonthlyResetTime(long t)
         {
             t = GetNextDailyResetTime(t);
-            DateTime time = Time.UnixTimeToDateTime(t);
-            if (time.Day == 1)
-                return t;
+            var time = Time.UnixTimeToDateTime(t);
 
-            var newDate = new DateTime(time.Year, time.Month + 1, 1, 0, 0, 0, time.Kind);
-            return Time.DateTimeToUnixTime(newDate);
+            return time.Day == 1 ? t : Time.DateTimeToUnixTime(time.AddMonths(1));
         }
 
         public void ResetMonthlyQuests()

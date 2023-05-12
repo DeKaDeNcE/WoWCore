@@ -201,9 +201,12 @@ namespace Game.Maps
                         if (playerInstanceLock != null)
                         {
                             instanceLock = playerInstanceLock;
-                            _instanceLocksByPlayer[playerGuid][entries.GetKey()] = instanceLock;
+
+                            if (_instanceLocksByPlayer.TryGetValue(playerGuid, out var value))
+                                value[entries.GetKey()] = instanceLock;
 
                             playerLocks.Remove(entries.GetKey());
+
                             if (playerLocks.Empty())
                                 _temporaryInstanceLocksByPlayer.Remove(playerGuid);
 

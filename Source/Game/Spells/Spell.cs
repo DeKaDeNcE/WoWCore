@@ -9413,7 +9413,7 @@ namespace Game.Spells
 
         public CastSpellExtraArgs AddSpellMod(SpellValueMod mod, int val)
         {
-            SpellValueOverrides.Add(mod, val);
+            SpellValueOverrides[mod] = val;
             return this;
         }
 

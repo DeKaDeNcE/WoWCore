@@ -682,9 +682,17 @@ namespace Game.Maps
 
         public DungeonEncounterRecord GetBossDungeonEncounter(Creature creature)
         {
-            BossAI bossAi = (BossAI)creature.GetAI();
-            if (bossAi != null)
-                return GetBossDungeonEncounter(bossAi.GetBossId());
+            try
+            {
+                BossAI bossAi = creature.GetAI<BossAI>();
+
+                if (bossAi != null)
+                    return GetBossDungeonEncounter(bossAi.GetBossId());
+            }
+            catch (Exception e)
+            {
+                Log.outError(LogFilter.Server, $"InstanceScript.GetBossDungeonEncounter: {e.Message} Name: {creature.GetName()} GUID: {creature.GetGUID()} Entry: {creature.GetEntry()} Spawn: {creature.GetSpawnId()} AI Name: {creature.GetAIName()} Script Id: {creature.GetScriptId()} Script Name: {creature.GetScriptName()}");
+            }
 
             return null;
         }

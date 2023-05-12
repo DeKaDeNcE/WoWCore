@@ -1260,7 +1260,7 @@ namespace Game
                     {
                         map.RemoveRespawnTime(SpawnObjectType.Creature, guid);
                         var creatureBounds = map.GetCreatureBySpawnIdStore().LookupByKey(guid);
-                        foreach (var creature in creatureBounds)
+                        foreach (var creature in creatureBounds.ToList())
                             creature.AddObjectToRemoveList();
                     });
                 }

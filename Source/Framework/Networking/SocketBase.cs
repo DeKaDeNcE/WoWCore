@@ -101,7 +101,14 @@ namespace Framework.Networking
             if (!IsOpen())
                 return;
 
-            _socket.Send(data);
+            try
+            {
+                _socket.Send(data);
+            }
+            catch (Exception ex)
+            {
+                Log.outWarn(LogFilter.Network, $"WorldSocket.AsyncWrite: {GetRemoteIpAddress()} errored when writing socket: {ex.Message}");
+            }
         }
 
         public void CloseSocket()
@@ -116,7 +123,7 @@ namespace Framework.Networking
             }
             catch (Exception ex)
             {
-                Log.outDebug(LogFilter.Network, $"WorldSocket.CloseSocket: {GetRemoteIpAddress()} errored when shutting down socket: {ex.Message}");
+                Log.outWarn(LogFilter.Network, $"WorldSocket.CloseSocket: {GetRemoteIpAddress()} errored when shutting down socket: {ex.Message}");
             }
 
             OnClose();

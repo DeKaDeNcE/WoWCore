@@ -98,7 +98,7 @@ namespace Framework.Networking
             }
             catch (Exception ex)
             {
-                Log.outException(ex);
+                Log.outWarn(LogFilter.Network, $"WorldSocket.AsyncWrite: {GetRemoteIpEndPoint()} errored when writing socket: {ex.Message}");
             }
         }
 
@@ -111,7 +111,7 @@ namespace Framework.Networking
             }
             catch (Exception ex)
             {
-                Log.outDebug(LogFilter.Network, $"WorldSocket.CloseSocket: {GetRemoteIpEndPoint()} errored when shutting down socket: {ex.Message}");
+                Log.outWarn(LogFilter.Network, $"WorldSocket.CloseSocket: {GetRemoteIpEndPoint()} errored when shutting down socket: {ex.Message}");
             }
         }
 

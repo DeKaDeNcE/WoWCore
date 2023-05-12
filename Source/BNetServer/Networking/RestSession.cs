@@ -79,15 +79,15 @@ namespace BNetServer.Networking;
             string login = "";
             string password = "";
 
-            for (int i = 0; i < loginForm.Inputs.Count; ++i)
+            for (int i = 0; i < (loginForm.Inputs?.Count ?? 0); ++i)
             {
-                switch (loginForm.Inputs[i].Id)
+                switch (loginForm.Inputs[i]?.Id)
                 {
                     case "account_name":
-                        login = loginForm.Inputs[i].Value;
+                        login = loginForm.Inputs[i]?.Value;
                         break;
                     case "password":
-                        password = loginForm.Inputs[i].Value;
+                        password = loginForm.Inputs[i]?.Value;
                         break;
                 }
             }

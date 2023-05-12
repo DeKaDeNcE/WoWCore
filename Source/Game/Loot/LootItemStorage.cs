@@ -48,8 +48,9 @@ namespace Game.Loots
                     lootItem.context = (ItemContext)result.Read<byte>(11);
                     StringArray bonusLists = new(result.Read<string>(12), ' ');
 
-                    foreach (string str in bonusLists)
-                        lootItem.BonusListIDs.Add(uint.Parse(str));
+                    if (bonusLists.Length > 0)
+                        foreach (string str in bonusLists)
+                            lootItem.BonusListIDs.Add(uint.Parse(str));
 
                     storedContainer.AddLootItem(lootItem, null);
 

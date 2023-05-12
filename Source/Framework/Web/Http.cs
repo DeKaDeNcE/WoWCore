@@ -74,30 +74,30 @@ namespace Framework.Web
                 if (info.Length != 3)
                     return null;
 
-                headerValues.Add("method", info[0]);
-                headerValues.Add("path", info[1]);
-                headerValues.Add("type", info[2]);
+                headerValues.TryAdd("method", info[0]);
+                headerValues.TryAdd("path", info[1]);
+                headerValues.TryAdd("type", info[2]);
 
                 while (!sr.EndOfStream)
                 {
                     info = sr.ReadLine().Split(new string[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
 
                     if (info.Length == 2)
-                        headerValues.Add(info[0].Replace("-", "").ToLower(), info[1]);
+                        headerValues.TryAdd(info[0].Replace("-", "").ToLower(), info[1]);
                     else if (info.Length > 2)
                     {
                         var val = "";
 
                         info.Skip(1);
 
-                        headerValues.Add(info[0].Replace("-", "").ToLower(), val);
+                        headerValues.TryAdd(info[0].Replace("-", "").ToLower(), val);
                     }
                     else
                     {
                         // We are at content here.
                         var content = sr.ReadLine();
 
-                        headerValues.Add("content", content);
+                        headerValues.TryAdd("content", content);
 
                         // There shouldn't be anything after the content!
                         break;

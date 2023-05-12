@@ -197,7 +197,7 @@ public class Log
     static void outMessage(LogFilter type, LogLevel level, string text, params object[] args)
     {
         Logger logger = GetLoggerByType(type);
-        logger.write(new LogMessage(level, type, string.Format(text, args)));
+        logger.write(new LogMessage(level, type, string.Format(Convert.ToString(text), args)));
     }
 
     static byte NextAppenderId()
