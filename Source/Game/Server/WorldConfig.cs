@@ -514,18 +514,11 @@ namespace Game;
                 Values[WorldCfg.StartAlliedRaceLevel] = Values[WorldCfg.MaxPlayerLevel];
             }
 
-            Values[WorldCfg.StartPlayerMoney] = GetDefaultValue("StartPlayerMoney", 0);
-
-            if ((int)Values[WorldCfg.StartPlayerMoney] < 0)
+            Values[WorldCfg.StartPlayerMoney] = GetDefaultValue("StartPlayerMoney", 0UL);
+            if ((ulong)Values[WorldCfg.StartPlayerMoney] > PlayerConst.MaxMoneyAmount)
             {
-                Log.outError(LogFilter.ServerLoading, "StartPlayerMoney ({0}) must be in range 0..{1}. Set to {2}.", Values[WorldCfg.StartPlayerMoney], PlayerConst.MaxMoneyAmount, 0);
-                Values[WorldCfg.StartPlayerMoney] = 0;
-            }
-            else if ((int)Values[WorldCfg.StartPlayerMoney] > 0x7FFFFFFF - 1) // TODO: (See MaxMoneyAMOUNT)
-            {
-                Log.outError(LogFilter.ServerLoading, "StartPlayerMoney ({0}) must be in range 0..{1}. Set to {2}.",
-                    Values[WorldCfg.StartPlayerMoney], 0x7FFFFFFF - 1, 0x7FFFFFFF - 1);
-                Values[WorldCfg.StartPlayerMoney] = 0x7FFFFFFF - 1;
+                Log.outError(LogFilter.ServerLoading, "StartPlayerMoney ({0}) must be in range 0..{1}. Set to {2}.", (ulong)Values[WorldCfg.StartPlayerMoney], PlayerConst.MaxMoneyAmount, PlayerConst.MaxMoneyAmount);
+                Values[WorldCfg.StartPlayerMoney] = PlayerConst.MaxMoneyAmount;
             }
 
             Values[WorldCfg.CurrencyResetHour] = GetDefaultValue("Currency.ResetHour", 3);
