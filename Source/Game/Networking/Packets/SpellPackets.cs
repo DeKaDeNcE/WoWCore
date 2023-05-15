@@ -1337,7 +1337,7 @@ namespace Game.Networking.Packets
             data.WriteFloat(PlayerItemLevel);
             data.WriteFloat(TargetItemLevel);
             data.WriteInt16(PlayerLevelDelta);
-            data.WriteUInt16(ScalingHealthItemLevelCurveID);
+            data.WriteUInt32(ScalingHealthItemLevelCurveID);
             data.WriteUInt8(TargetLevel);
             data.WriteUInt8(Expansion);
             data.WriteInt8(TargetScalingLevelDelta);
@@ -1353,7 +1353,7 @@ namespace Game.Networking.Packets
         public short PlayerLevelDelta;
         public float PlayerItemLevel;
         public float TargetItemLevel;
-        public ushort ScalingHealthItemLevelCurveID;
+        public uint ScalingHealthItemLevelCurveID;
         public byte TargetLevel;
         public byte Expansion;
         public sbyte TargetScalingLevelDelta;

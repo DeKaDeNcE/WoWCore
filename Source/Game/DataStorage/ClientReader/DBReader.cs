@@ -18,7 +18,7 @@ namespace Game.DataStorage
 {
     class DBReader
     {
-        private const uint WDC3FmtSig = 0x33434457; // WDC3
+        private const uint WDC4FmtSig = 0x34434457; // WDC4
 
         public WDCHeader Header;
         public FieldMetaData[] FieldMeta;
@@ -26,7 +26,7 @@ namespace Game.DataStorage
         public Value32[][] PalletData;
         public Dictionary<int, Value32>[] CommonData;
 
-        public Dictionary<int, WDC3Row> Records = new();
+        public Dictionary<int, WDC4Row> Records = new();
 
         public bool Load(Stream stream)
         {
@@ -34,7 +34,7 @@ namespace Game.DataStorage
             {
                 Header = new WDCHeader();
                 Header.Signature = reader.ReadUInt32();
-                if (Header.Signature != WDC3FmtSig)
+                if (Header.Signature != WDC4FmtSig)
                     return false;
 
                 Header.RecordCount = reader.ReadUInt32();
@@ -133,6 +133,39 @@ namespace Game.DataStorage
 
                     Array.Resize(ref recordsData, recordsData.Length + 8); // pad with extra zeros so we don't crash when reading
 
+                    // skip encrypted sections => has tact key + record data is zero filled
+                    if (sections[sectionIndex].TactKeyLookup != 0 && Array.TrueForAll(recordsData, x => x == 0))
+                    {
+                        bool completelyZero = false;
+
+                        if (sections[sectionIndex].IndexDataSize > 0 || sections[sectionIndex].NumCopyRecords > 0)
+                        {
+                            // this will be the record id from m_indexData or m_copyData
+                            // if this is zero then the id for this record will be zero which is invalid
+                            completelyZero = reader.ReadInt32() == 0;
+                            reader.BaseStream.Position -= 4;
+                        }
+                        else if (sections[sectionIndex].NumSparseRecords > 0)
+                        {
+                            // this will be the first m_sparseEntries entry
+                            // confirm it's size is not zero otherwise it is invalid
+                            completelyZero = reader.Read<SparseEntry>().Size == 0;
+                            reader.BaseStream.Position -= 6;
+                        }
+                        else
+                        {
+                            // there is no additional data and recordsData is already known to be zeroed
+                            // therefore the record will have an id of zero which is invalid
+                            completelyZero = true;
+                        }
+
+                        if (completelyZero)
+                        {
+                            previousRecordCount += sections[sectionIndex].NumRecords;
+                            continue;
+                        }
+                    }
+
                     // index data
                     int[] indexData = reader.ReadArray<int>((uint)(sections[sectionIndex].IndexDataSize / 4));
                     bool isIndexEmpty = Header.HasIndexTable() && indexData.Count(i => i == 0) == sections[sectionIndex].NumRecords;
@@ -144,10 +177,16 @@ namespace Game.DataStorage
                         copyData[reader.ReadInt32()] = reader.ReadInt32();
 
                     if (sections[sectionIndex].NumSparseRecords > 0)
+                    {
+                        // HACK unittestsparse is malformed and has sparseIndexData first
+                        if (Header.TableHash == 145293629)
+                            reader.BaseStream.Position += 4 * sections[sectionIndex].NumSparseRecords;
+
                         sparseEntries = reader.ReadArray<SparseEntry>((uint)sections[sectionIndex].NumSparseRecords);
+                    }
 
                     // reference data
-                    ReferenceData refData = null;
+                    ReferenceData refData;
 
                     if (sections[sectionIndex].ParentLookupDataSize > 0)
                     {
@@ -197,7 +236,7 @@ namespace Game.DataStorage
                         long recordIndex = i + previousRecordCount;
                         long recordOffset =  (recordIndex * Header.RecordSize) - (Header.RecordCount * Header.RecordSize);
 
-                        var rec = new WDC3Row(this, bitReader, (int)recordOffset, Header.HasIndexTable() ? (isIndexEmpty ? i : indexData[i]) : -1, hasRef ? refId : -1, stringsTable);
+                        var rec = new WDC4Row(this, bitReader, (int)recordOffset, Header.HasIndexTable() ? (isIndexEmpty ? i : indexData[i]) : -1, hasRef ? refId : -1, stringsTable);
                         Records.Add(rec.Id, rec);
                     }
 
@@ -219,7 +258,7 @@ namespace Game.DataStorage
         }
     }
 
-    class WDC3Row
+    class WDC4Row
     {
         private BitReader _data;
         private int _dataOffset;
@@ -235,7 +274,7 @@ namespace Game.DataStorage
         private Dictionary<int, Value32>[] _commonData;
         private Dictionary<long, string> _stringsTable;
 
-        public WDC3Row(DBReader reader, BitReader data, int recordsOffset, int id, int refId, Dictionary<long, string> stringsTable)
+        public WDC4Row(DBReader reader, BitReader data, int recordsOffset, int id, int refId, Dictionary<long, string> stringsTable)
         {
             _data = data;
             _recordsOffset = recordsOffset;
@@ -286,7 +325,7 @@ namespace Game.DataStorage
                     uint palletIndex = _data.Read<uint>(columnMeta.Pallet.BitWidth);
                     return _palletData[fieldIndex][palletIndex].As<T>();
             }
-            throw new Exception(string.Format("Unexpected compression type {0}", _columnMeta[fieldIndex].CompressionType));
+            throw new Exception($"Unexpected compression type {_columnMeta[fieldIndex].CompressionType}");
         }
 
         T[] GetFieldValueArray<T>(int fieldIndex, int arraySize) where T : unmanaged
@@ -327,7 +366,7 @@ namespace Game.DataStorage
                     int cardinality = columnMeta.Pallet.Cardinality;
 
                     if (arraySize != cardinality)
-                        throw new Exception("Struct missmatch for pallet array field?");
+                        throw new Exception("Struct mismatch for pallet array field?");
 
                     uint palletArrayIndex = _data.Read<uint>(columnMeta.Pallet.BitWidth);
 
@@ -338,7 +377,7 @@ namespace Game.DataStorage
 
                     return arr4;
             }
-            throw new Exception(string.Format("Unexpected compression type {0}", columnMeta.CompressionType));
+            throw new Exception($"Unexpected compression type {columnMeta.CompressionType}");
         }
 
         public T As<T>() where T : new()
@@ -526,23 +565,14 @@ namespace Game.DataStorage
             return obj;
         }
 
-        public WDC3Row Clone()
-        {
-            return (WDC3Row)MemberwiseClone();
-        }
+        public WDC4Row Clone() => (WDC4Row)MemberwiseClone();
     }
 
     public class WDCHeader
     {
-        public bool HasIndexTable()
-        {
-            return Convert.ToBoolean(Flags & HeaderFlags.IndexMap);
-        }
+        public bool HasIndexTable() => Convert.ToBoolean(Flags & HeaderFlags.IndexMap);
 
-        public bool HasOffsetTable()
-        {
-            return Convert.ToBoolean(Flags & HeaderFlags.OffsetMap);
-        }
+        public bool HasOffsetTable() => Convert.ToBoolean(Flags & HeaderFlags.OffsetMap);
 
         public uint Signature;
         public uint RecordCount;
@@ -577,7 +607,7 @@ namespace Game.DataStorage
             get
             {
                 int value = (32 - Bits) >> 3;
-                return (value < 0 ? Math.Abs(value) + 4 : value);
+                return value < 0 ? Math.Abs(value) + 4 : value;
             }
         }
 
@@ -587,7 +617,7 @@ namespace Game.DataStorage
             {
                 int bitSize = 32 - Bits;
                 if (bitSize < 0)
-                    bitSize = (bitSize * -1) + 32;
+                    bitSize = bitSize * -1 + 32;
                 return bitSize;
             }
         }
@@ -678,10 +708,14 @@ namespace Game.DataStorage
     {
         private uint Value;
 
-        public T As<T>() where T : unmanaged
-        {
-            return Unsafe.As<uint, T>(ref Value);
-        }
+        public T As<T>() where T : unmanaged => Unsafe.As<uint, T>(ref Value);
+    }
+
+    public struct Value64
+    {
+        private ulong Value;
+
+        public T As<T>() where T : unmanaged => Unsafe.As<ulong, T>(ref Value);
     }
 
     public class LocalizedString
@@ -693,14 +727,8 @@ namespace Game.DataStorage
 
         public string this[Locale locale]
         {
-            get
-            {
-                return stringStorage[(int)locale] ?? "";
-            }
-            set
-            {
-                stringStorage[(int)locale] = value;
-            }
+            get => stringStorage[(int)locale] ?? "";
+            set => stringStorage[(int)locale] = value;
         }
 
         StringArray stringStorage = new((int)Locale.Total);

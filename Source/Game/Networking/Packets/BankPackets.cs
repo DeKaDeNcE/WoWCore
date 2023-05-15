@@ -40,18 +40,22 @@ namespace Game.Networking.Packets
 
     public class BuyBankSlot : ClientPacket
     {
+        public ObjectGuid Guid;
+
         public BuyBankSlot(WorldPacket packet) : base(packet) { }
 
         public override void Read()
         {
             Guid = _worldPacket.ReadPackedGuid();
         }
-
-        public ObjectGuid Guid;
     }
 
-    class AutoBankReagent : ClientPacket
+    public class AutoBankReagent : ClientPacket
     {
+        public InvUpdate Inv;
+        public byte Slot;
+        public byte PackSlot;
+
         public AutoBankReagent(WorldPacket packet) : base(packet) { }
 
         public override void Read()
@@ -60,14 +64,14 @@ namespace Game.Networking.Packets
             PackSlot = _worldPacket.ReadUInt8();
             Slot = _worldPacket.ReadUInt8();
         }
+    }
 
+    public class AutoStoreBankReagent : ClientPacket
+    {
         public InvUpdate Inv;
         public byte Slot;
         public byte PackSlot;
-    }
 
-    class AutoStoreBankReagent : ClientPacket
-    {
         public AutoStoreBankReagent(WorldPacket packet) : base(packet) { }
 
         public override void Read()
@@ -76,23 +80,19 @@ namespace Game.Networking.Packets
             Slot = _worldPacket.ReadUInt8();
             PackSlot = _worldPacket.ReadUInt8();
         }
-
-        public InvUpdate Inv;
-        public byte Slot;
-        public byte PackSlot;
     }
 
     // CMSG_BUY_REAGENT_BANK
     // CMSG_REAGENT_BANK_DEPOSIT
-    class ReagentBank : ClientPacket
+    public class ReagentBank : ClientPacket
     {
+        public ObjectGuid Banker;
+
         public ReagentBank(WorldPacket packet) : base(packet) { }
 
         public override void Read()
         {
             Banker = _worldPacket.ReadPackedGuid();
         }
-
-        public ObjectGuid Banker;
     }
 }

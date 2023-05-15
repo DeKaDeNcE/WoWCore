@@ -1903,7 +1903,7 @@ namespace Game.Achievements
                         return false;
                     break;
                 case ModifierTreeType.PlayerInTimeWalkerInstance: // 123
-                    if (!referencePlayer.HasPlayerFlag(PlayerFlags.Timewalking))
+                    if (!referencePlayer.HasPlayerFlag(PlayerFlags.TimeWalking))
                         return false;
                     break;
                 case ModifierTreeType.PvpSeasonIsActive: // 124

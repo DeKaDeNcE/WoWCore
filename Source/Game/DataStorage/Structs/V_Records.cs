@@ -12,7 +12,7 @@ namespace Game.DataStorage
     {
         public uint Id;
         public VehicleFlags Flags;
-        public byte FlagsB;
+        public int FlagsB;
         public float TurnSpeed;
         public float PitchSpeed;
         public float PitchMin;

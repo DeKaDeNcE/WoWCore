@@ -345,23 +345,41 @@ namespace Game.Entities
             }
         }
 
-        public void SendSpellCategoryCooldowns()
+        public void AddSpellCategoryCooldownMod(int spellCategoryId, int mod)
         {
-            SpellCategoryCooldown cooldowns = new();
+            var categoryIndex = m_activePlayerData.CategoryCooldownMods.FindIndexIf(cooldownMod => cooldownMod.SpellCategoryID == spellCategoryId);
 
-            var categoryCooldownAuras = GetAuraEffectsByType(AuraType.ModSpellCategoryCooldown);
-            foreach (AuraEffect aurEff in categoryCooldownAuras)
+            if (categoryIndex < 0)
             {
-                uint categoryId = (uint)aurEff.GetMiscValue();
-                var cooldownInfo = cooldowns.CategoryCooldowns.Find(p => p.Category == categoryId);
+                CategoryCooldownMod newMod = new()
+                {
+                    SpellCategoryID = spellCategoryId,
+                    ModCooldown = -mod
+                };
 
-                if (cooldownInfo == null)
-                    cooldowns.CategoryCooldowns.Add(new SpellCategoryCooldown.CategoryCooldownInfo(categoryId, -aurEff.GetAmount()));
-                else
-                    cooldownInfo.ModCooldown -= aurEff.GetAmount();
+                AddDynamicUpdateFieldValue(m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.CategoryCooldownMods), newMod);
             }
+            else
+            {
+                CategoryCooldownMod cooldownMod = m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.CategoryCooldownMods, categoryIndex);
+                SetUpdateFieldValue(ref cooldownMod.ModCooldown, m_activePlayerData.CategoryCooldownMods[categoryIndex].ModCooldown - mod);
+            }
+        }
 
-            SendPacket(cooldowns);
+        public void RemoveSpellCategoryCooldownMod(int spellCategoryId, int mod)
+        {
+            var categoryIndex = m_activePlayerData.CategoryCooldownMods.FindIndexIf(cooldownMod => cooldownMod.SpellCategoryID == spellCategoryId);
+
+            if (categoryIndex < 0)
+                return;
+
+            if (m_activePlayerData.CategoryCooldownMods[categoryIndex].ModCooldown + mod == 0)
+                RemoveDynamicUpdateFieldValue(m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.CategoryCooldownMods), categoryIndex);
+            else
+            {
+                CategoryCooldownMod cooldownMod = m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.CategoryCooldownMods, categoryIndex);
+                SetUpdateFieldValue(ref cooldownMod.ModCooldown, m_activePlayerData.CategoryCooldownMods[categoryIndex].ModCooldown + mod);
+            }
         }
 
         void InitializeSkillFields()

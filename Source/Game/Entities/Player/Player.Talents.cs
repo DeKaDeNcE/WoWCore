@@ -236,28 +236,22 @@ namespace Game.Entities
             UpdateItemSetAuras(false);
         }
 
-        bool HasTalent(uint talentId, byte group)
-        {
-            return GetTalentMap(group).ContainsKey(talentId) && GetTalentMap(group)[talentId] != PlayerSpellState.Removed;
-        }
+        bool HasTalent(uint talentId, byte group) => GetTalentMap(group).ContainsKey(talentId) && GetTalentMap(group)[talentId] != PlayerSpellState.Removed;
 
-        uint GetTalentResetCost() { return _specializationInfo.ResetTalentsCost; }
+        uint GetTalentResetCost() => _specializationInfo.ResetTalentsCost;
         void SetTalentResetCost(uint cost) { _specializationInfo.ResetTalentsCost = cost; }
-        long GetTalentResetTime() { return _specializationInfo.ResetTalentsTime; }
+        long GetTalentResetTime() => _specializationInfo.ResetTalentsTime;
         void SetTalentResetTime(long time_) { _specializationInfo.ResetTalentsTime = time_; }
-        public uint GetPrimarySpecialization() { return m_playerData.CurrentSpecID; }
+        public uint GetPrimarySpecialization() => m_playerData.CurrentSpecID;
         void SetPrimarySpecialization(uint spec) { SetUpdateFieldValue(m_values.ModifyValue(m_playerData).ModifyValue(m_playerData.CurrentSpecID), spec); }
-        public byte GetActiveTalentGroup() { return _specializationInfo.ActiveGroup; }
+        public byte GetActiveTalentGroup() => _specializationInfo.ActiveGroup;
         void SetActiveTalentGroup(byte group) { _specializationInfo.ActiveGroup = group; }
 
         // Loot Spec
         public void SetLootSpecId(uint id) { SetUpdateFieldValue(m_values.ModifyValue(m_activePlayerData).ModifyValue(m_activePlayerData.LootSpecID), (ushort)id); }
-        public uint GetLootSpecId() { return m_activePlayerData.LootSpecID; }
+        public uint GetLootSpecId() => m_activePlayerData.LootSpecID;
 
-        public uint GetDefaultSpecId()
-        {
-            return Global.DB2Mgr.GetDefaultChrSpecializationForClass(GetClass()).Id;
-        }
+        public uint GetDefaultSpecId() => Global.DB2Mgr.GetDefaultChrSpecializationForClass(GetClass()).Id;
 
         public void ActivateTalentGroup(ChrSpecializationRecord spec)
         {
@@ -509,8 +503,8 @@ namespace Game.Entities
                 }));
         }
 
-        public Dictionary<uint, PlayerSpellState> GetTalentMap(uint spec) { return _specializationInfo.Talents[spec]; }
-        public List<uint> GetGlyphs(byte spec) { return _specializationInfo.Glyphs[spec]; }
+        public Dictionary<uint, PlayerSpellState> GetTalentMap(uint spec) => _specializationInfo.Talents[spec];
+        public List<uint> GetGlyphs(byte spec) => _specializationInfo.Glyphs[spec];
 
         public uint GetNextResetTalentsCost()
         {
@@ -831,10 +825,7 @@ namespace Game.Entities
             }
         }
 
-        bool HasPvpTalent(uint talentID, byte activeTalentGroup)
-        {
-            return GetPvpTalentMap(activeTalentGroup).Contains(talentID);
-        }
+        bool HasPvpTalent(uint talentID, byte activeTalentGroup) => GetPvpTalentMap(activeTalentGroup).Contains(talentID);
 
         //Traits
         public void CreateTraitConfig(TraitConfigPacket traitConfig)

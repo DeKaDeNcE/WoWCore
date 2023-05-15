@@ -726,7 +726,7 @@ namespace Game
             my_trade.UpdateClientStateIndex();
             if (setTradeItem.TradeSlot != (byte)TradeSlots.NonTraded && item.IsBindedNotWith(my_trade.GetTrader()))
             {
-                info.Status = TradeStatus.NotOnTaplist;
+                info.Status = TradeStatus.NotOnTapList;
                 info.TradeSlot = setTradeItem.TradeSlot;
                 SendTradeStatus(info);
                 return;

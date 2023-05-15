@@ -353,10 +353,7 @@ namespace Game
             ObjectManager.AddLocaleString(fields.Read<string>(3), locale, text.Text);
         }
 
-        public uint XPValue(Player player)
-        {
-            return XPValue(player, ContentTuningId, RewardXPDifficulty, RewardXPMultiplier, Expansion);
-        }
+        public uint XPValue(Player player) => XPValue(player, ContentTuningId, RewardXPDifficulty, RewardXPMultiplier, Expansion);
 
         public static uint XPValue(Player player, uint contentTuningId, uint xpDifficulty, float xpMultiplier = 1.0f, int expansion = -1)
         {
@@ -367,13 +364,20 @@ namespace Game
                 if (questXp == null || xpDifficulty >= 10)
                     return 0;
 
+                uint xp = questXp.Difficulty[xpDifficulty];
+
+                var contentTuning = CliDB.ContentTuningStorage.LookupByKey(contentTuningId);
+
+                if (contentTuning != null)
+                    xp *= (uint)contentTuning.QuestXpMultiplier;
+
                 int diffFactor = (int)(2 * (questLevel - player.GetLevel()) + 12);
                 if (diffFactor < 1)
                     diffFactor = 1;
                 else if (diffFactor > 10)
                     diffFactor = 10;
 
-                uint xp = (uint)(diffFactor * questXp.Difficulty[xpDifficulty] * xpMultiplier / 10);
+                xp = (uint)diffFactor * xp * (uint)(xpMultiplier / 10);
                 if (player.GetLevel() >= Global.ObjectMgr.GetMaxLevelForExpansion(PlayerConst.CurrentExpansion - 1) && player.GetSession().GetExpansion() == PlayerConst.CurrentExpansion && expansion >= 0 && expansion < (int)PlayerConst.CurrentExpansion)
                     xp = (uint)(xp / 9.0f);
 

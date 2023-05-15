@@ -2,6 +2,8 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable InconsistentNaming
+
 using System;
 using System.Numerics;
 using System.Collections.Generic;
@@ -12,6 +14,14 @@ namespace Game.Networking.Packets
 {
     public class SeasonInfo : ServerPacket
     {
+        public int MythicPlusDisplaySeasonID;
+        public int MythicPlusMilestoneSeasonID;
+        public int PreviousArenaSeason;
+        public int CurrentArenaSeason;
+        public int PvpSeasonID;
+        public int ConquestWeeklyProgressCurrencyID;
+        public bool WeeklyRewardChestsEnabled;
+
         public SeasonInfo() : base(ServerOpcodes.SeasonInfo) { }
 
         public override void Write()
@@ -25,30 +35,25 @@ namespace Game.Networking.Packets
             _worldPacket.WriteBit(WeeklyRewardChestsEnabled);
             _worldPacket.FlushBits();
         }
-
-        public int MythicPlusDisplaySeasonID;
-        public int MythicPlusMilestoneSeasonID;
-        public int PreviousArenaSeason;
-        public int CurrentArenaSeason;
-        public int PvpSeasonID;
-        public int ConquestWeeklyProgressCurrencyID;
-        public bool WeeklyRewardChestsEnabled;
     }
 
     public class AreaSpiritHealerQuery : ClientPacket
     {
+        public ObjectGuid HealerGuid;
+
         public AreaSpiritHealerQuery(WorldPacket packet) : base(packet) { }
 
         public override void Read()
         {
             HealerGuid = _worldPacket.ReadPackedGuid();
         }
-
-        public ObjectGuid HealerGuid;
     }
 
     public class AreaSpiritHealerTime : ServerPacket
     {
+        public ObjectGuid HealerGuid;
+        public uint TimeLeft;
+
         public AreaSpiritHealerTime() : base(ServerOpcodes.AreaSpiritHealerTime) { }
 
         public override void Write()
@@ -56,21 +61,18 @@ namespace Game.Networking.Packets
             _worldPacket.WritePackedGuid(HealerGuid);
             _worldPacket.WriteUInt32(TimeLeft);
         }
-
-        public ObjectGuid HealerGuid;
-        public uint TimeLeft;
     }
 
     public class AreaSpiritHealerQueue : ClientPacket
     {
+        public ObjectGuid HealerGuid;
+
         public AreaSpiritHealerQueue(WorldPacket packet) : base(packet) { }
 
         public override void Read()
         {
             HealerGuid = _worldPacket.ReadPackedGuid();
         }
-
-        public ObjectGuid HealerGuid;
     }
 
     public class HearthAndResurrect : ClientPacket
@@ -80,7 +82,7 @@ namespace Game.Networking.Packets
         public override void Read() { }
     }
 
-    class PVPLogDataRequest : ClientPacket
+    public class PVPLogDataRequest : ClientPacket
     {
         public PVPLogDataRequest(WorldPacket packet) : base(packet) { }
 
@@ -89,30 +91,35 @@ namespace Game.Networking.Packets
 
     public class PVPMatchStatisticsMessage : ServerPacket
     {
+        public PVPMatchStatistics Data;
+
         public PVPMatchStatisticsMessage() : base(ServerOpcodes.PvpMatchStatistics, ConnectionType.Instance) { }
 
         public override void Write()
         {
             Data.Write(_worldPacket);
         }
-
-        public PVPMatchStatistics Data;
     }
 
     public class BattlefieldStatusNone : ServerPacket
     {
+        public RideTicket Ticket = new();
+
         public BattlefieldStatusNone() : base(ServerOpcodes.BattlefieldStatusNone) { }
 
         public override void Write()
         {
             Ticket.Write(_worldPacket);
         }
-
-        public RideTicket Ticket = new();
     }
 
     public class BattlefieldStatusNeedConfirmation : ServerPacket
     {
+        public uint Timeout;
+        public uint Mapid;
+        public BattlefieldStatusHeader Hdr = new();
+        public byte Role;
+
         public BattlefieldStatusNeedConfirmation() : base(ServerOpcodes.BattlefieldStatusNeedConfirmation) { }
 
         public override void Write()
@@ -122,15 +129,17 @@ namespace Game.Networking.Packets
             _worldPacket.WriteUInt32(Timeout);
             _worldPacket.WriteUInt8(Role);
         }
-
-        public uint Timeout;
-        public uint Mapid;
-        public BattlefieldStatusHeader Hdr = new();
-        public byte Role;
     }
 
     public class BattlefieldStatusActive : ServerPacket
     {
+        public BattlefieldStatusHeader Hdr = new();
+        public uint ShutdownTimer;
+        public byte ArenaFaction;
+        public bool LeftEarly;
+        public uint StartTimer;
+        public uint Mapid;
+
         public BattlefieldStatusActive() : base(ServerOpcodes.BattlefieldStatusActive) { }
 
         public override void Write()
@@ -143,17 +152,18 @@ namespace Game.Networking.Packets
             _worldPacket.WriteBit(LeftEarly);
             _worldPacket.FlushBits();
         }
-
-        public BattlefieldStatusHeader Hdr = new();
-        public uint ShutdownTimer;
-        public byte ArenaFaction;
-        public bool LeftEarly;
-        public uint StartTimer;
-        public uint Mapid;
     }
 
     public class BattlefieldStatusQueued : ServerPacket
     {
+        public uint AverageWaitTime;
+        public BattlefieldStatusHeader Hdr = new();
+        public bool AsGroup;
+        public bool SuspendedQueue;
+        public bool EligibleForMatchmaking;
+        public uint WaitTime;
+        public int Unused920;
+
         public BattlefieldStatusQueued() : base(ServerOpcodes.BattlefieldStatusQueued) { }
 
         public override void Write()
@@ -167,18 +177,15 @@ namespace Game.Networking.Packets
             _worldPacket.WriteBit(SuspendedQueue);
             _worldPacket.FlushBits();
         }
-
-        public uint AverageWaitTime;
-        public BattlefieldStatusHeader Hdr = new();
-        public bool AsGroup;
-        public bool SuspendedQueue;
-        public bool EligibleForMatchmaking;
-        public uint WaitTime;
-        public int Unused920;
     }
 
     public class BattlefieldStatusFailed : ServerPacket
     {
+        public ulong QueueID;
+        public ObjectGuid ClientID;
+        public int Reason;
+        public RideTicket Ticket = new();
+
         public BattlefieldStatusFailed() : base(ServerOpcodes.BattlefieldStatusFailed) { }
 
         public override void Write()
@@ -188,15 +195,14 @@ namespace Game.Networking.Packets
             _worldPacket.WriteInt32(Reason);
             _worldPacket.WritePackedGuid(ClientID);
         }
-
-        public ulong QueueID;
-        public ObjectGuid ClientID;
-        public int Reason;
-        public RideTicket Ticket = new();
     }
 
-    class BattlemasterJoin : ClientPacket
+    public class BattlemasterJoin : ClientPacket
     {
+        public Array<ulong> QueueIDs = new(1);
+        public byte Roles;
+        public int[] BlacklistMap = new int[2];
+
         public BattlemasterJoin(WorldPacket packet) : base(packet) { }
 
         public override void Read()
@@ -209,14 +215,13 @@ namespace Game.Networking.Packets
             for (var i = 0; i < queueCount; ++i)
                 QueueIDs[i] = _worldPacket.ReadUInt64();
         }
-
-        public Array<ulong> QueueIDs = new(1);
-        public byte Roles;
-        public int[] BlacklistMap = new int[2];
     }
 
-    class BattlemasterJoinArena : ClientPacket
+    public class BattlemasterJoinArena : ClientPacket
     {
+        public byte TeamSizeIndex;
+        public byte Roles;
+
         public BattlemasterJoinArena(WorldPacket packet) : base(packet) { }
 
         public override void Read()
@@ -224,20 +229,20 @@ namespace Game.Networking.Packets
             TeamSizeIndex = _worldPacket.ReadUInt8();
             Roles = _worldPacket.ReadUInt8();
         }
-
-        public byte TeamSizeIndex;
-        public byte Roles;
     }
 
-    class BattlefieldLeave : ClientPacket
+    public class BattlefieldLeave : ClientPacket
     {
         public BattlefieldLeave(WorldPacket packet) : base(packet) { }
 
         public override void Read() { }
     }
 
-    class BattlefieldPort : ClientPacket
+    public class BattlefieldPort : ClientPacket
     {
+        public RideTicket Ticket = new();
+        public bool AcceptedInvite;
+
         public BattlefieldPort(WorldPacket packet) : base(packet) { }
 
         public override void Read()
@@ -245,25 +250,30 @@ namespace Game.Networking.Packets
             Ticket.Read(_worldPacket);
             AcceptedInvite = _worldPacket.HasBit();
         }
-
-        public RideTicket Ticket = new();
-        public bool AcceptedInvite;
     }
 
-    class BattlefieldListRequest : ClientPacket
+    public class BattlefieldListRequest : ClientPacket
     {
+        public int ListID;
+
         public BattlefieldListRequest(WorldPacket packet) : base(packet) { }
 
         public override void Read()
         {
             ListID = _worldPacket.ReadInt32();
         }
-
-        public int ListID;
     }
 
-    class BattlefieldList : ServerPacket
+    public class BattlefieldList : ServerPacket
     {
+        public ObjectGuid BattlemasterGuid;
+        public int BattlemasterListID;
+        public byte MinLevel;
+        public byte MaxLevel;
+        public List<int> Battlefields = new(); // Players cannot join a specific Battleground instance anymore - this is always empty
+        public bool PvpAnywhere;
+        public bool HasRandomWinToday;
+
         public BattlefieldList() : base(ServerOpcodes.BattlefieldList) { }
 
         public override void Write()
@@ -281,25 +291,24 @@ namespace Game.Networking.Packets
             _worldPacket.WriteBit(HasRandomWinToday);
             _worldPacket.FlushBits();
         }
-
-        public ObjectGuid BattlemasterGuid;
-        public int BattlemasterListID;
-        public byte MinLevel;
-        public byte MaxLevel;
-        public List<int> Battlefields = new();    // Players cannot join a specific Battleground instance anymore - this is always empty
-        public bool PvpAnywhere;
-        public bool HasRandomWinToday;
     }
 
-    class GetPVPOptionsEnabled : ClientPacket
+    public class GetPVPOptionsEnabled : ClientPacket
     {
         public GetPVPOptionsEnabled(WorldPacket packet) : base(packet) { }
 
         public override void Read() { }
     }
 
-    class PVPOptionsEnabled : ServerPacket
+    public class PVPOptionsEnabled : ServerPacket
     {
+        public bool WargameArenas;
+        public bool RatedArenas;
+        public bool WargameBattlegrounds;
+        public bool ArenaSkirmish;
+        public bool PugBattlegrounds;
+        public bool RatedBattlegrounds;
+
         public PVPOptionsEnabled() : base(ServerOpcodes.PvpOptionsEnabled) { }
 
         public override void Write()
@@ -312,36 +321,42 @@ namespace Game.Networking.Packets
             _worldPacket.WriteBit(ArenaSkirmish);
             _worldPacket.FlushBits();
         }
-
-        public bool WargameArenas;
-        public bool RatedArenas;
-        public bool WargameBattlegrounds;
-        public bool ArenaSkirmish;
-        public bool PugBattlegrounds;
-        public bool RatedBattlegrounds;
     }
 
-    class RequestBattlefieldStatus : ClientPacket
+    public class RequestBattlefieldStatus : ClientPacket
     {
         public RequestBattlefieldStatus(WorldPacket packet) : base(packet) { }
 
         public override void Read() { }
     }
 
-    class ReportPvPPlayerAFK : ClientPacket
+    public class ReportPvPPlayerAFK : ClientPacket
     {
+        public ObjectGuid Offender;
+
         public ReportPvPPlayerAFK(WorldPacket packet) : base(packet) { }
 
         public override void Read()
         {
             Offender = _worldPacket.ReadPackedGuid();
         }
-
-        public ObjectGuid Offender;
     }
 
-    class ReportPvPPlayerAFKResult : ServerPacket
+    public class ReportPvPPlayerAFKResult : ServerPacket
     {
+        public ObjectGuid Offender;
+        public byte NumPlayersIHaveReported = 0;
+        public byte NumBlackMarksOnOffender = 0;
+        public ResultCode Result = ResultCode.GenericFailure;
+
+        public enum ResultCode
+        {
+            Success           = 0,
+            GenericFailure    = 1, // there are more error codes but they are impossible to receive without modifying the client
+            AFKSystemEnabled  = 5,
+            AFKSystemDisabled = 6
+        }
+
         public ReportPvPPlayerAFKResult() : base(ServerOpcodes.ReportPvpPlayerAfkResult, ConnectionType.Instance) { }
 
         public override void Write()
@@ -351,23 +366,12 @@ namespace Game.Networking.Packets
             _worldPacket.WriteUInt8(NumBlackMarksOnOffender);
             _worldPacket.WriteUInt8(NumPlayersIHaveReported);
         }
-
-        public ObjectGuid Offender;
-        public byte NumPlayersIHaveReported = 0;
-        public byte NumBlackMarksOnOffender = 0;
-        public ResultCode Result = ResultCode.GenericFailure;
-
-        public enum ResultCode
-        {
-            Success = 0,
-            GenericFailure = 1, // there are more error codes but they are impossible to receive without modifying the client
-            AFKSystemEnabled = 5,
-            AFKSystemDisabled = 6
-        }
     }
 
-    class BattlegroundPlayerPositions : ServerPacket
+    public class BattlegroundPlayerPositions : ServerPacket
     {
+        public List<BattlegroundPlayerPosition> FlagCarriers = new();
+
         public BattlegroundPlayerPositions() : base(ServerOpcodes.BattlegroundPlayerPositions, ConnectionType.Instance) { }
 
         public override void Write()
@@ -376,47 +380,45 @@ namespace Game.Networking.Packets
             foreach (var pos in FlagCarriers)
                 pos.Write(_worldPacket);
         }
-
-        public List<BattlegroundPlayerPosition> FlagCarriers = new();
     }
 
-    class BattlegroundPlayerJoined : ServerPacket
+    public class BattlegroundPlayerJoined : ServerPacket
     {
+        public ObjectGuid Guid;
+
         public BattlegroundPlayerJoined() : base(ServerOpcodes.BattlegroundPlayerJoined, ConnectionType.Instance) { }
 
         public override void Write()
         {
             _worldPacket.WritePackedGuid(Guid);
         }
-
-        public ObjectGuid Guid;
     }
 
-    class BattlegroundPlayerLeft : ServerPacket
+    public class BattlegroundPlayerLeft : ServerPacket
     {
+        public ObjectGuid Guid;
+
         public BattlegroundPlayerLeft() : base(ServerOpcodes.BattlegroundPlayerLeft, ConnectionType.Instance) { }
 
         public override void Write()
         {
             _worldPacket.WritePackedGuid(Guid);
         }
-
-        public ObjectGuid Guid;
     }
 
-    class DestroyArenaUnit : ServerPacket
+    public class DestroyArenaUnit : ServerPacket
     {
+        public ObjectGuid Guid;
+
         public DestroyArenaUnit() : base(ServerOpcodes.DestroyArenaUnit) { }
 
         public override void Write()
         {
             _worldPacket.WritePackedGuid(Guid);
         }
-
-        public ObjectGuid Guid;
     }
 
-    class RequestPVPRewards : ClientPacket
+    public class RequestPVPRewards : ClientPacket
     {
         public RequestPVPRewards(WorldPacket packet) : base(packet) { }
 
@@ -425,13 +427,6 @@ namespace Game.Networking.Packets
 
     public class RequestPVPRewardsResponse : ServerPacket
     {
-        public RequestPVPRewardsResponse() : base(ServerOpcodes.RequestPvpRewardsResponse) { }
-
-        public override void Write()
-        {
-            throw new NotImplementedException();
-        }
-
         public uint RatedRewardPointsThisWeek;
         public uint ArenaRewardPointsThisWeek;
         public uint RatedMaxRewardPointsThisWeek;
@@ -442,17 +437,26 @@ namespace Game.Networking.Packets
         public uint MaxRewardPointsThisWeek;
         public uint RewardPointsThisWeek;
         public uint RandomMaxRewardPointsThisWeek;
+
+        public RequestPVPRewardsResponse() : base(ServerOpcodes.RequestPvpRewardsResponse) { }
+
+        public override void Write()
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    class RequestRatedPvpInfo : ClientPacket
+    public class RequestRatedPvpInfo : ClientPacket
     {
         public RequestRatedPvpInfo(WorldPacket packet) : base(packet) { }
 
         public override void Read() { }
     }
 
-    class RatedPvpInfo : ServerPacket
+    public class RatedPvpInfo : ServerPacket
     {
+        public BracketInfo[] Bracket = new BracketInfo[7];
+
         public RatedPvpInfo() : base(ServerOpcodes.RatedPvpInfo) { }
 
         public override void Write()
@@ -460,12 +464,27 @@ namespace Game.Networking.Packets
             foreach (BracketInfo bracket in Bracket)
                 bracket.Write(_worldPacket);
         }
-
-        BracketInfo[] Bracket = new BracketInfo[7];
     }
 
-    class PVPMatchInitialize : ServerPacket
+    public class PVPMatchInitialize : ServerPacket
     {
+        public enum MatchState
+        {
+            InProgress = 1,
+            Complete   = 3,
+            Inactive   = 4
+        }
+
+        public uint MapID;
+        public MatchState State = MatchState.Inactive;
+        public long StartTime;
+        public int Duration;
+        public RatedMatchDeserterPenalty DeserterPenalty;
+        public byte ArenaFaction;
+        public uint BattlemasterListID;
+        public bool Registered;
+        public bool AffectsRating;
+
         public PVPMatchInitialize() : base(ServerOpcodes.PvpMatchInitialize, ConnectionType.Instance) { }
 
         public override void Write()
@@ -484,27 +503,15 @@ namespace Game.Networking.Packets
             if (DeserterPenalty != null)
                 DeserterPenalty.Write(_worldPacket);
         }
-
-        public enum MatchState
-        {
-            InProgress = 1,
-            Complete = 3,
-            Inactive = 4
-        }
-
-        public uint MapID;
-        public MatchState State = MatchState.Inactive;
-        public long StartTime;
-        public int Duration;
-        public RatedMatchDeserterPenalty DeserterPenalty;
-        public byte ArenaFaction;
-        public uint BattlemasterListID;
-        public bool Registered;
-        public bool AffectsRating;
     }
 
-    class PVPMatchComplete : ServerPacket
+    public class PVPMatchComplete : ServerPacket
     {
+        public byte Winner;
+        public int Duration;
+        public PVPMatchStatistics LogData;
+        public uint SoloShuffleStatus;
+
         public PVPMatchComplete() : base(ServerOpcodes.PvpMatchComplete, ConnectionType.Instance) { }
 
         public override void Write()
@@ -518,14 +525,9 @@ namespace Game.Networking.Packets
             if (LogData != null)
                 LogData.Write(_worldPacket);
         }
-
-        public byte Winner;
-        public int Duration;
-        public PVPMatchStatistics LogData;
-        public uint SoloShuffleStatus;
     }
 
-    class UpdateCapturePoint : ServerPacket
+    public class UpdateCapturePoint : ServerPacket
     {
         public BattlegroundCapturePointInfo CapturePointInfo;
 
@@ -537,7 +539,7 @@ namespace Game.Networking.Packets
         }
     }
 
-    class CapturePointRemoved : ServerPacket
+    public class CapturePointRemoved : ServerPacket
     {
         public ObjectGuid CapturePointGUID;
 
@@ -553,7 +555,7 @@ namespace Game.Networking.Packets
         }
     }
 
-    class RequestCrowdControlSpell : ClientPacket
+    public class RequestCrowdControlSpell : ClientPacket
     {
         public ObjectGuid PlayerGUID;
         public RequestCrowdControlSpell(WorldPacket packet) : base(packet) { }
@@ -564,7 +566,7 @@ namespace Game.Networking.Packets
         }
     }
 
-    class ArenaCrowdControlSpellResult : ServerPacket
+    public class ArenaCrowdControlSpellResult : ServerPacket
     {
         public ObjectGuid PlayerGUID;
         public int SpellID;
@@ -579,7 +581,7 @@ namespace Game.Networking.Packets
     }
 
     //Structs
-    struct BracketInfo
+    public struct BracketInfo
     {
         public int PersonalRating;
         public int Ranking;
@@ -628,7 +630,7 @@ namespace Game.Networking.Packets
         }
     }
 
-    class RatedMatchDeserterPenalty
+    public class RatedMatchDeserterPenalty
     {
         public int PersonalRatingChange;
         public int QueuePenaltySpellID;
@@ -650,35 +652,37 @@ namespace Game.Networking.Packets
 
         public class RatingData
         {
+
+            public uint[] PreMatch = new uint[2];
+            public uint[] PostMatch = new uint[2];
+            public uint[] PreMatchMMR = new uint[2];
+
             public void Write(WorldPacket data)
             {
-                foreach (var id in Prematch)
+                foreach (var id in PreMatch)
                     data.WriteUInt32(id);
 
-                foreach (var id in Postmatch)
+                foreach (var id in PostMatch)
                     data.WriteUInt32(id);
 
-                foreach (var id in PrematchMMR)
+                foreach (var id in PreMatchMMR)
                     data.WriteUInt32(id);
             }
 
-            public uint[] Prematch = new uint[2];
-            public uint[] Postmatch = new uint[2];
-            public uint[] PrematchMMR = new uint[2];
         }
 
         public struct HonorData
         {
+            public uint HonorKills;
+            public uint Deaths;
+            public uint ContributionPoints;
+
             public void Write(WorldPacket data)
             {
                 data.WriteUInt32(HonorKills);
                 data.WriteUInt32(Deaths);
                 data.WriteUInt32(ContributionPoints);
             }
-
-            public uint HonorKills;
-            public uint Deaths;
-            public uint ContributionPoints;
         }
 
         public struct PVPMatchPlayerPVPStat
@@ -697,11 +701,31 @@ namespace Game.Networking.Packets
                 data.WriteInt32(PvpStatID);
                 data.WriteUInt32(PvpStatValue);
             }
-
         }
 
         public class PVPMatchPlayerStatistics
         {
+            public ObjectGuid PlayerGUID;
+            public uint Kills;
+            public byte Faction;
+            public bool IsInWorld;
+            public HonorData? Honor;
+            public uint DamageDone;
+            public uint HealingDone;
+            public uint? PreMatchRating;
+            public int? RatingChange;
+            public uint? PreMatchMMR;
+            public int? MmrChange;
+            public uint? PostMatchMMR;
+            public List<PVPMatchPlayerPVPStat> Stats = new();
+            public int PrimaryTalentTree;
+            public int Sex;
+            public Race PlayerRace;
+            public int PlayerClass;
+            public int CreatureID;
+            public int HonorLevel;
+            public int Role;
+
             public void Write(WorldPacket data)
             {
                 data.WritePackedGuid(PlayerGUID);
@@ -727,6 +751,7 @@ namespace Game.Networking.Packets
                 data.WriteBit(RatingChange.HasValue);
                 data.WriteBit(PreMatchMMR.HasValue);
                 data.WriteBit(MmrChange.HasValue);
+                // data.WriteBit(PostMatchMMR.HasValue); // missing?
                 data.FlushBits();
 
                 if (Honor.HasValue)
@@ -743,33 +768,17 @@ namespace Game.Networking.Packets
 
                 if (MmrChange.HasValue)
                     data.WriteInt32(MmrChange.Value);
-            }
 
-            public ObjectGuid PlayerGUID;
-            public uint Kills;
-            public byte Faction;
-            public bool IsInWorld;
-            public HonorData? Honor;
-            public uint DamageDone;
-            public uint HealingDone;
-            public uint? PreMatchRating;
-            public int? RatingChange;
-            public uint? PreMatchMMR;
-            public int? MmrChange;
-            public List<PVPMatchPlayerPVPStat> Stats = new();
-            public int PrimaryTalentTree;
-            public int Sex;
-            public Race PlayerRace;
-            public int PlayerClass;
-            public int CreatureID;
-            public int HonorLevel;
-            public int Role;
+                if (PostMatchMMR.HasValue)
+                    data.WriteUInt32(PostMatchMMR.Value);
+            }
         }
 
         public void Write(WorldPacket data)
         {
             data.WriteBit(Ratings != null);
             data.WriteInt32(Statistics.Count);
+
             foreach (var count in PlayerCount)
                 data.WriteInt8(count);
 
@@ -783,6 +792,15 @@ namespace Game.Networking.Packets
 
     public class BattlefieldStatusHeader
     {
+        public RideTicket Ticket;
+        public List<ulong> QueueID = new();
+        public byte RangeMin;
+        public byte RangeMax;
+        public byte TeamSize;
+        public uint InstanceID;
+        public bool RegisteredMatch;
+        public bool TournamentRules;
+
         public void Write(WorldPacket data)
         {
             Ticket.Write(data);
@@ -799,19 +817,15 @@ namespace Game.Networking.Packets
             data.WriteBit(TournamentRules);
             data.FlushBits();
         }
-
-        public RideTicket Ticket;
-        public List<ulong> QueueID = new();
-        public byte RangeMin;
-        public byte RangeMax;
-        public byte TeamSize;
-        public uint InstanceID;
-        public bool RegisteredMatch;
-        public bool TournamentRules;
     }
 
     public struct BattlegroundPlayerPosition
     {
+        public ObjectGuid Guid;
+        public Vector2 Pos;
+        public sbyte IconID;
+        public sbyte ArenaSlot;
+
         public void Write(WorldPacket data)
         {
             data.WritePackedGuid(Guid);
@@ -819,14 +833,9 @@ namespace Game.Networking.Packets
             data.WriteInt8(IconID);
             data.WriteInt8(ArenaSlot);
         }
-
-        public ObjectGuid Guid;
-        public Vector2 Pos;
-        public sbyte IconID;
-        public sbyte ArenaSlot;
     }
 
-    class BattlegroundCapturePointInfo
+    public class BattlegroundCapturePointInfo
     {
         public ObjectGuid Guid;
         public Vector2 Pos;

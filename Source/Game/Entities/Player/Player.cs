@@ -3688,7 +3688,7 @@ namespace Game.Entities
 
         public void BuildPlayerRepop()
         {
-            PreRessurect packet = new();
+            PreResurrect packet = new();
             packet.PlayerGUID = GetGUID();
             SendPacket(packet);
 
@@ -4195,7 +4195,7 @@ namespace Game.Entities
             if (pvp)
             {
                 if (!WorldConfig.GetBoolValue(WorldCfg.DeathCorpseReclaimDelayPvp))
-                    return PlayerConst.copseReclaimDelay[0];
+                    return PlayerConst.CorpseReclaimDelay[0];
             }
             else if (!WorldConfig.GetBoolValue(WorldCfg.DeathCorpseReclaimDelayPve))
                 return 0;
@@ -4204,7 +4204,7 @@ namespace Game.Entities
             // 0..2 full period
             // should be ceil(x)-1 but not floor(x)
             ulong count = (ulong)((now < m_deathExpireTime - 1) ? (m_deathExpireTime - 1 - now) / PlayerConst.DeathExpireStep : 0);
-            return PlayerConst.copseReclaimDelay[count];
+            return PlayerConst.CorpseReclaimDelay[count];
         }
         void UpdateCorpseReclaimDelay()
         {
@@ -4250,7 +4250,7 @@ namespace Game.Entities
                         count = PlayerConst.MaxDeathCount - 1;
                 }
 
-                long expected_time = corpse.GetGhostTime() + PlayerConst.copseReclaimDelay[count];
+                long expected_time = corpse.GetGhostTime() + PlayerConst.CorpseReclaimDelay[count];
                 long now = GameTime.GetGameTime();
 
                 if (now >= expected_time)
@@ -4739,8 +4739,8 @@ namespace Game.Entities
 
         void UpdateWarModeAuras()
         {
-            uint auraInside = PlayerConst.WarmodeEnlistedSpellInside;
-            uint auraOutside = PlayerConst.WarmodeEnlistedSpellOutside;
+            uint auraInside = PlayerConst.WarModeEnlistedSpellInside;
+            uint auraOutside = PlayerConst.WarModeEnlistedSpellOutside;
 
             if (IsWarModeDesired())
             {

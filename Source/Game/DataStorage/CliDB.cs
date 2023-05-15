@@ -389,7 +389,7 @@ namespace Game.DataStorage
             foreach (var entry in TaxiPathNodeStorage.Values)
                 TaxiPathNodesByPath[entry.PathID][entry.NodeIndex] = entry;
 
-            var taxiMaskSize = ((TaxiNodesStorage.GetNumRows() - 1) / 8) + 1;
+            var taxiMaskSize = (TaxiNodesStorage.GetNumRows() - 1) / 8 + 1;
             TaxiNodesMask = new byte[taxiMaskSize];
             OldContinentsNodesMask = new byte[taxiMaskSize];
             HordeTaxiNodesMask = new byte[taxiMaskSize];
@@ -1123,42 +1123,24 @@ namespace Game.DataStorage
         #endregion
 
         #region Helper Methods
-        public static float GetGameTableColumnForClass(dynamic row, Class class_)
+        public static float GetGameTableColumnForClass(dynamic row, Class class_) => class_ switch
         {
-            switch (class_)
-            {
-                case Class.Warrior:
-                    return row.Warrior;
-                case Class.Paladin:
-                    return row.Paladin;
-                case Class.Hunter:
-                    return row.Hunter;
-                case Class.Rogue:
-                    return row.Rogue;
-                case Class.Priest:
-                    return row.Priest;
-                case Class.Deathknight:
-                    return row.DeathKnight;
-                case Class.Shaman:
-                    return row.Shaman;
-                case Class.Mage:
-                    return row.Mage;
-                case Class.Warlock:
-                    return row.Warlock;
-                case Class.Monk:
-                    return row.Monk;
-                case Class.Druid:
-                    return row.Druid;
-                case Class.DemonHunter:
-                    return row.DemonHunter;
-                case Class.Evoker:
-                    return row.Evoker;
-                case Class.Adventurer:
-                    return row.Adventurer;
-            }
-
-            return 0.0f;
-        }
+            Class.Warrior     => row.Warrior,
+            Class.Paladin     => row.Paladin,
+            Class.Hunter      => row.Hunter,
+            Class.Rogue       => row.Rogue,
+            Class.Priest      => row.Priest,
+            Class.Deathknight => row.DeathKnight,
+            Class.Shaman      => row.Shaman,
+            Class.Mage        => row.Mage,
+            Class.Warlock     => row.Warlock,
+            Class.Monk        => row.Monk,
+            Class.Druid       => row.Druid,
+            Class.DemonHunter => row.DemonHunter,
+            Class.Evoker      => row.Evoker,
+            Class.Adventurer  => row.Adventurer,
+            _ => 0.0f
+        };
 
         public static float GetSpellScalingColumnForClass(GtSpellScalingRecord row, int class_)
         {
@@ -1216,10 +1198,7 @@ namespace Game.DataStorage
             return 0.0f;
         }
 
-        public static float GetBattlePetXPPerLevel(GtBattlePetXPRecord row)
-        {
-            return row.Wins * row.Xp;
-        }
+        public static float GetBattlePetXPPerLevel(GtBattlePetXPRecord row) => row.Wins * row.Xp;
 
         public static float GetIlvlStatMultiplier(GtGenericMultByILvlRecord row, InventoryType invType)
         {

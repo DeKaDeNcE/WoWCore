@@ -2401,7 +2401,7 @@ namespace Framework.Constants
         Max
     }
 
-    public enum UiMapType : uint
+    public enum UiMapType : byte
     {
         Cosmic = 0,
         World = 1,

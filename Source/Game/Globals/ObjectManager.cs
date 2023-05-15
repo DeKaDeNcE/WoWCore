@@ -5344,7 +5344,7 @@ namespace Game
         {
             return _creatureTemplateSparringStorage.LookupByKey(entry);
         }
-        
+
         public CreatureMovementData GetCreatureMovementOverride(ulong spawnId)
         {
             return creatureMovementOverrides.LookupByKey(spawnId);

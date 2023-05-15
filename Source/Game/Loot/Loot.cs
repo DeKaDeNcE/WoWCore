@@ -241,7 +241,7 @@ namespace Game.Loots
 
             foreach (var (playerGuid, roll) in m_rollVoteMap)
             {
-                if (roll.Vote != RollVote.NotEmitedYet)
+                if (roll.Vote != RollVote.NotEmittedYet)
                     continue;
 
                 Player player = Global.ObjAccessor.GetPlayer(m_map, playerGuid);
@@ -258,7 +258,7 @@ namespace Game.Loots
             ItemTemplate itemTemplate = Global.ObjectMgr.GetItemTemplate(m_lootItem.itemid);
             foreach (var (playerGuid, roll) in m_rollVoteMap)
             {
-                if (roll.Vote != RollVote.NotEmitedYet)
+                if (roll.Vote != RollVote.NotEmittedYet)
                     continue;
 
                 Player player = Global.ObjAccessor.GetPlayer(m_map, playerGuid);
@@ -277,6 +277,7 @@ namespace Game.Loots
 
                 FillPacket(startLootRoll.Item);
                 startLootRoll.Item.UIType = LootSlotType.RollOngoing;
+                startLootRoll.DungeonEncounterID = (int)m_loot.GetDungeonEncounterId();
 
                 player.SendPacket(startLootRoll);
             }
@@ -298,6 +299,7 @@ namespace Game.Loots
             lootAllPassed.LootObj = m_loot.GetGUID();
             FillPacket(lootAllPassed.Item);
             lootAllPassed.Item.UIType = LootSlotType.AllowLoot;
+            lootAllPassed.DungeonEncounterID = (int)m_loot.GetDungeonEncounterId();
             lootAllPassed.Write();
 
             foreach (var (playerGuid, roll) in m_rollVoteMap)
@@ -324,6 +326,7 @@ namespace Game.Loots
             lootRoll.Autopassed = false;
             FillPacket(lootRoll.Item);
             lootRoll.Item.UIType = LootSlotType.RollOngoing;
+            lootRoll.DungeonEncounterID = (int)m_loot.GetDungeonEncounterId();
             lootRoll.Write();
 
             foreach (var (playerGuid, roll) in m_rollVoteMap)
@@ -363,7 +366,7 @@ namespace Game.Loots
                 {
                     case RollVote.Pass:
                         break;
-                    case RollVote.NotEmitedYet:
+                    case RollVote.NotEmittedYet:
                     case RollVote.NotValid:
                         SendRoll(playerGuid, 0, RollVote.Pass, targetGuid);
                         break;
@@ -380,6 +383,7 @@ namespace Game.Loots
             lootRollWon.RollType = rollType;
             FillPacket(lootRollWon.Item);
             lootRollWon.Item.UIType = LootSlotType.Locked;
+            lootRollWon.DungeonEncounterID = (int)m_loot.GetDungeonEncounterId();
             lootRollWon.MainSpec = true;    // offspec rolls not implemented
             lootRollWon.Write();
 
@@ -442,7 +446,7 @@ namespace Game.Loots
                         continue;
                     }
                     // initialize player vote map
-                    m_rollVoteMap[allowedLooter].Vote = plr.GetPassOnGroupLoot() ? RollVote.Pass : RollVote.NotEmitedYet;
+                    m_rollVoteMap[allowedLooter].Vote = plr.GetPassOnGroupLoot() ? RollVote.Pass : RollVote.NotEmittedYet;
                     if (!plr.GetPassOnGroupLoot())
                         plr.AddLootRoll(this);
 
@@ -567,7 +571,7 @@ namespace Game.Loots
                     // Explicitly passing excludes a player from winning loot, so no action required.
                     case RollVote.Pass:
                         break;
-                    case RollVote.NotEmitedYet:
+                    case RollVote.NotEmittedYet:
                         ++notVoted;
                         break;
                 }

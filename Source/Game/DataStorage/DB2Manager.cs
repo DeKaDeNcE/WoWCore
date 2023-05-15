@@ -243,7 +243,7 @@ namespace Game.DataStorage
             foreach (CurvePointRecord curvePoint in CurvePointStorage.Values)
             {
                 if (CurveStorage.ContainsKey(curvePoint.CurveID))
-                    _curvePoints.Add(curvePoint.CurveID, curvePoint);
+                    _curvePoints.Add((uint)curvePoint.CurveID, curvePoint);
             }
 
             foreach (var key in _curvePoints.Keys.ToList())

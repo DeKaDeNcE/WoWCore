@@ -144,7 +144,7 @@ namespace Game.Networking.Packets
                     _worldPacket.WritePackedGuid(PartnerAccount);
                     break;
                 case TradeStatus.WrongRealm:
-                case TradeStatus.NotOnTaplist:
+                case TradeStatus.NotOnTapList:
                     _worldPacket.WriteUInt8(TradeSlot);
                     break;
                 case TradeStatus.NotEnoughCurrency:

@@ -4269,7 +4269,7 @@ namespace Game.Maps
                         Player player = _GetScriptPlayerSourceOrTarget(source, target, step.script);
                         if (player)
                         {
-                            if (step.script.KillCredit.Flags.HasAnyFlag(eScriptFlags.KillcreditRewardGroup))
+                            if (step.script.KillCredit.Flags.HasAnyFlag(eScriptFlags.KillCreditRewardGroup))
                                 player.RewardPlayerAndGroupAtEvent(step.script.KillCredit.CreatureEntry, player);
                             else
                                 player.KilledMonsterCredit(step.script.KillCredit.CreatureEntry, ObjectGuid.Empty);
@@ -4371,7 +4371,7 @@ namespace Game.Maps
                     case ScriptCommands.RemoveAura:
                     {
                         // Source (datalong2 != 0) or target (datalong2 == 0) must be Unit.
-                        bool bReverse = step.script.RemoveAura.Flags.HasAnyFlag(eScriptFlags.RemoveauraReverse);
+                        bool bReverse = step.script.RemoveAura.Flags.HasAnyFlag(eScriptFlags.RemoveAuraReverse);
                         Unit unit = _GetScriptUnit(bReverse ? source : target, bReverse, step.script);
                         if (unit)
                             unit.RemoveAurasDueToSpell(step.script.RemoveAura.SpellID);
@@ -4390,23 +4390,23 @@ namespace Game.Maps
                         // source/target cast spell at target/source (script.datalong2: 0: s.t 1: s.s 2: t.t 3: t.s
                         switch (step.script.CastSpell.Flags)
                         {
-                            case eScriptFlags.CastspellSourceToTarget: // source . target
+                            case eScriptFlags.CastSpellSourceToTarget: // source . target
                                 uSource = source;
                                 uTarget = target;
                                 break;
-                            case eScriptFlags.CastspellSourceToSource: // source . source
+                            case eScriptFlags.CastSpellSourceToSource: // source . source
                                 uSource = source;
                                 uTarget = uSource;
                                 break;
-                            case eScriptFlags.CastspellTargetToTarget: // target . target
+                            case eScriptFlags.CastSpellTargetToTarget: // target . target
                                 uSource = target;
                                 uTarget = uSource;
                                 break;
-                            case eScriptFlags.CastspellTargetToSource: // target . source
+                            case eScriptFlags.CastSpellTargetToSource: // target . source
                                 uSource = target;
                                 uTarget = source;
                                 break;
-                            case eScriptFlags.CastspellSearchCreature: // source . creature with entry
+                            case eScriptFlags.CastSpellSearchCreature: // source . creature with entry
                                 uSource = source;
                                 uTarget = uSource?.FindNearestCreature((uint)Math.Abs(step.script.CastSpell.CreatureEntry), step.script.CastSpell.SearchRadius);
                                 break;
@@ -4425,7 +4425,7 @@ namespace Game.Maps
                         }
 
                         bool triggered = ((int)step.script.CastSpell.Flags != 4)
-                            ? step.script.CastSpell.CreatureEntry.HasAnyFlag((int)eScriptFlags.CastspellTriggered)
+                            ? step.script.CastSpell.CreatureEntry.HasAnyFlag((int)eScriptFlags.CastSpellTriggered)
                             : step.script.CastSpell.CreatureEntry < 0;
                         uSource.CastSpell(uTarget, step.script.CastSpell.SpellID, triggered);
                         break;
@@ -4438,7 +4438,7 @@ namespace Game.Maps
                         {
                             // PlaySound.Flags bitmask: 0/1=anyone/target
                             Player player2 = null;
-                            if (step.script.PlaySound.Flags.HasAnyFlag(eScriptFlags.PlaysoundTargetPlayer))
+                            if (step.script.PlaySound.Flags.HasAnyFlag(eScriptFlags.PlaySoundTargetPlayer))
                             {
                                 // Target must be Player.
                                 player2 = _GetScriptPlayer(target, false, step.script);
@@ -4447,7 +4447,7 @@ namespace Game.Maps
                             }
 
                             // PlaySound.Flags bitmask: 0/2=without/with distance dependent
-                            if (step.script.PlaySound.Flags.HasAnyFlag(eScriptFlags.PlaysoundDistanceSound))
+                            if (step.script.PlaySound.Flags.HasAnyFlag(eScriptFlags.PlaySoundDistanceSound))
                                 obj.PlayDistanceSound(step.script.PlaySound.SoundID, player2);
                             else
                                 obj.PlayDirectSound(step.script.PlaySound.SoundID, player2);
@@ -4499,7 +4499,7 @@ namespace Game.Maps
                         }
                         break;
                     }
-                    case ScriptCommands.CallscriptToUnit:
+                    case ScriptCommands.CallScriptToUnit:
                     {
                         if (step.script.CallScript.CreatureEntry == 0)
                         {

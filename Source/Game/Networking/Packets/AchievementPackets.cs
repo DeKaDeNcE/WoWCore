@@ -2,6 +2,8 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable InconsistentNaming
+
 using System;
 using System.Collections.Generic;
 using Framework.Constants;
@@ -11,32 +13,36 @@ namespace Game.Networking.Packets
 {
     public class AllAchievementData : ServerPacket
     {
+        public AllAchievements Data = new();
+
         public AllAchievementData() : base(ServerOpcodes.AllAchievementData, ConnectionType.Instance) { }
 
         public override void Write()
         {
             Data.Write(_worldPacket);
         }
-
-        public AllAchievements Data = new();
     }
 
-    class AllAccountCriteria : ServerPacket
+    public class AllAccountCriteria : ServerPacket
     {
+        public List<CriteriaProgressPkt> Progress = new();
+
         public AllAccountCriteria() : base(ServerOpcodes.AllAccountCriteria, ConnectionType.Instance) { }
 
         public override void Write()
         {
             _worldPacket.WriteInt32(Progress.Count);
+
             foreach (var progress in Progress)
                 progress.Write(_worldPacket);
         }
-
-        public List<CriteriaProgressPkt> Progress = new();
     }
 
     public class RespondInspectAchievements : ServerPacket
     {
+        public ObjectGuid Player;
+        public AllAchievements Data = new();
+
         public RespondInspectAchievements() : base(ServerOpcodes.RespondInspectAchievements, ConnectionType.Instance) { }
 
         public override void Write()
@@ -44,13 +50,19 @@ namespace Game.Networking.Packets
             _worldPacket.WritePackedGuid(Player);
             Data.Write(_worldPacket);
         }
-
-        public ObjectGuid Player;
-        public AllAchievements Data = new();
     }
 
     public class CriteriaUpdate : ServerPacket
     {
+        public uint CriteriaID;
+        public ulong Quantity;
+        public ObjectGuid PlayerGUID;
+        public uint Flags;
+        public long CurrentTime;
+        public long ElapsedTime;
+        public long CreationTime;
+        public ulong? RafAcceptanceID;
+
         public CriteriaUpdate() : base(ServerOpcodes.CriteriaUpdate, ConnectionType.Instance) { }
 
         public override void Write()
@@ -68,43 +80,37 @@ namespace Game.Networking.Packets
             if (RafAcceptanceID.HasValue)
                 _worldPacket.WriteUInt64(RafAcceptanceID.Value);
         }
-
-        public uint CriteriaID;
-        public ulong Quantity;
-        public ObjectGuid PlayerGUID;
-        public uint Flags;
-        public long CurrentTime;
-        public long ElapsedTime;
-        public long CreationTime;
-        public ulong? RafAcceptanceID;
     }
 
-    class AccountCriteriaUpdate : ServerPacket
+    public class AccountCriteriaUpdate : ServerPacket
     {
+        public CriteriaProgressPkt Progress;
+
         public AccountCriteriaUpdate() : base(ServerOpcodes.AccountCriteriaUpdate) { }
 
         public override void Write()
         {
             Progress.Write(_worldPacket);
         }
-
-        public CriteriaProgressPkt Progress;
     }
 
     public class CriteriaDeleted : ServerPacket
     {
+        public uint CriteriaID;
+
         public CriteriaDeleted() : base(ServerOpcodes.CriteriaDeleted, ConnectionType.Instance) { }
 
         public override void Write()
         {
             _worldPacket.WriteUInt32(CriteriaID);
         }
-
-        public uint CriteriaID;
     }
 
     public class AchievementDeleted : ServerPacket
     {
+        public uint AchievementID;
+        public uint Immunities; // this is just garbage, not used by client
+
         public AchievementDeleted() : base(ServerOpcodes.AchievementDeleted, ConnectionType.Instance) { }
 
         public override void Write()
@@ -112,13 +118,18 @@ namespace Game.Networking.Packets
             _worldPacket.WriteUInt32(AchievementID);
             _worldPacket.WriteUInt32(Immunities);
         }
-
-        public uint AchievementID;
-        public uint Immunities; // this is just garbage, not used by client
     }
 
     public class AchievementEarned : ServerPacket
     {
+        public ObjectGuid Earner;
+        public uint EarnerNativeRealm;
+        public uint EarnerVirtualRealm;
+        public uint AchievementID;
+        public long Time;
+        public bool Initial;
+        public ObjectGuid Sender;
+
         public AchievementEarned() : base(ServerOpcodes.AchievementEarned, ConnectionType.Instance) { }
 
         public override void Write()
@@ -132,18 +143,15 @@ namespace Game.Networking.Packets
             _worldPacket.WriteBit(Initial);
             _worldPacket.FlushBits();
         }
-
-        public ObjectGuid Earner;
-        public uint EarnerNativeRealm;
-        public uint EarnerVirtualRealm;
-        public uint AchievementID;
-        public long Time;
-        public bool Initial;
-        public ObjectGuid Sender;
     }
 
     public class BroadcastAchievement  : ServerPacket
     {
+        public ObjectGuid PlayerGUID;
+        public string Name = "";
+        public uint AchievementID;
+        public bool GuildAchievement;
+
         public BroadcastAchievement() : base(ServerOpcodes.BroadcastAchievement) { }
 
         public override void Write()
@@ -154,15 +162,12 @@ namespace Game.Networking.Packets
             _worldPacket.WriteUInt32(AchievementID);
             _worldPacket.WriteString(Name);
         }
-
-        public ObjectGuid PlayerGUID;
-        public string Name = "";
-        public uint AchievementID;
-        public bool GuildAchievement;
     }
 
     public class GuildCriteriaUpdate : ServerPacket
     {
+        public List<GuildCriteriaProgress> Progress = new();
+
         public GuildCriteriaUpdate() : base(ServerOpcodes.GuildCriteriaUpdate) { }
 
         public override void Write()
@@ -181,12 +186,13 @@ namespace Game.Networking.Packets
                 _worldPacket.WriteInt32(progress.Flags);
             }
         }
-
-        public List<GuildCriteriaProgress> Progress = new();
     }
 
     public class GuildCriteriaDeleted : ServerPacket
     {
+        public ObjectGuid GuildGUID;
+        public uint CriteriaID;
+
         public GuildCriteriaDeleted() : base(ServerOpcodes.GuildCriteriaDeleted) { }
 
         public override void Write()
@@ -194,25 +200,26 @@ namespace Game.Networking.Packets
             _worldPacket.WritePackedGuid(GuildGUID);
             _worldPacket.WriteUInt32(CriteriaID);
         }
-
-        public ObjectGuid GuildGUID;
-        public uint CriteriaID;
     }
 
     public class GuildSetFocusedAchievement : ClientPacket
     {
+        public uint AchievementID;
+
         public GuildSetFocusedAchievement(WorldPacket packet) : base(packet) { }
 
         public override void Read()
         {
             AchievementID = _worldPacket.ReadUInt32();
         }
-
-        public uint AchievementID;
     }
 
     public class GuildAchievementDeleted : ServerPacket
     {
+        public ObjectGuid GuildGUID;
+        public uint AchievementID;
+        public long TimeDeleted;
+
         public GuildAchievementDeleted() : base(ServerOpcodes.GuildAchievementDeleted) { }
 
         public override void Write()
@@ -221,14 +228,14 @@ namespace Game.Networking.Packets
             _worldPacket.WriteUInt32(AchievementID);
             _worldPacket.WritePackedTime(TimeDeleted);
         }
-
-        public ObjectGuid GuildGUID;
-        public uint AchievementID;
-        public long TimeDeleted;
     }
 
     public class GuildAchievementEarned : ServerPacket
     {
+        public uint AchievementID;
+        public ObjectGuid GuildGUID;
+        public long TimeEarned;
+
         public GuildAchievementEarned() : base(ServerOpcodes.GuildAchievementEarned) { }
 
         public override void Write()
@@ -237,14 +244,12 @@ namespace Game.Networking.Packets
             _worldPacket.WriteUInt32(AchievementID);
             _worldPacket.WritePackedTime(TimeEarned);
         }
-
-        public uint AchievementID;
-        public ObjectGuid GuildGUID;
-        public long TimeEarned;
     }
 
     public class AllGuildAchievements : ServerPacket
     {
+        public List<EarnedAchievement> Earned = new();
+
         public AllGuildAchievements() : base(ServerOpcodes.AllGuildAchievements) { }
 
         public override void Write()
@@ -254,12 +259,14 @@ namespace Game.Networking.Packets
             foreach (EarnedAchievement earned in Earned)
                 earned.Write(_worldPacket);
         }
-
-        public List<EarnedAchievement> Earned = new();
     }
 
-    class GuildGetAchievementMembers : ClientPacket
+    public class GuildGetAchievementMembers : ClientPacket
     {
+        public ObjectGuid PlayerGUID;
+        public ObjectGuid GuildGUID;
+        public uint AchievementID;
+
         public GuildGetAchievementMembers(WorldPacket packet) : base(packet) { }
 
         public override void Read()
@@ -268,14 +275,14 @@ namespace Game.Networking.Packets
             GuildGUID = _worldPacket.ReadPackedGuid();
             AchievementID = _worldPacket.ReadUInt32();
         }
-
-        public ObjectGuid PlayerGUID;
-        public ObjectGuid GuildGUID;
-        public uint AchievementID;
     }
 
-    class GuildAchievementMembers : ServerPacket
+    public class GuildAchievementMembers : ServerPacket
     {
+        public ObjectGuid GuildGUID;
+        public uint AchievementID;
+        public List<ObjectGuid> Member = new();
+
         public GuildAchievementMembers() : base(ServerOpcodes.GuildAchievementMembers) { }
 
         public override void Write()
@@ -286,15 +293,17 @@ namespace Game.Networking.Packets
             foreach (ObjectGuid guid in Member)
                 _worldPacket.WritePackedGuid(guid);
         }
-
-        public ObjectGuid GuildGUID;
-        public uint AchievementID;
-        public List<ObjectGuid> Member = new();
     }
 
     //Structs
     public struct EarnedAchievement
     {
+        public uint Id;
+        public long Date;
+        public ObjectGuid Owner;
+        public uint VirtualRealmAddress;
+        public uint NativeRealmAddress;
+
         public void Write(WorldPacket data)
         {
             data.WriteUInt32(Id);
@@ -303,16 +312,19 @@ namespace Game.Networking.Packets
             data.WriteUInt32(VirtualRealmAddress);
             data.WriteUInt32(NativeRealmAddress);
         }
-
-        public uint Id;
-        public long Date;
-        public ObjectGuid Owner;
-        public uint VirtualRealmAddress;
-        public uint NativeRealmAddress;
     }
 
     public struct CriteriaProgressPkt
     {
+        public uint Id;
+        public ulong Quantity;
+        public ObjectGuid Player;
+        public uint Flags;
+        public long Date;
+        public long TimeFromStart;
+        public long TimeFromCreate;
+        public ulong? RafAcceptanceID;
+
         public void Write(WorldPacket data)
         {
             data.WriteUInt32(Id);
@@ -328,15 +340,6 @@ namespace Game.Networking.Packets
             if (RafAcceptanceID.HasValue)
                 data.WriteUInt64(RafAcceptanceID.Value);
         }
-
-        public uint Id;
-        public ulong Quantity;
-        public ObjectGuid Player;
-        public uint Flags;
-        public long Date;
-        public long TimeFromStart;
-        public long TimeFromCreate;
-        public ulong? RafAcceptanceID;
     }
 
     public struct GuildCriteriaProgress
@@ -352,6 +355,9 @@ namespace Game.Networking.Packets
 
     public class AllAchievements
     {
+        public List<EarnedAchievement> Earned = new();
+        public List<CriteriaProgressPkt> Progress = new();
+
         public void Write(WorldPacket data)
         {
             data.WriteInt32(Earned.Count);
@@ -363,8 +369,5 @@ namespace Game.Networking.Packets
             foreach (CriteriaProgressPkt progress in Progress)
                 progress.Write(data);
         }
-
-        public List<EarnedAchievement> Earned = new();
-        public List<CriteriaProgressPkt> Progress = new();
     }
 }

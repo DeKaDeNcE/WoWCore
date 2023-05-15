@@ -2,6 +2,8 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable InconsistentNaming
+
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -14,8 +16,11 @@ using Game.DataStorage;
 
 namespace Game.Networking.Packets
 {
-    class Ping : ClientPacket
+    public class Ping : ClientPacket
     {
+        public uint Serial;
+        public uint Latency;
+
         public Ping(WorldPacket packet) : base(packet) { }
 
         public override void Read()
@@ -23,13 +28,12 @@ namespace Game.Networking.Packets
             Serial = _worldPacket.ReadUInt32();
             Latency = _worldPacket.ReadUInt32();
         }
-
-        public uint Serial;
-        public uint Latency;
     }
 
-    class Pong : ServerPacket
+    public class Pong : ServerPacket
     {
+        public uint Serial;
+
         public Pong(uint serial) : base(ServerOpcodes.Pong)
         {
             Serial = serial;
@@ -39,12 +43,14 @@ namespace Game.Networking.Packets
         {
             _worldPacket.WriteUInt32(Serial);
         }
-
-        uint Serial;
     }
 
-    class AuthChallenge : ServerPacket
+    public class AuthChallenge : ServerPacket
     {
+        public byte[] Challenge = new byte[16];
+        public byte[] DosChallenge = new byte[32]; // Encryption seeds
+        public byte DosZeroBits;
+
         public AuthChallenge() : base(ServerOpcodes.AuthChallenge) { }
 
         public override void Write()
@@ -53,14 +59,19 @@ namespace Game.Networking.Packets
             _worldPacket.WriteBytes(Challenge);
             _worldPacket.WriteUInt8(DosZeroBits);
         }
-
-        public byte[] Challenge = new byte[16];
-        public byte[] DosChallenge = new byte[32]; // Encryption seeds
-        public byte DosZeroBits;
     }
 
-    class AuthSession : ClientPacket
+    public class AuthSession : ClientPacket
     {
+        public uint RegionID;
+        public uint BattlegroupID;
+        public uint RealmID;
+        public Array<byte> LocalChallenge = new(16);
+        public byte[] Digest = new byte[24];
+        public ulong DosResponse;
+        public string RealmJoinTicket;
+        public bool UseIPv6;
+
         public AuthSession(WorldPacket packet) : base(packet) { }
 
         public override void Read()
@@ -80,19 +91,47 @@ namespace Game.Networking.Packets
             if (realmJoinTicketSize != 0)
                 RealmJoinTicket = _worldPacket.ReadString(realmJoinTicketSize);
         }
-
-        public uint RegionID;
-        public uint BattlegroupID;
-        public uint RealmID;
-        public Array<byte> LocalChallenge = new(16);
-        public byte[] Digest = new byte[24];
-        public ulong DosResponse;
-        public string RealmJoinTicket;
-        public bool UseIPv6;
     }
 
-    class AuthResponse : ServerPacket
+    public class AuthResponse : ServerPacket
     {
+        public AuthSuccessInfo SuccessInfo; // contains the packet data in case that it has account information (It is never set when WaitInfo is set), otherwise its contents are undefined.
+        public AuthWaitInfo? WaitInfo; // contains the queue wait information in case the account is in the login queue.
+        public BattlenetRpcErrorCode Result; // the result of the authentication process, possible values are @ref BattlenetRpcErrorCode
+
+        public class AuthSuccessInfo
+        {
+            public byte ActiveExpansionLevel; // the current server expansion, the possible values are in @ref Expansions
+            public byte AccountExpansionLevel; // the current expansion of this account, the possible values are in @ref Expansions
+            public uint TimeRested; // affects the return value of the GetBillingTimeRested() client API call, it is the number of seconds you have left until the experience points and loot you receive from creatures and quests is reduced. It is only used in the Asia region in retail, it's not implemented in TC and will probably never be.
+
+            public uint VirtualRealmAddress; // a special identifier made from the Index, BattleGroup and Region. @todo implement
+            public uint TimeSecondsUntilPCKick; // @todo research
+            public uint CurrencyID; // this is probably used for the ingame shop. @todo implement
+            public long Time;
+
+            public GameTime GameTimeInfo;
+
+            public List<VirtualRealmInfo> VirtualRealms = new();     // list of realms connected to this one (inclusive) @todo implement
+            public List<CharacterTemplate> Templates = new(); // list of pre-made character templates. @todo implement
+
+            public List<RaceClassAvailability> AvailableClasses; // the minimum AccountExpansion required to select the classes
+
+            public bool IsExpansionTrial;
+            public bool ForceCharacterTemplate; // forces the client to always use a character template when creating a new character. @see Templates. @todo implement
+            public ushort? NumPlayersHorde; // number of horde players in this realm. @todo implement
+            public ushort? NumPlayersAlliance; // number of alliance players in this realm. @todo implement
+            public long? ExpansionTrialExpiration; // expansion trial expiration unix timestamp
+
+            public struct GameTime
+            {
+                public uint BillingPlan;
+                public uint TimeRemain;
+                public uint Unknown735;
+                public bool InGameRoom;
+            }
+        }
+
         public AuthResponse() : base(ServerOpcodes.AuthResponse) { }
 
         public override void Write()
@@ -181,66 +220,57 @@ namespace Game.Networking.Packets
             if (WaitInfo.HasValue)
                 WaitInfo.Value.Write(_worldPacket);
         }
-
-        public AuthSuccessInfo SuccessInfo; // contains the packet data in case that it has account information (It is never set when WaitInfo is set), otherwise its contents are undefined.
-        public AuthWaitInfo? WaitInfo; // contains the queue wait information in case the account is in the login queue.
-        public BattlenetRpcErrorCode Result; // the result of the authentication process, possible values are @ref BattlenetRpcErrorCode
-
-        public class AuthSuccessInfo
-        {
-            public byte ActiveExpansionLevel; // the current server expansion, the possible values are in @ref Expansions
-            public byte AccountExpansionLevel; // the current expansion of this account, the possible values are in @ref Expansions
-            public uint TimeRested; // affects the return value of the GetBillingTimeRested() client API call, it is the number of seconds you have left until the experience points and loot you receive from creatures and quests is reduced. It is only used in the Asia region in retail, it's not implemented in TC and will probably never be.
-
-            public uint VirtualRealmAddress; // a special identifier made from the Index, BattleGroup and Region. @todo implement
-            public uint TimeSecondsUntilPCKick; // @todo research
-            public uint CurrencyID; // this is probably used for the ingame shop. @todo implement
-            public long Time;
-
-            public GameTime GameTimeInfo;
-
-            public List<VirtualRealmInfo> VirtualRealms = new();     // list of realms connected to this one (inclusive) @todo implement
-            public List<CharacterTemplate> Templates = new(); // list of pre-made character templates. @todo implement
-
-            public List<RaceClassAvailability> AvailableClasses; // the minimum AccountExpansion required to select the classes
-
-            public bool IsExpansionTrial;
-            public bool ForceCharacterTemplate; // forces the client to always use a character template when creating a new character. @see Templates. @todo implement
-            public ushort? NumPlayersHorde; // number of horde players in this realm. @todo implement
-            public ushort? NumPlayersAlliance; // number of alliance players in this realm. @todo implement
-            public long? ExpansionTrialExpiration; // expansion trial expiration unix timestamp
-
-            public struct GameTime
-            {
-                public uint BillingPlan;
-                public uint TimeRemain;
-                public uint Unknown735;
-                public bool InGameRoom;
-            }
-        }
     }
 
-    class WaitQueueUpdate : ServerPacket
+    public class WaitQueueUpdate : ServerPacket
     {
+        public AuthWaitInfo WaitInfo;
+
         public WaitQueueUpdate() : base(ServerOpcodes.WaitQueueUpdate) { }
 
         public override void Write()
         {
             WaitInfo.Write(_worldPacket);
         }
-
-        public AuthWaitInfo WaitInfo;
     }
 
-    class WaitQueueFinish : ServerPacket
+    public class WaitQueueFinish : ServerPacket
     {
         public WaitQueueFinish() : base(ServerOpcodes.WaitQueueFinish) { }
 
         public override void Write() { }
     }
 
-    class ConnectTo : ServerPacket
+    public class ConnectTo : ServerPacket
     {
+        public ulong Key;
+        public ConnectToSerial Serial;
+        public ConnectPayload Payload;
+        public byte Con;
+
+        public class ConnectPayload
+        {
+            public SocketAddress Where;
+            public ushort Port;
+            public byte[] Signature = new byte[256];
+        }
+
+        public struct SocketAddress
+        {
+            public AddressType Type;
+
+            public byte[] IPv4;
+            public byte[] IPv6;
+            public string NameSocket;
+        }
+
+        public enum AddressType
+        {
+            IPv4 = 1,
+            IPv6 = 2,
+            NamedSocket = 3 // not supported by windows client
+        }
+
         public ConnectTo() : base(ServerOpcodes.ConnectTo)
         {
             Payload = new ConnectPayload();
@@ -278,38 +308,15 @@ namespace Game.Networking.Packets
             _worldPacket.WriteUInt8(Con);
             _worldPacket.WriteUInt64(Key);
         }
-
-        public ulong Key;
-        public ConnectToSerial Serial;
-        public ConnectPayload Payload;
-        public byte Con;
-
-        public class ConnectPayload
-        {
-            public SocketAddress Where;
-            public ushort Port;
-            public byte[] Signature = new byte[256];
-        }
-
-        public struct SocketAddress
-        {
-            public AddressType Type;
-
-            public byte[] IPv4;
-            public byte[] IPv6;
-            public string NameSocket;
-        }
-
-        public enum AddressType
-        {
-            IPv4 = 1,
-            IPv6 = 2,
-            NamedSocket = 3 // not supported by windows client
-        }
     }
 
-    class AuthContinuedSession : ClientPacket
+    public class AuthContinuedSession : ClientPacket
     {
+        public ulong DosResponse;
+        public ulong Key;
+        public byte[] LocalChallenge = new byte[16];
+        public byte[] Digest = new byte[24];
+
         public AuthContinuedSession(WorldPacket packet) : base(packet) { }
 
         public override void Read()
@@ -319,22 +326,20 @@ namespace Game.Networking.Packets
             LocalChallenge = _worldPacket.ReadBytes(16);
             Digest = _worldPacket.ReadBytes(24);
         }
-
-        public ulong DosResponse;
-        public ulong Key;
-        public byte[] LocalChallenge = new byte[16];
-        public byte[] Digest = new byte[24];
     }
 
-    class ResumeComms : ServerPacket
+    public class ResumeComms : ServerPacket
     {
         public ResumeComms(ConnectionType connection) : base(ServerOpcodes.ResumeComms, connection) { }
 
         public override void Write() { }
     }
 
-    class ConnectToFailed : ClientPacket
+    public class ConnectToFailed : ClientPacket
     {
+        public ConnectToSerial Serial;
+        public byte Con;
+
         public ConnectToFailed(WorldPacket packet) : base(packet) { }
 
         public override void Read()
@@ -342,12 +347,9 @@ namespace Game.Networking.Packets
             Serial = (ConnectToSerial)_worldPacket.ReadUInt32();
             Con = _worldPacket.ReadUInt8();
         }
-
-        public ConnectToSerial Serial;
-        byte Con;
     }
 
-    class EnterEncryptedMode : ServerPacket
+    public class EnterEncryptedMode : ServerPacket
     {
         byte[] EncryptionKey;
         bool Enabled;
@@ -390,6 +392,10 @@ namespace Game.Networking.Packets
     //Structs
     public struct AuthWaitInfo
     {
+        public uint WaitCount; // position of the account in the login queue
+        public uint WaitTime;  // Wait time in login queue in minutes, if sent queued and this value is 0 client displays "unknown time"
+        public bool HasFCM;    // true if the account has a forced character migration pending. @todo implement
+
         public void Write(WorldPacket data)
         {
             data.WriteUInt32(WaitCount);
@@ -397,14 +403,15 @@ namespace Game.Networking.Packets
             data.WriteBit(HasFCM);
             data.FlushBits();
         }
-
-        public uint WaitCount; // position of the account in the login queue
-        public uint WaitTime; // Wait time in login queue in minutes, if sent queued and this value is 0 client displays "unknown time"
-        public bool HasFCM; // true if the account has a forced character migration pending. @todo implement
     }
 
-    struct VirtualRealmNameInfo
+    public struct VirtualRealmNameInfo
     {
+        public bool IsLocal;               // true if the realm is the same as the account's home realm
+        public bool IsInternalRealm;       // @todo research
+        public string RealmNameActual;     // the name of the realm
+        public string RealmNameNormalized; // the name of the realm without spaces
+
         public VirtualRealmNameInfo(bool isHomeRealm, bool isInternalRealm, string realmNameActual, string realmNameNormalized)
         {
             IsLocal = isHomeRealm;
@@ -424,15 +431,13 @@ namespace Game.Networking.Packets
             data.WriteString(RealmNameActual);
             data.WriteString(RealmNameNormalized);
         }
-
-        public bool IsLocal;                    // true if the realm is the same as the account's home realm
-        public bool IsInternalRealm;            // @todo research
-        public string RealmNameActual;     // the name of the realm
-        public string RealmNameNormalized; // the name of the realm without spaces
     }
 
-    struct VirtualRealmInfo
+    public struct VirtualRealmInfo
     {
+        public uint RealmAddress; // the virtual address of this realm, constructed as RealmHandle::Region << 24 | RealmHandle::Battlegroup << 16 | RealmHandle::Index
+        public VirtualRealmNameInfo RealmNameInfo;
+
         public VirtualRealmInfo(uint realmAddress, bool isHomeRealm, bool isInternalRealm, string realmNameActual, string realmNameNormalized)
         {
 
@@ -445,8 +450,5 @@ namespace Game.Networking.Packets
             data.WriteUInt32(RealmAddress);
             RealmNameInfo.Write(data);
         }
-
-        public uint RealmAddress;             // the virtual address of this realm, constructed as RealmHandle::Region << 24 | RealmHandle::Battlegroup << 16 | RealmHandle::Index
-        public VirtualRealmNameInfo RealmNameInfo;
     }
 }

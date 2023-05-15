@@ -2,15 +2,20 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable InconsistentNaming
+
 using System.Numerics;
-using System.Collections.Generic;
 using Framework.Constants;
 using Game.Entities;
 
 namespace Game.Networking.Packets
 {
-    class AreaTriggerPkt : ClientPacket
+    public class AreaTriggerPkt : ClientPacket
     {
+        public uint AreaTriggerID;
+        public bool Entered;
+        public bool FromClient;
+
         public AreaTriggerPkt(WorldPacket packet) : base(packet) { }
 
         public override void Read()
@@ -19,14 +24,13 @@ namespace Game.Networking.Packets
             Entered = _worldPacket.HasBit();
             FromClient = _worldPacket.HasBit();
         }
-
-        public uint AreaTriggerID;
-        public bool Entered;
-        public bool FromClient;
     }
 
-    class AreaTriggerDenied : ServerPacket
+    public class AreaTriggerDenied : ServerPacket
     {
+        public int AreaTriggerID;
+        public bool Entered;
+
         public AreaTriggerDenied() : base(ServerOpcodes.AreaTriggerDenied) { }
 
         public override void Write()
@@ -35,20 +39,22 @@ namespace Game.Networking.Packets
             _worldPacket.WriteBit(Entered);
             _worldPacket.FlushBits();
         }
-
-        public int AreaTriggerID;
-        public bool Entered;
     }
 
-    class AreaTriggerNoCorpse : ServerPacket
+    public class AreaTriggerNoCorpse : ServerPacket
     {
         public AreaTriggerNoCorpse() : base(ServerOpcodes.AreaTriggerNoCorpse) { }
 
         public override void Write() { }
     }
 
-    class AreaTriggerRePath : ServerPacket
+    public class AreaTriggerRePath : ServerPacket
     {
+        public AreaTriggerSplineInfo AreaTriggerSpline;
+        public AreaTriggerOrbitInfo AreaTriggerOrbit;
+        public AreaTriggerMovementScriptInfo? AreaTriggerMovementScript;
+        public ObjectGuid TriggerGUID;
+
         public AreaTriggerRePath() : base(ServerOpcodes.AreaTriggerRePath) { }
 
         public override void Write()
@@ -69,16 +75,15 @@ namespace Game.Networking.Packets
             if (AreaTriggerOrbit != null)
                 AreaTriggerOrbit.Write(_worldPacket);
         }
-
-        public AreaTriggerSplineInfo AreaTriggerSpline;
-        public AreaTriggerOrbitInfo AreaTriggerOrbit;
-        public AreaTriggerMovementScriptInfo? AreaTriggerMovementScript;
-        public ObjectGuid TriggerGUID;
     }
 
     //Structs
-    class AreaTriggerSplineInfo
+    public class AreaTriggerSplineInfo
     {
+        public uint TimeToTarget;
+        public uint ElapsedTimeForMovement;
+        public Vector3[] Points = new Vector3[0];
+
         public void Write(WorldPacket data)
         {
             data.WriteUInt32(TimeToTarget);
@@ -90,9 +95,5 @@ namespace Game.Networking.Packets
             foreach (Vector3 point in Points)
                 data.WriteVector3(point);
         }
-
-        public uint TimeToTarget;
-        public uint ElapsedTimeForMovement;
-        public Vector3[] Points = new Vector3[0];
     }
 }

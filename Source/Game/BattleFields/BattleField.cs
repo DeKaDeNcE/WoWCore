@@ -353,7 +353,7 @@ namespace Game.BattleFields
             return m_players[player.GetTeamId()].Contains(player.GetGUID());
         }
 
-        // Called in WorldSession:HandleBfQueueInviteResponse
+        // Called in Battlefield::InvitePlayerToQueue
         public void PlayerAcceptInviteToQueue(Player player)
         {
             // Add player in queue
@@ -375,7 +375,7 @@ namespace Game.BattleFields
             player.TeleportTo(571, 5804.1499f, 624.7710f, 647.7670f, 1.6400f);
         }
 
-        // Called in WorldSession:HandleBfEntryInviteResponse
+        // Called in Battlefield::InvitePlayerToWar
         public void PlayerAcceptInviteToWar(Player player)
         {
             if (!IsWarTime())

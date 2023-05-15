@@ -21,7 +21,7 @@ namespace Game.BattleFields
         {
             m_TypeId = (uint)BattleFieldTypes.WinterGrasp;                              // See enum BattlefieldTypes
             m_BattleId = BattlefieldIds.WG;
-            m_ZoneId = (uint)AreaId.Wintergrasp;
+            m_ZoneId = (uint)AreaIds.Wintergrasp;
 
             InitStalker(WGNpcs.Stalker, WGConst.WintergraspStalkerPos);
 
@@ -405,21 +405,21 @@ namespace Game.BattleFields
 
         uint GetSpiritGraveyardId(uint areaId)
         {
-            switch ((AreaId)areaId)
+            switch ((AreaIds)areaId)
             {
-                case AreaId.WintergraspFortress:
+                case AreaIds.WintergraspFortress:
                     return WGGraveyardId.Keep;
-                case AreaId.TheSunkenRing:
+                case AreaIds.TheSunkenRing:
                     return WGGraveyardId.WorkshopNE;
-                case AreaId.TheBrokenTemplate:
+                case AreaIds.TheBrokenTemple:
                     return WGGraveyardId.WorkshopNW;
-                case AreaId.WestparkWorkshop:
+                case AreaIds.WestsparkWorkshop:
                     return WGGraveyardId.WorkshopSW;
-                case AreaId.EastparkWorkshop:
+                case AreaIds.EastsparkWorkshop:
                     return WGGraveyardId.WorkshopSE;
-                case AreaId.Wintergrasp:
+                case AreaIds.Wintergrasp:
                     return WGGraveyardId.Alliance;
-                case AreaId.TheChilledQuagmire:
+                case AreaIds.TheChilledQuagmire:
                     return WGGraveyardId.Horde;
                 default:
                     Log.outError(LogFilter.Battlefield, "BattlefieldWG.GetSpiritGraveyardId: Unexpected Area Id {0}", areaId);
@@ -712,14 +712,14 @@ namespace Game.BattleFields
 
         public override uint GetData(uint data)
         {
-            switch ((AreaId)data)
+            switch ((AreaIds)data)
             {
                 // Used to determine when the phasing spells must be cast
                 // See: SpellArea.IsFitToRequirements
-                case AreaId.TheSunkenRing:
-                case AreaId.TheBrokenTemplate:
-                case AreaId.WestparkWorkshop:
-                case AreaId.EastparkWorkshop:
+                case AreaIds.TheSunkenRing:
+                case AreaIds.TheBrokenTemple:
+                case AreaIds.WestsparkWorkshop:
+                case AreaIds.EastsparkWorkshop:
                     // Graveyards and Workshops are controlled by the same team.
                     BfGraveyard graveyard = GetGraveyardById((int)GetSpiritGraveyardId(data));
                     if (graveyard != null)

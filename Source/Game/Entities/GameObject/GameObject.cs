@@ -2264,7 +2264,7 @@ namespace Game.Entities
 
                     Player player = user.ToPlayer();
 
-                    Loot loot = new Loot(GetMap(), GetGUID(), LootType.Fishinghole, null);
+                    Loot loot = new Loot(GetMap(), GetGUID(), LootType.FishingHole, null);
                     loot.FillLoot(GetGoInfo().GetLootId(), LootStorage.Gameobject, player, true);
                     m_personalLoot[player.GetGUID()] = loot;
 

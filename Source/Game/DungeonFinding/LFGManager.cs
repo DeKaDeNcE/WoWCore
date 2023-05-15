@@ -1995,12 +1995,12 @@ namespace Game.DungeonFinding
                     return Global.GameEventMgr.IsHolidayActive(HolidayIds.Brewfest);
                 case 288: // The Crown Chemical Co.
                     return Global.GameEventMgr.IsHolidayActive(HolidayIds.LoveIsInTheAir);
-                case 744: // Random Timewalking Dungeon (Burning Crusade)
-                    return Global.GameEventMgr.IsHolidayActive(HolidayIds.TimewalkingDungeonEventBcDefault);
-                case 995: // Random Timewalking Dungeon (Wrath of the Lich King)
-                    return Global.GameEventMgr.IsHolidayActive(HolidayIds.TimewalkingDungeonEventLkDefault);
-                case 1146: // Random Timewalking Dungeon (Cataclysm)
-                    return Global.GameEventMgr.IsHolidayActive(HolidayIds.TimewalkingDungeonEventCataDefault);
+                case 744: // Random TimeWalking Dungeon (Burning Crusade)
+                    return Global.GameEventMgr.IsHolidayActive(HolidayIds.TimeWalkingDungeonEventBcDefault);
+                case 995: // Random TimeWalking Dungeon (Wrath of the Lich King)
+                    return Global.GameEventMgr.IsHolidayActive(HolidayIds.TimeWalkingDungeonEventLkDefault);
+                case 1146: // Random TimeWalking Dungeon (Cataclysm)
+                    return Global.GameEventMgr.IsHolidayActive(HolidayIds.TimeWalkingDungeonEventCataDefault);
             }
             return false;
         }

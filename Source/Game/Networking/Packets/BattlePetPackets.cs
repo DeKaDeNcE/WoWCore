@@ -2,6 +2,8 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable InconsistentNaming
+
 using System;
 using System.Collections.Generic;
 using Framework.Constants;
@@ -9,8 +11,13 @@ using Game.Entities;
 
 namespace Game.Networking.Packets
 {
-    class BattlePetJournal : ServerPacket
+    public class BattlePetJournal : ServerPacket
     {
+        public ushort Trap;
+        public bool HasJournalLock = false;
+        public List<BattlePetSlot> Slots = new();
+        public List<BattlePetStruct> Pets = new();
+
         public BattlePetJournal() : base(ServerOpcodes.BattlePetJournal) { }
 
         public override void Write()
@@ -27,43 +34,41 @@ namespace Game.Networking.Packets
             foreach (var pet in Pets)
                 pet.Write(_worldPacket);
         }
-
-        public ushort Trap;
-        public bool HasJournalLock = false;
-        public List<BattlePetSlot> Slots = new();
-        public List<BattlePetStruct> Pets = new();
     }
 
-    class BattlePetJournalLockAcquired : ServerPacket
+    public class BattlePetJournalLockAcquired : ServerPacket
     {
         public BattlePetJournalLockAcquired() : base(ServerOpcodes.BattlePetJournalLockAcquired) { }
 
         public override void Write() { }
     }
 
-    class BattlePetJournalLockDenied : ServerPacket
+    public class BattlePetJournalLockDenied : ServerPacket
     {
         public BattlePetJournalLockDenied() : base(ServerOpcodes.BattlePetJournalLockDenied) { }
 
         public override void Write() { }
     }
 
-    class BattlePetRequestJournal : ClientPacket
+    public class BattlePetRequestJournal : ClientPacket
     {
         public BattlePetRequestJournal(WorldPacket packet) : base(packet) { }
 
         public override void Read() { }
     }
 
-    class BattlePetRequestJournalLock : ClientPacket
+    public class BattlePetRequestJournalLock : ClientPacket
     {
         public BattlePetRequestJournalLock(WorldPacket packet) : base(packet) { }
 
         public override void Read() { }
     }
 
-    class BattlePetUpdates : ServerPacket
+    public class BattlePetUpdates : ServerPacket
     {
+        public List<BattlePetStruct> Pets = new();
+        public bool PetAdded;
+
         public BattlePetUpdates() : base(ServerOpcodes.BattlePetUpdates) { }
 
         public override void Write()
@@ -75,13 +80,14 @@ namespace Game.Networking.Packets
             foreach (var pet in Pets)
                 pet.Write(_worldPacket);
         }
-
-        public List<BattlePetStruct> Pets = new();
-        public bool PetAdded;
     }
 
-    class PetBattleSlotUpdates : ServerPacket
+    public class PetBattleSlotUpdates : ServerPacket
     {
+        public List<BattlePetSlot> Slots = new();
+        public bool AutoSlotted;
+        public bool NewSlot;
+
         public PetBattleSlotUpdates() : base(ServerOpcodes.PetBattleSlotUpdates) { }
 
         public override void Write()
@@ -94,14 +100,13 @@ namespace Game.Networking.Packets
             foreach (var slot in Slots)
                 slot.Write(_worldPacket);
         }
-
-        public List<BattlePetSlot> Slots = new();
-        public bool AutoSlotted;
-        public bool NewSlot;
     }
 
-    class BattlePetSetBattleSlot : ClientPacket
+    public class BattlePetSetBattleSlot : ClientPacket
     {
+        public ObjectGuid PetGuid;
+        public byte Slot;
+
         public BattlePetSetBattleSlot(WorldPacket packet) : base(packet) { }
 
         public override void Read()
@@ -109,13 +114,14 @@ namespace Game.Networking.Packets
             PetGuid = _worldPacket.ReadPackedGuid();
             Slot = _worldPacket.ReadUInt8();
         }
-
-        public ObjectGuid PetGuid;
-        public byte Slot;
     }
 
-    class BattlePetModifyName : ClientPacket
+    public class BattlePetModifyName : ClientPacket
     {
+        public ObjectGuid PetGuid;
+        public string Name;
+        public DeclinedName DeclinedNames;
+
         public BattlePetModifyName(WorldPacket packet) : base(packet) { }
 
         public override void Read()
@@ -138,14 +144,13 @@ namespace Game.Networking.Packets
 
             Name = _worldPacket.ReadString(nameLength);
         }
-
-        public ObjectGuid PetGuid;
-        public string Name;
-        public DeclinedName DeclinedNames;
     }
 
-    class QueryBattlePetName : ClientPacket
+    public class QueryBattlePetName : ClientPacket
     {
+        public ObjectGuid BattlePetID;
+        public ObjectGuid UnitGUID;
+
         public QueryBattlePetName(WorldPacket packet) : base(packet) { }
 
         public override void Read()
@@ -153,13 +158,19 @@ namespace Game.Networking.Packets
             BattlePetID = _worldPacket.ReadPackedGuid();
             UnitGUID = _worldPacket.ReadPackedGuid();
         }
-
-        public ObjectGuid BattlePetID;
-        public ObjectGuid UnitGUID;
     }
 
-    class QueryBattlePetNameResponse : ServerPacket
+    public class QueryBattlePetNameResponse : ServerPacket
     {
+        public ObjectGuid BattlePetID;
+        public uint CreatureID;
+        public long Timestamp;
+        public bool Allow;
+
+        public bool HasDeclined;
+        public DeclinedName DeclinedNames;
+        public string Name;
+
         public QueryBattlePetNameResponse() : base(ServerOpcodes.QueryBattlePetNameResponse, ConnectionType.Instance) { }
 
         public override void Write()
@@ -186,83 +197,77 @@ namespace Game.Networking.Packets
 
             _worldPacket.FlushBits();
         }
-
-        public ObjectGuid BattlePetID;
-        public uint CreatureID;
-        public long Timestamp;
-        public bool Allow;
-
-        public bool HasDeclined;
-        public DeclinedName DeclinedNames;
-        public string Name;
     }
 
-    class BattlePetDeletePet : ClientPacket
+    public class BattlePetDeletePet : ClientPacket
     {
+        public ObjectGuid PetGuid;
+
         public BattlePetDeletePet(WorldPacket packet) : base(packet) { }
 
         public override void Read()
         {
             PetGuid = _worldPacket.ReadPackedGuid();
         }
-
-        public ObjectGuid PetGuid;
     }
 
-    class BattlePetSetFlags : ClientPacket
+    public class BattlePetSetFlags : ClientPacket
     {
+        public ObjectGuid PetGuid;
+        public ushort Flags;
+        public FlagsControlType ControlType;
+
         public BattlePetSetFlags(WorldPacket packet) : base(packet) { }
 
         public override void Read()
         {
             PetGuid = _worldPacket.ReadPackedGuid();
-            Flags = _worldPacket.ReadUInt32();
+            Flags = _worldPacket.ReadUInt16();
             ControlType = (FlagsControlType)_worldPacket.ReadBits<byte>(2);
         }
-
-        public ObjectGuid PetGuid;
-        public uint Flags;
-        public FlagsControlType ControlType;
     }
 
-    class BattlePetClearFanfare : ClientPacket
+    public class BattlePetClearFanfare : ClientPacket
     {
+        public ObjectGuid PetGuid;
+
         public BattlePetClearFanfare(WorldPacket packet) : base(packet) { }
 
         public override void Read()
         {
             PetGuid = _worldPacket.ReadPackedGuid();
         }
-
-        public ObjectGuid PetGuid;
     }
 
-    class CageBattlePet : ClientPacket
+    public class CageBattlePet : ClientPacket
     {
+        public ObjectGuid PetGuid;
+
         public CageBattlePet(WorldPacket packet) : base(packet) { }
 
         public override void Read()
         {
             PetGuid = _worldPacket.ReadPackedGuid();
         }
-
-        public ObjectGuid PetGuid;
     }
 
-    class BattlePetDeleted : ServerPacket
+    public class BattlePetDeleted : ServerPacket
     {
+        public ObjectGuid PetGuid;
+
         public BattlePetDeleted() : base(ServerOpcodes.BattlePetDeleted) { }
 
         public override void Write()
         {
             _worldPacket.WritePackedGuid(PetGuid);
         }
-
-        public ObjectGuid PetGuid;
     }
 
-    class BattlePetErrorPacket : ServerPacket
+    public class BattlePetErrorPacket : ServerPacket
     {
+        public BattlePetError Result;
+        public uint CreatureID;
+
         public BattlePetErrorPacket() : base(ServerOpcodes.BattlePetError) { }
 
         public override void Write()
@@ -270,24 +275,21 @@ namespace Game.Networking.Packets
             _worldPacket.WriteBits(Result, 4);
             _worldPacket.WriteUInt32(CreatureID);
         }
-
-        public BattlePetError Result;
-        public uint CreatureID;
     }
 
-    class BattlePetSummon : ClientPacket
+    public class BattlePetSummon : ClientPacket
     {
+        public ObjectGuid PetGuid;
+
         public BattlePetSummon(WorldPacket packet) : base(packet) { }
 
         public override void Read()
         {
             PetGuid = _worldPacket.ReadPackedGuid();
         }
-
-        public ObjectGuid PetGuid;
     }
 
-    class BattlePetUpdateNotify : ClientPacket
+    public class BattlePetUpdateNotify : ClientPacket
     {
         public ObjectGuid PetGuid;
 
@@ -302,6 +304,29 @@ namespace Game.Networking.Packets
     //Structs
     public struct BattlePetStruct
     {
+        public struct BattlePetOwnerInfo
+        {
+            public ObjectGuid Guid;
+            public uint PlayerVirtualRealm;
+            public uint PlayerNativeRealm;
+        }
+
+        public ObjectGuid Guid;
+        public uint Species;
+        public uint CreatureID;
+        public uint DisplayID;
+        public ushort Breed;
+        public ushort Level;
+        public ushort Exp;
+        public ushort Flags;
+        public uint Power;
+        public uint Health;
+        public uint MaxHealth;
+        public uint Speed;
+        public byte Quality;
+        public BattlePetOwnerInfo? OwnerInfo;
+        public string Name;
+
         public void Write(WorldPacket data)
         {
             data .WritePackedGuid( Guid);
@@ -331,33 +356,15 @@ namespace Game.Networking.Packets
                 data.WriteUInt32(OwnerInfo.Value.PlayerNativeRealm); // Native
             }
         }
-
-        public struct BattlePetOwnerInfo
-        {
-            public ObjectGuid Guid;
-            public uint PlayerVirtualRealm;
-            public uint PlayerNativeRealm;
-        }
-
-        public ObjectGuid Guid;
-        public uint Species;
-        public uint CreatureID;
-        public uint DisplayID;
-        public ushort Breed;
-        public ushort Level;
-        public ushort Exp;
-        public ushort Flags;
-        public uint Power;
-        public uint Health;
-        public uint MaxHealth;
-        public uint Speed;
-        public byte Quality;
-        public BattlePetOwnerInfo? OwnerInfo;
-        public string Name;
     }
 
     public class BattlePetSlot
     {
+        public BattlePetStruct Pet;
+        public uint CollarID;
+        public byte Index;
+        public bool Locked = true;
+
         public void Write(WorldPacket data)
         {
             data .WritePackedGuid(Pet.Guid.IsEmpty() ? ObjectGuid.Create(HighGuid.BattlePet, 0) : Pet.Guid);
@@ -366,10 +373,5 @@ namespace Game.Networking.Packets
             data.WriteBit(Locked);
             data.FlushBits();
         }
-
-        public BattlePetStruct Pet;
-        public uint CollarID;
-        public byte Index;
-        public bool Locked = true;
     }
 }

@@ -6174,7 +6174,7 @@ namespace Game.Entities
                     bones.loot.FillLoot(1, LootStorage.Creature, this, true);
             }
             // For wintergrasp Quests
-            else if (GetZoneId() == (uint)AreaId.Wintergrasp)
+            else if (GetZoneId() == (uint)AreaIds.Wintergrasp)
                 bones.loot.FillLoot(1, LootStorage.Creature, this, true);
 
             // It may need a better formula
