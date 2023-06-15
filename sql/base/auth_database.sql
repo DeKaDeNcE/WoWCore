@@ -62,6 +62,8 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
+INSERT INTO `account` VALUES
+(1, '1#1', 0xFE81E14499422DC9DDD9608250DD921C40A37C002CC6093C725D905B84819885, 0xE5C02D14CE2D6E85F29DF2FAE4A0362F88CB84E77685BA562E101A4538DB7019, NULL, 0x08872C1D16D14F32704BECB8D1BE437D357BD645DF30AE0FE8F6A5EF390633DA957989D369F10855, NULL, 'GM@GM', 'GM@GM', '2023-03-03 20:56:09', '127.0.0.1', '127.0.0.1', 0, 0, '00', '2023-03-04 07:01:28', 0, 9, 0, '', '', 0, 'Wn64', 0, 1, 1);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,6 +89,8 @@ CREATE TABLE `account_access` (
 
 LOCK TABLES `account_access` WRITE;
 /*!40000 ALTER TABLE `account_access` DISABLE KEYS */;
+INSERT INTO `account_access` VALUES
+(1, 3, -1, NULL);
 /*!40000 ALTER TABLE `account_access` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -441,6 +445,8 @@ CREATE TABLE `battlenet_accounts` (
 
 LOCK TABLES `battlenet_accounts` WRITE;
 /*!40000 ALTER TABLE `battlenet_accounts` DISABLE KEYS */;
+INSERT INTO `battlenet_accounts` VALUES
+(1, 'GM@GM', '586EF64D6BCF71292B55C8805E465172D876E0C79968F925A0DCE5D9B4BAA492', '2023-03-03 20:56:08', '127.0.0.1:56737', 0, 0, '00', '2023-03-04 07:01:27', 0, 0, 'Wn64', 0, 'TC-18B5D0672A47CE2B4669DE176633402F94D7E211', 1677909687);
 /*!40000 ALTER TABLE `battlenet_accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2341,7 +2347,7 @@ CREATE TABLE `realmlist` (
 LOCK TABLES `realmlist` WRITE;
 /*!40000 ALTER TABLE `realmlist` DISABLE KEYS */;
 INSERT INTO `realmlist` VALUES
-(1,'Trinity','127.0.0.1','127.0.0.1','255.255.255.0',8085,0,0,1,0,0,50000,1,1);
+(1,'WowCore','127.0.0.1','127.0.0.1','255.255.255.0',8085,0,0,1,0,0,50000,1,1);
 /*!40000 ALTER TABLE `realmlist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2775,7 +2781,7 @@ DROP TABLE IF EXISTS `vw_log_history`;
 /*!50001 DROP VIEW IF EXISTS `vw_log_history`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `vw_log_history` AS SELECT 
+/*!50001 CREATE VIEW `vw_log_history` AS SELECT
  1 AS `First Logged`,
  1 AS `Last Logged`,
  1 AS `Occurrences`,
@@ -2793,7 +2799,7 @@ DROP TABLE IF EXISTS `vw_rbac`;
 /*!50001 DROP VIEW IF EXISTS `vw_rbac`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `vw_rbac` AS SELECT 
+/*!50001 CREATE VIEW `vw_rbac` AS SELECT
  1 AS `Permission ID`,
  1 AS `Permission Group`,
  1 AS `Security Level`,
