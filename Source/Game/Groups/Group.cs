@@ -44,7 +44,7 @@ namespace Game.Groups
             UpdateReadyCheck(diff);
         }
 
-        void SelectNewPartyOrRaidLeader()
+        public void SelectNewPartyOrRaidLeader()
         {
             Player newLeader = null;
 
@@ -891,7 +891,7 @@ namespace Game.Groups
             player.SendPacket(partyUpdate);
         }
 
-        void SendUpdateDestroyGroupToPlayer(Player player)
+        public void SendUpdateDestroyGroupToPlayer(Player player)
         {
             PartyUpdate partyUpdate = new();
             partyUpdate.PartyFlags = GroupFlags.Destroyed;
@@ -946,7 +946,7 @@ namespace Game.Groups
             }
         }
 
-        bool _setMembersGroup(ObjectGuid guid, byte group)
+        public bool _setMembersGroup(ObjectGuid guid, byte group)
         {
             var slot = _getMemberSlot(guid);
             if (slot == null)
@@ -1360,7 +1360,7 @@ namespace Game.Groups
             m_ownedInstancesMgr.InsertLast(refe);
         }
 
-        void _homebindIfInstance(Player player)
+        public void _homebindIfInstance(Player player)
         {
             if (player && !player.IsGameMaster() && CliDB.MapStorage.LookupByKey(player.GetMapId()).IsDungeon())
                 player.m_InstanceValid = false;
@@ -1422,7 +1422,7 @@ namespace Game.Groups
             return slot.roles;
         }
 
-        void UpdateReadyCheck(uint diff)
+        public void UpdateReadyCheck(uint diff)
         {
             if (!m_readyCheckStarted)
                 return;
@@ -1456,7 +1456,7 @@ namespace Game.Groups
             BroadcastPacket(readyCheckStarted, false);
         }
 
-        void EndReadyCheck()
+        public void EndReadyCheck()
         {
             if (!m_readyCheckStarted)
                 return;
@@ -1472,7 +1472,7 @@ namespace Game.Groups
             BroadcastPacket(readyCheckCompleted, false);
         }
 
-        bool IsReadyCheckCompleted()
+        public bool IsReadyCheckCompleted()
         {
             foreach (var member in m_memberSlots)
                 if (!member.readyChecked)
@@ -1490,7 +1490,7 @@ namespace Game.Groups
                 SetMemberReadyCheck(slot, ready);
         }
 
-        void SetMemberReadyCheck(MemberSlot slot, bool ready)
+        public void SetMemberReadyCheck(MemberSlot slot, bool ready)
         {
             ReadyCheckResponse response = new();
             response.PartyGUID = m_guid;
@@ -1501,7 +1501,7 @@ namespace Game.Groups
             SetMemberReadyChecked(slot);
         }
 
-        void SetOfflineMembersReadyChecked()
+        public void SetOfflineMembersReadyChecked()
         {
             foreach (MemberSlot member in m_memberSlots)
             {
@@ -1511,14 +1511,14 @@ namespace Game.Groups
             }
         }
 
-        void SetMemberReadyChecked(MemberSlot slot)
+        public void SetMemberReadyChecked(MemberSlot slot)
         {
             slot.readyChecked = true;
             if (IsReadyCheckCompleted())
                 EndReadyCheck();
         }
 
-        void ResetMemberReadyChecked()
+        public void ResetMemberReadyChecked()
         {
             foreach (MemberSlot member in m_memberSlots)
                 member.readyChecked = false;
@@ -1614,7 +1614,7 @@ namespace Game.Groups
             return m_guid.GetCounter();
         }
 
-        string GetLeaderName()
+        public string GetLeaderName()
         {
             return m_leaderName;
         }
@@ -1759,7 +1759,7 @@ namespace Game.Groups
             m_memberMgr.InsertFirst(pRef);
         }
 
-        void DelinkMember(ObjectGuid guid)
+        public void DelinkMember(ObjectGuid guid)
         {
             GroupReference refe = m_memberMgr.GetFirst();
             while (refe != null)
@@ -1774,7 +1774,7 @@ namespace Game.Groups
             }
         }
 
-        void _initRaidSubGroupsCounter()
+        public void _initRaidSubGroupsCounter()
         {
             // Sub group counters initialization
             if (m_subGroupsCounts == null)
@@ -1784,7 +1784,7 @@ namespace Game.Groups
                 ++m_subGroupsCounts[memberSlot.group];
         }
 
-        MemberSlot _getMemberSlot(ObjectGuid guid)
+        public MemberSlot _getMemberSlot(ObjectGuid guid)
         {
             foreach (var member in m_memberSlots)
                 if (member.guid == guid)
@@ -1792,13 +1792,13 @@ namespace Game.Groups
             return null;
         }
 
-        void SubGroupCounterIncrease(byte subgroup)
+        public void SubGroupCounterIncrease(byte subgroup)
         {
             if (m_subGroupsCounts != null)
                 ++m_subGroupsCounts[subgroup];
         }
 
-        void SubGroupCounterDecrease(byte subgroup)
+        public void SubGroupCounterDecrease(byte subgroup)
         {
             if (m_subGroupsCounts != null)
                 --m_subGroupsCounts[subgroup];
@@ -1811,7 +1811,7 @@ namespace Game.Groups
                     member.flags &= ~flag;
         }
 
-        void ToggleGroupMemberFlag(MemberSlot slot, GroupMemberFlags flag, bool apply)
+        public void ToggleGroupMemberFlag(MemberSlot slot, GroupMemberFlags flag, bool apply)
         {
             if (apply)
                 slot.flags |= flag;
@@ -1852,7 +1852,7 @@ namespace Game.Groups
         public uint GetInviteeCount() { return (uint)m_invitees.Count; }
         public GroupFlags GetGroupFlags() { return m_groupFlags; }
 
-        bool IsReadyCheckStarted() { return m_readyCheckStarted; }
+        public bool IsReadyCheckStarted() { return m_readyCheckStarted; }
 
         public void BroadcastWorker(Action<Player> worker)
         {
