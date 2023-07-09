@@ -69,7 +69,6 @@ namespace Scripts.Spells.Shaman;
         public const uint LavaBurst = 51505;
         public const uint LavaBurstBonusDamage = 71824;
         public const uint LavaBurstOverload = 77451;
-        public const uint LavaBurstRank2 = 231721;
         public const uint LavaSurge = 77762;
         public const uint LightningBolt = 188196;
         public const uint LightningBoltEnergize = 214815;
@@ -915,7 +914,7 @@ namespace Scripts.Spells.Shaman;
     {
         public override bool Validate(SpellInfo spellInfo)
         {
-            return ValidateSpellInfo(SpellIds.LavaBurstRank2, SpellIds.FlameShock);
+            return ValidateSpellInfo(SpellIds.FlameShock);
         }
 
         void CalcCritChance(Unit victim, ref float chance)
@@ -925,7 +924,7 @@ namespace Scripts.Spells.Shaman;
             if (caster == null || victim == null)
                 return;
 
-            if (caster.HasAura(SpellIds.LavaBurstRank2) && victim.HasAura(SpellIds.FlameShock, caster.GetGUID()))
+            if (victim.HasAura(SpellIds.FlameShock, caster.GetGUID()))
                 if (victim.GetTotalAuraModifier(AuraType.ModAttackerSpellAndWeaponCritChance) > -100)
                     chance = 100.0f;
         }
