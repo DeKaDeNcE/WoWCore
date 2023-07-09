@@ -140,6 +140,11 @@ namespace Game.DataStorage
         {
             return GetFlags().HasFlag(AreaFlags.NoPvP);
         }
+
+        public bool CanEnableWarMode()
+        {
+            return GetFlags2().HasFlag(AreaFlags2.AllowWarModeToggle);
+        }
     }
 
     public sealed class AreaTriggerRecord
