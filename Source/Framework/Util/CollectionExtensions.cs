@@ -55,18 +55,21 @@ namespace System.Collections.Generic;
 
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
         {
-            return source.OrderBy(x => Guid.NewGuid());
+            var list = new List<T>(source);
+            var n = list.Count;
+
+            while (n > 1)
+            {
+                n--;
+                var k = RandomHelper.IRand(n + 1);
+                (list[k], list[n]) = (list[n], list[k]);
+            }
+
+            foreach (var item in list)
+                yield return item;
         }
 
-        public static void Swap<T>(this T[] array, int position1, int position2)
-        {
-            //
-            // Swaps elements in an array. Doesn't need to return a reference.
-            //
-            T temp = array[position1]; // Copy the first position's element
-            array[position1] = array[position2]; // Assign to the second element
-            array[position2] = temp; // Assign to the first element
-        }
+        public static void Swap<T>(this T[] array, int position1, int position2) { (array[position1], array[position2]) = (array[position2], array[position1]); }
 
         public static void Resize<T>(this List<T> list, uint size)
         {
@@ -104,6 +107,16 @@ namespace System.Collections.Generic;
                 list.Resize(size);
         }
 
+        public static void RandomShuffle<T>(this List<T> list)
+        {
+            var n = list.Count;
+
+            while (n > 1) {
+                n--;
+                var k = RandomHelper.IRand(n + 1);
+                (list[k], list[n]) = (list[n], list[k]);
+            }
+        }
 
         public static T SelectRandom<T>(this IEnumerable<T> source) => source.SelectRandom(1).Single();
 

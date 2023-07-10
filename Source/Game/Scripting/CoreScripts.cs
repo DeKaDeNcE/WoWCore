@@ -46,6 +46,12 @@ namespace Game.Scripting;
             return null;
         }
 
+        public static uint GetGossipSenderFor(Player player, uint menuId) => player.PlayerTalkClass.GetGossipOptionSender(menuId);
+
+        public static uint GetGossipActionFor(Player player, uint gossipListId) => player.PlayerTalkClass.GetGossipOptionAction(gossipListId);
+
+        public static void InitGossipMenuFor(Player player, uint menuId) { player.PlayerTalkClass.GetGossipMenu().SetMenuId(menuId); }
+
         public static void ClearGossipMenuFor(Player player) { player.PlayerTalkClass.ClearMenus(); }
 
         // Using provided text, not from DB
