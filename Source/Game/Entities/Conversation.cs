@@ -123,16 +123,18 @@ namespace Game.Entities
             Global.ScriptMgr.OnConversationCreate(this, creator);
 
             List<ConversationLine> lines = new();
+
             foreach (ConversationLineTemplate line in conversationTemplate.Lines)
             {
                 if (!Global.ConditionMgr.IsObjectMeetingNotGroupedConditions(ConditionSourceType.ConversationLine, line.Id, creator))
                     continue;
 
-                ConversationLine lineField = new();
+                ConversationLine lineField   = new();
                 lineField.ConversationLineID = line.Id;
-                lineField.UiCameraID = line.UiCameraID;
-                lineField.ActorIndex = line.ActorIdx;
-                lineField.Flags = line.Flags;
+                lineField.UiCameraID         = line.UiCameraID;
+                lineField.ActorIndex         = line.ActorIdx;
+                lineField.Flags              = line.Flags;
+                lineField.ChatType           = line.ChatType;
 
                 ConversationLineRecord convoLine = CliDB.ConversationLineStorage.LookupByKey(line.Id); // never null for conversationTemplate->Lines
 
