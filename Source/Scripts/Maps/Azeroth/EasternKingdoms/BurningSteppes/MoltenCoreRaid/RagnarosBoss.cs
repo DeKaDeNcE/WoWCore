@@ -140,7 +140,8 @@ class boss_ragnaros : BossAI
                         break;
                     case EventIds.Intro4:
                         Talk(TextIds.SayArrival5Rag);
-                        Creature executus = ObjectAccessor.GetCreature(me, instance.GetGuidData(DataTypes.MajordomoExecutus));
+                        var executus = Global.ObjAccessor.GetCreature(me, instance.GetGuidData(DataTypes.MajordomoExecutus));
+
                         if (executus)
                             Unit.Kill(me, executus);
                         break;

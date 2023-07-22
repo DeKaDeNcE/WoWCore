@@ -66,7 +66,8 @@ class boss_draganthaurissan : ScriptedAI
 
     public override void JustDied(Unit killer)
     {
-        Creature moira = ObjectAccessor.GetCreature(me, _instance.GetGuidData(DataTypes.DataMoira));
+        var moira = Global.ObjAccessor.GetCreature(me, _instance.GetGuidData(DataTypes.DataMoira));
+
         if (moira)
         {
             moira.GetAI().EnterEvadeMode();

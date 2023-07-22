@@ -446,7 +446,8 @@ namespace Game
                 return;
             }
 
-            Creature pet = ObjectAccessor.GetCreatureOrPetOrVehicle(_player, packet.PetGUID);
+            var pet = Global.ObjAccessor.GetCreatureOrPetOrVehicle(_player, packet.PetGUID);
+
             if (pet == null)
             {
                 Log.outError(LogFilter.Network, "HandlePetCancelAura: Attempt to cancel an aura for non-existant {0} by player '{1}'", packet.PetGUID.ToString(), GetPlayer().GetName());
@@ -529,7 +530,8 @@ namespace Game
             if (GetPlayer().m_SummonSlot[slotId].IsEmpty())
                 return;
 
-            Creature totem = ObjectAccessor.GetCreature(GetPlayer(), _player.m_SummonSlot[slotId]);
+            var totem = Global.ObjAccessor.GetCreature(GetPlayer(), _player.m_SummonSlot[slotId]);
+
             if (totem != null && totem.IsTotem())// && totem.GetGUID() == packet.TotemGUID)  Unknown why blizz doesnt send the guid when you right click it.
                 totem.ToTotem().UnSummon();
         }
@@ -556,7 +558,8 @@ namespace Game
         void HandleSpellClick(SpellClick packet)
         {
             // this will get something not in world. crash
-            Creature unit = ObjectAccessor.GetCreatureOrPetOrVehicle(GetPlayer(), packet.SpellClickUnitGuid);
+            var unit = Global.ObjAccessor.GetCreatureOrPetOrVehicle(GetPlayer(), packet.SpellClickUnitGuid);
+
             if (unit == null)
                 return;
 

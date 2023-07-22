@@ -321,7 +321,7 @@ namespace Game.Entities
             QuestRelationResult questInvolvedRelations;
 
             // pets also can have quests
-            Creature creature = ObjectAccessor.GetCreatureOrPetOrVehicle(this, guid);
+            var creature = Global.ObjAccessor.GetCreatureOrPetOrVehicle(this, guid);
 
             if (creature != null)
             {
@@ -3133,7 +3133,8 @@ namespace Game.Entities
                 if (itr.IsAnyTypeCreature())
                 {
                     // need also pet quests case support
-                    Creature questgiver = ObjectAccessor.GetCreatureOrPetOrVehicle(this, itr);
+                    var questgiver = Global.ObjAccessor.GetCreatureOrPetOrVehicle(this, itr);
+
                     if (!questgiver || questgiver.IsHostileTo(this))
                         continue;
 
@@ -3202,11 +3203,13 @@ namespace Game.Entities
 
             UpdateData udata = new(GetMapId());
             UpdateObject packet;
+
             foreach (var guid in m_clientGUIDs)
             {
                 if (guid.IsGameObject())
                 {
-                    GameObject obj = ObjectAccessor.GetGameObject(this, guid);
+                    var obj = Global.ObjAccessor.GetGameObject(this, guid);
+
                     if (obj != null)
                     {
                         ObjectFieldData objMask = new();
@@ -3233,7 +3236,8 @@ namespace Game.Entities
                 }
                 else if (guid.IsCreatureOrVehicle())
                 {
-                    Creature obj = ObjectAccessor.GetCreatureOrPetOrVehicle(this, guid);
+                    var obj = Global.ObjAccessor.GetCreatureOrPetOrVehicle(this, guid);
+
                     if (obj == null)
                         continue;
 

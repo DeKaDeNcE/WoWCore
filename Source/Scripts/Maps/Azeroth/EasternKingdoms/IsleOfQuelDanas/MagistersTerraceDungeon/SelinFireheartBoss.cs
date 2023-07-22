@@ -197,7 +197,8 @@ class boss_selin_fireheart : BossAI
                 {
                     Talk(TextIds.SayEmpowered);
 
-                    Creature CrystalChosen = ObjectAccessor.GetCreature(me, CrystalGUID);
+                    var CrystalChosen = Global.ObjAccessor.GetCreature(me, CrystalGUID);
+
                     if (CrystalChosen && CrystalChosen.IsAlive())
                         CrystalChosen.KillSelf();
 

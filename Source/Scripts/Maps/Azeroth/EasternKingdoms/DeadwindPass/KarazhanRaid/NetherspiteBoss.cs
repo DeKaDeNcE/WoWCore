@@ -147,11 +147,13 @@ class boss_netherspite : ScriptedAI
     {
         for (int i = 0; i < 3; ++i)
         {
-            Creature portal = ObjectAccessor.GetCreature(me, PortalGUID[i]);
+            var portal = Global.ObjAccessor.GetCreature(me, PortalGUID[i]);
+
             if (portal)
                 portal.DisappearAndDie();
 
-            Creature portal1 = ObjectAccessor.GetCreature(me, BeamerGUID[i]);
+            var portal1 = Global.ObjAccessor.GetCreature(me, BeamerGUID[i]);
+
             if (portal1)
                 portal1.DisappearAndDie();
 
@@ -164,7 +166,8 @@ class boss_netherspite : ScriptedAI
     {
         for (int j = 0; j < 3; ++j) // j = color
         {
-            Creature portal = ObjectAccessor.GetCreature(me, PortalGUID[j]);
+            var portal = Global.ObjAccessor.GetCreature(me, PortalGUID[j]);
+
             if (portal)
             {
                 // the one who's been cast upon before
@@ -197,7 +200,8 @@ class boss_netherspite : ScriptedAI
                 {
                     BeamTarget[j] = target.GetGUID();
                     // remove currently beaming portal
-                    Creature beamer = ObjectAccessor.GetCreature(portal, BeamerGUID[j]);
+                    var beamer = Global.ObjAccessor.GetCreature(portal, BeamerGUID[j]);
+
                     if (beamer)
                     {
                         beamer.CastSpell(target, MiscConst.PortalBeam[j], false);
@@ -248,7 +252,8 @@ class boss_netherspite : ScriptedAI
 
     void HandleDoors(bool open) // Massive Door switcher
     {
-        GameObject Door = ObjectAccessor.GetGameObject(me, instance.GetGuidData(DataTypes.GoMassiveDoor));
+        var Door = Global.ObjAccessor.GetGameObject(me, instance.GetGuidData(DataTypes.GoMassiveDoor));
+
         if (Door)
             Door.SetGoState(open ? GameObjectState.Active : GameObjectState.Ready);
     }

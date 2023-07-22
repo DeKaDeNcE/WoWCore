@@ -96,10 +96,12 @@ class boss_balinda : ScriptedAI
                 EnterEvadeMode();
                 Talk(TextIds.SayEvade);
             }
-            Creature elemental = ObjectAccessor.GetCreature(me, WaterElementalGUID);
-            if (elemental != null)
-                if (elemental.GetDistance2d(me.GetHomePosition().GetPositionX(), me.GetHomePosition().GetPositionY()) > 50)
-                    elemental.GetAI().EnterEvadeMode();
+
+            var elemental = Global.ObjAccessor.GetCreature(me, WaterElementalGUID);
+
+            if (elemental != null && elemental.GetDistance2d(me.GetHomePosition().GetPositionX(), me.GetHomePosition().GetPositionY()) > 50)
+                elemental.GetAI().EnterEvadeMode();
+
             task.Repeat();
         });
     }

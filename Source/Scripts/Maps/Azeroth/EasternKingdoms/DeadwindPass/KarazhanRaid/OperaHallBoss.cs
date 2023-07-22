@@ -331,7 +331,8 @@ class npc_tito : ScriptedAI
     {
         if (!DorotheeGUID.IsEmpty())
         {
-            Creature Dorothee = ObjectAccessor.GetCreature(me, DorotheeGUID);
+            var Dorothee = Global.ObjAccessor.GetCreature(me, DorotheeGUID);
+
             if (Dorothee && Dorothee.IsAlive())
             {
                 Dorothee.GetAI<boss_dorothee>().TitoDied = true;
@@ -1068,7 +1069,8 @@ class boss_julianne : ScriptedAI
             //if this is true then we have to kill romulo too
             if (RomuloDead)
             {
-                Creature Romulo = ObjectAccessor.GetCreature(me, RomuloGUID);
+                var Romulo = Global.ObjAccessor.GetCreature(me, RomuloGUID);
+
                 if (Romulo)
                 {
                     Romulo.RemoveUnitFlag(UnitFlags.Uninteractible);
@@ -1081,8 +1083,9 @@ class boss_julianne : ScriptedAI
                 return;
             }
 
-            //if not already returned, then romulo is alive and we can pretend die
-            Creature Romulo1 = (ObjectAccessor.GetCreature((me), RomuloGUID));
+            //if not already returned, then Romulo is alive and we can pretend die
+            var Romulo1 = Global.ObjAccessor.GetCreature(me, RomuloGUID);
+
             if (Romulo1)
             {
                 MiscConst.PretendToDie(me);
@@ -1187,7 +1190,8 @@ class boss_julianne : ScriptedAI
         {
             if (ResurrectTimer <= diff)
             {
-                Creature Romulo = ObjectAccessor.GetCreature(me, RomuloGUID);
+                var Romulo = Global.ObjAccessor.GetCreature(me, RomuloGUID);
+
                 if (Romulo && Romulo.GetAI<boss_romulo>().IsFakingDeath)
                 {
                     Talk(TextIds.SayJulianneResurrect);
@@ -1227,7 +1231,8 @@ class boss_julianne : ScriptedAI
         {
             if (RandomHelper.URand(0, 1) != 0 && SummonedRomulo)
             {
-                Creature Romulo = (ObjectAccessor.GetCreature((me), RomuloGUID));
+                var Romulo = Global.ObjAccessor.GetCreature(me, RomuloGUID);
+
                 if (Romulo && Romulo.IsAlive() && !RomuloDead)
                     DoCast(Romulo, SpellIds.EternalAffection);
             }
@@ -1303,7 +1308,8 @@ class boss_romulo : ScriptedAI
             IsFakingDeath = true;
             Phase = RAJPhase.Both;
 
-            Creature Julianne = ObjectAccessor.GetCreature(me, JulianneGUID);
+            var Julianne = Global.ObjAccessor.GetCreature(me, JulianneGUID);
+
             if (Julianne)
             {
                 Julianne.GetAI<boss_julianne>().RomuloDead = true;
@@ -1318,7 +1324,8 @@ class boss_romulo : ScriptedAI
         {
             if (JulianneDead)
             {
-                Creature Julianne = ObjectAccessor.GetCreature(me, JulianneGUID);
+                var Julianne = Global.ObjAccessor.GetCreature(me, JulianneGUID);
+
                 if (Julianne)
                 {
                     Julianne.RemoveUnitFlag(UnitFlags.Uninteractible);
@@ -1330,7 +1337,8 @@ class boss_romulo : ScriptedAI
                 return;
             }
 
-            Creature Julianne1 = ObjectAccessor.GetCreature(me, JulianneGUID);
+            var Julianne1 = Global.ObjAccessor.GetCreature(me, JulianneGUID);
+
             if (Julianne1)
             {
                 MiscConst.PretendToDie(me);
@@ -1350,7 +1358,8 @@ class boss_romulo : ScriptedAI
         Talk(TextIds.SayRomuloAggro);
         if (!JulianneGUID.IsEmpty())
         {
-            Creature Julianne = ObjectAccessor.GetCreature(me, JulianneGUID);
+            var Julianne = Global.ObjAccessor.GetCreature(me, JulianneGUID);
+
             if (Julianne && Julianne.GetVictim())
             {
                 AddThreat(Julianne.GetVictim(), 1.0f);
@@ -1387,7 +1396,8 @@ class boss_romulo : ScriptedAI
         {
             if (ResurrectTimer <= diff)
             {
-                Creature Julianne = (ObjectAccessor.GetCreature((me), JulianneGUID));
+                var Julianne = Global.ObjAccessor.GetCreature(me, JulianneGUID);
+
                 if (Julianne && Julianne.GetAI<boss_julianne>().IsFakingDeath)
                 {
                     Talk(TextIds.SayRomuloResurrect);

@@ -245,26 +245,32 @@ class boss_rend_blackhand : BossAI
                 {
                     case EventIds.Start1:
                     {
-                        Creature victor = ObjectAccessor.GetCreature(me, victorGUID);
+                        var victor = Global.ObjAccessor.GetCreature(me, victorGUID);
+
                         if (victor != null)
                             victor.GetAI().Talk(TextIds.SayNefarius0);
+
                         _events.ScheduleEvent(EventIds.Start2, TimeSpan.FromSeconds(4));
                         break;
                     }
                     case EventIds.Start2:
                     {
                         _events.ScheduleEvent(EventIds.TurnToPlayer, TimeSpan.FromSeconds(0));
-                        Creature victor = ObjectAccessor.GetCreature(me, victorGUID);
+                        var victor = Global.ObjAccessor.GetCreature(me, victorGUID);
+
                         if (victor != null)
                             victor.HandleEmoteCommand(Emote.OneshotPoint);
+
                         _events.ScheduleEvent(EventIds.Start3, TimeSpan.FromSeconds(4));
                         break;
                     }
                     case EventIds.Start3:
                     {
-                        Creature victor = ObjectAccessor.GetCreature(me, victorGUID);
+                        var victor = Global.ObjAccessor.GetCreature(me, victorGUID);
+
                         if (victor != null)
                             victor.GetAI().Talk(TextIds.SayNefarius1);
+
                         _events.ScheduleEvent(EventIds.Wave1, TimeSpan.FromSeconds(2));
                         _events.ScheduleEvent(EventIds.TurnToRend, TimeSpan.FromSeconds(4));
                         _events.ScheduleEvent(EventIds.WavesText1, TimeSpan.FromSeconds(20));
@@ -272,7 +278,8 @@ class boss_rend_blackhand : BossAI
                     }
                     case EventIds.TurnToRend:
                     {
-                        Creature victor = ObjectAccessor.GetCreature(me, victorGUID);
+                        var victor = Global.ObjAccessor.GetCreature(me, victorGUID);
+
                         if (victor != null)
                         {
                             victor.SetFacingToObject(me);
@@ -282,7 +289,8 @@ class boss_rend_blackhand : BossAI
                     }
                     case EventIds.TurnToPlayer:
                     {
-                        Creature victor = ObjectAccessor.GetCreature(me, victorGUID);
+                        var victor = Global.ObjAccessor.GetCreature(me, victorGUID);
+
                         if (victor != null)
                         {
                             Unit player = victor.SelectNearestPlayer(60.0f);
@@ -293,7 +301,8 @@ class boss_rend_blackhand : BossAI
                     }
                     case EventIds.TurnToFacing1:
                     {
-                        Creature victor = ObjectAccessor.GetCreature(me, victorGUID);
+                        var victor = Global.ObjAccessor.GetCreature(me, victorGUID);
+
                         if (victor != null)
                             victor.SetFacingTo(1.518436f);
                         break;
@@ -306,9 +315,11 @@ class boss_rend_blackhand : BossAI
                         break;
                     case EventIds.WavesEmote1:
                     {
-                        Creature victor = ObjectAccessor.GetCreature(me, victorGUID);
+                        var victor = Global.ObjAccessor.GetCreature(me, victorGUID);
+
                         if (victor != null)
                             victor.HandleEmoteCommand(Emote.OneshotQuestion);
+
                         break;
                     }
                     case EventIds.WavesEmote2:
@@ -317,9 +328,11 @@ class boss_rend_blackhand : BossAI
                     case EventIds.WavesText1:
                     {
                         _events.ScheduleEvent(EventIds.TurnToPlayer, TimeSpan.FromSeconds(0));
-                        Creature victor = ObjectAccessor.GetCreature(me, victorGUID);
+                        var victor = Global.ObjAccessor.GetCreature(me, victorGUID);
+
                         if (victor != null)
                             victor.GetAI().Talk(TextIds.SayNefarius2);
+
                         me.HandleEmoteCommand(Emote.OneshotTalk);
                         _events.ScheduleEvent(EventIds.TurnToFacing1, TimeSpan.FromSeconds(4));
                         _events.ScheduleEvent(EventIds.WavesEmote1, TimeSpan.FromSeconds(5));
@@ -330,9 +343,11 @@ class boss_rend_blackhand : BossAI
                     case EventIds.WavesText2:
                     {
                         _events.ScheduleEvent(EventIds.TurnToPlayer, TimeSpan.FromSeconds(0));
-                        Creature victor = ObjectAccessor.GetCreature(me, victorGUID);
+                        var victor = Global.ObjAccessor.GetCreature(me, victorGUID);
+
                         if (victor != null)
                             victor.GetAI().Talk(TextIds.SayNefarius3);
+
                         _events.ScheduleEvent(EventIds.TurnToFacing1, TimeSpan.FromSeconds(4));
                         _events.ScheduleEvent(EventIds.Wave3, TimeSpan.FromSeconds(2));
                         _events.ScheduleEvent(EventIds.WavesText3, TimeSpan.FromSeconds(20));
@@ -341,9 +356,11 @@ class boss_rend_blackhand : BossAI
                     case EventIds.WavesText3:
                     {
                         _events.ScheduleEvent(EventIds.TurnToPlayer, TimeSpan.FromSeconds(0));
-                        Creature victor = ObjectAccessor.GetCreature(me, victorGUID);
+                        var victor = Global.ObjAccessor.GetCreature(me, victorGUID);
+
                         if (victor != null)
                             victor.GetAI().Talk(TextIds.SayNefarius4);
+
                         _events.ScheduleEvent(EventIds.TurnToFacing1, TimeSpan.FromSeconds(4));
                         _events.ScheduleEvent(EventIds.Wave4, TimeSpan.FromSeconds(2));
                         _events.ScheduleEvent(EventIds.WavesText4, TimeSpan.FromSeconds(20));
@@ -359,9 +376,11 @@ class boss_rend_blackhand : BossAI
                     case EventIds.WavesText5:
                     {
                         _events.ScheduleEvent(EventIds.TurnToPlayer, TimeSpan.FromSeconds(0));
-                        Creature victor = ObjectAccessor.GetCreature(me, victorGUID);
+                        var victor = Global.ObjAccessor.GetCreature(me, victorGUID);
+
                         if (victor != null)
                             victor.GetAI().Talk(TextIds.SayNefarius5);
+
                         _events.ScheduleEvent(EventIds.TurnToFacing1, TimeSpan.FromSeconds(4));
                         _events.ScheduleEvent(EventIds.Wave6, TimeSpan.FromSeconds(2));
                         _events.ScheduleEvent(EventIds.WavesCompleteText1, TimeSpan.FromSeconds(20));
@@ -370,18 +389,22 @@ class boss_rend_blackhand : BossAI
                     case EventIds.WavesCompleteText1:
                     {
                         _events.ScheduleEvent(EventIds.TurnToPlayer, TimeSpan.FromSeconds(0));
-                        Creature victor = ObjectAccessor.GetCreature(me, victorGUID);
+                        var victor = Global.ObjAccessor.GetCreature(me, victorGUID);
+
                         if (victor != null)
                             victor.GetAI().Talk(TextIds.SayNefarius6);
+
                         _events.ScheduleEvent(EventIds.TurnToFacing1, TimeSpan.FromSeconds(4));
                         _events.ScheduleEvent(EventIds.WavesCompleteText2, TimeSpan.FromSeconds(13));
                         break;
                     }
                     case EventIds.WavesCompleteText2:
                     {
-                        Creature victor = ObjectAccessor.GetCreature(me, victorGUID);
+                        var victor = Global.ObjAccessor.GetCreature(me, victorGUID);
+
                         if (victor != null)
                             victor.GetAI().Talk(TextIds.SayNefarius7);
+
                         Talk(TextIds.SayBlackhand2);
                         _events.ScheduleEvent(EventIds.PathRend, TimeSpan.FromSeconds(1));
                         _events.ScheduleEvent(EventIds.WavesCompleteText3, TimeSpan.FromSeconds(4));
@@ -389,18 +412,22 @@ class boss_rend_blackhand : BossAI
                     }
                     case EventIds.WavesCompleteText3:
                     {
-                        Creature victor = ObjectAccessor.GetCreature(me, victorGUID);
+                        var victor = Global.ObjAccessor.GetCreature(me, victorGUID);
+
                         if (victor != null)
                             victor.GetAI().Talk(TextIds.SayNefarius8);
+
                         _events.ScheduleEvent(EventIds.PathNefarius, TimeSpan.FromSeconds(1));
                         _events.ScheduleEvent(EventIds.PathRend, TimeSpan.FromSeconds(1));
                         break;
                     }
                     case EventIds.PathNefarius:
                     {
-                        Creature victor = ObjectAccessor.GetCreature(me, victorGUID);
+                        var victor = Global.ObjAccessor.GetCreature(me, victorGUID);
+
                         if (victor != null)
                             victor.GetMotionMaster().MovePath(MiscConst.NefariusPath1, true);
+
                         break;
                     }
                     case EventIds.PathRend:
@@ -416,7 +443,8 @@ class boss_rend_blackhand : BossAI
                         break;
                     case EventIds.Wave1:
                     {
-                        GameObject portcullis = ObjectAccessor.GetGameObject(me, portcullisGUID);
+                        var portcullis = Global.ObjAccessor.GetGameObject(me, portcullisGUID);
+
                         if (portcullis != null)
                             portcullis.UseDoorOrButton();
 
@@ -426,7 +454,8 @@ class boss_rend_blackhand : BossAI
                     case EventIds.Wave2:
                     {
                         // spawn wave
-                        GameObject portcullis = ObjectAccessor.GetGameObject(me, portcullisGUID);
+                        var portcullis = Global.ObjAccessor.GetGameObject(me, portcullisGUID);
+
                         if (portcullis != null)
                             portcullis.UseDoorOrButton();
                         // move wave
@@ -435,7 +464,8 @@ class boss_rend_blackhand : BossAI
                     case EventIds.Wave3:
                     {
                         // spawn wave
-                        GameObject portcullis = ObjectAccessor.GetGameObject(me, portcullisGUID);
+                        var portcullis = Global.ObjAccessor.GetGameObject(me, portcullisGUID);
+
                         if (portcullis != null)
                             portcullis.UseDoorOrButton();
                         // move wave
@@ -444,7 +474,8 @@ class boss_rend_blackhand : BossAI
                     case EventIds.Wave4:
                     {
                         // spawn wave
-                        GameObject portcullis = ObjectAccessor.GetGameObject(me, portcullisGUID);
+                        var portcullis = Global.ObjAccessor.GetGameObject(me, portcullisGUID);
+
                         if (portcullis != null)
                             portcullis.UseDoorOrButton();
                         // move wave
@@ -453,7 +484,8 @@ class boss_rend_blackhand : BossAI
                     case EventIds.Wave5:
                     {
                         // spawn wave
-                        GameObject portcullis = ObjectAccessor.GetGameObject(me, portcullisGUID);
+                        var portcullis = Global.ObjAccessor.GetGameObject(me, portcullisGUID);
+
                         if (portcullis != null)
                             portcullis.UseDoorOrButton();
                         // move wave
@@ -462,7 +494,8 @@ class boss_rend_blackhand : BossAI
                     case EventIds.Wave6:
                     {
                         // spawn wave
-                        GameObject portcullis = ObjectAccessor.GetGameObject(me, portcullisGUID);
+                        var portcullis = Global.ObjAccessor.GetGameObject(me, portcullisGUID);
+
                         if (portcullis != null)
                             portcullis.UseDoorOrButton();
                         // move wave

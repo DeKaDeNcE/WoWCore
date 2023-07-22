@@ -395,7 +395,8 @@ class npc_felblood_kaelthas_phoenix : ScriptedAI
 
                 _scheduler.Schedule(TimeSpan.FromSeconds(15), task =>
                 {
-                    Creature egg = ObjectAccessor.GetCreature(me, _eggGUID);
+                    var egg = Global.ObjAccessor.GetCreature(me, _eggGUID);
+
                     if (egg)
                         egg.DespawnOrUnsummon();
 

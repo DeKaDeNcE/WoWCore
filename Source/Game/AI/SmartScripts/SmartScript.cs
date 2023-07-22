@@ -4223,12 +4223,12 @@ namespace Game.AI
             }
             catch (Exception e)
             {
-                Log.outError(LogFilter.Sql, "SmartScript: Action target Creature cannot cast AI to SmartAI (GUID: {0} Entry: {1}) is not using SmartAI, action skipped to prevent crash.", creature != null ? creature.GetSpawnId() : (_me != null ? _me.GetSpawnId() : 0), creature != null ? creature.GetEntry() : (_me != null ? _me.GetEntry() : 0));
+                Log.outError(LogFilter.Sql, "SmartScript: Action target Creature cannot cast AI to SmartAI (GUID: {0} Entry: {1}) is not using SmartAI, action skipped to prevent crash. {2}", creature != null ? creature.GetSpawnId() : _me != null ? _me.GetSpawnId() : 0, creature != null ? creature.GetEntry() : _me != null ? _me.GetEntry() : 0, e.Message);
                 smart = false;
             }
 
             if (!smart && !silent)
-                Log.outError(LogFilter.Sql, "SmartScript: Action target Creature (GUID: {0} Entry: {1}) is not using SmartAI, action skipped to prevent crash.", creature != null ? creature.GetSpawnId() : (_me != null ? _me.GetSpawnId() : 0), creature != null ? creature.GetEntry() : (_me != null ? _me.GetEntry() : 0));
+                Log.outError(LogFilter.Sql, "SmartScript: Action target Creature (GUID: {0} Entry: {1}) is not using SmartAI, action skipped to prevent crash.", creature != null ? creature.GetSpawnId() : _me != null ? _me.GetSpawnId() : 0, creature != null ? creature.GetEntry() : _me != null ? _me.GetEntry() : 0);
 
             return smart;
         }
@@ -4247,12 +4247,12 @@ namespace Game.AI
             }
             catch (Exception e)
             {
-                Log.outError(LogFilter.Sql, "SmartScript: Action target GameObject cannot cast AI to SmartAI (GUID: {0} Entry: {1}) is not using SmartGameObjectAI, action skipped to prevent crash.", gameObject != null ? gameObject.GetSpawnId() : (_go != null ? _go.GetSpawnId() : 0), gameObject != null ? gameObject.GetEntry() : (_go != null ? _go.GetEntry() : 0));
+                Log.outError(LogFilter.Sql, "SmartScript: Action target GameObject cannot cast AI to SmartAI (GUID: {0} Entry: {1}) is not using SmartGameObjectAI, action skipped to prevent crash. {2}", gameObject != null ? gameObject.GetSpawnId() : _go != null ? _go.GetSpawnId() : 0, gameObject != null ? gameObject.GetEntry() : _go != null ? _go.GetEntry() : 0, e.Message);
                 smart = false;
             }
 
             if (!smart && !silent)
-                Log.outError(LogFilter.Sql, "SmartScript: Action target GameObject (GUID: {0} Entry: {1}) is not using SmartGameObjectAI, action skipped to prevent crash.", gameObject != null ? gameObject.GetSpawnId() : (_go != null ? _go.GetSpawnId() : 0), gameObject != null ? gameObject.GetEntry() : (_go != null ? _go.GetEntry() : 0));
+                Log.outError(LogFilter.Sql, "SmartScript: Action target GameObject (GUID: {0} Entry: {1}) is not using SmartGameObjectAI, action skipped to prevent crash.", gameObject != null ? gameObject.GetSpawnId() : _go != null ? _go.GetSpawnId() : 0, gameObject != null ? gameObject.GetEntry() : _go != null ? _go.GetEntry() : 0);
 
             return smart;
         }
@@ -4344,7 +4344,8 @@ namespace Game.AI
             {
                 if (!_meOrigGUID.IsEmpty())
                 {
-                    Creature m = ObjectAccessor.GetCreature(lookupRoot, _meOrigGUID);
+                    var m = Global.ObjAccessor.GetCreature(lookupRoot, _meOrigGUID);
+
                     if (m != null)
                     {
                         _me = m;
@@ -4355,7 +4356,8 @@ namespace Game.AI
 
                 if (!_goOrigGUID.IsEmpty())
                 {
-                    GameObject o = ObjectAccessor.GetGameObject(lookupRoot, _goOrigGUID);
+                    var o = Global.ObjAccessor.GetGameObject(lookupRoot, _goOrigGUID);
+
                     if (o != null)
                     {
                         _me = null;

@@ -89,7 +89,9 @@ class boss_nightbane : BossAI
         _flyCount = 0;
         me.SetDisableGravity(true);
         HandleTerraceDoors(true);
-        GameObject urn = ObjectAccessor.GetGameObject(me, instance.GetGuidData(DataTypes.GoBlackenedUrn));
+
+        var urn = Global.ObjAccessor.GetGameObject(me, instance.GetGuidData(DataTypes.GoBlackenedUrn));
+
         if (urn)
             urn.RemoveFlag(GameObjectFlags.InUse);
     }
@@ -361,7 +363,8 @@ class go_blackened_urn : GameObjectAI
         if (instance.GetBossState(DataTypes.Nightbane) == EncounterState.Done || instance.GetBossState(DataTypes.Nightbane) == EncounterState.InProgress)
             return false;
 
-        Creature nightbane = ObjectAccessor.GetCreature(me, instance.GetGuidData(DataTypes.Nightbane));
+        var nightbane = Global.ObjAccessor.GetCreature(me, instance.GetGuidData(DataTypes.Nightbane));
+
         if (nightbane)
         {
             me.SetFlag(GameObjectFlags.InUse);

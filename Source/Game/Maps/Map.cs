@@ -2483,7 +2483,7 @@ namespace Game.Maps
                 {
                     case TypeId.Corpse:
                     {
-                        var corpse = ObjectAccessor.GetCorpse(obj, obj.GetGUID());
+                        var corpse = Global.ObjAccessor.GetCorpse(obj, obj.GetGUID());
 
                         if (corpse == null)
                             Log.outError(LogFilter.Maps, "Tried to delete corpse/bones {0} that is not in map.", obj.GetGUID().ToString());

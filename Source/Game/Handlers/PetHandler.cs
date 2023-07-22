@@ -20,7 +20,8 @@ namespace Game
         [WorldPacketHandler(ClientOpcodes.DismissCritter)]
         void HandleDismissCritter(DismissCritter packet)
         {
-            Unit pet = ObjectAccessor.GetCreatureOrPetOrVehicle(GetPlayer(), packet.CritterGUID);
+            var pet = Global.ObjAccessor.GetCreatureOrPetOrVehicle(GetPlayer(), packet.CritterGUID);
+
             if (!pet)
             {
                 Log.outDebug(LogFilter.Network, "Critter {0} does not exist - player '{1}' ({2} / account: {3}) attempted to dismiss it (possibly lagged out)",
@@ -94,7 +95,8 @@ namespace Game
         [WorldPacketHandler(ClientOpcodes.PetStopAttack, Processing = PacketProcessing.Inplace)]
         void HandlePetStopAttack(PetStopAttack packet)
         {
-            Unit pet = ObjectAccessor.GetCreatureOrPetOrVehicle(GetPlayer(), packet.PetGUID);
+            var pet = Global.ObjAccessor.GetCreatureOrPetOrVehicle(GetPlayer(), packet.PetGUID);
+
             if (!pet)
             {
                 Log.outError(LogFilter.Network, "HandlePetStopAttack: {0} does not exist", packet.PetGUID.ToString());
@@ -403,7 +405,8 @@ namespace Game
             QueryPetNameResponse response = new();
             response.UnitGUID = guid;
 
-            Creature unit = ObjectAccessor.GetCreatureOrPetOrVehicle(GetPlayer(), guid);
+            var unit = Global.ObjAccessor.GetCreatureOrPetOrVehicle(GetPlayer(), guid);
+
             if (unit)
             {
                 response.Allow = true;
@@ -521,12 +524,12 @@ namespace Game
         [WorldPacketHandler(ClientOpcodes.PetRename)]
         void HandlePetRename(PetRename packet)
         {
-            ObjectGuid petguid = packet.RenameData.PetGUID;
-            bool isdeclined = packet.RenameData.HasDeclinedNames;
-            string name = packet.RenameData.NewName;
+            var petguid = packet.RenameData.PetGUID;
+            var isdeclined = packet.RenameData.HasDeclinedNames;
+            var name = packet.RenameData.NewName;
 
-            PetStable petStable = _player.GetPetStable();
-            Pet pet = ObjectAccessor.GetPet(GetPlayer(), petguid);
+            var petStable = _player.GetPetStable();
+            var pet = Global.ObjAccessor.GetPet(GetPlayer(), petguid);
             // check it!
             if (!pet || !pet.IsPet() || pet.ToPet().GetPetType() != PetType.Hunter || !pet.HasPetFlag(UnitPetFlags.CanBeRenamed) ||
                 pet.GetOwnerGUID() != _player.GetGUID() || pet.GetCharmInfo() == null ||
@@ -589,7 +592,8 @@ namespace Game
                 return;
 
             // pet/charmed
-            Creature pet = ObjectAccessor.GetCreatureOrPetOrVehicle(GetPlayer(), packet.Pet);
+            var pet = Global.ObjAccessor.GetCreatureOrPetOrVehicle(GetPlayer(), packet.Pet);
+
             if (pet && pet.ToPet() && pet.ToPet().GetPetType() == PetType.Hunter)
             {
                 _player.RemovePet((Pet)pet, PetSaveMode.AsDeleted);
@@ -599,7 +603,8 @@ namespace Game
         [WorldPacketHandler(ClientOpcodes.PetSpellAutocast, Processing = PacketProcessing.Inplace)]
         void HandlePetSpellAutocast(PetSpellAutocast packet)
         {
-            Creature pet = ObjectAccessor.GetCreatureOrPetOrVehicle(GetPlayer(), packet.PetGUID);
+            var pet = Global.ObjAccessor.GetCreatureOrPetOrVehicle(GetPlayer(), packet.PetGUID);
+
             if (!pet)
             {
                 Log.outError(LogFilter.Network, "WorldSession.HandlePetSpellAutocast: {0} not found.", packet.PetGUID.ToString());

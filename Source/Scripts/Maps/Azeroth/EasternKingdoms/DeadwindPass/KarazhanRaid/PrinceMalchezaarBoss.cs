@@ -95,7 +95,7 @@ class netherspite_infernal : ScriptedAI
             _scheduler.Schedule(TimeSpan.FromSeconds(4), task => DoCast(me, SpellIds.Hellfire));
             _scheduler.Schedule(TimeSpan.FromSeconds(170), task =>
             {
-                Creature pMalchezaar = ObjectAccessor.GetCreature(me, Malchezaar);
+                var pMalchezaar = Global.ObjAccessor.GetCreature(me, Malchezaar);
 
                 if (pMalchezaar && pMalchezaar.IsAlive())
                     pMalchezaar.GetAI<boss_malchezaar>().Cleanup(me, Point);
@@ -145,7 +145,6 @@ class boss_malchezaar : ScriptedAI
     uint Cleave_Timer;
     uint InfernalTimer;
     uint AxesTargetSwitchTimer;
-    uint InfernalCleanupTimer;
 
     List<ObjectGuid> infernals = new();
     List<Vector2> positions = new();
@@ -172,7 +171,6 @@ class boss_malchezaar : ScriptedAI
         AmplifyDamageTimer = 5000;
         Cleave_Timer = 8000;
         InfernalTimer = 40000;
-        InfernalCleanupTimer = 47000;
         AxesTargetSwitchTimer = RandomHelper.URand(7500, 20000);
         SunderArmorTimer = RandomHelper.URand(5000, 10000);
         phase = 1;

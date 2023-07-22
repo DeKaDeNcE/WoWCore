@@ -303,7 +303,6 @@ class npc_sparring_partner : ScriptedAI
 {
     // private EventMap _events;
     private bool _jumped;
-    private byte _actorID;
     private uint _path;
     private uint _summonSpell;
     private ObjectGuid _playerGUID;
@@ -317,14 +316,12 @@ class npc_sparring_partner : ScriptedAI
             SetEquipmentSlots(false, ItemIds.Sword);
             _summonSpell = SpellIds.SummonCole;
             _path = PathIds.AllianceSparringPartner;
-            _actorID = 0;
         }
         else if (me.GetEntry() == CreatureIds.HordeSparringPartner)
         {
             SetEquipmentSlots(false, ItemIds.Axe);
             _summonSpell = SpellIds.SummonThrog;
             _path = PathIds.HordeSparringPartner;
-            _actorID = 1;
         }
     }
 

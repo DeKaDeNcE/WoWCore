@@ -206,7 +206,8 @@ namespace Game
             if (!GetPlayer().IsAlive() || !packet.Unit.IsCreatureOrVehicle())
                 return;
 
-            Creature lootTarget = ObjectAccessor.GetCreature(GetPlayer(), packet.Unit);
+            var lootTarget = Global.ObjAccessor.GetCreature(GetPlayer(), packet.Unit);
+
             if (!lootTarget)
                 return;
 
@@ -306,7 +307,8 @@ namespace Game
             }
             else if (lguid.IsCorpse())        // ONLY remove insignia at BG
             {
-                Corpse corpse = ObjectAccessor.GetCorpse(player, lguid);
+                var corpse = Global.ObjAccessor.GetCorpse(player, lguid);
+
                 if (!corpse || !corpse.IsWithinDistInMap(player, SharedConst.InteractionDistance))
                     return;
 

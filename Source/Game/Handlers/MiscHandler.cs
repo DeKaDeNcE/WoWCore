@@ -471,7 +471,8 @@ namespace Game
         [WorldPacketHandler(ClientOpcodes.ConversationLineStarted)]
         void HandleConversationLineStarted(ConversationLineStarted conversationLineStarted)
         {
-            Conversation convo = ObjectAccessor.GetConversation(_player, conversationLineStarted.ConversationGUID);
+            var convo = Global.ObjAccessor.GetConversation(_player, conversationLineStarted.ConversationGUID);
+
             if (convo != null)
                 Global.ScriptMgr.OnConversationLineStarted(convo, conversationLineStarted.LineID, _player);
         }

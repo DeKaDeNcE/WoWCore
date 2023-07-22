@@ -34,8 +34,9 @@ namespace Game
         public void SendTaxiStatus(ObjectGuid guid)
         {
             // cheating checks
-            Player player = GetPlayer();
-            Creature unit = ObjectAccessor.GetCreature(player, guid);
+            var player = GetPlayer();
+            var unit = Global.ObjAccessor.GetCreature(player, guid);
+
             if (!unit || unit.IsHostileTo(player) || !unit.HasNpcFlag(NPCFlags.FlightMaster))
             {
                 Log.outDebug(LogFilter.Network, "WorldSession.SendTaxiStatus - {0} not found.", guid.ToString());

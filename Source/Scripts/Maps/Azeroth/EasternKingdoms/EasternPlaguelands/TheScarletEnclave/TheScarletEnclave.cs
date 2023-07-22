@@ -561,7 +561,7 @@ class go_acherus_soul_prison : GameObjectAI
 
             if (!prisonerGUID.IsEmpty())
             {
-                Creature prisoner = ObjectAccessor.GetCreature(player, prisonerGUID);
+                var prisoner = Global.ObjAccessor.GetCreature(player, prisonerGUID);
 
                 if (prisoner != null && prisoner.IsAlive())
                     ((npc_unworthy_initiate)prisoner.GetAI()).EventStart(anchor, player);

@@ -622,8 +622,9 @@ namespace Game
         [WorldPacketHandler(ClientOpcodes.AreaSpiritHealerQuery)]
         void HandleAreaSpiritHealerQuery(AreaSpiritHealerQuery areaSpiritHealerQuery)
         {
-            Player player = GetPlayer();
-            Creature spiritHealer = ObjectAccessor.GetCreature(player, areaSpiritHealerQuery.HealerGuid);
+            var player = GetPlayer();
+            var spiritHealer = Global.ObjAccessor.GetCreature(player, areaSpiritHealerQuery.HealerGuid);
+
             if (spiritHealer == null)
                 return;
 
@@ -658,7 +659,8 @@ namespace Game
         [WorldPacketHandler(ClientOpcodes.AreaSpiritHealerQueue)]
         void HandleAreaSpiritHealerQueue(AreaSpiritHealerQueue areaSpiritHealerQueue)
         {
-            Creature spiritHealer = ObjectAccessor.GetCreature(GetPlayer(), areaSpiritHealerQueue.HealerGuid);
+            var spiritHealer = Global.ObjAccessor.GetCreature(GetPlayer(), areaSpiritHealerQueue.HealerGuid);
+
             if (spiritHealer == null)
                 return;
 

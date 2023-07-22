@@ -3101,7 +3101,7 @@ namespace Game.Entities
 
         public GameObject GetLinkedTrap()
         {
-            return ObjectAccessor.GetGameObject(this, m_linkedTrap);
+            return Global.ObjAccessor.GetGameObject(this, m_linkedTrap);
         }
 
         public override void BuildValuesCreate(WorldPacket data, Player target)

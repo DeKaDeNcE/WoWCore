@@ -430,7 +430,7 @@ namespace Scripts.World.NpcSpecial
 
         Creature GetOrSummonGuard()
         {
-            Creature guard = ObjectAccessor.GetCreature(me, _myGuard);
+            var guard = Global.ObjAccessor.GetCreature(me, _myGuard);
 
             if (guard == null && (guard = me.SummonCreature(_spawn.otherEntry, 0.0f, 0.0f, 0.0f, 0.0f, TempSummonType.TimedDespawnOutOfCombat, TimeSpan.FromMinutes(5))))
                 _myGuard = guard.GetGUID();
@@ -847,7 +847,8 @@ namespace Scripts.World.NpcSpecial
                         {
                             foreach (var guid in Patients)
                             {
-                                Creature patient = ObjectAccessor.GetCreature(me, guid);
+                                var patient = Global.ObjAccessor.GetCreature(me, guid);
+
                                 if (patient)
                                     patient.SetDeathState(DeathState.JustDied);
                             }
@@ -1001,7 +1002,8 @@ namespace Scripts.World.NpcSpecial
             {
                 if (!DoctorGUID.IsEmpty())
                 {
-                    Creature doctor = ObjectAccessor.GetCreature(me, DoctorGUID);
+                    var doctor = Global.ObjAccessor.GetCreature(me, DoctorGUID);
+
                     if (doctor)
                         ((npc_doctor)doctor.GetAI()).PatientSaved(me, player, Coord);
                 }
@@ -1051,7 +1053,8 @@ namespace Scripts.World.NpcSpecial
 
                 if (!DoctorGUID.IsEmpty())
                 {
-                    Creature doctor = ObjectAccessor.GetCreature((me), DoctorGUID);
+                    var doctor = Global.ObjAccessor.GetCreature(me, DoctorGUID);
+
                     if (doctor)
                         ((npc_doctor)doctor.GetAI()).PatientDied(Coord);
                 }
@@ -1290,7 +1293,8 @@ namespace Scripts.World.NpcSpecial
                     // Turn to random brewfest reveler within set range
                     if (!_revelerGuids.Empty())
                     {
-                        Creature creature = ObjectAccessor.GetCreature(me, _revelerGuids.SelectRandom());
+                        var creature = Global.ObjAccessor.GetCreature(me, _revelerGuids.SelectRandom());
+
                         if (creature != null)
                             me.SetFacingToObject(creature);
                     }
@@ -1603,7 +1607,8 @@ namespace Scripts.World.NpcSpecial
 
         GameObject VerifyTarget()
         {
-            GameObject target = ObjectAccessor.GetGameObject(me, _target);
+            var target = Global.ObjAccessor.GetGameObject(me, _target);
+
             if (target)
                 return target;
 

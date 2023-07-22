@@ -1116,9 +1116,11 @@ namespace Scripts.Spells.Mage;
 
         TempSummon GetRingOfFrostMinion()
         {
-            Creature creature = ObjectAccessor.GetCreature(GetOwner(), _ringOfFrostGUID);
+            var creature = Global.ObjAccessor.GetCreature(GetOwner(), _ringOfFrostGUID);
+
             if (creature)
                 return creature.ToTempSummon();
+
             return null;
         }
 

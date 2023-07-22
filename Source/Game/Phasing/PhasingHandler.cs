@@ -705,10 +705,10 @@ namespace Game
             {
                 if (!summonGuid.IsEmpty())
                 {
-                    Creature summon = ObjectAccessor.GetCreature(unit, summonGuid);
-                    if (summon != null)
-                        if (_visited.Add(summon))
-                            func(summon);
+                    var summon = Global.ObjAccessor.GetCreature(unit, summonGuid);
+
+                    if (summon != null && _visited.Add(summon))
+                        func(summon);
                 }
             }
 

@@ -351,11 +351,13 @@ namespace Scripts.World.Areatriggers
             if (player.GetQuestStatus(QuestIds.TheLonesomeWatcher) != QuestStatus.Incomplete)
                 return false;
 
-            Creature stormforgedMonitor = ObjectAccessor.GetCreature(player, stormforgedMonitorGUID);
+            var stormforgedMonitor = Global.ObjAccessor.GetCreature(player, stormforgedMonitorGUID);
+
             if (stormforgedMonitor)
                 return false;
 
-            Creature stormforgedEradictor = ObjectAccessor.GetCreature(player, stormforgedEradictorGUID);
+            var stormforgedEradictor = Global.ObjAccessor.GetCreature(player, stormforgedEradictorGUID);
+
             if (stormforgedEradictor)
                 return false;
 

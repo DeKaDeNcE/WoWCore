@@ -363,7 +363,9 @@ class boss_garothi_worldbreaker : BossAI
                 {
                     _surgingFelDummyGuids.Remove(_lastSurgingFelDummyGuid);
                     _lastSurgingFelDummyGuid = _surgingFelDummyGuids.SelectRandom();
-                    Creature dummy = ObjectAccessor.GetCreature(me, _lastSurgingFelDummyGuid);
+
+                    var dummy = Global.ObjAccessor.GetCreature(me, _lastSurgingFelDummyGuid);
+
                     if (dummy)
                         dummy.CastSpell(dummy, SpellIds.SurgingFelAreaTrigger);
 

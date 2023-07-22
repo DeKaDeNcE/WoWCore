@@ -619,7 +619,6 @@ class instance_blackrock_spire : InstanceMapScript
         ObjectGuid go_emberseerin;
         ObjectGuid go_doors;
         ObjectGuid go_emberseerout;
-        ObjectGuid go_blackrockaltar;
         ObjectGuid[] go_roomrunes = new ObjectGuid[7];
         ObjectGuid[] go_emberseerrunes = new ObjectGuid[7];
         List<ObjectGuid>[] runecreaturelist = new List<ObjectGuid>[7];
@@ -692,7 +691,8 @@ class at_nearby_scarshield_infiltrator : AreaTriggerScript
             InstanceScript instance = player.GetInstanceScript();
             if (instance != null)
             {
-                Creature infiltrator = ObjectAccessor.GetCreature(player, instance.GetGuidData(DataTypes.ScarshieldInfiltrator));
+                var infiltrator = Global.ObjAccessor.GetCreature(player, instance.GetGuidData(DataTypes.ScarshieldInfiltrator));
+
                 if (infiltrator)
                 {
                     if (player.GetLevel() >= 57)

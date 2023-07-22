@@ -1259,15 +1259,17 @@ namespace Game.Spells
                         target = vehicleBase.GetVehicleKit().GetPassenger((sbyte)(targetType.GetTarget() - Targets.UnitPassenger0));
                     break;
                 case Targets.UnitTargetTapList:
-                    Creature creatureCaster = m_caster.ToCreature();
+                    var creatureCaster = m_caster.ToCreature();
+
                     if (creatureCaster != null && !creatureCaster.GetTapList().Empty())
                         target = Global.ObjAccessor.GetWorldObject(creatureCaster, creatureCaster.GetTapList().SelectRandom());
                     break;
                 case Targets.UnitOwnCritter:
                 {
                     Unit unitCaster = m_caster.ToUnit();
+
                     if (unitCaster != null)
-                        target = ObjectAccessor.GetCreatureOrPetOrVehicle(m_caster, unitCaster.GetCritterGUID());
+                        target = Global.ObjAccessor.GetCreatureOrPetOrVehicle(m_caster, unitCaster.GetCritterGUID());
                     break;
                 }
             }
@@ -2860,12 +2862,14 @@ namespace Game.Spells
                 return;
             }
 
-            Unit unitCaster = m_caster.ToUnit();
+            var unitCaster = m_caster.ToUnit();
+
             if (unitCaster != null)
             {
                 if (m_spellInfo.HasAttribute(SpellAttr1.DismissPetFirst))
                 {
-                    Creature pet = ObjectAccessor.GetCreature(m_caster, unitCaster.GetPetGUID());
+                    var pet = Global.ObjAccessor.GetCreature(m_caster, unitCaster.GetPetGUID());
+
                     if (pet != null)
                         pet.DespawnOrUnsummon();
                 }
@@ -7120,7 +7124,8 @@ namespace Game.Spells
                         return false;
                     }
 
-                    Corpse corpse = ObjectAccessor.GetCorpse(m_caster, m_targets.GetCorpseTargetGUID());
+                    var corpse = Global.ObjAccessor.GetCorpse(m_caster, m_targets.GetCorpseTargetGUID());
+
                     if (!corpse)
                         return false;
 
@@ -8738,7 +8743,8 @@ namespace Game.Spells
 
         public override void DoTargetSpellHit(Spell spell, SpellEffectInfo spellEffectInfo)
         {
-            GameObject go = spell.GetCaster().GetGUID() == TargetGUID ? spell.GetCaster().ToGameObject() : ObjectAccessor.GetGameObject(spell.GetCaster(), TargetGUID);
+            var go = spell.GetCaster().GetGUID() == TargetGUID ? spell.GetCaster().ToGameObject() : Global.ObjAccessor.GetGameObject(spell.GetCaster(), TargetGUID);
+
             if (go == null)
                 return;
 
@@ -8782,7 +8788,8 @@ namespace Game.Spells
 
         public override void DoTargetSpellHit(Spell spell, SpellEffectInfo spellEffectInfo)
         {
-            Corpse corpse = ObjectAccessor.GetCorpse(spell.GetCaster(), TargetGUID);
+            var corpse = Global.ObjAccessor.GetCorpse(spell.GetCaster(), TargetGUID);
+
             if (corpse == null)
                 return;
 

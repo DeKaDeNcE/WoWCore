@@ -454,7 +454,8 @@ namespace Game.Misc
             packet.SuggestedPartyMembers = quest.SuggestedPlayers;
 
             // Is there a better way? what about game objects?
-            Creature creature = ObjectAccessor.GetCreature(_session.GetPlayer(), npcGUID);
+            var creature = Global.ObjAccessor.GetCreature(_session.GetPlayer(), npcGUID);
+
             if (creature != null)
                 packet.QuestGiverCreatureID = (int)creature.GetCreatureTemplate().Entry;
 
@@ -543,7 +544,8 @@ namespace Game.Misc
             offer.QuestGiverGUID = npcGUID;
 
             // Is there a better way? what about game objects?
-            Creature creature = ObjectAccessor.GetCreature(_session.GetPlayer(), npcGUID);
+            var creature = Global.ObjAccessor.GetCreature(_session.GetPlayer(), npcGUID);
+
             if (creature)
             {
                 packet.QuestGiverCreatureID = creature.GetEntry();
@@ -610,7 +612,8 @@ namespace Game.Misc
             packet.QuestGiverGUID = npcGUID;
 
             // Is there a better way? what about game objects?
-            Creature creature = ObjectAccessor.GetCreature(_session.GetPlayer(), npcGUID);
+            var creature = Global.ObjAccessor.GetCreature(_session.GetPlayer(), npcGUID);
+
             if (creature)
                 packet.QuestGiverCreatureID = creature.GetCreatureTemplate().Entry;
 

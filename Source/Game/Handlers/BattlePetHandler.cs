@@ -54,7 +54,8 @@ namespace Game
             QueryBattlePetNameResponse response = new();
             response.BattlePetID = queryBattlePetName.BattlePetID;
 
-            Creature summonedBattlePet = ObjectAccessor.GetCreatureOrPetOrVehicle(_player, queryBattlePetName.UnitGUID);
+            var summonedBattlePet = Global.ObjAccessor.GetCreatureOrPetOrVehicle(_player, queryBattlePetName.UnitGUID);
+
             if (!summonedBattlePet || !summonedBattlePet.IsSummon())
             {
                 SendPacket(response);

@@ -24,24 +24,14 @@ struct TextIds
 [Script]
 class boss_halycon : BossAI
 {
-    static Position SummonLocation = new Position(-167.9561f, -411.7844f, 76.23057f, 1.53589f);
+    static Position SummonLocation = new(-167.9561f, -411.7844f, 76.23057f, 1.53589f);
 
-    bool Summoned;
+    public boss_halycon(Creature creature) : base(creature, DataTypes.Halycon) { }
 
-    public boss_halycon(Creature creature) : base(creature, DataTypes.Halycon)
-    {
-        Initialize();
-    }
-
-    void Initialize()
-    {
-        Summoned = false;
-    }
 
     public override void Reset()
     {
         _Reset();
-        Initialize();
     }
 
     public override void JustEngagedWith(Unit who)
@@ -53,6 +43,7 @@ class boss_halycon : BossAI
             DoCastVictim(SpellIds.Rend);
             task.Repeat(TimeSpan.FromSeconds(8), TimeSpan.FromSeconds(10));
         });
+
         _scheduler.Schedule(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(12), task =>
         {
             DoCast(me, SpellIds.Thrash);
@@ -63,8 +54,6 @@ class boss_halycon : BossAI
     {
         me.SummonCreature(CreaturesIds.GizrulTheSlavener, SummonLocation, TempSummonType.TimedDespawn, TimeSpan.FromMinutes(5));
         Talk(TextIds.EmoteDeath);
-
-        Summoned = true;
     }
 
     public override void UpdateAI(uint diff)

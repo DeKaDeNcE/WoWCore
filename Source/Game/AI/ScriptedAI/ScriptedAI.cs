@@ -772,7 +772,8 @@ namespace Game.AI
         {
             foreach (var id in this)
             {
-                Creature summon = ObjectAccessor.GetCreature(_me, id);
+                var summon = Global.ObjAccessor.GetCreature(_me, id);
+
                 if (summon && summon.IsAIEnabled() && (entry == 0 || summon.GetEntry() == entry))
                 {
                     summon.GetAI().DoZoneInCombat();
@@ -784,7 +785,8 @@ namespace Game.AI
         {
             foreach (var id in this)
             {
-                Creature summon = ObjectAccessor.GetCreature(_me, id);
+                var summon = Global.ObjAccessor.GetCreature(_me, id);
+
                 if (!summon)
                     Remove(id);
                 else if (summon.GetEntry() == entry)
@@ -799,8 +801,10 @@ namespace Game.AI
         {
             while (!this.Empty())
             {
-                Creature summon = ObjectAccessor.GetCreature(_me, this.FirstOrDefault());
+                var summon = Global.ObjAccessor.GetCreature(_me, this.FirstOrDefault());
+
                 RemoveAt(0);
+
                 if (summon)
                     summon.DespawnOrUnsummon();
             }
@@ -822,7 +826,7 @@ namespace Game.AI
         {
             foreach (var id in this)
             {
-                if (!ObjectAccessor.GetCreature(_me, id))
+                if (!Global.ObjAccessor.GetCreature(_me, id))
                     Remove(id);
             }
         }
@@ -847,7 +851,8 @@ namespace Game.AI
         {
             foreach (var id in this)
             {
-                Creature summon = ObjectAccessor.GetCreature(_me, id);
+                var summon = Global.ObjAccessor.GetCreature(_me, id);
+
                 if (summon && summon.GetEntry() == entry)
                     return true;
             }
@@ -859,7 +864,8 @@ namespace Game.AI
         {
             foreach (var guid in summons)
             {
-                Creature summon = ObjectAccessor.GetCreature(_me, guid);
+                var summon = Global.ObjAccessor.GetCreature(_me, guid);
+
                 if (summon && summon.IsAIEnabled())
                     summon.GetAI().DoAction(action);
             }

@@ -638,7 +638,8 @@ namespace Scripts.Spells.Shaman;
 
         void HandleEffecRemoved(AuraEffect aurEff, AuraEffectHandleModes mode)
         {
-            Creature summon = ObjectAccessor.GetCreature(GetTarget(), _visualDummy);
+            var summon = Global.ObjAccessor.GetCreature(GetTarget(), _visualDummy);
+
             if (summon != null)
                 summon.DespawnOrUnsummon();
         }

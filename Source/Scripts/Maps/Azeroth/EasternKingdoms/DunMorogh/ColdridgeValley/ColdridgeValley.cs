@@ -152,7 +152,7 @@ class npc_milos_gyro : VehicleAI
 
         _events.ExecuteEvents(eventId =>
         {
-            Creature milo = ObjectAccessor.GetCreature(me, _miloGUID);
+            var milo = Global.ObjAccessor.GetCreature(me, _miloGUID);
 
             switch (eventId)
             {

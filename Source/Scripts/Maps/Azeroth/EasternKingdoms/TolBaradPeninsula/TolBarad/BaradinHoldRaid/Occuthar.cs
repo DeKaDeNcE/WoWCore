@@ -145,7 +145,8 @@ class npc_eyestalk : ScriptedAI
     public override void IsSummonedBy(WorldObject summoner)
     {
         // player is the spellcaster so register summon manually
-        Creature occuthar = ObjectAccessor.GetCreature(me, _instance.GetGuidData(DataTypes.Occuthar));
+        var occuthar = Global.ObjAccessor.GetCreature(me, _instance.GetGuidData(DataTypes.Occuthar));
+
         if (occuthar != null)
             occuthar.GetAI().JustSummoned(me);
     }
@@ -240,10 +241,12 @@ class spell_occuthar_eyes_of_occuthar_vehicle_SpellScript : SpellScript
     {
         Position pos = GetHitUnit().GetPosition();
 
-        Creature occuthar = ObjectAccessor.GetCreature(GetCaster(), GetCaster().GetInstanceScript().GetGuidData(DataTypes.Occuthar));
+        var occuthar = Global.ObjAccessor.GetCreature(GetCaster(), GetCaster().GetInstanceScript().GetGuidData(DataTypes.Occuthar));
+
         if (occuthar != null)
         {
-            Creature creature = occuthar.SummonCreature(CreatureIds.EyeOfOccuthar, pos);
+            var creature = occuthar.SummonCreature(CreatureIds.EyeOfOccuthar, pos);
+
             if (creature != null)
                 creature.CastSpell(GetHitUnit(), SpellIds.GazeOfOccuthar, false);
         }

@@ -744,7 +744,6 @@ namespace Game.Entities
                                 if (oldValueCheck <= effect.GetAmount() || newValueCheck > effectAmount)
                                     continue;
                                 break;
-                            break;
                         }
 
                         CastSpell(this, triggerSpell, new CastSpellExtraArgs(effect));

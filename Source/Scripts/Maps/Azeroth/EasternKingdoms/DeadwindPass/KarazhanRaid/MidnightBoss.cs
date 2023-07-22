@@ -75,9 +75,10 @@ class boss_attumen : BossAI
 
     public override void EnterEvadeMode(EvadeReason why)
     {
-        Creature midnight = ObjectAccessor.GetCreature(me, _midnightGUID);
+        var midnight = Global.ObjAccessor.GetCreature(me, _midnightGUID);
+
         if (midnight)
-            base._DespawnAtEvade(TimeSpan.FromSeconds(10), midnight);
+            _DespawnAtEvade(TimeSpan.FromSeconds(10), midnight);
 
         me.DespawnOrUnsummon();
     }
@@ -116,7 +117,8 @@ class boss_attumen : BossAI
         {
             _phase = Phases.None;
 
-            Creature midnight = ObjectAccessor.GetCreature(me, _midnightGUID);
+            var midnight = Global.ObjAccessor.GetCreature(me, _midnightGUID);
+
             if (midnight)
                 midnight.GetAI().DoCastAOE(SpellIds.Mount, new CastSpellExtraArgs(true));
         }
@@ -131,7 +133,8 @@ class boss_attumen : BossAI
     {
         if (summon.GetEntry() == CreatureIds.AttumenMounted)
         {
-            Creature midnight = ObjectAccessor.GetCreature(me, _midnightGUID);
+            var midnight = Global.ObjAccessor.GetCreature(me, _midnightGUID);
+
             if (midnight)
             {
                 if (midnight.GetHealth() > me.GetHealth())
@@ -217,7 +220,8 @@ class boss_attumen : BossAI
 
         if (spellInfo.Id == SpellIds.Mount)
         {
-            Creature midnight = ObjectAccessor.GetCreature(me, _midnightGUID);
+            var midnight = Global.ObjAccessor.GetCreature(me, _midnightGUID);
+
             if (midnight)
             {
                 _phase = Phases.None;
@@ -237,7 +241,8 @@ class boss_attumen : BossAI
 
                 _scheduler.Schedule(TimeSpan.FromSeconds(1), task =>
                 {
-                    Creature midnight = ObjectAccessor.GetCreature(me, _midnightGUID);
+                    var midnight = Global.ObjAccessor.GetCreature(me, _midnightGUID);
+
                     if (midnight)
                     {
                         if (me.IsWithinDist2d(midnight, 5.0f))

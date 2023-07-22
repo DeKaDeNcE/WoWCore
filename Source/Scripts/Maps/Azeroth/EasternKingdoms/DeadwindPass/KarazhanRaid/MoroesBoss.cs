@@ -122,10 +122,10 @@ class boss_moroes : BossAI
             {
                 if (!AddGUID[i].IsEmpty())
                 {
-                    Creature temp = ObjectAccessor.GetCreature(me, AddGUID[i]);
-                    if (temp && temp.IsAlive())
-                        if (!temp.GetVictim())
-                            temp.GetAI().AttackStart(me.GetVictim());
+                    var temp = Global.ObjAccessor.GetCreature(me, AddGUID[i]);
+
+                    if (temp && temp.IsAlive() && !temp.GetVictim())
+                        temp.GetAI().AttackStart(me.GetVictim());
                 }
             }
             task.Repeat();
@@ -227,7 +227,8 @@ class boss_moroes : BossAI
         {
             if (!AddGUID[i].IsEmpty())
             {
-                Creature temp = ObjectAccessor.GetCreature(me, AddGUID[i]);
+                var temp = Global.ObjAccessor.GetCreature(me, AddGUID[i]);
+
                 if (temp)
                     temp.DespawnOrUnsummon();
             }
@@ -240,7 +241,8 @@ class boss_moroes : BossAI
         {
             if (!AddGUID[i].IsEmpty())
             {
-                Creature temp = ObjectAccessor.GetCreature((me), AddGUID[i]);
+                var temp = Global.ObjAccessor.GetCreature(me, AddGUID[i]);
+
                 if (temp && temp.IsAlive())
                 {
                     temp.GetAI().AttackStart(me.GetVictim());
@@ -290,7 +292,8 @@ class boss_moroes_guest : ScriptedAI
 
     public void AcquireGUID()
     {
-        Creature Moroes = ObjectAccessor.GetCreature(me, instance.GetGuidData(DataTypes.Moroes));
+        var Moroes = Global.ObjAccessor.GetCreature(me, instance.GetGuidData(DataTypes.Moroes));
+
         if (Moroes)
         {
             for (byte i = 0; i < 4; ++i)

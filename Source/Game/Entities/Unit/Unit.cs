@@ -921,10 +921,10 @@ namespace Game.Entities
             ObjectGuid pet_guid = GetPetGUID();
             if (!pet_guid.IsEmpty())
             {
-                Creature pet = ObjectAccessor.GetCreatureOrPetOrVehicle(this, pet_guid);
-                if (pet != null)
-                    if (pet.HasUnitTypeMask(UnitTypeMask.Guardian))
-                        return (Guardian)pet;
+                var pet = Global.ObjAccessor.GetCreatureOrPetOrVehicle(this, pet_guid);
+
+                if (pet != null && pet.HasUnitTypeMask(UnitTypeMask.Guardian))
+                    return (Guardian)pet;
 
                 Log.outFatal(LogFilter.Unit, "Unit:GetGuardianPet: Guardian {0} not exist.", pet_guid);
                 SetPetGUID(ObjectGuid.Empty);

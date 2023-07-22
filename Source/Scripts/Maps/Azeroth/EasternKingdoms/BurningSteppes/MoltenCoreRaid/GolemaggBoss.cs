@@ -104,7 +104,8 @@ class npc_core_rager : ScriptedAI
         if (HealthAbovePct(50) || _instance == null)
             return;
 
-        Creature pGolemagg = ObjectAccessor.GetCreature(me, _instance.GetGuidData(DataTypes.GolemaggTheIncinerator));
+        var pGolemagg = Global.ObjAccessor.GetCreature(me, _instance.GetGuidData(DataTypes.GolemaggTheIncinerator));
+
         if (pGolemagg)
         {
             if (pGolemagg.IsAlive())

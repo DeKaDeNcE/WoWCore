@@ -59,10 +59,12 @@ class at_alizabal_intro : AreaTriggerScript
 
     public override bool OnTrigger(Player player, AreaTriggerRecord areaTrigger)
     {
-        InstanceScript instance = player.GetInstanceScript();
+        var instance = player.GetInstanceScript();
+
         if (instance != null)
         {
-            Creature alizabal = ObjectAccessor.GetCreature(player, instance.GetGuidData(DataTypes.Alizabal));
+            var alizabal = Global.ObjAccessor.GetCreature(player, instance.GetGuidData(DataTypes.Alizabal));
+
             if (alizabal)
                 alizabal.GetAI().DoAction(ActionIds.Intro);
         }

@@ -343,7 +343,7 @@ namespace Game.Chat
             if (_session == null)
                 return null;
 
-            return ObjectAccessor.GetCreatureOrPetOrVehicle(_session.GetPlayer(), _session.GetPlayer().GetTarget());
+            return Global.ObjAccessor.GetCreatureOrPetOrVehicle(_session.GetPlayer(), _session.GetPlayer().GetTarget());
         }
         public Player GetSelectedPlayerOrSelf()
         {

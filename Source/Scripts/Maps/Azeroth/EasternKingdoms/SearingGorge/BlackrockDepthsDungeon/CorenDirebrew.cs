@@ -305,7 +305,8 @@ class npc_direbrew_minion : ScriptedAI
 
     public override void IsSummonedBy(WorldObject summoner)
     {
-        Creature coren = ObjectAccessor.GetCreature(me, _instance.GetGuidData(DataTypes.DataCoren));
+        var coren = Global.ObjAccessor.GetCreature(me, _instance.GetGuidData(DataTypes.DataCoren));
+
         if (coren)
             coren.GetAI().JustSummoned(me);
     }

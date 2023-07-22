@@ -98,19 +98,19 @@ public class ObjectAccessor : Singleton<ObjectAccessor>
         return null;
     }
 
-    public static Corpse GetCorpse(WorldObject u, ObjectGuid guid) => u.GetMap().GetCorpse(guid);
+    public Corpse GetCorpse(WorldObject u, ObjectGuid guid) => u.GetMap().GetCorpse(guid);
 
-    public static GameObject GetGameObject(WorldObject u, ObjectGuid guid) => u.GetMap().GetGameObject(guid);
+    public GameObject GetGameObject(WorldObject u, ObjectGuid guid) => u.GetMap().GetGameObject(guid);
 
-    public static Transport GetTransport(WorldObject u, ObjectGuid guid) => u.GetMap().GetTransport(guid);
+    public Transport GetTransport(WorldObject u, ObjectGuid guid) => u.GetMap().GetTransport(guid);
 
-    public static DynamicObject GetDynamicObject(WorldObject u, ObjectGuid guid) => u.GetMap().GetDynamicObject(guid);
+    public DynamicObject GetDynamicObject(WorldObject u, ObjectGuid guid) => u.GetMap().GetDynamicObject(guid);
 
-    public static AreaTrigger GetAreaTrigger(WorldObject u, ObjectGuid guid) => u.GetMap().GetAreaTrigger(guid);
+    public AreaTrigger GetAreaTrigger(WorldObject u, ObjectGuid guid) => u.GetMap().GetAreaTrigger(guid);
 
-    public static SceneObject GetSceneObject(WorldObject u, ObjectGuid guid) => u.GetMap().GetSceneObject(guid);
+    public SceneObject GetSceneObject(WorldObject u, ObjectGuid guid) => u.GetMap().GetSceneObject(guid);
 
-    public static Conversation GetConversation(WorldObject u, ObjectGuid guid) => u.GetMap().GetConversation(guid);
+    public Conversation GetConversation(WorldObject u, ObjectGuid guid) => u.GetMap().GetConversation(guid);
 
     public Unit GetUnit(WorldObject u, ObjectGuid guid)
     {
@@ -123,9 +123,9 @@ public class ObjectAccessor : Singleton<ObjectAccessor>
         return GetCreature(u, guid);
     }
 
-    public static Creature GetCreature(WorldObject u, ObjectGuid guid) => u.GetMap().GetCreature(guid);
+    public Creature GetCreature(WorldObject u, ObjectGuid guid) => u.GetMap().GetCreature(guid);
 
-    public static Pet GetPet(WorldObject u, ObjectGuid guid) => u.GetMap().GetPet(guid);
+    public Pet GetPet(WorldObject u, ObjectGuid guid) => u.GetMap().GetPet(guid);
 
     public Player GetPlayer(Map m, ObjectGuid guid)
     {
@@ -139,7 +139,7 @@ public class ObjectAccessor : Singleton<ObjectAccessor>
 
     public Player GetPlayer(WorldObject u, ObjectGuid guid) => GetPlayer(u.GetMap(), guid);
 
-    public static Creature GetCreatureOrPetOrVehicle(WorldObject u, ObjectGuid guid) => guid.IsPet() ? GetPet(u, guid) : guid.IsCreatureOrVehicle() ? GetCreature(u, guid) : null;
+    public Creature GetCreatureOrPetOrVehicle(WorldObject u, ObjectGuid guid) => guid.IsPet() ? GetPet(u, guid) : guid.IsCreatureOrVehicle() ? GetCreature(u, guid) : null;
 
     // these functions return objects if found in whole world
     // ACCESS LIKE THAT IS NOT THREAD SAFE

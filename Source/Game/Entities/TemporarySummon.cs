@@ -39,7 +39,7 @@ namespace Game.Entities
 
         public Creature GetSummonerCreatureBase()
         {
-            return !m_summonerGUID.IsEmpty() ? ObjectAccessor.GetCreature(this, m_summonerGUID) : null;
+            return !m_summonerGUID.IsEmpty() ? Global.ObjAccessor.GetCreature(this, m_summonerGUID) : null;
         }
 
         public GameObject GetSummonerGameObject()

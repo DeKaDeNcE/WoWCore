@@ -638,17 +638,21 @@ namespace Game.AI
         public Creature GetCharmer()
         {
             if (me.GetCharmerGUID().IsCreature())
-                return ObjectAccessor.GetCreature(me, me.GetCharmerGUID());
+                return Global.ObjAccessor.GetCreature(me, me.GetCharmerGUID());
+
             return null;
         }
 
         // helper functions to determine player info
         public bool IsHealer(Player who = null)
         {
-            return (!who || who == me) ? _isSelfHealer : IsPlayerHealer(who);
+            return !who || who == me ? _isSelfHealer : IsPlayerHealer(who);
         }
-        public bool IsRangedAttacker(Player who = null) { return (!who || who == me) ? _isSelfRangedAttacker : IsPlayerRangedAttacker(who); }
-        public uint GetSpec(Player who = null) { return (!who || who == me) ? _selfSpec : who.GetPrimarySpecialization(); }
+
+        public bool IsRangedAttacker(Player who = null) { return !who || who == me ? _isSelfRangedAttacker : IsPlayerRangedAttacker(who); }
+
+        public uint GetSpec(Player who = null) { return !who || who == me ? _selfSpec : who.GetPrimarySpecialization(); }
+
         public void SetIsRangedAttacker(bool state) { _isSelfRangedAttacker = state; } // this allows overriding of the default ranged attacker detection
 
         public virtual Unit SelectAttackTarget() { return me.GetCharmer() ? me.GetCharmer().GetVictim() : null; }

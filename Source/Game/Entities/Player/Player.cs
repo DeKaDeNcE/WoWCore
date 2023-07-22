@@ -21,7 +21,6 @@ using Game.Spells;
 using Game.Garrisons;
 using Game.BattlePets;
 using Game.DataStorage;
-using Game.BattleFields;
 using Game.Achievements;
 using Game.BattleGrounds;
 using Game.Networking;
@@ -192,7 +191,8 @@ namespace Game.Entities
 
             if (position.TransportGuid.HasValue)
             {
-                Transport transport = ObjectAccessor.GetTransport(this, ObjectGuid.Create(HighGuid.Transport, position.TransportGuid.Value));
+                var transport = ObjAccessor.GetTransport(this, ObjectGuid.Create(HighGuid.Transport, position.TransportGuid.Value));
+
                 if (transport != null)
                 {
                     transport.AddPassenger(this);
@@ -912,10 +912,10 @@ namespace Game.Entities
 
         public Creature GetSummonedBattlePet()
         {
-            Creature summonedBattlePet = ObjectAccessor.GetCreatureOrPetOrVehicle(this, GetCritterGUID());
-            if (summonedBattlePet != null)
-                if (!GetSummonedBattlePetGUID().IsEmpty() && GetSummonedBattlePetGUID() == summonedBattlePet.GetBattlePetCompanionGUID())
-                    return summonedBattlePet;
+            var summonedBattlePet = ObjAccessor.GetCreatureOrPetOrVehicle(this, GetCritterGUID());
+
+            if (summonedBattlePet != null && !GetSummonedBattlePetGUID().IsEmpty() && GetSummonedBattlePetGUID() == summonedBattlePet.GetBattlePetCompanionGUID())
+                return summonedBattlePet;
 
             return null;
         }
@@ -4354,7 +4354,8 @@ namespace Game.Entities
                 if (!petGuid.IsPet())
                     return null;
 
-                Pet pet = ObjectAccessor.GetPet(this, petGuid);
+                var pet = ObjAccessor.GetPet(this, petGuid);
+
                 if (pet == null)
                     return null;
 
@@ -5180,7 +5181,8 @@ namespace Game.Entities
                 return null;
 
             // exist (we need look pets also for some interaction (quest/etc)
-            Creature creature = ObjectAccessor.GetCreatureOrPetOrVehicle(this, guid);
+            var creature = ObjAccessor.GetCreatureOrPetOrVehicle(this, guid);
+
             if (creature == null)
                 return null;
 
@@ -5234,7 +5236,8 @@ namespace Game.Entities
                 return null;
 
             // exist
-            GameObject go = ObjectAccessor.GetGameObject(this, guid);
+            var go = ObjAccessor.GetGameObject(this, guid);
+
             if (go == null)
                 return null;
 
