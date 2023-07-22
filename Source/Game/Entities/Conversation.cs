@@ -12,8 +12,8 @@ using Game.DataStorage;
 using Game.Networking;
 using Game.Networking.Packets;
 
-namespace Game.Entities
-{
+namespace Game.Entities;
+
     public class Conversation : WorldObject
     {
         public Conversation() : base(false)
@@ -94,9 +94,9 @@ namespace Game.Entities
             return conversation;
         }
 
-        void Create(ulong lowGuid, uint conversationEntry, Map map, Unit creator, Position pos, ObjectGuid privateObjectOwner, SpellInfo spellInfo = null)
+        public void Create(ulong lowGuid, uint conversationEntry, Map map, Unit creator, Position pos, ObjectGuid privateObjectOwner, SpellInfo spellInfo = null)
         {
-            ConversationTemplate conversationTemplate = Global.ConversationDataStorage.GetConversationTemplate(conversationEntry);
+            var conversationTemplate = Global.ConversationDataStorage.GetConversationTemplate(conversationEntry);
             //ASSERT(conversationTemplate);
 
             _creatorGuid = creator.GetGUID();
@@ -167,7 +167,7 @@ namespace Game.Entities
             Global.ScriptMgr.OnConversationCreate(this, creator);
         }
 
-        bool Start()
+        public bool Start()
         {
             foreach (ConversationLine line in m_conversationData.Lines.GetValue())
             {
@@ -218,6 +218,39 @@ namespace Game.Entities
             return _lastLineEndTimes[(int)locale];
         }
 
+        public Locale GetPrivateObjectOwnerLocale()
+        {
+            var privateOwnerLocale = Locale.enUS;
+
+            var owner = Global.ObjAccessor.GetPlayer(this, GetPrivateObjectOwner());
+
+            if (owner)
+                privateOwnerLocale = owner.GetSession().GetSessionDbLocaleIndex();
+
+            return privateOwnerLocale;
+        }
+
+        public Unit GetActorUnit(uint actorIdx)
+        {
+            if (m_conversationData.Actors.Size() <= actorIdx)
+            {
+                Log.outError(LogFilter.Conversation, $"Conversation::GetActorUnit: Tried to access invalid actor idx {actorIdx} (Conversation ID: {GetEntry()}).");
+                return null;
+            }
+
+            return Global.ObjAccessor.GetUnit(this, m_conversationData.Actors[(int)actorIdx].ActorGUID);
+        }
+
+        public Creature GetActorCreature(uint actorIdx)
+        {
+            Unit actor = GetActorUnit(actorIdx);
+
+            if (!actor)
+                return null;
+
+            return actor.ToCreature();
+        }
+
         public uint GetScriptId()
         {
             return Global.ConversationDataStorage.GetConversationTemplate(GetEntry()).ScriptId;
@@ -252,9 +285,10 @@ namespace Game.Entities
             data.WriteBytes(buffer);
         }
 
-        void BuildValuesUpdateForPlayerWithMask(UpdateData data, UpdateMask requestedObjectMask, UpdateMask requestedConversationMask, Player target)
+        public void BuildValuesUpdateForPlayerWithMask(UpdateData data, UpdateMask requestedObjectMask, UpdateMask requestedConversationMask, Player target)
         {
             UpdateMask valuesMask = new((int)TypeId.Max);
+
             if (requestedObjectMask.IsAnySet())
                 valuesMask.Set((int)TypeId.Object);
 
@@ -285,7 +319,7 @@ namespace Game.Entities
             base.ClearUpdateMask(remove);
         }
 
-        TimeSpan GetDuration() { return _duration; }
+        public TimeSpan GetDuration() { return _duration; }
         public uint GetTextureKitId() { return _textureKitId; }
 
         public ObjectGuid GetCreatorGuid() { return _creatorGuid; }
@@ -296,23 +330,23 @@ namespace Game.Entities
         public override float GetStationaryY() { return _stationaryPosition.GetPositionY(); }
         public override float GetStationaryZ() { return _stationaryPosition.GetPositionZ(); }
         public override float GetStationaryO() { return _stationaryPosition.GetOrientation(); }
-        void RelocateStationaryPosition(Position pos) { _stationaryPosition.Relocate(pos); }
+        public void RelocateStationaryPosition(Position pos) { _stationaryPosition.Relocate(pos); }
 
-        ConversationData m_conversationData;
+        public ConversationData m_conversationData;
 
-        Position _stationaryPosition = new();
-        ObjectGuid _creatorGuid;
-        TimeSpan _duration;
-        uint _textureKitId;
+        public Position _stationaryPosition = new();
+        public ObjectGuid _creatorGuid;
+        public TimeSpan _duration;
+        public uint _textureKitId;
 
-        Dictionary<(Locale locale, uint lineId), TimeSpan> _lineStartTimes = new();
-        TimeSpan[] _lastLineEndTimes = new TimeSpan[(int)Locale.Total];
+        public Dictionary<(Locale locale, uint lineId), TimeSpan> _lineStartTimes = new();
+        public TimeSpan[] _lastLineEndTimes = new TimeSpan[(int)Locale.Total];
 
-        class ValuesUpdateForPlayerWithMaskSender : IDoWork<Player>
+        public class ValuesUpdateForPlayerWithMaskSender : IDoWork<Player>
         {
-            Conversation Owner;
-            ObjectFieldData ObjectMask = new();
-            ConversationData ConversationMask = new();
+            public Conversation Owner;
+            public ObjectFieldData ObjectMask = new();
+            public ConversationData ConversationMask = new();
 
             public ValuesUpdateForPlayerWithMaskSender(Conversation owner)
             {
@@ -331,12 +365,12 @@ namespace Game.Entities
         }
     }
 
-    class ConversationActorFillVisitor
+    public class ConversationActorFillVisitor
     {
-        Conversation _conversation;
-        Unit _creator;
-        Map _map;
-        ConversationActorTemplate _actor;
+        public Conversation _conversation;
+        public Unit _creator;
+        public Map _map;
+        public ConversationActorTemplate _actor;
 
         public ConversationActorFillVisitor(Conversation conversation, Unit creator, Map map, ConversationActorTemplate actor)
         {
@@ -344,7 +378,6 @@ namespace Game.Entities
             _creator = creator;
             _map = map;
             _actor = actor;
-
         }
 
         public void Invoke(ConversationActorTemplate template)
@@ -394,4 +427,3 @@ namespace Game.Entities
             _conversation.AddActor(_actor.Id, _actor.Index, ConversationActorType.TalkingHead, talkingHead.CreatureId, talkingHead.CreatureDisplayInfoId);
         }
     }
-}

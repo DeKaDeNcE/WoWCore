@@ -34,7 +34,7 @@ namespace Game.Scripting
         //Initialization
         public void Initialize()
         {
-            uint oldMSTime = Time.GetMSTime();
+            var oldMSTime = Time.GetMSTime();
 
             LoadDatabase();
 
@@ -59,122 +59,128 @@ namespace Game.Scripting
                 return;
             }
 
-            Assembly assembly = Assembly.LoadFile(AppContext.BaseDirectory + "Scripts.dll");
-            if (assembly == null)
+            try
             {
-                Log.outError(LogFilter.ServerLoading, "Error Loading Scripts.dll, Only Core Scripts are loaded.");
-                return;
-            }
+                var assembly = Assembly.LoadFile(AppContext.BaseDirectory + "Scripts.dll");
 
-            foreach (var type in assembly.GetTypes())
-            {
-                var attributes = (ScriptAttribute[])type.GetCustomAttributes<ScriptAttribute>();
-                if (!attributes.Empty())
+                foreach (var type in assembly.GetTypes())
                 {
-                    var constructors = type.GetConstructors();
-                    if (constructors.Length == 0)
+                    var attributes = (ScriptAttribute[])type.GetCustomAttributes<ScriptAttribute>();
+
+                    if (!attributes.Empty())
                     {
-                        Log.outError(LogFilter.Scripts, "Script: {0} contains no Public Constructors. Can't load script.", type.Name);
-                        continue;
-                    }
+                        var constructors = type.GetConstructors();
 
-                    foreach (var attribute in attributes)
-                    {
-                        var genericType = type;
-                        string name = type.Name;
-
-                        bool validArgs = true;
-                        int i = 0;
-                        foreach (var constructor in constructors)
+                        if (constructors.Length == 0)
                         {
-                            var parameters = constructor.GetParameters();
-                            if (parameters.Length != attribute.Args.Length)
-                                continue;
-
-                            foreach (var arg in constructor.GetParameters())
-                            {
-                                if (arg.ParameterType != attribute.Args[i++].GetType())
-                                {
-                                    validArgs = false;
-                                    break;
-                                }
-                            }
-
-                            if (validArgs)
-                                break;
-                        }
-
-                        if (!validArgs)
-                        {
-                            Log.outError(LogFilter.Scripts, "Script: {0} contains no Public Constructors with the right parameter types. Can't load script.", type.Name);
+                            Log.outError(LogFilter.Scripts, $"Script: {type.Name} contains no Public Constructors. Can't load script.");
                             continue;
                         }
 
-                        switch (type.BaseType.Name)
+                        foreach (var attribute in attributes)
                         {
-                            case nameof(SpellScript):
-                                genericType = typeof(GenericSpellScriptLoader<>).MakeGenericType(type);
-                                name = name.Replace("_SpellScript", "");
-                                break;
-                            case nameof(AuraScript):
-                                genericType = typeof(GenericAuraScriptLoader<>).MakeGenericType(type);
-                                name = name.Replace("_AuraScript", "");
-                                break;
-                            case nameof(GameObjectAI):
-                                genericType = typeof(GenericGameObjectScript<>).MakeGenericType(type);
-                                break;
-                            case nameof(AreaTriggerAI):
-                                genericType = typeof(GenericAreaTriggerScript<>).MakeGenericType(type);
-                                break;
-                            case "SpellScriptLoader":
-                            case "AuraScriptLoader":
-                            case "WorldScript":
-                            case "FormulaScript":
-                            case "WorldMapScript":
-                            case "InstanceMapScript":
-                            case "BattlegroundMapScript":
-                            case "ItemScript":
-                            case "UnitScript":
-                            case "CreatureScript":
-                            case "GameObjectScript":
-                            case "AreaTriggerScript":
-                            case "OutdoorPvPScript":
-                            case "WeatherScript":
-                            case "AuctionHouseScript":
-                            case "ConditionScript":
-                            case "VehicleScript":
-                            case "DynamicObjectScript":
-                            case "TransportScript":
-                            case "AchievementCriteriaScript":
-                            case "PlayerScript":
-                            case "GuildScript":
-                            case "GroupScript":
-                            case "AreaTriggerEntityScript":
-                            case "OnlyOnceAreaTriggerScript":
-                            case "SceneScript":
-                            case "QuestScript":
-                            case "ConversationScript":
-                            case "AchievementScript":
-                            case "BattlefieldScript":
-                                if (!attribute.Name.IsEmpty())
-                                    name = attribute.Name;
+                            var genericType = type;
+                            var name        = type.Name;
 
-                                if (attribute.Args.Empty())
-                                    Activator.CreateInstance(genericType);
-                                else
-                                    Activator.CreateInstance(genericType, new object[] { name }.Combine(attribute.Args));
+                            var validArgs = true;
+                            var i         = 0;
+
+                            foreach (var constructor in constructors)
+                            {
+                                var parameters = constructor.GetParameters();
+
+                                if (parameters.Length != attribute.Args.Length)
+                                    continue;
+
+                                foreach (var arg in constructor.GetParameters())
+                                {
+                                    if (arg.ParameterType != attribute.Args[i++].GetType())
+                                    {
+                                        validArgs = false;
+                                        break;
+                                    }
+                                }
+
+                                if (validArgs)
+                                    break;
+                            }
+
+                            if (!validArgs)
+                            {
+                                Log.outError(LogFilter.Scripts, "Script: {0} contains no Public Constructors with the right parameter types. Can't load script.", type.Name);
                                 continue;
-                            default:
-                                genericType = typeof(GenericCreatureScript<>).MakeGenericType(type);
-                                break;
+                            }
+
+                            switch (type.BaseType.Name)
+                            {
+                                case nameof(SpellScript):
+                                    genericType = typeof(GenericSpellScriptLoader<>).MakeGenericType(type);
+                                    name = name.Replace("_SpellScript", "");
+                                    break;
+                                case nameof(AuraScript):
+                                    genericType = typeof(GenericAuraScriptLoader<>).MakeGenericType(type);
+                                    name = name.Replace("_AuraScript", "");
+                                    break;
+                                case nameof(GameObjectAI):
+                                    genericType = typeof(GenericGameObjectScript<>).MakeGenericType(type);
+                                    break;
+                                case nameof(AreaTriggerAI):
+                                    genericType = typeof(GenericAreaTriggerScript<>).MakeGenericType(type);
+                                    break;
+                                case "SpellScriptLoader":
+                                case "AuraScriptLoader":
+                                case "WorldScript":
+                                case "FormulaScript":
+                                case "WorldMapScript":
+                                case "InstanceMapScript":
+                                case "BattlegroundMapScript":
+                                case "ItemScript":
+                                case "UnitScript":
+                                case "CreatureScript":
+                                case "GameObjectScript":
+                                case "AreaTriggerScript":
+                                case "OutdoorPvPScript":
+                                case "WeatherScript":
+                                case "AuctionHouseScript":
+                                case "ConditionScript":
+                                case "VehicleScript":
+                                case "DynamicObjectScript":
+                                case "TransportScript":
+                                case "AchievementCriteriaScript":
+                                case "PlayerScript":
+                                case "GuildScript":
+                                case "GroupScript":
+                                case "AreaTriggerEntityScript":
+                                case "OnlyOnceAreaTriggerScript":
+                                case "SceneScript":
+                                case "QuestScript":
+                                case "ConversationScript":
+                                case "AchievementScript":
+                                case "BattlefieldScript":
+                                    if (!attribute.Name.IsEmpty())
+                                        name = attribute.Name;
+
+                                    if (attribute.Args.Empty())
+                                        Activator.CreateInstance(genericType);
+                                    else
+                                        Activator.CreateInstance(genericType, new object[] { name }.Combine(attribute.Args));
+                                    continue;
+                                default:
+                                    genericType = typeof(GenericCreatureScript<>).MakeGenericType(type);
+                                    break;
+                            }
+
+                            if (!attribute.Name.IsEmpty())
+                                name = attribute.Name;
+
+                            Activator.CreateInstance(genericType, name, attribute.Args);
                         }
-
-                        if (!attribute.Name.IsEmpty())
-                            name = attribute.Name;
-
-                        Activator.CreateInstance(genericType, name, attribute.Args);
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                Log.outError(LogFilter.ServerLoading, $"Error Loading Scripts.dll, Only Core Scripts are loaded. {e}");
             }
         }
 
@@ -185,14 +191,15 @@ namespace Game.Scripting
 
         void LoadScriptSplineChains()
         {
-            uint oldMSTime = Time.GetMSTime();
+            var oldMSTime = Time.GetMSTime();
 
             m_mSplineChainsMap.Clear();
 
-            //                                             0      1        2         3                 4            5
-            SQLResult resultMeta = DB.World.Query("SELECT entry, chainId, splineId, expectedDuration, msUntilNext, velocity FROM script_spline_chain_meta ORDER BY entry asc, chainId asc, splineId asc");
-            //                                           0      1        2         3    4  5  6
-            SQLResult resultWP = DB.World.Query("SELECT entry, chainId, splineId, wpId, x, y, z FROM script_spline_chain_waypoints ORDER BY entry asc, chainId asc, splineId asc, wpId asc");
+            //                                      0      1        2         3                 4            5
+            var resultMeta = DB.World.Query("SELECT entry, chainId, splineId, expectedDuration, msUntilNext, velocity FROM script_spline_chain_meta ORDER BY entry asc, chainId asc, splineId asc");
+            //                                    0      1        2         3     4  5  6
+            var resultWP = DB.World.Query("SELECT entry, chainId, splineId, wpId, x, y, z FROM script_spline_chain_waypoints ORDER BY entry asc, chainId asc, splineId asc, wpId asc");
+
             if (resultMeta.IsEmpty() || resultWP.IsEmpty())
             {
                 Log.outInfo(LogFilter.ServerLoading, "Loaded spline chain data for 0 chains, consisting of 0 splines with 0 waypoints. DB tables `script_spline_chain_meta` and `script_spline_chain_waypoints` are empty.");
@@ -200,43 +207,49 @@ namespace Game.Scripting
             else
             {
                 uint chainCount = 0, splineCount = 0, wpCount = 0;
+
                 do
                 {
-                    uint entry = resultMeta.Read<uint>(0);
-                    ushort chainId = resultMeta.Read<ushort>(1);
-                    byte splineId = resultMeta.Read<byte>(2);
+                    var entry    = resultMeta.Read<uint>(0);
+                    var chainId  = resultMeta.Read<ushort>(1);
+                    var splineId = resultMeta.Read<byte>(2);
 
                     var key = Tuple.Create(entry, chainId);
+
                     if (!m_mSplineChainsMap.ContainsKey(key))
                         m_mSplineChainsMap[key] = new List<SplineChainLink>();
 
                     var chain = m_mSplineChainsMap[Tuple.Create(entry, chainId)];
+
                     if (splineId != chain.Count)
                     {
-                        Log.outWarn(LogFilter.ServerLoading, "Creature #{0}: Chain {1} has orphaned spline {2}, skipped.", entry, chainId, splineId);
+                        Log.outWarn(LogFilter.ServerLoading, $"Creature #{entry}: Chain {chainId} has orphaned spline {splineId}, skipped.");
                         continue;
                     }
 
-                    uint expectedDuration = resultMeta.Read<uint>(3);
-                    uint msUntilNext = resultMeta.Read<uint>(4);
-                    float velocity = resultMeta.Read<float>(5);
+                    var expectedDuration = resultMeta.Read<uint>(3);
+                    var msUntilNext      = resultMeta.Read<uint>(4);
+                    var velocity         = resultMeta.Read<float>(5);
+
                     chain.Add(new SplineChainLink(expectedDuration, msUntilNext, velocity));
 
                     if (splineId == 0)
                         ++chainCount;
+
                     ++splineCount;
                 } while (resultMeta.NextRow());
 
                 do
                 {
-                    uint entry = resultWP.Read<uint>(0);
-                    ushort chainId = resultWP.Read<ushort>(1);
-                    byte splineId = resultWP.Read<byte>(2);
-                    byte wpId = resultWP.Read<byte>(3);
-                    float posX = resultWP.Read<float>(4);
-                    float posY = resultWP.Read<float>(5);
-                    float posZ = resultWP.Read<float>(6);
-                    var chain = m_mSplineChainsMap.LookupByKey(Tuple.Create(entry, chainId));
+                    var entry    = resultWP.Read<uint>(0);
+                    var chainId  = resultWP.Read<ushort>(1);
+                    var splineId = resultWP.Read<byte>(2);
+                    var wpId     = resultWP.Read<byte>(3);
+                    var posX     = resultWP.Read<float>(4);
+                    var posY     = resultWP.Read<float>(5);
+                    var posZ     = resultWP.Read<float>(6);
+                    var chain    = m_mSplineChainsMap.LookupByKey(Tuple.Create(entry, chainId));
+
                     if (chain == null)
                     {
                         Log.outWarn(LogFilter.ServerLoading, "Creature #{0} has waypoint data for spline chain {1}. No such chain exists - entry skipped.", entry, chainId);
@@ -248,12 +261,15 @@ namespace Game.Scripting
                         Log.outWarn(LogFilter.ServerLoading, "Creature #{0} has waypoint data for spline ({1},{2}). The specified chain does not have a spline with this index - entry skipped.", entry, chainId, splineId);
                         continue;
                     }
-                    SplineChainLink spline = chain[splineId];
+
+                    var spline = chain[splineId];
+
                     if (wpId != spline.Points.Count)
                     {
                         Log.outWarn(LogFilter.ServerLoading, "Creature #{0} has orphaned waypoint data in spline ({1},{2}) at index {3}. Skipped.", entry, chainId, splineId, wpId);
                         continue;
                     }
+
                     spline.Points.Add(new Vector3(posX, posY, posZ));
                     ++wpCount;
                 } while (resultWP.NextRow());
@@ -987,10 +1003,10 @@ namespace Game.Scripting
         }
 
         // UnitScript
-        public void OnHeal(Unit healer, Unit reciever, ref uint gain)
+        public void OnHeal(Unit healer, Unit receiver, ref uint gain)
         {
             uint dmg = gain;
-            ForEach<UnitScript>(p => p.OnHeal(healer, reciever, ref dmg));
+            ForEach<UnitScript>(p => p.OnHeal(healer, receiver, ref dmg));
             gain = dmg;
         }
         public void OnDamage(Unit attacker, Unit victim, ref uint damage)
@@ -1162,7 +1178,7 @@ namespace Game.Scripting
             GetScriptRegistry<T>().AddScript(script);
         }
 
-        ScriptRegistry<T> GetScriptRegistry<T>() where T : ScriptObject
+        public ScriptRegistry<T> GetScriptRegistry<T>() where T : ScriptObject
         {
             if (ScriptStorage.ContainsKey(typeof(T)))
                 return (ScriptRegistry<T>)ScriptStorage[typeof(T)];
@@ -1170,12 +1186,12 @@ namespace Game.Scripting
             return null;
         }
 
-        uint _ScriptCount;
+        public uint _ScriptCount;
         public Dictionary<uint, SpellSummary> spellSummaryStorage = new();
-        Hashtable ScriptStorage = new();
+        public Hashtable ScriptStorage = new();
 
         // creature entry + chain ID
-        MultiMap<Tuple<uint, ushort>, SplineChainLink> m_mSplineChainsMap = new(); // spline chains
+        public MultiMap<Tuple<uint, ushort>, SplineChainLink> m_mSplineChainsMap = new(); // spline chains
     }
 
     public interface IScriptRegistry
@@ -1185,6 +1201,10 @@ namespace Game.Scripting
 
     public class ScriptRegistry<TValue> : IScriptRegistry where TValue : ScriptObject
     {
+        // Counter used for code-only scripts.
+        public uint _scriptIdCounter;
+        public Dictionary<uint, TValue> ScriptMap = new();
+
         public void AddScript(TValue script)
         {
             Cypher.Assert(script != null);
@@ -1199,11 +1219,13 @@ namespace Game.Scripting
 
             // Get an ID for the script. An ID only exists if it's a script that is assigned in the database
             // through a script name (or similar).
-            uint id = Global.ObjectMgr.GetScriptId(script.GetName());
+            var id = Global.ObjectMgr.GetScriptId(script.GetName());
+
             if (id != 0)
             {
                 // Try to find an existing script.
-                bool existing = false;
+                var existing = false;
+
                 foreach (var it in ScriptMap)
                 {
                     if (it.Value.GetName() == script.GetName())
@@ -1223,7 +1245,6 @@ namespace Game.Scripting
                 {
                     // If the script is already assigned . delete it!
                     Log.outError(LogFilter.Scripts, "Script '{0}' already assigned with the same script name, so the script can't work.", script.GetName());
-
                     Cypher.Assert(false); // Error that should be fixed ASAP.
                 }
             }
@@ -1231,40 +1252,23 @@ namespace Game.Scripting
             {
                 // The script uses a script name from database, but isn't assigned to anything.
                 Log.outError(LogFilter.Sql, "Script named '{0}' does not have a script name assigned in database.", script.GetName());
-                return;
             }
         }
 
         // Gets a script by its ID (assigned by ObjectMgr).
-        public TValue GetScriptById(uint id)
-        {
-            return ScriptMap.LookupByKey(id);
-        }
+        public TValue GetScriptById(uint id) => ScriptMap.LookupByKey(id);
 
-        public bool Empty()
-        {
-            return ScriptMap.Empty();
-        }
+        public bool Empty() => ScriptMap.Empty();
 
-        public ICollection<TValue> GetStorage()
-        {
-            return ScriptMap.Values;
-        }
+        public ICollection<TValue> GetStorage() => ScriptMap.Values;
 
-        public void Unload()
-        {
-            ScriptMap.Clear();
-        }
-
-        // Counter used for code-only scripts.
-        uint _scriptIdCounter;
-        Dictionary<uint, TValue> ScriptMap = new();
+        public void Unload() { ScriptMap.Clear(); }
     }
 
     public class SpellSummary
     {
-        public byte Targets;                                          // set of enum SelectTarget
-        public byte Effects;                                          // set of enum SelectEffect
+        public byte Targets; // set of enum SelectTarget
+        public byte Effects; // set of enum SelectEffect
     }
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
@@ -1276,7 +1280,7 @@ namespace Game.Scripting
             Args = args;
         }
 
-        public string Name { get; private set; }
-        public object[] Args { get; private set; }
+        public string Name { get; }
+        public object[] Args { get; }
     }
 }
