@@ -2,6 +2,8 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable InconsistentNaming
+
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -725,6 +727,12 @@ namespace Game.Loots
             return allLooted;
         }
 
+        public void LootMoney()
+        {
+            gold     = 0;
+            _changed = true;
+        }
+
         public LootItem GetItemInSlot(uint lootListId)
         {
             if (lootListId < items.Count)
@@ -872,6 +880,7 @@ namespace Game.Loots
         public void OnLootOpened(Map map, ObjectGuid looter)
         {
             AddLooter(looter);
+
             if (!_wasOpened)
             {
                 _wasOpened = true;
@@ -879,35 +888,46 @@ namespace Game.Loots
                 if (_lootMethod == LootMethod.GroupLoot || _lootMethod == LootMethod.NeedBeforeGreed)
                 {
                     ushort maxEnchantingSkill = 0;
-                    foreach (ObjectGuid allowedLooterGuid in _allowedLooters)
+
+                    foreach (var allowedLooterGuid in _allowedLooters)
                     {
-                        Player allowedLooter = Global.ObjAccessor.GetPlayer(map, allowedLooterGuid);
+                        var allowedLooter = Global.ObjAccessor.GetPlayer(map, allowedLooterGuid);
+
                         if (allowedLooter != null)
                             maxEnchantingSkill = Math.Max(maxEnchantingSkill, allowedLooter.GetSkillValue(SkillType.Enchanting));
                     }
 
                     for (uint lootListId = 0; lootListId < items.Count; ++lootListId)
                     {
-                        LootItem item = items[(int)lootListId];
+                        var item = items[(int)lootListId];
+
                         if (!item.is_blocked)
                             continue;
 
                         LootRoll lootRoll = new();
                         var inserted = _rolls.TryAdd(lootListId, lootRoll);
-                        if (!lootRoll.TryToStart(map, this, lootListId, maxEnchantingSkill))
+
+                        if (inserted && !lootRoll.TryToStart(map, this, lootListId, maxEnchantingSkill))
                             _rolls.Remove(lootListId);
                     }
+
+                    if (!_rolls.Empty())
+                        _changed = true;
                 }
                 else if (_lootMethod == LootMethod.MasterLoot)
                 {
                     if (looter == _lootMaster)
                     {
-                        Player lootMaster = Global.ObjAccessor.GetPlayer(map, looter);
+                        var lootMaster = Global.ObjAccessor.GetPlayer(map, looter);
+
                         if (lootMaster != null)
                         {
-                            MasterLootCandidateList masterLootCandidateList = new();
-                            masterLootCandidateList.LootObj = GetGUID();
-                            masterLootCandidateList.Players = _allowedLooters;
+                            MasterLootCandidateList masterLootCandidateList = new()
+                            {
+                                LootObj = GetGUID(),
+                                Players = _allowedLooters
+                            };
+
                             lootMaster.SendPacket(masterLootCandidateList);
                         }
                     }
@@ -968,6 +988,7 @@ namespace Game.Loots
             if (is_looted)
                 return null;
 
+            _changed = true;
             return item;
         }
 
@@ -1060,6 +1081,8 @@ namespace Game.Loots
 
         public bool IsLooted() { return gold == 0 && unlootedCount == 0; }
 
+        public bool IsChanged() { return _changed; }
+
         public void AddLooter(ObjectGuid guid) { PlayersLooting.Add(guid); }
         public void RemoveLooter(ObjectGuid guid) { PlayersLooting.Remove(guid); }
 
@@ -1094,6 +1117,7 @@ namespace Game.Loots
         ObjectGuid _lootMaster;
         List<ObjectGuid> _allowedLooters = new();
         bool _wasOpened;                                                // true if at least one player received the loot content
+        bool _changed;
         uint _dungeonEncounterId;
     }
 

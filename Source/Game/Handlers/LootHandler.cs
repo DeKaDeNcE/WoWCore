@@ -2,6 +2,7 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Local
 
 using System.Collections.Generic;
@@ -25,7 +26,6 @@ namespace Game
             Player player = GetPlayer();
             AELootResult aeResult = player.GetAELootView().Count > 1 ? new AELootResult() : null;
 
-            // @todo Implement looting by LootObject guid
             foreach (LootRequest req in packet.Loot)
             {
                 Loot loot = player.GetAELootView().LookupByKey(req.Object);
@@ -146,7 +146,7 @@ namespace Game
                     SendPacket(packet);
                 }
 
-                loot.gold = 0;
+                loot.LootMoney();
 
                 // Delete the money loot record from the DB
                 if (loot.loot_type == LootType.Item)
@@ -161,7 +161,7 @@ namespace Game
                 player.GetSession().DoLootRelease(loot);
         }
 
-        class AELootCreatureCheck : ICheck<Creature>
+        public class AELootCreatureCheck : ICheck<Creature>
         {
             public static float LootDistance = 30.0f;
 
@@ -187,7 +187,7 @@ namespace Game
                 return _looter.IsAllowedToLoot(creature);
             }
 
-            bool IsValidAELootTarget(Creature creature)
+            public bool IsValidAELootTarget(Creature creature)
             {
                 if (creature.GetGUID() == _mainLootTarget)
                     return false;
