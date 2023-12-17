@@ -1,0 +1,3961 @@
+SOURCE ../0_includes/races.sql
+SOURCE ../0_includes/classes.sql
+SOURCE ../0_includes/action_bar.sql
+SOURCE ../0_includes/spells.sql
+SOURCE ../0_includes/items.sql
+
+DELETE FROM `playercreateinfo_action`;
+INSERT INTO `playercreateinfo_action`
+(               `race`,       `class`,                  `button`,                            `action`,       `type`) VALUES
+# Warrior #############################################################################################################################################################################################
+(               @RACE_HUMAN,      @WARRIOR,      @ACTION_BAR_1_SLOT_1,                       @WARRIOR_SLAM,  @TYPE_SPELL), # 1464 Slam
+(               @RACE_HUMAN,      @WARRIOR,      @ACTION_BAR_1_SLOT_0,       @RACE_HUMAN_RACIAL_WILL_TO_SURVIVE,  @TYPE_SPELL), # 59752 Will to Survive (Racial)
+(                 @RACE_ORC,      @WARRIOR,      @ACTION_BAR_1_SLOT_1,                       @WARRIOR_SLAM,  @TYPE_SPELL), # 1464 Slam
+(                 @RACE_ORC,      @WARRIOR,      @ACTION_BAR_1_SLOT_0,              @RACE_ORC_RACIAL_BLOOD_FURY,  @TYPE_SPELL), # 20572 Blood Fury (Racial)
+(               @RACE_DWARF,      @WARRIOR,      @ACTION_BAR_1_SLOT_1,                       @WARRIOR_SLAM,  @TYPE_SPELL), # 1464 Slam
+(               @RACE_DWARF,      @WARRIOR,      @ACTION_BAR_1_SLOT_0,             @RACE_DWARF_RACIAL_STONEFORM,  @TYPE_SPELL), # 20594 Stoneform (Racial)
+(           @RACE_NIGHT_ELF,      @WARRIOR,      @ACTION_BAR_1_SLOT_1,                       @WARRIOR_SLAM,  @TYPE_SPELL), # 1464 Slam
+(           @RACE_NIGHT_ELF,      @WARRIOR,      @ACTION_BAR_1_SLOT_0,        @RACE_NIGHT_ELF_RACIAL_SHADOWMELD,  @TYPE_SPELL), # 58984 Shadowmeld (Racial)
+(              @RACE_UNDEAD,      @WARRIOR,      @ACTION_BAR_1_SLOT_1,                       @WARRIOR_SLAM,  @TYPE_SPELL), # 1464 Slam
+(              @RACE_UNDEAD,      @WARRIOR,      @ACTION_BAR_1_SLOT_9, @RACE_UNDEAD_RACIAL_WILL_OF_THE_FORSAKEN,  @TYPE_SPELL), # 7744 Will of the Forsaken (Racial)
+(              @RACE_UNDEAD,      @WARRIOR,      @ACTION_BAR_1_SLOT_0,          @RACE_UNDEAD_RACIAL_CANNIBALIZE,  @TYPE_SPELL), # 20577 Cannibalize (Racial)
+(              @RACE_TAUREN,      @WARRIOR,      @ACTION_BAR_1_SLOT_1,                       @WARRIOR_SLAM,  @TYPE_SPELL), # 1464 Slam
+(              @RACE_TAUREN,      @WARRIOR,      @ACTION_BAR_1_SLOT_0,            @RACE_TAUREN_RACIAL_WAR_STOMP,  @TYPE_SPELL), # 20549 War Stomp (Racial)
+(               @RACE_GNOME,      @WARRIOR,      @ACTION_BAR_1_SLOT_1,                       @WARRIOR_SLAM,  @TYPE_SPELL), # 1464 Slam
+(               @RACE_GNOME,      @WARRIOR,      @ACTION_BAR_1_SLOT_0,         @RACE_GNOME_RACIAL_ESCAPE_ARTIST,  @TYPE_SPELL), # 20589 Escape Artist (Racial)
+(               @TROLL,      @WARRIOR,      @ACTION_BAR_1_SLOT_1,                       @WARRIOR_SLAM,  @TYPE_SPELL), # 1464 Slam
+(               @TROLL,      @WARRIOR,      @ACTION_BAR_1_SLOT_0,            @TROLL_RACIAL_BERSERKING,  @TYPE_SPELL), # 26297 Berserking (Racial)
+(              @GOBLIN,      @WARRIOR,      @ACTION_BAR_1_SLOT_1,                       @WARRIOR_SLAM,  @TYPE_SPELL), # 1464 Slam
+(              @GOBLIN,      @WARRIOR,      @ACTION_BAR_1_SLOT_0,          @GOBLIN_RACIAL_ROCKET_JUMP,  @TYPE_SPELL), # 69070 Rocket Jump (Racial)
+(              @GOBLIN,      @WARRIOR,  @ACTION_BAR_1_SLOT_MINUS,       @GOBLIN_RACIAL_ROCKET_BARRAGE,  @TYPE_SPELL), # 69041 Rocket Barrage (Racial)
+(           @BLOOD_ELF,      @WARRIOR,      @ACTION_BAR_1_SLOT_1,                       @WARRIOR_SLAM,  @TYPE_SPELL), # 1464 Slam
+(           @BLOOD_ELF,      @WARRIOR,      @ACTION_BAR_1_SLOT_0,    @BLOOD_ELF_RACIAL_ARCANE_TORRENT,  @TYPE_SPELL), # 69179 Arcane Torrent (Racial)
+(             @DRAENEI,      @WARRIOR,      @ACTION_BAR_1_SLOT_1,                       @WARRIOR_SLAM,  @TYPE_SPELL), # 1464 Slam
+(             @DRAENEI,      @WARRIOR,      @ACTION_BAR_1_SLOT_0,   @DRAENEI_RACIAL_GIFT_OF_THE_NAARU,  @TYPE_SPELL), # 28880 Gift of the Naaru (Racial)
+(              @WORGEN,      @WARRIOR,      @ACTION_BAR_1_SLOT_1,                       @WARRIOR_SLAM,  @TYPE_SPELL), # 1464 Slam
+(    @PANDAREN_NEUTRAL,      @WARRIOR,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL), # 88163 Attack
+(    @PANDAREN_NEUTRAL,      @WARRIOR,      @ACTION_BAR_1_SLOT_2,                       @WARRIOR_SLAM,  @TYPE_SPELL), # 1464 Slam
+(    @PANDAREN_NEUTRAL,      @WARRIOR,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL), # 107079 Quaking Palm (Racial)
+(    @PANDAREN_NEUTRAL,      @WARRIOR, @ACTION_BAR_1_SLOT_EQUALS,               @ITEM_SMALL_RICE_CAKE,   @TYPE_ITEM), # 77273 Small Rice Cake (Item)
+(   @PANDAREN_ALLIANCE,      @WARRIOR,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL), # 88163 Attack
+(   @PANDAREN_ALLIANCE,      @WARRIOR,      @ACTION_BAR_1_SLOT_2,                       @WARRIOR_SLAM,  @TYPE_SPELL), # 1464 Slam
+(   @PANDAREN_ALLIANCE,      @WARRIOR,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL), # 107079 Quaking Palm (Racial)
+(   @PANDAREN_ALLIANCE,      @WARRIOR, @ACTION_BAR_1_SLOT_EQUALS,               @ITEM_SMALL_RICE_CAKE,   @TYPE_ITEM), # 77273 Small Rice Cake (Item)
+(      @PANDAREN_HORDE,      @WARRIOR,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL), # 88163 Attack
+(      @PANDAREN_HORDE,      @WARRIOR,      @ACTION_BAR_1_SLOT_2,                       @WARRIOR_SLAM,  @TYPE_SPELL), # 1464 Slam
+(      @PANDAREN_HORDE,      @WARRIOR,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL), # 107079 Quaking Palm (Racial)
+(      @PANDAREN_HORDE,      @WARRIOR, @ACTION_BAR_1_SLOT_EQUALS,               @ITEM_SMALL_RICE_CAKE,   @TYPE_ITEM), # 77273 Small Rice Cake (Item)
+
+# Charge 100
+(          @NIGHTBORNE,      @WARRIOR,      @ACTION_BAR_1_SLOT_1, 100,  @TYPE_SPELL),
+
+# 1464 Slam
+(          @NIGHTBORNE,      @WARRIOR,      @ACTION_BAR_1_SLOT_2,                       @WARRIOR_SLAM,  @TYPE_SPELL),
+
+# Whirlwind 1680
+(          @NIGHTBORNE,      @WARRIOR,      @ACTION_BAR_1_SLOT_3, 1680,  @TYPE_SPELL),
+
+# Shield Block 2565
+(          @NIGHTBORNE,      @WARRIOR,      @ACTION_BAR_1_SLOT_4, 2565,  @TYPE_SPELL),
+
+# Shield Slam 23922
+(          @NIGHTBORNE,      @WARRIOR,      @ACTION_BAR_1_SLOT_5, 23922,  @TYPE_SPELL),
+
+# Execute 163201
+(          @NIGHTBORNE,      @WARRIOR,      @ACTION_BAR_1_SLOT_6, 163201,  @TYPE_SPELL),
+
+# Victory Rush 34428
+(          @NIGHTBORNE,      @WARRIOR,      @ACTION_BAR_1_SLOT_7, 34428,  @TYPE_SPELL),
+
+# Pummel 6552
+(          @NIGHTBORNE,      @WARRIOR,      @ACTION_BAR_1_SLOT_8, 6552,  @TYPE_SPELL),
+
+# Hamstring 1715
+(          @NIGHTBORNE,      @WARRIOR,      @ACTION_BAR_1_SLOT_9, 1715,  @TYPE_SPELL),
+
+# Arcane Pulse 260364 Racial
+(          @NIGHTBORNE,      @WARRIOR,  @ACTION_BAR_1_SLOT_MINUS, 260364,  @TYPE_SPELL),
+
+# Nightborne Manasaber 258845 Account Level Mount 1008
+(          @NIGHTBORNE,      @WARRIOR, @ACTION_BAR_1_SLOT_EQUALS, 258845,  @TYPE_SPELL),
+
+# Charge 100
+( @HIGHMOUNTAIN_TAUREN,      @WARRIOR,      @ACTION_BAR_1_SLOT_1, 100,  @TYPE_SPELL),
+
+# 1464 Slam
+( @HIGHMOUNTAIN_TAUREN,      @WARRIOR,      @ACTION_BAR_1_SLOT_2,                       @WARRIOR_SLAM,  @TYPE_SPELL),
+
+# Whirlwind 1680
+( @HIGHMOUNTAIN_TAUREN,      @WARRIOR,      @ACTION_BAR_1_SLOT_3, 1680,  @TYPE_SPELL),
+
+# Shield Block 2565
+( @HIGHMOUNTAIN_TAUREN,      @WARRIOR,      @ACTION_BAR_1_SLOT_4, 2565,  @TYPE_SPELL),
+
+# Shield Slam 23922
+( @HIGHMOUNTAIN_TAUREN,      @WARRIOR,      @ACTION_BAR_1_SLOT_5, 23922,  @TYPE_SPELL),
+
+# Execute 163201
+( @HIGHMOUNTAIN_TAUREN,      @WARRIOR,      @ACTION_BAR_1_SLOT_6, 163201,  @TYPE_SPELL),
+
+# Victory Rush 34428
+( @HIGHMOUNTAIN_TAUREN,      @WARRIOR,      @ACTION_BAR_1_SLOT_7, 34428,  @TYPE_SPELL),
+
+# Pummel 6552
+( @HIGHMOUNTAIN_TAUREN,      @WARRIOR,      @ACTION_BAR_1_SLOT_8, 6552,  @TYPE_SPELL),
+
+# Hamstring 1715
+( @HIGHMOUNTAIN_TAUREN,      @WARRIOR,      @ACTION_BAR_1_SLOT_9, 1715,  @TYPE_SPELL),
+
+# Bull Rush 255654 Racial
+( @HIGHMOUNTAIN_TAUREN,      @WARRIOR,  @ACTION_BAR_1_SLOT_MINUS, 255654,  @TYPE_SPELL),
+
+# Highmountain Thunderhoof 258060 Account Level Mount 1007
+( @HIGHMOUNTAIN_TAUREN,      @WARRIOR, @ACTION_BAR_1_SLOT_EQUALS, 258060,  @TYPE_SPELL),
+
+# Charge 100
+(            @VOID_ELF,      @WARRIOR,      @ACTION_BAR_1_SLOT_1, 100,  @TYPE_SPELL),
+
+# 1464 Slam
+(            @VOID_ELF,      @WARRIOR,      @ACTION_BAR_1_SLOT_2,                       @WARRIOR_SLAM,  @TYPE_SPELL),
+
+# Whirlwind 1680
+(            @VOID_ELF,      @WARRIOR,      @ACTION_BAR_1_SLOT_3, 1680,  @TYPE_SPELL),
+
+# Shield Block 2565
+(            @VOID_ELF,      @WARRIOR,      @ACTION_BAR_1_SLOT_4, 2565,  @TYPE_SPELL),
+
+# Shield Slam 23922
+(            @VOID_ELF,      @WARRIOR,      @ACTION_BAR_1_SLOT_5, 23922,  @TYPE_SPELL),
+
+# Execute 163201
+(            @VOID_ELF,      @WARRIOR,      @ACTION_BAR_1_SLOT_6, 163201,  @TYPE_SPELL),
+
+# Victory Rush 34428
+(            @VOID_ELF,      @WARRIOR,      @ACTION_BAR_1_SLOT_7, 34428,  @TYPE_SPELL),
+
+# Pummel 6552
+(            @VOID_ELF,      @WARRIOR,      @ACTION_BAR_1_SLOT_8, 6552,  @TYPE_SPELL),
+
+# Hamstring 1715
+(            @VOID_ELF,      @WARRIOR,      @ACTION_BAR_1_SLOT_9, 1715,  @TYPE_SPELL),
+
+# Spatial Rift 256948 Racial
+(            @VOID_ELF,      @WARRIOR,  @ACTION_BAR_1_SLOT_MINUS, 256948,  @TYPE_SPELL),
+
+# Starcursed Voidstrider 259202 Account Level Mount 1009
+(            @VOID_ELF,      @WARRIOR, @ACTION_BAR_1_SLOT_EQUALS, 259202,  @TYPE_SPELL),
+
+# Charge 100
+( @LIGHTFORGED_DRAENEI,      @WARRIOR,      @ACTION_BAR_1_SLOT_1, 100,  @TYPE_SPELL),
+
+# 1464 Slam
+( @LIGHTFORGED_DRAENEI,      @WARRIOR,      @ACTION_BAR_1_SLOT_2,                       @WARRIOR_SLAM,  @TYPE_SPELL),
+
+# Whirlwind 1680
+( @LIGHTFORGED_DRAENEI,      @WARRIOR,      @ACTION_BAR_1_SLOT_3, 1680,  @TYPE_SPELL),
+
+# Shield Block 2565
+( @LIGHTFORGED_DRAENEI,      @WARRIOR,      @ACTION_BAR_1_SLOT_4, 2565,  @TYPE_SPELL),
+
+# Shield Slam 23922
+( @LIGHTFORGED_DRAENEI,      @WARRIOR,      @ACTION_BAR_1_SLOT_5, 23922,  @TYPE_SPELL),
+
+# Execute 163201
+( @LIGHTFORGED_DRAENEI,      @WARRIOR,      @ACTION_BAR_1_SLOT_6, 163201,  @TYPE_SPELL),
+
+# Victory Rush 34428
+( @LIGHTFORGED_DRAENEI,      @WARRIOR,      @ACTION_BAR_1_SLOT_7, 34428,  @TYPE_SPELL),
+
+# Pummel 6552
+( @LIGHTFORGED_DRAENEI,      @WARRIOR,      @ACTION_BAR_1_SLOT_8, 6552,  @TYPE_SPELL),
+
+# Hamstring 1715
+( @LIGHTFORGED_DRAENEI,      @WARRIOR,      @ACTION_BAR_1_SLOT_9, 1715,  @TYPE_SPELL),
+
+# Light's Judgement 255647 Racial
+( @LIGHTFORGED_DRAENEI,      @WARRIOR,  @ACTION_BAR_1_SLOT_MINUS, 255647,  @TYPE_SPELL),
+
+# Lightforged Felcrusher 258022 Account Level Mount 1006
+( @LIGHTFORGED_DRAENEI,      @WARRIOR, @ACTION_BAR_1_SLOT_EQUALS, 258022,  @TYPE_SPELL),
+
+# Charge 100
+(     @ZANDALARI_TROLL,      @WARRIOR,      @ACTION_BAR_1_SLOT_1, 100,  @TYPE_SPELL),
+
+# 1464 Slam
+(     @ZANDALARI_TROLL,      @WARRIOR,      @ACTION_BAR_1_SLOT_2,                       @WARRIOR_SLAM,  @TYPE_SPELL),
+
+# Whirlwind 1680
+(     @ZANDALARI_TROLL,      @WARRIOR,      @ACTION_BAR_1_SLOT_3, 1680,  @TYPE_SPELL),
+
+# Shield Block 2565
+(     @ZANDALARI_TROLL,      @WARRIOR,      @ACTION_BAR_1_SLOT_4, 2565,  @TYPE_SPELL),
+
+# Shield Slam 23922
+(     @ZANDALARI_TROLL,      @WARRIOR,      @ACTION_BAR_1_SLOT_5, 23922,  @TYPE_SPELL),
+
+# Execute 163201
+(     @ZANDALARI_TROLL,      @WARRIOR,      @ACTION_BAR_1_SLOT_6, 163201,  @TYPE_SPELL),
+
+# Victory Rush 34428
+(     @ZANDALARI_TROLL,      @WARRIOR,      @ACTION_BAR_1_SLOT_7, 34428,  @TYPE_SPELL),
+
+# Pummel 6552
+(     @ZANDALARI_TROLL,      @WARRIOR,      @ACTION_BAR_1_SLOT_8, 6552,  @TYPE_SPELL),
+
+# Hamstring 1715
+(     @ZANDALARI_TROLL,      @WARRIOR,      @ACTION_BAR_1_SLOT_9, 1715,  @TYPE_SPELL),
+
+# Embrace of the Loa 292752 Racial
+(     @ZANDALARI_TROLL,      @WARRIOR,  @ACTION_BAR_1_SLOT_MINUS, 292752,  @TYPE_SPELL),
+
+# Zandalari Direhorn 263707 Account Level Mount 1038
+(     @ZANDALARI_TROLL,      @WARRIOR, @ACTION_BAR_1_SLOT_EQUALS, 263707,  @TYPE_SPELL),
+
+# Charge 100
+(           @KUL_TIRAN,      @WARRIOR,      @ACTION_BAR_1_SLOT_1, 100,  @TYPE_SPELL),
+
+# 1464 Slam
+(           @KUL_TIRAN,      @WARRIOR,      @ACTION_BAR_1_SLOT_2,                       @WARRIOR_SLAM,  @TYPE_SPELL),
+
+# Whirlwind 1680
+(           @KUL_TIRAN,      @WARRIOR,      @ACTION_BAR_1_SLOT_3, 1680,  @TYPE_SPELL),
+
+# Shield Block 2565
+(           @KUL_TIRAN,      @WARRIOR,      @ACTION_BAR_1_SLOT_4, 2565,  @TYPE_SPELL),
+
+# Shield Slam 23922
+(           @KUL_TIRAN,      @WARRIOR,      @ACTION_BAR_1_SLOT_5, 23922,  @TYPE_SPELL),
+
+# Execute 163201
+(           @KUL_TIRAN,      @WARRIOR,      @ACTION_BAR_1_SLOT_6, 163201,  @TYPE_SPELL),
+
+# Victory Rush 34428
+(           @KUL_TIRAN,      @WARRIOR,      @ACTION_BAR_1_SLOT_7, 34428,  @TYPE_SPELL),
+
+# Pummel 6552
+(           @KUL_TIRAN,      @WARRIOR,      @ACTION_BAR_1_SLOT_8, 6552,  @TYPE_SPELL),
+
+# Hamstring 1715
+(           @KUL_TIRAN,      @WARRIOR,      @ACTION_BAR_1_SLOT_9, 1715,  @TYPE_SPELL),
+
+# Haymaker 287712 Racial
+(           @KUL_TIRAN,      @WARRIOR,  @ACTION_BAR_1_SLOT_MINUS, 287712,  @TYPE_SPELL),
+
+# Kul Tiran Charger 282682 Account Level Mount 1198
+(           @KUL_TIRAN,      @WARRIOR, @ACTION_BAR_1_SLOT_EQUALS, 282682,  @TYPE_SPELL),
+
+# Charge 100
+(     @DARK_IRON_DWARF,      @WARRIOR,      @ACTION_BAR_1_SLOT_1, 100,  @TYPE_SPELL),
+
+# 1464 Slam
+(     @DARK_IRON_DWARF,      @WARRIOR,      @ACTION_BAR_1_SLOT_2,                       @WARRIOR_SLAM,  @TYPE_SPELL),
+
+# Whirlwind 1680
+(     @DARK_IRON_DWARF,      @WARRIOR,      @ACTION_BAR_1_SLOT_3, 1680,  @TYPE_SPELL),
+
+# Shield Block 2565
+(     @DARK_IRON_DWARF,      @WARRIOR,      @ACTION_BAR_1_SLOT_4, 2565,  @TYPE_SPELL),
+
+# Shield Slam 23922
+(     @DARK_IRON_DWARF,      @WARRIOR,      @ACTION_BAR_1_SLOT_5, 23922,  @TYPE_SPELL),
+
+# Execute 163201
+(     @DARK_IRON_DWARF,      @WARRIOR,      @ACTION_BAR_1_SLOT_6, 163201,  @TYPE_SPELL),
+
+# Victory Rush 34428
+(     @DARK_IRON_DWARF,      @WARRIOR,      @ACTION_BAR_1_SLOT_7, 34428,  @TYPE_SPELL),
+
+# Pummel 6552
+(     @DARK_IRON_DWARF,      @WARRIOR,      @ACTION_BAR_1_SLOT_8, 6552,  @TYPE_SPELL),
+
+# Hamstring 1715
+(     @DARK_IRON_DWARF,      @WARRIOR,      @ACTION_BAR_1_SLOT_9, 1715,  @TYPE_SPELL),
+
+# Fireblood 265221 Racial
+(     @DARK_IRON_DWARF,      @WARRIOR,  @ACTION_BAR_1_SLOT_MINUS, 265221,  @TYPE_SPELL),
+
+# Dark Iron Core Hound 271646 Account Level Mount 1048
+(     @DARK_IRON_DWARF,      @WARRIOR, @ACTION_BAR_1_SLOT_EQUALS, 271646,  @TYPE_SPELL),
+
+# Charge 100
+(             @VULPERA,      @WARRIOR,      @ACTION_BAR_1_SLOT_1, 100,  @TYPE_SPELL),
+
+# 1464 Slam
+(             @VULPERA,      @WARRIOR,      @ACTION_BAR_1_SLOT_2,                       @WARRIOR_SLAM,  @TYPE_SPELL),
+
+# Whirlwind 1680
+(             @VULPERA,      @WARRIOR,      @ACTION_BAR_1_SLOT_3, 1680,  @TYPE_SPELL),
+
+# Shield Block 2565
+(             @VULPERA,      @WARRIOR,      @ACTION_BAR_1_SLOT_4, 2565,  @TYPE_SPELL),
+
+# Shield Slam 23922
+(             @VULPERA,      @WARRIOR,      @ACTION_BAR_1_SLOT_5, 23922,  @TYPE_SPELL),
+
+# Execute 163201
+(             @VULPERA,      @WARRIOR,      @ACTION_BAR_1_SLOT_6, 163201,  @TYPE_SPELL),
+
+# Victory Rush 34428
+(             @VULPERA,      @WARRIOR,      @ACTION_BAR_1_SLOT_7, 34428,  @TYPE_SPELL),
+
+# Pummel 6552
+(             @VULPERA,      @WARRIOR,      @ACTION_BAR_1_SLOT_8, 6552,  @TYPE_SPELL),
+
+# Hamstring 1715
+(             @VULPERA,      @WARRIOR,      @ACTION_BAR_1_SLOT_9, 1715,  @TYPE_SPELL),
+
+# Bag of Tricks 312411 Racial
+(             @VULPERA,      @WARRIOR,  @ACTION_BAR_1_SLOT_MINUS, 312411,  @TYPE_SPELL),
+
+# Caravan Hyena 306423 Account Level Mount 306423 
+(             @VULPERA,      @WARRIOR, @ACTION_BAR_1_SLOT_EQUALS, 306423,  @TYPE_SPELL),
+
+# Charge 100
+(          @MAGHAR_ORC,      @WARRIOR,      @ACTION_BAR_1_SLOT_1, 100,  @TYPE_SPELL),
+
+# 1464 Slam
+(          @MAGHAR_ORC,      @WARRIOR,      @ACTION_BAR_1_SLOT_2,                       @WARRIOR_SLAM,  @TYPE_SPELL),
+
+# Whirlwind 1680
+(          @MAGHAR_ORC,      @WARRIOR,      @ACTION_BAR_1_SLOT_3, 1680,  @TYPE_SPELL),
+
+# Shield Block 2565
+(          @MAGHAR_ORC,      @WARRIOR,      @ACTION_BAR_1_SLOT_4, 2565,  @TYPE_SPELL),
+
+# Shield Slam 23922
+(          @MAGHAR_ORC,      @WARRIOR,      @ACTION_BAR_1_SLOT_5, 23922,  @TYPE_SPELL),
+
+# Execute 163201
+(          @MAGHAR_ORC,      @WARRIOR,      @ACTION_BAR_1_SLOT_6, 163201,  @TYPE_SPELL),
+
+# Victory Rush 34428
+(          @MAGHAR_ORC,      @WARRIOR,      @ACTION_BAR_1_SLOT_7, 34428,  @TYPE_SPELL),
+
+# Pummel 6552
+(          @MAGHAR_ORC,      @WARRIOR,      @ACTION_BAR_1_SLOT_8, 6552,  @TYPE_SPELL),
+
+# Hamstring 1715
+(          @MAGHAR_ORC,      @WARRIOR,      @ACTION_BAR_1_SLOT_9, 1715,  @TYPE_SPELL),
+
+# Ancestral Call 274738 Racial
+(          @MAGHAR_ORC,      @WARRIOR,  @ACTION_BAR_1_SLOT_MINUS, 274738,  @TYPE_SPELL),
+
+# Mag'har Direwolf 267274 Account Level Mount 1044
+(          @MAGHAR_ORC,      @WARRIOR, @ACTION_BAR_1_SLOT_EQUALS, 267274,  @TYPE_SPELL),
+
+# Charge 100
+(          @MECHAGNOME,      @WARRIOR,      @ACTION_BAR_1_SLOT_1, 100,  @TYPE_SPELL),
+
+# 1464 Slam
+(          @MECHAGNOME,      @WARRIOR,      @ACTION_BAR_1_SLOT_2,                       @WARRIOR_SLAM,  @TYPE_SPELL),
+
+# Whirlwind 1680
+(          @MECHAGNOME,      @WARRIOR,      @ACTION_BAR_1_SLOT_3, 1680,  @TYPE_SPELL),
+
+# Shield Block 2565
+(          @MECHAGNOME,      @WARRIOR,      @ACTION_BAR_1_SLOT_4, 2565,  @TYPE_SPELL),
+
+# Shield Slam 23922
+(          @MECHAGNOME,      @WARRIOR,      @ACTION_BAR_1_SLOT_5, 23922,  @TYPE_SPELL),
+
+# Execute 163201
+(          @MECHAGNOME,      @WARRIOR,      @ACTION_BAR_1_SLOT_6, 163201,  @TYPE_SPELL),
+
+# Victory Rush 34428
+(          @MECHAGNOME,      @WARRIOR,      @ACTION_BAR_1_SLOT_7, 34428,  @TYPE_SPELL),
+
+# Pummel 6552
+(          @MECHAGNOME,      @WARRIOR,      @ACTION_BAR_1_SLOT_8, 6552,  @TYPE_SPELL),
+
+# Hamstring 1715
+(          @MECHAGNOME,      @WARRIOR,      @ACTION_BAR_1_SLOT_9, 1715,  @TYPE_SPELL),
+
+# Hyper Organic Light Originator 312924 Racial
+(          @MECHAGNOME,      @WARRIOR,  @ACTION_BAR_1_SLOT_MINUS, 312924,  @TYPE_SPELL),
+
+# Mechagon Mechanostrider 305592 Account Level Mount 305592
+(          @MECHAGNOME,      @WARRIOR, @ACTION_BAR_1_SLOT_EQUALS, 305592,  @TYPE_SPELL),
+
+# Paladin #############################################################################################################################################################################################
+
+# Crusader Strike 35395
+(               @RACE_HUMAN, @PALADIN,      @ACTION_BAR_1_SLOT_1, 35395,  @TYPE_SPELL),
+
+# Will to Survive 59752 Racial
+(               @RACE_HUMAN, @PALADIN,      @ACTION_BAR_1_SLOT_0, 59752,  @TYPE_SPELL),
+
+# Crusader Strike 35395
+(               @RACE_DWARF, @PALADIN,      @ACTION_BAR_1_SLOT_1, 35395,  @TYPE_SPELL),
+
+# Stoneform 20594 Racial
+(               @RACE_DWARF, @PALADIN,      @ACTION_BAR_1_SLOT_0, 20594,  @TYPE_SPELL),
+
+# Crusader Strike 35395
+(           @BLOOD_ELF, @PALADIN,      @ACTION_BAR_1_SLOT_1, 35395,  @TYPE_SPELL),
+
+# Arcane Torrent 69179 Racial
+(           @BLOOD_ELF, @PALADIN,      @ACTION_BAR_1_SLOT_0,    @BLOOD_ELF_RACIAL_ARCANE_TORRENT,  @TYPE_SPELL),
+
+# Crusader Strike 35395
+(             @DRAENEI, @PALADIN,      @ACTION_BAR_1_SLOT_1, 35395,  @TYPE_SPELL),
+
+# Gift of the Naaru 28880 Racial
+(             @DRAENEI, @PALADIN,      @ACTION_BAR_1_SLOT_0,   @DRAENEI_RACIAL_GIFT_OF_THE_NAARU,  @TYPE_SPELL),
+
+# Judgement 20271
+( @LIGHTFORGED_DRAENEI, @PALADIN,      @ACTION_BAR_1_SLOT_1, 20271,  @TYPE_SPELL),
+
+# Crusader Strike 35395
+( @LIGHTFORGED_DRAENEI, @PALADIN,      @ACTION_BAR_1_SLOT_2, 35395,  @TYPE_SPELL),
+
+# Consecration 26573
+( @LIGHTFORGED_DRAENEI, @PALADIN,      @ACTION_BAR_1_SLOT_3, 26573,  @TYPE_SPELL),
+
+# Shield of the Righteous 53600
+( @LIGHTFORGED_DRAENEI, @PALADIN,      @ACTION_BAR_1_SLOT_4, 53600,  @TYPE_SPELL),
+
+# Hammer of Justice 853
+( @LIGHTFORGED_DRAENEI, @PALADIN,      @ACTION_BAR_1_SLOT_5, 853,  @TYPE_SPELL),
+
+# Flash of Light 19750
+( @LIGHTFORGED_DRAENEI, @PALADIN,      @ACTION_BAR_1_SLOT_6, 19750,  @TYPE_SPELL),
+
+# Divine Shield 642
+( @LIGHTFORGED_DRAENEI, @PALADIN,      @ACTION_BAR_1_SLOT_7, 642,  @TYPE_SPELL),
+
+# Word of Glory 85673
+( @LIGHTFORGED_DRAENEI, @PALADIN,      @ACTION_BAR_1_SLOT_8, 85673,  @TYPE_SPELL),
+
+# Light's Judgement 255647 Racial
+( @LIGHTFORGED_DRAENEI, @PALADIN,  @ACTION_BAR_1_SLOT_MINUS, 255647,  @TYPE_SPELL),
+
+# Lightforged Felcrusher 258022 Account Level Mount 1006
+( @LIGHTFORGED_DRAENEI, @PALADIN, @ACTION_BAR_1_SLOT_EQUALS, 258022,  @TYPE_SPELL),
+
+# Judgement 20271
+(     @ZANDALARI_TROLL, @PALADIN,      @ACTION_BAR_1_SLOT_1, 20271,  @TYPE_SPELL),
+
+# Crusader Strike 35395
+(     @ZANDALARI_TROLL, @PALADIN,      @ACTION_BAR_1_SLOT_2, 35395,  @TYPE_SPELL),
+
+# Consecration 26573
+(     @ZANDALARI_TROLL, @PALADIN,      @ACTION_BAR_1_SLOT_3, 26573,  @TYPE_SPELL),
+
+# Shield of the Righteous 53600
+(     @ZANDALARI_TROLL, @PALADIN,      @ACTION_BAR_1_SLOT_4, 53600,  @TYPE_SPELL),
+
+# Hammer of Justice 853
+(     @ZANDALARI_TROLL, @PALADIN,      @ACTION_BAR_1_SLOT_5, 853,  @TYPE_SPELL),
+
+# Flash of Light 19750
+(     @ZANDALARI_TROLL, @PALADIN,      @ACTION_BAR_1_SLOT_6, 19750,  @TYPE_SPELL),
+
+# Divine Shield 642
+(     @ZANDALARI_TROLL, @PALADIN,      @ACTION_BAR_1_SLOT_7, 642,  @TYPE_SPELL),
+
+# Word of Glory 85673
+(     @ZANDALARI_TROLL, @PALADIN,      @ACTION_BAR_1_SLOT_8, 85673,  @TYPE_SPELL),
+
+# Embrace of the Loa 292752 Racial
+(     @ZANDALARI_TROLL, @PALADIN,  @ACTION_BAR_1_SLOT_MINUS, 292752,  @TYPE_SPELL),
+
+# Crusader's Direhorn 290698 Account Level Mount 1225
+(     @ZANDALARI_TROLL, @PALADIN, @ACTION_BAR_1_SLOT_EQUALS, 290698,  @TYPE_SPELL),
+
+# Judgement 20271
+(     @DARK_IRON_DWARF, @PALADIN,      @ACTION_BAR_1_SLOT_1, 20271,  @TYPE_SPELL),
+
+# Crusader Strike 35395
+(     @DARK_IRON_DWARF, @PALADIN,      @ACTION_BAR_1_SLOT_2, 35395,  @TYPE_SPELL),
+
+# Consecration 26573
+(     @DARK_IRON_DWARF, @PALADIN,      @ACTION_BAR_1_SLOT_3, 26573,  @TYPE_SPELL),
+
+# Shield of the Righteous 53600
+(     @DARK_IRON_DWARF, @PALADIN,      @ACTION_BAR_1_SLOT_4, 53600,  @TYPE_SPELL),
+
+# Hammer of Justice 853
+(     @DARK_IRON_DWARF, @PALADIN,      @ACTION_BAR_1_SLOT_5, 853,  @TYPE_SPELL),
+
+# Flash of Light 19750
+(     @DARK_IRON_DWARF, @PALADIN,      @ACTION_BAR_1_SLOT_6, 19750,  @TYPE_SPELL),
+
+# Divine Shield 642
+(     @DARK_IRON_DWARF, @PALADIN,      @ACTION_BAR_1_SLOT_7, 642,  @TYPE_SPELL),
+
+# Word of Glory 85673
+(     @DARK_IRON_DWARF, @PALADIN,      @ACTION_BAR_1_SLOT_8, 85673,  @TYPE_SPELL),
+
+# Fireblood 265221 Racial
+(     @DARK_IRON_DWARF, @PALADIN,  @ACTION_BAR_1_SLOT_MINUS, 265221,  @TYPE_SPELL),
+
+# Dark Iron Core Hound 271646 Account Level Mount 1048
+(     @DARK_IRON_DWARF, @PALADIN, @ACTION_BAR_1_SLOT_EQUALS, 271646,  @TYPE_SPELL),
+
+# Hunter ##############################################################################################################################################################################################
+
+# Steady Shot 56641
+(               @RACE_HUMAN, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Will to Survive 59752 Racial
+(               @RACE_HUMAN, @HUNTER,      @ACTION_BAR_1_SLOT_0, 59752,  @TYPE_SPELL),
+
+# Steady Shot 56641
+(                 @RACE_ORC, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Blood Fury 20572 Racial
+(                 @RACE_ORC, @HUNTER,      @ACTION_BAR_1_SLOT_0, 20572,  @TYPE_SPELL),
+
+# Steady Shot 56641
+(               @RACE_DWARF, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Stoneform 20594 Racial
+(               @RACE_DWARF, @HUNTER,      @ACTION_BAR_1_SLOT_0, 20594,  @TYPE_SPELL),
+
+# Steady Shot 56641
+(           @RACE_NIGHT_ELF, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Shadowmeld 58984 Racial
+(           @RACE_NIGHT_ELF, @HUNTER,      @ACTION_BAR_1_SLOT_0, 58984,  @TYPE_SPELL),
+
+# Steady Shot 56641
+(              @RACE_UNDEAD, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Will of the Forsaken 7744 Racial
+(              @RACE_UNDEAD, @HUNTER,      @ACTION_BAR_1_SLOT_9, 7744,  @TYPE_SPELL),
+
+# Cannibalize 20577 Racial
+(              @RACE_UNDEAD, @HUNTER,      @ACTION_BAR_1_SLOT_0, 20577,  @TYPE_SPELL),
+
+# Steady Shot 56641
+(              @RACE_TAUREN, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# War Stomp 20549
+(              @RACE_TAUREN, @HUNTER,      @ACTION_BAR_1_SLOT_0,            @RACE_TAUREN_RACIAL_WAR_STOMP,  @TYPE_SPELL),
+
+# Steady Shot 56641
+(               @RACE_GNOME, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Escape Artist 20589 Racial
+(               @RACE_GNOME, @HUNTER,      @ACTION_BAR_1_SLOT_0,            @RACE_TAUREN_RACIAL_WAR_STOMP,  @TYPE_SPELL),
+
+# Steady Shot 56641
+(               @TROLL, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Berserking 26297 Racial
+(               @TROLL, @HUNTER,      @ACTION_BAR_1_SLOT_0,            @TROLL_RACIAL_BERSERKING,  @TYPE_SPELL),
+
+# Steady Shot 56641
+(              @GOBLIN, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Rocket Jump 69070 Racial
+(              @GOBLIN, @HUNTER,      @ACTION_BAR_1_SLOT_0,          @GOBLIN_RACIAL_ROCKET_JUMP,  @TYPE_SPELL),
+
+# Rocket Barrage 69041 Racial
+(              @GOBLIN, @HUNTER,  @ACTION_BAR_1_SLOT_MINUS,       @GOBLIN_RACIAL_ROCKET_BARRAGE,  @TYPE_SPELL),
+
+# Steady Shot 56641
+(           @BLOOD_ELF, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Arcane Torrent 69179 Racial
+(           @BLOOD_ELF, @HUNTER,      @ACTION_BAR_1_SLOT_0,    @BLOOD_ELF_RACIAL_ARCANE_TORRENT,  @TYPE_SPELL),
+
+# Steady Shot 56641
+(             @DRAENEI, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Gift of the Naaru 28880 Racial
+(             @DRAENEI, @HUNTER,      @ACTION_BAR_1_SLOT_0,   @DRAENEI_RACIAL_GIFT_OF_THE_NAARU,  @TYPE_SPELL),
+
+# Steady Shot 56641
+(              @WORGEN, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# 88163 Attack
+# (    @PANDAREN_NEUTRAL, @HUNTER,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Steady Shot 56641
+(    @PANDAREN_NEUTRAL, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Small Sugarcane Stalk 77272 Item
+# (    @PANDAREN_NEUTRAL, @HUNTER,      @ACTION_BAR_1_SLOT_8, 77272,   @TYPE_ITEM),
+
+# Quaking Palm 107079 Racial
+(    @PANDAREN_NEUTRAL, @HUNTER,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Sugarcane Stalk 77272 Item
+(    @PANDAREN_NEUTRAL, @HUNTER, @ACTION_BAR_1_SLOT_EQUALS, 77272,   @TYPE_ITEM),
+
+# 88163 Attack
+# (   @PANDAREN_ALLIANCE, @HUNTER,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Steady Shot 56641
+(   @PANDAREN_ALLIANCE, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Small Sugarcane Stalk 77272 Item
+# (   @PANDAREN_ALLIANCE, @HUNTER,      @ACTION_BAR_1_SLOT_8, 77272,   @TYPE_ITEM),
+
+# Quaking Palm 107079 Racial
+(   @PANDAREN_ALLIANCE, @HUNTER,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Sugarcane Stalk 77272 Item
+(   @PANDAREN_ALLIANCE, @HUNTER, @ACTION_BAR_1_SLOT_EQUALS, 77272,   @TYPE_ITEM),
+
+# 88163 Attack
+# (      @PANDAREN_HORDE, @HUNTER,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Steady Shot 56641
+(      @PANDAREN_HORDE, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Small Sugarcane Stalk 77272 Item
+# (      @PANDAREN_HORDE, @HUNTER,      @ACTION_BAR_1_SLOT_8, 77272,   @TYPE_ITEM),
+
+# Quaking Palm 107079 Racial
+(      @PANDAREN_HORDE, @HUNTER,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Sugarcane Stalk 77272 Item
+(      @PANDAREN_HORDE, @HUNTER, @ACTION_BAR_1_SLOT_EQUALS, 77272,   @TYPE_ITEM),
+
+# Steady Shot 56641
+(          @NIGHTBORNE, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Arcane Shot 185358
+(          @NIGHTBORNE, @HUNTER,      @ACTION_BAR_1_SLOT_2, 185358,  @TYPE_SPELL),
+
+# Hunter's Mark 257284
+(          @NIGHTBORNE, @HUNTER,      @ACTION_BAR_1_SLOT_3, 257284,  @TYPE_SPELL),
+
+# Wing Clip 195645
+(          @NIGHTBORNE, @HUNTER,      @ACTION_BAR_1_SLOT_4, 195645,  @TYPE_SPELL),
+
+# Disengage 781
+(          @NIGHTBORNE, @HUNTER,      @ACTION_BAR_1_SLOT_5, 781,  @TYPE_SPELL),
+
+# Feign Death 5384
+(          @NIGHTBORNE, @HUNTER,      @ACTION_BAR_1_SLOT_6, 5384,  @TYPE_SPELL),
+
+# Freezing Trap 187650
+(          @NIGHTBORNE, @HUNTER,      @ACTION_BAR_1_SLOT_7, 187650,  @TYPE_SPELL),
+
+# Exhilaration 109304
+(          @NIGHTBORNE, @HUNTER,      @ACTION_BAR_1_SLOT_8, 109304,  @TYPE_SPELL),
+
+# Aspect of the Turtle 186265
+(          @NIGHTBORNE, @HUNTER,      @ACTION_BAR_1_SLOT_9, 186265,  @TYPE_SPELL),
+
+# Aspect of the Cheetah 186257
+(          @NIGHTBORNE, @HUNTER,      @ACTION_BAR_1_SLOT_0, 186257,  @TYPE_SPELL),
+
+# Arcane Pulse 260364 Racial
+(          @NIGHTBORNE, @HUNTER,  @ACTION_BAR_1_SLOT_MINUS, 260364,  @TYPE_SPELL),
+
+# Nightborne Manasaber 258845 Account Level Mount 1008
+(          @NIGHTBORNE, @HUNTER, @ACTION_BAR_1_SLOT_EQUALS, 258845,  @TYPE_SPELL),
+
+# Call Pet 9
+(          @NIGHTBORNE, @HUNTER, 12,      @ACTION_BAR_1_SLOT_0, @TYPE_ACTION),
+
+# Pet Utility 103
+(          @NIGHTBORNE, @HUNTER, 13, 103, @TYPE_ACTION),
+
+# Steady Shot 56641
+( @HIGHMOUNTAIN_TAUREN, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Arcane Shot 185358
+( @HIGHMOUNTAIN_TAUREN, @HUNTER,      @ACTION_BAR_1_SLOT_2, 185358,  @TYPE_SPELL),
+
+# Hunter's Mark 257284
+( @HIGHMOUNTAIN_TAUREN, @HUNTER,      @ACTION_BAR_1_SLOT_3, 257284,  @TYPE_SPELL),
+
+# Wing Clip 195645
+( @HIGHMOUNTAIN_TAUREN, @HUNTER,      @ACTION_BAR_1_SLOT_4, 195645,  @TYPE_SPELL),
+
+# Disengage 781
+( @HIGHMOUNTAIN_TAUREN, @HUNTER,      @ACTION_BAR_1_SLOT_5, 781,  @TYPE_SPELL),
+
+# Feign Death 5384
+( @HIGHMOUNTAIN_TAUREN, @HUNTER,      @ACTION_BAR_1_SLOT_6, 5384,  @TYPE_SPELL),
+
+# Freezing Trap 187650
+( @HIGHMOUNTAIN_TAUREN, @HUNTER,      @ACTION_BAR_1_SLOT_7, 187650,  @TYPE_SPELL),
+
+# Exhilaration 109304
+( @HIGHMOUNTAIN_TAUREN, @HUNTER,      @ACTION_BAR_1_SLOT_8, 109304,  @TYPE_SPELL),
+
+# Aspect of the Turtle 186265
+( @HIGHMOUNTAIN_TAUREN, @HUNTER,      @ACTION_BAR_1_SLOT_9, 186265,  @TYPE_SPELL),
+
+# Aspect of the Cheetah 186257
+( @HIGHMOUNTAIN_TAUREN, @HUNTER,      @ACTION_BAR_1_SLOT_0, 186257,  @TYPE_SPELL),
+
+# Bull Rush 255654 Racial
+( @HIGHMOUNTAIN_TAUREN, @HUNTER,  @ACTION_BAR_1_SLOT_MINUS, 255654,  @TYPE_SPELL),
+
+# Highmountain Thunderhoof 258060 Account Level Mount 1007
+( @HIGHMOUNTAIN_TAUREN, @HUNTER, @ACTION_BAR_1_SLOT_EQUALS, 258060,  @TYPE_SPELL),
+
+# Call Pet 9
+( @HIGHMOUNTAIN_TAUREN, @HUNTER, 12,      @ACTION_BAR_1_SLOT_0, @TYPE_ACTION),
+
+# Pet Utility 103
+( @HIGHMOUNTAIN_TAUREN, @HUNTER, 13, 103, @TYPE_ACTION),
+
+# Steady Shot 56641
+(            @VOID_ELF, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Arcane Shot 185358
+(            @VOID_ELF, @HUNTER,      @ACTION_BAR_1_SLOT_2, 185358,  @TYPE_SPELL),
+
+# Hunter's Mark 257284
+(            @VOID_ELF, @HUNTER,      @ACTION_BAR_1_SLOT_3, 257284,  @TYPE_SPELL),
+
+# Wing Clip 195645
+(            @VOID_ELF, @HUNTER,      @ACTION_BAR_1_SLOT_4, 195645,  @TYPE_SPELL),
+
+# Disengage 781
+(            @VOID_ELF, @HUNTER,      @ACTION_BAR_1_SLOT_5, 781,  @TYPE_SPELL),
+
+# Feign Death 5384
+(            @VOID_ELF, @HUNTER,      @ACTION_BAR_1_SLOT_6, 5384,  @TYPE_SPELL),
+
+# Freezing Trap 187650
+(            @VOID_ELF, @HUNTER,      @ACTION_BAR_1_SLOT_7, 187650,  @TYPE_SPELL),
+
+# Exhilaration 109304
+(            @VOID_ELF, @HUNTER,      @ACTION_BAR_1_SLOT_8, 109304,  @TYPE_SPELL),
+
+# Aspect of the Turtle 186265
+(            @VOID_ELF, @HUNTER,      @ACTION_BAR_1_SLOT_9, 186265,  @TYPE_SPELL),
+
+# Aspect of the Cheetah 186257
+(            @VOID_ELF, @HUNTER,      @ACTION_BAR_1_SLOT_0, 186257,  @TYPE_SPELL),
+
+# Spatial Rift 256948 Racial
+(            @VOID_ELF, @HUNTER,  @ACTION_BAR_1_SLOT_MINUS, 256948,  @TYPE_SPELL),
+
+# Starcursed Voidstrider 259202 Account Level Mount 1009
+(            @VOID_ELF, @HUNTER, @ACTION_BAR_1_SLOT_EQUALS, 259202,  @TYPE_SPELL),
+
+# Call Pet 9
+(            @VOID_ELF, @HUNTER, 12,      @ACTION_BAR_1_SLOT_0, @TYPE_ACTION),
+
+# Pet Utility 103
+(            @VOID_ELF, @HUNTER, 13, 103, @TYPE_ACTION),
+
+# Steady Shot 56641
+( @LIGHTFORGED_DRAENEI, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Arcane Shot 185358
+( @LIGHTFORGED_DRAENEI, @HUNTER,      @ACTION_BAR_1_SLOT_2, 185358,  @TYPE_SPELL),
+
+# Hunter's Mark 257284
+( @LIGHTFORGED_DRAENEI, @HUNTER,      @ACTION_BAR_1_SLOT_3, 257284,  @TYPE_SPELL),
+
+# Wing Clip 195645
+( @LIGHTFORGED_DRAENEI, @HUNTER,      @ACTION_BAR_1_SLOT_4, 195645,  @TYPE_SPELL),
+
+# Disengage 781
+( @LIGHTFORGED_DRAENEI, @HUNTER,      @ACTION_BAR_1_SLOT_5, 781,  @TYPE_SPELL),
+
+# Feign Death 5384
+( @LIGHTFORGED_DRAENEI, @HUNTER,      @ACTION_BAR_1_SLOT_6, 5384,  @TYPE_SPELL),
+
+# Freezing Trap 187650
+( @LIGHTFORGED_DRAENEI, @HUNTER,      @ACTION_BAR_1_SLOT_7, 187650,  @TYPE_SPELL),
+
+# Exhilaration 109304
+( @LIGHTFORGED_DRAENEI, @HUNTER,      @ACTION_BAR_1_SLOT_8, 109304,  @TYPE_SPELL),
+
+# Aspect of the Turtle 186265
+( @LIGHTFORGED_DRAENEI, @HUNTER,      @ACTION_BAR_1_SLOT_9, 186265,  @TYPE_SPELL),
+
+# Aspect of the Cheetah 186257
+( @LIGHTFORGED_DRAENEI, @HUNTER,      @ACTION_BAR_1_SLOT_0, 186257,  @TYPE_SPELL),
+
+# Light's Judgement 255647 Racial
+( @LIGHTFORGED_DRAENEI, @HUNTER,  @ACTION_BAR_1_SLOT_MINUS, 255647,  @TYPE_SPELL),
+
+# Lightforged Felcrusher 258022 Account Level Mount 1006
+( @LIGHTFORGED_DRAENEI, @HUNTER, @ACTION_BAR_1_SLOT_EQUALS, 258022,  @TYPE_SPELL),
+
+# Call Pet 9
+( @LIGHTFORGED_DRAENEI, @HUNTER, 12,      @ACTION_BAR_1_SLOT_0, @TYPE_ACTION),
+
+# Pet Utility 103
+( @LIGHTFORGED_DRAENEI, @HUNTER, 13, 103, @TYPE_ACTION),
+
+# Steady Shot 56641
+(     @ZANDALARI_TROLL, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Arcane Shot 185358
+(     @ZANDALARI_TROLL, @HUNTER,      @ACTION_BAR_1_SLOT_2, 185358,  @TYPE_SPELL),
+
+# Hunter's Mark 257284
+(     @ZANDALARI_TROLL, @HUNTER,      @ACTION_BAR_1_SLOT_3, 257284,  @TYPE_SPELL),
+
+# Wing Clip 195645
+(     @ZANDALARI_TROLL, @HUNTER,      @ACTION_BAR_1_SLOT_4, 195645,  @TYPE_SPELL),
+
+# Disengage 781
+(     @ZANDALARI_TROLL, @HUNTER,      @ACTION_BAR_1_SLOT_5, 781,  @TYPE_SPELL),
+
+# Feign Death 5384
+(     @ZANDALARI_TROLL, @HUNTER,      @ACTION_BAR_1_SLOT_6, 5384,  @TYPE_SPELL),
+
+# Freezing Trap 187650
+(     @ZANDALARI_TROLL, @HUNTER,      @ACTION_BAR_1_SLOT_7, 187650,  @TYPE_SPELL),
+
+# Exhilaration 109304
+(     @ZANDALARI_TROLL, @HUNTER,      @ACTION_BAR_1_SLOT_8, 109304,  @TYPE_SPELL),
+
+# Aspect of the Turtle 186265
+(     @ZANDALARI_TROLL, @HUNTER,      @ACTION_BAR_1_SLOT_9, 186265,  @TYPE_SPELL),
+
+# Aspect of the Cheetah 186257
+(     @ZANDALARI_TROLL, @HUNTER,      @ACTION_BAR_1_SLOT_0, 186257,  @TYPE_SPELL),
+
+# Light's Judgement 255647 Racial
+(     @ZANDALARI_TROLL, @HUNTER,  @ACTION_BAR_1_SLOT_MINUS, 255647,  @TYPE_SPELL),
+
+# Lightforged Felcrusher 258022 Account Level Mount 1006
+(     @ZANDALARI_TROLL, @HUNTER, @ACTION_BAR_1_SLOT_EQUALS, 258022,  @TYPE_SPELL),
+
+# Call Pet 9
+(     @ZANDALARI_TROLL, @HUNTER, 12,      @ACTION_BAR_1_SLOT_0, @TYPE_ACTION),
+
+# Pet Utility 103
+(     @ZANDALARI_TROLL, @HUNTER, 13, 103, @TYPE_ACTION),
+
+# Steady Shot 56641
+(           @KUL_TIRAN, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Arcane Shot 185358
+(           @KUL_TIRAN, @HUNTER,      @ACTION_BAR_1_SLOT_2, 185358,  @TYPE_SPELL),
+
+# Hunter's Mark 257284
+(           @KUL_TIRAN, @HUNTER,      @ACTION_BAR_1_SLOT_3, 257284,  @TYPE_SPELL),
+
+# Wing Clip 195645
+(           @KUL_TIRAN, @HUNTER,      @ACTION_BAR_1_SLOT_4, 195645,  @TYPE_SPELL),
+
+# Disengage 781
+(           @KUL_TIRAN, @HUNTER,      @ACTION_BAR_1_SLOT_5, 781,  @TYPE_SPELL),
+
+# Feign Death 5384
+(           @KUL_TIRAN, @HUNTER,      @ACTION_BAR_1_SLOT_6, 5384,  @TYPE_SPELL),
+
+# Freezing Trap 187650
+(           @KUL_TIRAN, @HUNTER,      @ACTION_BAR_1_SLOT_7, 187650,  @TYPE_SPELL),
+
+# Exhilaration 109304
+(           @KUL_TIRAN, @HUNTER,      @ACTION_BAR_1_SLOT_8, 109304,  @TYPE_SPELL),
+
+# Aspect of the Turtle 186265
+(           @KUL_TIRAN, @HUNTER,      @ACTION_BAR_1_SLOT_9, 186265,  @TYPE_SPELL),
+
+# Aspect of the Cheetah 186257
+(           @KUL_TIRAN, @HUNTER,      @ACTION_BAR_1_SLOT_0, 186257,  @TYPE_SPELL),
+
+# Haymaker 287712 Racial
+(           @KUL_TIRAN, @HUNTER,  @ACTION_BAR_1_SLOT_MINUS, 287712,  @TYPE_SPELL),
+
+# Kul Tiran Charger 282682 Account Level Mount 1198
+(           @KUL_TIRAN, @HUNTER, @ACTION_BAR_1_SLOT_EQUALS, 282682,  @TYPE_SPELL),
+
+# Call Pet 9
+(           @KUL_TIRAN, @HUNTER, 12,      @ACTION_BAR_1_SLOT_0, @TYPE_ACTION),
+
+# Pet Utility 103
+(           @KUL_TIRAN, @HUNTER, 13, 103, @TYPE_ACTION),
+
+# Steady Shot 56641
+(     @DARK_IRON_DWARF, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Arcane Shot 185358
+(     @DARK_IRON_DWARF, @HUNTER,      @ACTION_BAR_1_SLOT_2, 185358,  @TYPE_SPELL),
+
+# Hunter's Mark 257284
+(     @DARK_IRON_DWARF, @HUNTER,      @ACTION_BAR_1_SLOT_3, 257284,  @TYPE_SPELL),
+
+# Wing Clip 195645
+(     @DARK_IRON_DWARF, @HUNTER,      @ACTION_BAR_1_SLOT_4, 195645,  @TYPE_SPELL),
+
+# Disengage 781
+(     @DARK_IRON_DWARF, @HUNTER,      @ACTION_BAR_1_SLOT_5, 781,  @TYPE_SPELL),
+
+# Feign Death 5384
+(     @DARK_IRON_DWARF, @HUNTER,      @ACTION_BAR_1_SLOT_6, 5384,  @TYPE_SPELL),
+
+# Freezing Trap 187650
+(     @DARK_IRON_DWARF, @HUNTER,      @ACTION_BAR_1_SLOT_7, 187650,  @TYPE_SPELL),
+
+# Exhilaration 109304
+(     @DARK_IRON_DWARF, @HUNTER,      @ACTION_BAR_1_SLOT_8, 109304,  @TYPE_SPELL),
+
+# Aspect of the Turtle 186265
+(     @DARK_IRON_DWARF, @HUNTER,      @ACTION_BAR_1_SLOT_9, 186265,  @TYPE_SPELL),
+
+# Aspect of the Cheetah 186257
+(     @DARK_IRON_DWARF, @HUNTER,      @ACTION_BAR_1_SLOT_0, 186257,  @TYPE_SPELL),
+
+# Fireblood 265221 Racial
+(     @DARK_IRON_DWARF, @HUNTER,  @ACTION_BAR_1_SLOT_MINUS, 265221,  @TYPE_SPELL),
+
+# Dark Iron Core Hound 271646 Account Level Mount 1048
+(     @DARK_IRON_DWARF, @HUNTER, @ACTION_BAR_1_SLOT_EQUALS, 271646,  @TYPE_SPELL),
+
+# Call Pet 9
+(     @DARK_IRON_DWARF, @HUNTER, 12,      @ACTION_BAR_1_SLOT_0, @TYPE_ACTION),
+
+# Pet Utility 103
+(     @DARK_IRON_DWARF, @HUNTER, 13, 103, @TYPE_ACTION),
+
+# Steady Shot 56641
+(             @VULPERA, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Arcane Shot 185358
+(             @VULPERA, @HUNTER,      @ACTION_BAR_1_SLOT_2, 185358,  @TYPE_SPELL),
+
+# Hunter's Mark 257284
+(             @VULPERA, @HUNTER,      @ACTION_BAR_1_SLOT_3, 257284,  @TYPE_SPELL),
+
+# Wing Clip 195645
+(             @VULPERA, @HUNTER,      @ACTION_BAR_1_SLOT_4, 195645,  @TYPE_SPELL),
+
+# Disengage 781
+(             @VULPERA, @HUNTER,      @ACTION_BAR_1_SLOT_5, 781,  @TYPE_SPELL),
+
+# Feign Death 5384
+(             @VULPERA, @HUNTER,      @ACTION_BAR_1_SLOT_6, 5384,  @TYPE_SPELL),
+
+# Freezing Trap 187650
+(             @VULPERA, @HUNTER,      @ACTION_BAR_1_SLOT_7, 187650,  @TYPE_SPELL),
+
+# Exhilaration 109304
+(             @VULPERA, @HUNTER,      @ACTION_BAR_1_SLOT_8, 109304,  @TYPE_SPELL),
+
+# Aspect of the Turtle 186265
+(             @VULPERA, @HUNTER,      @ACTION_BAR_1_SLOT_9, 186265,  @TYPE_SPELL),
+
+# Aspect of the Cheetah 186257
+(             @VULPERA, @HUNTER,      @ACTION_BAR_1_SLOT_0, 186257,  @TYPE_SPELL),
+
+# Bag of Tricks 312411 Racial
+(             @VULPERA, @HUNTER,  @ACTION_BAR_1_SLOT_MINUS, 312411,  @TYPE_SPELL),
+
+# Caravan Hyena 306423 Account Level Mount 306423 
+(             @VULPERA, @HUNTER, @ACTION_BAR_1_SLOT_EQUALS, 306423,  @TYPE_SPELL),
+
+# Call Pet 9
+(             @VULPERA, @HUNTER, 12,      @ACTION_BAR_1_SLOT_0, @TYPE_ACTION),
+
+# Pet Utility 103
+(             @VULPERA, @HUNTER, 13, 103, @TYPE_ACTION),
+
+# Steady Shot 56641
+(          @MAGHAR_ORC, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Arcane Shot 185358
+(          @MAGHAR_ORC, @HUNTER,      @ACTION_BAR_1_SLOT_2, 185358,  @TYPE_SPELL),
+
+# Hunter's Mark 257284
+(          @MAGHAR_ORC, @HUNTER,      @ACTION_BAR_1_SLOT_3, 257284,  @TYPE_SPELL),
+
+# Wing Clip 195645
+(          @MAGHAR_ORC, @HUNTER,      @ACTION_BAR_1_SLOT_4, 195645,  @TYPE_SPELL),
+
+# Disengage 781
+(          @MAGHAR_ORC, @HUNTER,      @ACTION_BAR_1_SLOT_5, 781,  @TYPE_SPELL),
+
+# Feign Death 5384
+(          @MAGHAR_ORC, @HUNTER,      @ACTION_BAR_1_SLOT_6, 5384,  @TYPE_SPELL),
+
+# Freezing Trap 187650
+(          @MAGHAR_ORC, @HUNTER,      @ACTION_BAR_1_SLOT_7, 187650,  @TYPE_SPELL),
+
+# Exhilaration 109304
+(          @MAGHAR_ORC, @HUNTER,      @ACTION_BAR_1_SLOT_8, 109304,  @TYPE_SPELL),
+
+# Aspect of the Turtle 186265
+(          @MAGHAR_ORC, @HUNTER,      @ACTION_BAR_1_SLOT_9, 186265,  @TYPE_SPELL),
+
+# Aspect of the Cheetah 186257
+(          @MAGHAR_ORC, @HUNTER,      @ACTION_BAR_1_SLOT_0, 186257,  @TYPE_SPELL),
+
+# Bag of Tricks 312411 Racial
+(          @MAGHAR_ORC, @HUNTER,  @ACTION_BAR_1_SLOT_MINUS, 312411,  @TYPE_SPELL),
+
+# Caravan Hyena 306423 Account Level Mount 306423 
+(          @MAGHAR_ORC, @HUNTER, @ACTION_BAR_1_SLOT_EQUALS, 306423,  @TYPE_SPELL),
+
+# Call Pet 9
+(          @MAGHAR_ORC, @HUNTER, 12,      @ACTION_BAR_1_SLOT_0, @TYPE_ACTION),
+
+# Pet Utility 103
+(          @MAGHAR_ORC, @HUNTER, 13, 103, @TYPE_ACTION),
+
+# Steady Shot 56641
+(          @MECHAGNOME, @HUNTER,      @ACTION_BAR_1_SLOT_1, 56641,  @TYPE_SPELL),
+
+# Arcane Shot 185358
+(          @MECHAGNOME, @HUNTER,      @ACTION_BAR_1_SLOT_2, 185358,  @TYPE_SPELL),
+
+# Hunter's Mark 257284
+(          @MECHAGNOME, @HUNTER,      @ACTION_BAR_1_SLOT_3, 257284,  @TYPE_SPELL),
+
+# Wing Clip 195645
+(          @MECHAGNOME, @HUNTER,      @ACTION_BAR_1_SLOT_4, 195645,  @TYPE_SPELL),
+
+# Disengage 781
+(          @MECHAGNOME, @HUNTER,      @ACTION_BAR_1_SLOT_5, 781,  @TYPE_SPELL),
+
+# Feign Death 5384
+(          @MECHAGNOME, @HUNTER,      @ACTION_BAR_1_SLOT_6, 5384,  @TYPE_SPELL),
+
+# Freezing Trap 187650
+(          @MECHAGNOME, @HUNTER,      @ACTION_BAR_1_SLOT_7, 187650,  @TYPE_SPELL),
+
+# Exhilaration 109304
+(          @MECHAGNOME, @HUNTER,      @ACTION_BAR_1_SLOT_8, 109304,  @TYPE_SPELL),
+
+# Aspect of the Turtle 186265
+(          @MECHAGNOME, @HUNTER,      @ACTION_BAR_1_SLOT_9, 186265,  @TYPE_SPELL),
+
+# Aspect of the Cheetah 186257
+(          @MECHAGNOME, @HUNTER,      @ACTION_BAR_1_SLOT_0, 186257,  @TYPE_SPELL),
+
+# Hyper Organic Light Originator 312924 Racial
+(          @MECHAGNOME, @HUNTER,  @ACTION_BAR_1_SLOT_MINUS, 312924,  @TYPE_SPELL),
+
+# Mechagon Mechanostrider 305592 Account Level Mount 305592
+(          @MECHAGNOME, @HUNTER, @ACTION_BAR_1_SLOT_EQUALS, 305592,  @TYPE_SPELL),
+
+# Call Pet 9
+(          @MECHAGNOME, @HUNTER, 12,      @ACTION_BAR_1_SLOT_0, @TYPE_ACTION),
+
+# Pet Utility 103
+(          @MECHAGNOME, @HUNTER, 13, 103, @TYPE_ACTION),
+
+# Rogue ###############################################################################################################################################################################################
+
+# Sinister Strike 1752
+(               @RACE_HUMAN, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Will to Survive 59752 Racial
+(               @RACE_HUMAN, @ROGUE,      @ACTION_BAR_1_SLOT_0, 59752,  @TYPE_SPELL),
+
+# Sinister Strike 1752
+(                 @RACE_ORC, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Blood Fury 20572 Racial
+(                 @RACE_ORC, @ROGUE,      @ACTION_BAR_1_SLOT_0, 20572,  @TYPE_SPELL),
+
+# Sinister Strike 1752
+(               @RACE_DWARF, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Stoneform 20594 Racial
+(               @RACE_DWARF, @ROGUE,      @ACTION_BAR_1_SLOT_0, 20594,  @TYPE_SPELL),
+
+# Sinister Strike 1752
+(           @RACE_NIGHT_ELF, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Shadowmeld 58984 Racial
+(           @RACE_NIGHT_ELF, @ROGUE,      @ACTION_BAR_1_SLOT_0, 58984,  @TYPE_SPELL),
+
+# Sinister Strike 1752
+(              @RACE_UNDEAD, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Will of the Forsaken 7744 Racial
+(              @RACE_UNDEAD, @ROGUE,      @ACTION_BAR_1_SLOT_9, 7744,  @TYPE_SPELL),
+
+# Cannibalize 20577 Racial
+(              @RACE_UNDEAD, @ROGUE,      @ACTION_BAR_1_SLOT_0, 20577,  @TYPE_SPELL),
+
+# Sinister Strike 1752
+(               @RACE_GNOME, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Escape Artist 20589 Racial
+(               @RACE_GNOME, @ROGUE,      @ACTION_BAR_1_SLOT_0,            @RACE_TAUREN_RACIAL_WAR_STOMP,  @TYPE_SPELL),
+
+# Sinister Strike 1752
+(               @TROLL, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Berserking 26297 Racial
+(               @TROLL, @ROGUE,      @ACTION_BAR_1_SLOT_0,            @TROLL_RACIAL_BERSERKING,  @TYPE_SPELL),
+
+# Sinister Strike 1752
+(              @GOBLIN, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Rocket Jump 69070 Racial
+(              @GOBLIN, @ROGUE,      @ACTION_BAR_1_SLOT_0,          @GOBLIN_RACIAL_ROCKET_JUMP,  @TYPE_SPELL),
+
+# Rocket Barrage 69041 Racial
+(              @GOBLIN, @ROGUE,  @ACTION_BAR_1_SLOT_MINUS,       @GOBLIN_RACIAL_ROCKET_BARRAGE,  @TYPE_SPELL),
+
+# Sinister Strike 1752
+(           @BLOOD_ELF, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Arcane Torrent 69179 Racial
+(           @BLOOD_ELF, @ROGUE,      @ACTION_BAR_1_SLOT_0,    @BLOOD_ELF_RACIAL_ARCANE_TORRENT,  @TYPE_SPELL),
+
+# Sinister Strike 1752
+(              @WORGEN, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# 88163 Attack
+# (    @PANDAREN_NEUTRAL, @ROGUE,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Sinister Strike 1752
+(    @PANDAREN_NEUTRAL, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(    @PANDAREN_NEUTRAL, @ROGUE,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Sugarcane Stalk 77272 Item
+(    @PANDAREN_NEUTRAL, @ROGUE, @ACTION_BAR_1_SLOT_EQUALS, 77272,   @TYPE_ITEM),
+
+# 88163 Attack
+# (   @PANDAREN_ALLIANCE, @ROGUE,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Sinister Strike 1752
+(   @PANDAREN_ALLIANCE, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(   @PANDAREN_ALLIANCE, @ROGUE,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Sugarcane Stalk 77272 Item
+(   @PANDAREN_ALLIANCE, @ROGUE, @ACTION_BAR_1_SLOT_EQUALS, 77272,   @TYPE_ITEM),
+
+# 88163 Attack
+# (      @PANDAREN_HORDE, @ROGUE,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Sinister Strike 1752
+(      @PANDAREN_HORDE, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(      @PANDAREN_HORDE, @ROGUE,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Sugarcane Stalk 77272 Item
+(      @PANDAREN_HORDE, @ROGUE, @ACTION_BAR_1_SLOT_EQUALS, 77272,   @TYPE_ITEM),
+
+# Snister Strike 1752
+(          @NIGHTBORNE, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Eviscerate 196819
+(          @NIGHTBORNE, @ROGUE,      @ACTION_BAR_1_SLOT_2, 196819,  @TYPE_SPELL),
+
+# Slice and Dice 315496
+(          @NIGHTBORNE, @ROGUE,      @ACTION_BAR_1_SLOT_3, 315496,  @TYPE_SPELL),
+
+# Crimson Vial 185311
+(          @NIGHTBORNE, @ROGUE,      @ACTION_BAR_1_SLOT_4, 185311,  @TYPE_SPELL),
+
+# Sprint 2983
+(          @NIGHTBORNE, @ROGUE,      @ACTION_BAR_1_SLOT_5, 2983,  @TYPE_SPELL),
+
+# Kick 1766
+(          @NIGHTBORNE, @ROGUE,      @ACTION_BAR_1_SLOT_6, 1766,  @TYPE_SPELL),
+
+# Poisons 66
+(          @NIGHTBORNE, @ROGUE,      @ACTION_BAR_1_SLOT_7, 66, @TYPE_ACTION),
+
+# Arcane Pulse 260364 Racial
+(          @NIGHTBORNE, @ROGUE,  @ACTION_BAR_1_SLOT_MINUS, 260364,  @TYPE_SPELL),
+
+# Nightborne Manasaber 258845 Account Level Mount 1008
+(          @NIGHTBORNE, @ROGUE, @ACTION_BAR_1_SLOT_EQUALS, 258845,  @TYPE_SPELL),
+
+# Snister Strike 1752
+(            @VOID_ELF, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Eviscerate 196819
+(            @VOID_ELF, @ROGUE,      @ACTION_BAR_1_SLOT_2, 196819,  @TYPE_SPELL),
+
+# Slice and Dice 315496
+(            @VOID_ELF, @ROGUE,      @ACTION_BAR_1_SLOT_3, 315496,  @TYPE_SPELL),
+
+# Crimson Vial 185311
+(            @VOID_ELF, @ROGUE,      @ACTION_BAR_1_SLOT_4, 185311,  @TYPE_SPELL),
+
+# Sprint 2983
+(            @VOID_ELF, @ROGUE,      @ACTION_BAR_1_SLOT_5, 2983,  @TYPE_SPELL),
+
+# Kick 1766
+(            @VOID_ELF, @ROGUE,      @ACTION_BAR_1_SLOT_6, 1766,  @TYPE_SPELL),
+
+# Poisons 66
+(            @VOID_ELF, @ROGUE,      @ACTION_BAR_1_SLOT_7, 66, @TYPE_ACTION),
+
+# Spatial Rift 256948 Racial
+(            @VOID_ELF, @ROGUE,  @ACTION_BAR_1_SLOT_MINUS, 256948,  @TYPE_SPELL),
+
+# Starcursed Voidstrider 259202 Account Level Mount 1009
+(            @VOID_ELF, @ROGUE, @ACTION_BAR_1_SLOT_EQUALS, 259202,  @TYPE_SPELL),
+
+# Snister Strike 1752
+(     @ZANDALARI_TROLL, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Eviscerate 196819
+(     @ZANDALARI_TROLL, @ROGUE,      @ACTION_BAR_1_SLOT_2, 196819,  @TYPE_SPELL),
+
+# Slice and Dice 315496
+(     @ZANDALARI_TROLL, @ROGUE,      @ACTION_BAR_1_SLOT_3, 315496,  @TYPE_SPELL),
+
+# Crimson Vial 185311
+(     @ZANDALARI_TROLL, @ROGUE,      @ACTION_BAR_1_SLOT_4, 185311,  @TYPE_SPELL),
+
+# Sprint 2983
+(     @ZANDALARI_TROLL, @ROGUE,      @ACTION_BAR_1_SLOT_5, 2983,  @TYPE_SPELL),
+
+# Kick 1766
+(     @ZANDALARI_TROLL, @ROGUE,      @ACTION_BAR_1_SLOT_6, 1766,  @TYPE_SPELL),
+
+# Poisons 66
+(     @ZANDALARI_TROLL, @ROGUE,      @ACTION_BAR_1_SLOT_7, 66, @TYPE_ACTION),
+
+# Embrace of the Loa 292752 Racial
+(     @ZANDALARI_TROLL, @ROGUE,  @ACTION_BAR_1_SLOT_MINUS, 292752,  @TYPE_SPELL),
+
+# Zandalari Direhorn 263707 Account Level Mount 1038
+(     @ZANDALARI_TROLL, @ROGUE, @ACTION_BAR_1_SLOT_EQUALS, 263707,  @TYPE_SPELL),
+
+# Snister Strike 1752
+(           @KUL_TIRAN, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Eviscerate 196819
+(           @KUL_TIRAN, @ROGUE,      @ACTION_BAR_1_SLOT_2, 196819,  @TYPE_SPELL),
+
+# Slice and Dice 315496
+(           @KUL_TIRAN, @ROGUE,      @ACTION_BAR_1_SLOT_3, 315496,  @TYPE_SPELL),
+
+# Crimson Vial 185311
+(           @KUL_TIRAN, @ROGUE,      @ACTION_BAR_1_SLOT_4, 185311,  @TYPE_SPELL),
+
+# Sprint 2983
+(           @KUL_TIRAN, @ROGUE,      @ACTION_BAR_1_SLOT_5, 2983,  @TYPE_SPELL),
+
+# Kick 1766
+(           @KUL_TIRAN, @ROGUE,      @ACTION_BAR_1_SLOT_6, 1766,  @TYPE_SPELL),
+
+# Poisons 66
+(           @KUL_TIRAN, @ROGUE,      @ACTION_BAR_1_SLOT_7, 66, @TYPE_ACTION),
+
+# Haymaker 287712 Racial
+(           @KUL_TIRAN, @ROGUE,  @ACTION_BAR_1_SLOT_MINUS, 287712,  @TYPE_SPELL),
+
+# Kul Tiran Charger 282682 Account Level Mount 1198
+(           @KUL_TIRAN, @ROGUE, @ACTION_BAR_1_SLOT_EQUALS, 282682,  @TYPE_SPELL),
+
+# Snister Strike 1752
+(     @DARK_IRON_DWARF, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Eviscerate 196819
+(     @DARK_IRON_DWARF, @ROGUE,      @ACTION_BAR_1_SLOT_2, 196819,  @TYPE_SPELL),
+
+# Slice and Dice 315496
+(     @DARK_IRON_DWARF, @ROGUE,      @ACTION_BAR_1_SLOT_3, 315496,  @TYPE_SPELL),
+
+# Crimson Vial 185311
+(     @DARK_IRON_DWARF, @ROGUE,      @ACTION_BAR_1_SLOT_4, 185311,  @TYPE_SPELL),
+
+# Sprint 2983
+(     @DARK_IRON_DWARF, @ROGUE,      @ACTION_BAR_1_SLOT_5, 2983,  @TYPE_SPELL),
+
+# Kick 1766
+(     @DARK_IRON_DWARF, @ROGUE,      @ACTION_BAR_1_SLOT_6, 1766,  @TYPE_SPELL),
+
+# Poisons 66
+(     @DARK_IRON_DWARF, @ROGUE,      @ACTION_BAR_1_SLOT_7, 66, @TYPE_ACTION),
+
+# Fireblood 265221 Racial
+(     @DARK_IRON_DWARF, @ROGUE,  @ACTION_BAR_1_SLOT_MINUS, 265221,  @TYPE_SPELL),
+
+# Dark Iron Core Hound 271646 Account Level Mount 1048
+(     @DARK_IRON_DWARF, @ROGUE, @ACTION_BAR_1_SLOT_EQUALS, 271646,  @TYPE_SPELL),
+
+# Snister Strike 1752
+(             @VULPERA, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Eviscerate 196819
+(             @VULPERA, @ROGUE,      @ACTION_BAR_1_SLOT_2, 196819,  @TYPE_SPELL),
+
+# Slice and Dice 315496
+(             @VULPERA, @ROGUE,      @ACTION_BAR_1_SLOT_3, 315496,  @TYPE_SPELL),
+
+# Crimson Vial 185311
+(             @VULPERA, @ROGUE,      @ACTION_BAR_1_SLOT_4, 185311,  @TYPE_SPELL),
+
+# Sprint 2983
+(             @VULPERA, @ROGUE,      @ACTION_BAR_1_SLOT_5, 2983,  @TYPE_SPELL),
+
+# Kick 1766
+(             @VULPERA, @ROGUE,      @ACTION_BAR_1_SLOT_6, 1766,  @TYPE_SPELL),
+
+# Poisons 66
+(             @VULPERA, @ROGUE,      @ACTION_BAR_1_SLOT_7, 66, @TYPE_ACTION),
+
+# Bag of Tricks 312411 Racial
+(             @VULPERA, @ROGUE,  @ACTION_BAR_1_SLOT_MINUS, 312411,  @TYPE_SPELL),
+
+# Caravan Hyena 306423 Account Level Mount 306423 
+(             @VULPERA, @ROGUE, @ACTION_BAR_1_SLOT_EQUALS, 306423,  @TYPE_SPELL),
+
+# Snister Strike 1752
+(          @MAGHAR_ORC, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Eviscerate 196819
+(          @MAGHAR_ORC, @ROGUE,      @ACTION_BAR_1_SLOT_2, 196819,  @TYPE_SPELL),
+
+# Slice and Dice 315496
+(          @MAGHAR_ORC, @ROGUE,      @ACTION_BAR_1_SLOT_3, 315496,  @TYPE_SPELL),
+
+# Crimson Vial 185311
+(          @MAGHAR_ORC, @ROGUE,      @ACTION_BAR_1_SLOT_4, 185311,  @TYPE_SPELL),
+
+# Sprint 2983
+(          @MAGHAR_ORC, @ROGUE,      @ACTION_BAR_1_SLOT_5, 2983,  @TYPE_SPELL),
+
+# Kick 1766
+(          @MAGHAR_ORC, @ROGUE,      @ACTION_BAR_1_SLOT_6, 1766,  @TYPE_SPELL),
+
+# Poisons 66
+(          @MAGHAR_ORC, @ROGUE,      @ACTION_BAR_1_SLOT_7, 66, @TYPE_ACTION),
+
+# Ancestral Call 274738 Racial
+(          @MAGHAR_ORC, @ROGUE,  @ACTION_BAR_1_SLOT_MINUS, 274738,  @TYPE_SPELL),
+
+# Mag'har Direwolf 267274 Account Level Mount 1044
+(          @MAGHAR_ORC, @ROGUE, @ACTION_BAR_1_SLOT_EQUALS, 267274,  @TYPE_SPELL),
+
+# Snister Strike 1752
+(          @MECHAGNOME, @ROGUE,      @ACTION_BAR_1_SLOT_1, 1752,  @TYPE_SPELL),
+
+# Eviscerate 196819
+(          @MECHAGNOME, @ROGUE,      @ACTION_BAR_1_SLOT_2, 196819,  @TYPE_SPELL),
+
+# Slice and Dice 315496
+(          @MECHAGNOME, @ROGUE,      @ACTION_BAR_1_SLOT_3, 315496,  @TYPE_SPELL),
+
+# Crimson Vial 185311
+(          @MECHAGNOME, @ROGUE,      @ACTION_BAR_1_SLOT_4, 185311,  @TYPE_SPELL),
+
+# Sprint 2983
+(          @MECHAGNOME, @ROGUE,      @ACTION_BAR_1_SLOT_5, 2983,  @TYPE_SPELL),
+
+# Kick 1766
+(          @MECHAGNOME, @ROGUE,      @ACTION_BAR_1_SLOT_6, 1766,  @TYPE_SPELL),
+
+# Poisons 66
+(          @MECHAGNOME, @ROGUE,      @ACTION_BAR_1_SLOT_7, 66, @TYPE_ACTION),
+
+# Hyper Organic Light Originator 312924 Racial
+(          @MECHAGNOME, @ROGUE,  @ACTION_BAR_1_SLOT_MINUS, 312924,  @TYPE_SPELL),
+
+# Mechagon Mechanostrider 305592 Account Level Mount 305592
+(          @MECHAGNOME, @ROGUE, @ACTION_BAR_1_SLOT_EQUALS, 305592,  @TYPE_SPELL),
+
+# Priest ##############################################################################################################################################################################################
+
+# Smite 585
+(               @RACE_HUMAN, @PRIEST,      @ACTION_BAR_1_SLOT_1, 585,  @TYPE_SPELL),
+
+# Will to Survive 59752 Racial
+(               @RACE_HUMAN, @PRIEST,      @ACTION_BAR_1_SLOT_0, 59752,  @TYPE_SPELL),
+
+# Smite 585
+(               @RACE_DWARF, @PRIEST,      @ACTION_BAR_1_SLOT_1, 585,  @TYPE_SPELL),
+
+# Stoneform 20594 Racial
+(               @RACE_DWARF, @PRIEST,      @ACTION_BAR_1_SLOT_0, 20594,  @TYPE_SPELL),
+
+# Smite 585
+(           @RACE_NIGHT_ELF, @PRIEST,      @ACTION_BAR_1_SLOT_1, 585,  @TYPE_SPELL),
+
+# Shadowmeld 58984 Racial
+(           @RACE_NIGHT_ELF, @PRIEST,      @ACTION_BAR_1_SLOT_0, 58984,  @TYPE_SPELL),
+
+# Smite 585
+(              @RACE_UNDEAD, @PRIEST,      @ACTION_BAR_1_SLOT_1, 585,  @TYPE_SPELL),
+
+# Will of the Forsaken 7744 Racial
+(              @RACE_UNDEAD, @PRIEST,      @ACTION_BAR_1_SLOT_9, 7744,  @TYPE_SPELL),
+
+# Cannibalize 20577 Racial
+(              @RACE_UNDEAD, @PRIEST,      @ACTION_BAR_1_SLOT_0, 20577,  @TYPE_SPELL),
+
+# Smite 585
+(              @RACE_TAUREN, @PRIEST,      @ACTION_BAR_1_SLOT_1, 585,  @TYPE_SPELL),
+
+# War Stomp 20549
+(              @RACE_TAUREN, @PRIEST,      @ACTION_BAR_1_SLOT_0,            @RACE_TAUREN_RACIAL_WAR_STOMP,  @TYPE_SPELL),
+
+# Smite 585
+(               @RACE_GNOME, @PRIEST,      @ACTION_BAR_1_SLOT_1, 585,  @TYPE_SPELL),
+
+# Escape Artist 20589 Racial
+(               @RACE_GNOME, @PRIEST,      @ACTION_BAR_1_SLOT_0,            @RACE_TAUREN_RACIAL_WAR_STOMP,  @TYPE_SPELL),
+
+# Smite 585
+(               @TROLL, @PRIEST,      @ACTION_BAR_1_SLOT_1, 585,  @TYPE_SPELL),
+
+# Berserking 26297 Racial
+(               @TROLL, @PRIEST,      @ACTION_BAR_1_SLOT_0,            @TROLL_RACIAL_BERSERKING,  @TYPE_SPELL),
+
+# Smite 585
+(              @GOBLIN, @PRIEST,      @ACTION_BAR_1_SLOT_1, 585,  @TYPE_SPELL),
+
+# Rocket Jump 69070 Racial
+(              @GOBLIN, @PRIEST,      @ACTION_BAR_1_SLOT_0,          @GOBLIN_RACIAL_ROCKET_JUMP,  @TYPE_SPELL),
+
+# Rocket Barrage 69041 Racial
+(              @GOBLIN, @PRIEST,  @ACTION_BAR_1_SLOT_MINUS,       @GOBLIN_RACIAL_ROCKET_BARRAGE,  @TYPE_SPELL),
+
+# Smite 585
+(           @BLOOD_ELF, @PRIEST,      @ACTION_BAR_1_SLOT_1, 585,  @TYPE_SPELL),
+
+# Arcane Torrent 69179 Racial
+(           @BLOOD_ELF, @PRIEST,      @ACTION_BAR_1_SLOT_0,    @BLOOD_ELF_RACIAL_ARCANE_TORRENT,  @TYPE_SPELL),
+
+# Smite 585
+(             @DRAENEI, @PRIEST,      @ACTION_BAR_1_SLOT_1, 585,  @TYPE_SPELL),
+
+# Gift of the Naaru 28880 Racial
+(             @DRAENEI, @PRIEST,      @ACTION_BAR_1_SLOT_0,   @DRAENEI_RACIAL_GIFT_OF_THE_NAARU,  @TYPE_SPELL),
+
+# Smite 585
+(              @WORGEN, @PRIEST,      @ACTION_BAR_1_SLOT_1, 585,  @TYPE_SPELL),
+
+# 88163 Attack
+# (    @PANDAREN_NEUTRAL, @PRIEST,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Smite 585
+(    @PANDAREN_NEUTRAL, @PRIEST,      @ACTION_BAR_1_SLOT_1, 585,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(    @PANDAREN_NEUTRAL, @PRIEST,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Bamboo Shoot 77264 Item
+(    @PANDAREN_NEUTRAL, @PRIEST, @ACTION_BAR_1_SLOT_EQUALS, 77264,   @TYPE_ITEM),
+
+# 88163 Attack
+# (   @PANDAREN_ALLIANCE, @PRIEST,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Smite 585
+(   @PANDAREN_ALLIANCE, @PRIEST,      @ACTION_BAR_1_SLOT_1, 585,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(   @PANDAREN_ALLIANCE, @PRIEST,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Bamboo Shoot 77264 Item
+(   @PANDAREN_ALLIANCE, @PRIEST, @ACTION_BAR_1_SLOT_EQUALS, 77264,   @TYPE_ITEM),
+
+# 88163 Attack
+# (      @PANDAREN_HORDE, @PRIEST,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Smite 585
+(      @PANDAREN_HORDE, @PRIEST,      @ACTION_BAR_1_SLOT_1, 585,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(      @PANDAREN_HORDE, @PRIEST,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Bamboo Shoot 77264 Item
+(      @PANDAREN_HORDE, @PRIEST, @ACTION_BAR_1_SLOT_EQUALS, 77264,   @TYPE_ITEM),
+
+# Shadow Word: Pain 589
+(          @NIGHTBORNE, @PRIEST,      @ACTION_BAR_1_SLOT_1, 589,  @TYPE_SPELL),
+
+# Mind Blast 8092
+(          @NIGHTBORNE, @PRIEST,      @ACTION_BAR_1_SLOT_2, 8092,  @TYPE_SPELL),
+
+# Smite 585
+(          @NIGHTBORNE, @PRIEST,      @ACTION_BAR_1_SLOT_3, 585,  @TYPE_SPELL),
+
+# Power Word: Shield 17
+(          @NIGHTBORNE, @PRIEST,      @ACTION_BAR_1_SLOT_4, 17,  @TYPE_SPELL),
+
+# Flash Heal 2061
+(          @NIGHTBORNE, @PRIEST,      @ACTION_BAR_1_SLOT_5, 2061,  @TYPE_SPELL),
+
+# Psychic Scream 8122
+(          @NIGHTBORNE, @PRIEST,      @ACTION_BAR_1_SLOT_6, 8122,  @TYPE_SPELL),
+
+# Fade 586
+(          @NIGHTBORNE, @PRIEST,      @ACTION_BAR_1_SLOT_7, 586,  @TYPE_SPELL),
+
+# Desperate Prayer 19236
+(          @NIGHTBORNE, @PRIEST,      @ACTION_BAR_1_SLOT_8, 19236,  @TYPE_SPELL),
+
+# Power Word: Fortitude 21562
+(          @NIGHTBORNE, @PRIEST,      @ACTION_BAR_1_SLOT_9, 21562,  @TYPE_SPELL),
+
+# Resurrection 2006
+(          @NIGHTBORNE, @PRIEST,      @ACTION_BAR_1_SLOT_0, 2006,  @TYPE_SPELL),
+
+# Arcane Pulse 260364 Racial
+(          @NIGHTBORNE, @PRIEST,  @ACTION_BAR_1_SLOT_MINUS, 260364,  @TYPE_SPELL),
+
+# Nightborne Manasaber 258845 Account Level Mount 1008
+(          @NIGHTBORNE, @PRIEST, @ACTION_BAR_1_SLOT_EQUALS, 258845,  @TYPE_SPELL),
+
+# Shadow Word: Pain 589
+(            @VOID_ELF, @PRIEST,      @ACTION_BAR_1_SLOT_1, 589,  @TYPE_SPELL),
+
+# Mind Blast 8092
+(            @VOID_ELF, @PRIEST,      @ACTION_BAR_1_SLOT_2, 8092,  @TYPE_SPELL),
+
+# Smite 585
+(            @VOID_ELF, @PRIEST,      @ACTION_BAR_1_SLOT_3, 585,  @TYPE_SPELL),
+
+# Power Word: Shield 17
+(            @VOID_ELF, @PRIEST,      @ACTION_BAR_1_SLOT_4, 17,  @TYPE_SPELL),
+
+# Flash Heal 2061
+(            @VOID_ELF, @PRIEST,      @ACTION_BAR_1_SLOT_5, 2061,  @TYPE_SPELL),
+
+# Psychic Scream 8122
+(            @VOID_ELF, @PRIEST,      @ACTION_BAR_1_SLOT_6, 8122,  @TYPE_SPELL),
+
+# Fade 586
+(            @VOID_ELF, @PRIEST,      @ACTION_BAR_1_SLOT_7, 586,  @TYPE_SPELL),
+
+# Desperate Prayer 19236
+(            @VOID_ELF, @PRIEST,      @ACTION_BAR_1_SLOT_8, 19236,  @TYPE_SPELL),
+
+# Power Word: Fortitude 21562
+(            @VOID_ELF, @PRIEST,      @ACTION_BAR_1_SLOT_9, 21562,  @TYPE_SPELL),
+
+# Resurrection 2006
+(            @VOID_ELF, @PRIEST,      @ACTION_BAR_1_SLOT_0, 2006,  @TYPE_SPELL),
+
+# Spatial Rift 256948 Racial
+(            @VOID_ELF, @PRIEST,  @ACTION_BAR_1_SLOT_MINUS, 256948,  @TYPE_SPELL),
+
+# Starcursed Voidstrider 259202 Account Level Mount 1009
+(            @VOID_ELF, @PRIEST, @ACTION_BAR_1_SLOT_EQUALS, 259202,  @TYPE_SPELL),
+
+# Shadow Word: Pain 589
+( @LIGHTFORGED_DRAENEI, @PRIEST,      @ACTION_BAR_1_SLOT_1, 589,  @TYPE_SPELL),
+
+# Mind Blast 8092
+( @LIGHTFORGED_DRAENEI, @PRIEST,      @ACTION_BAR_1_SLOT_2, 8092,  @TYPE_SPELL),
+
+# Smite 585
+( @LIGHTFORGED_DRAENEI, @PRIEST,      @ACTION_BAR_1_SLOT_3, 585,  @TYPE_SPELL),
+
+# Power Word: Shield 17
+( @LIGHTFORGED_DRAENEI, @PRIEST,      @ACTION_BAR_1_SLOT_4, 17,  @TYPE_SPELL),
+
+# Flash Heal 2061
+( @LIGHTFORGED_DRAENEI, @PRIEST,      @ACTION_BAR_1_SLOT_5, 2061,  @TYPE_SPELL),
+
+# Psychic Scream 8122
+( @LIGHTFORGED_DRAENEI, @PRIEST,      @ACTION_BAR_1_SLOT_6, 8122,  @TYPE_SPELL),
+
+# Fade 586
+( @LIGHTFORGED_DRAENEI, @PRIEST,      @ACTION_BAR_1_SLOT_7, 586,  @TYPE_SPELL),
+
+# Desperate Prayer 19236
+( @LIGHTFORGED_DRAENEI, @PRIEST,      @ACTION_BAR_1_SLOT_8, 19236,  @TYPE_SPELL),
+
+# Power Word: Fortitude 21562
+( @LIGHTFORGED_DRAENEI, @PRIEST,      @ACTION_BAR_1_SLOT_9, 21562,  @TYPE_SPELL),
+
+# Resurrection 2006
+( @LIGHTFORGED_DRAENEI, @PRIEST,      @ACTION_BAR_1_SLOT_0, 2006,  @TYPE_SPELL),
+
+# Light's Judgement 255647 Racial
+( @LIGHTFORGED_DRAENEI, @PRIEST,  @ACTION_BAR_1_SLOT_MINUS, 255647,  @TYPE_SPELL),
+
+# Lightforged Felcrusher 258022 Account Level Mount 1006
+( @LIGHTFORGED_DRAENEI, @PRIEST, @ACTION_BAR_1_SLOT_EQUALS, 258022,  @TYPE_SPELL),
+
+# Shadow Word: Pain 589
+(     @ZANDALARI_TROLL, @PRIEST,      @ACTION_BAR_1_SLOT_1, 589,  @TYPE_SPELL),
+
+# Mind Blast 8092
+(     @ZANDALARI_TROLL, @PRIEST,      @ACTION_BAR_1_SLOT_2, 8092,  @TYPE_SPELL),
+
+# Smite 585
+(     @ZANDALARI_TROLL, @PRIEST,      @ACTION_BAR_1_SLOT_3, 585,  @TYPE_SPELL),
+
+# Power Word: Shield 17
+(     @ZANDALARI_TROLL, @PRIEST,      @ACTION_BAR_1_SLOT_4, 17,  @TYPE_SPELL),
+
+# Flash Heal 2061
+(     @ZANDALARI_TROLL, @PRIEST,      @ACTION_BAR_1_SLOT_5, 2061,  @TYPE_SPELL),
+
+# Psychic Scream 8122
+(     @ZANDALARI_TROLL, @PRIEST,      @ACTION_BAR_1_SLOT_6, 8122,  @TYPE_SPELL),
+
+# Fade 586
+(     @ZANDALARI_TROLL, @PRIEST,      @ACTION_BAR_1_SLOT_7, 586,  @TYPE_SPELL),
+
+# Desperate Prayer 19236
+(     @ZANDALARI_TROLL, @PRIEST,      @ACTION_BAR_1_SLOT_8, 19236,  @TYPE_SPELL),
+
+# Power Word: Fortitude 21562
+(     @ZANDALARI_TROLL, @PRIEST,      @ACTION_BAR_1_SLOT_9, 21562,  @TYPE_SPELL),
+
+# Resurrection 2006
+(     @ZANDALARI_TROLL, @PRIEST,      @ACTION_BAR_1_SLOT_0, 2006,  @TYPE_SPELL),
+
+# Embrace of the Loa 292752 Racial
+(     @ZANDALARI_TROLL, @PRIEST,  @ACTION_BAR_1_SLOT_MINUS, 292752,  @TYPE_SPELL),
+
+# Zandalari Direhorn 263707 Account Level Mount 1038
+(     @ZANDALARI_TROLL, @PRIEST, @ACTION_BAR_1_SLOT_EQUALS, 263707,  @TYPE_SPELL),
+
+# Shadow Word: Pain 589
+(           @KUL_TIRAN, @PRIEST,      @ACTION_BAR_1_SLOT_1, 589,  @TYPE_SPELL),
+
+# Mind Blast 8092
+(           @KUL_TIRAN, @PRIEST,      @ACTION_BAR_1_SLOT_2, 8092,  @TYPE_SPELL),
+
+# Smite 585
+(           @KUL_TIRAN, @PRIEST,      @ACTION_BAR_1_SLOT_3, 585,  @TYPE_SPELL),
+
+# Power Word: Shield 17
+(           @KUL_TIRAN, @PRIEST,      @ACTION_BAR_1_SLOT_4, 17,  @TYPE_SPELL),
+
+# Flash Heal 2061
+(           @KUL_TIRAN, @PRIEST,      @ACTION_BAR_1_SLOT_5, 2061,  @TYPE_SPELL),
+
+# Psychic Scream 8122
+(           @KUL_TIRAN, @PRIEST,      @ACTION_BAR_1_SLOT_6, 8122,  @TYPE_SPELL),
+
+# Fade 586
+(           @KUL_TIRAN, @PRIEST,      @ACTION_BAR_1_SLOT_7, 586,  @TYPE_SPELL),
+
+# Desperate Prayer 19236
+(           @KUL_TIRAN, @PRIEST,      @ACTION_BAR_1_SLOT_8, 19236,  @TYPE_SPELL),
+
+# Power Word: Fortitude 21562
+(           @KUL_TIRAN, @PRIEST,      @ACTION_BAR_1_SLOT_9, 21562,  @TYPE_SPELL),
+
+# Resurrection 2006
+(           @KUL_TIRAN, @PRIEST,      @ACTION_BAR_1_SLOT_0, 2006,  @TYPE_SPELL),
+
+# Haymaker 287712 Racial
+(           @KUL_TIRAN, @PRIEST,  @ACTION_BAR_1_SLOT_MINUS, 287712,  @TYPE_SPELL),
+
+# Kul Tiran Charger 282682 Account Level Mount 1198
+(           @KUL_TIRAN, @PRIEST, @ACTION_BAR_1_SLOT_EQUALS, 282682,  @TYPE_SPELL),
+
+# Shadow Word: Pain 589
+(     @DARK_IRON_DWARF, @PRIEST,      @ACTION_BAR_1_SLOT_1, 589,  @TYPE_SPELL),
+
+# Mind Blast 8092
+(     @DARK_IRON_DWARF, @PRIEST,      @ACTION_BAR_1_SLOT_2, 8092,  @TYPE_SPELL),
+
+# Smite 585
+(     @DARK_IRON_DWARF, @PRIEST,      @ACTION_BAR_1_SLOT_3, 585,  @TYPE_SPELL),
+
+# Power Word: Shield 17
+(     @DARK_IRON_DWARF, @PRIEST,      @ACTION_BAR_1_SLOT_4, 17,  @TYPE_SPELL),
+
+# Flash Heal 2061
+(     @DARK_IRON_DWARF, @PRIEST,      @ACTION_BAR_1_SLOT_5, 2061,  @TYPE_SPELL),
+
+# Psychic Scream 8122
+(     @DARK_IRON_DWARF, @PRIEST,      @ACTION_BAR_1_SLOT_6, 8122,  @TYPE_SPELL),
+
+# Fade 586
+(     @DARK_IRON_DWARF, @PRIEST,      @ACTION_BAR_1_SLOT_7, 586,  @TYPE_SPELL),
+
+# Desperate Prayer 19236
+(     @DARK_IRON_DWARF, @PRIEST,      @ACTION_BAR_1_SLOT_8, 19236,  @TYPE_SPELL),
+
+# Power Word: Fortitude 21562
+(     @DARK_IRON_DWARF, @PRIEST,      @ACTION_BAR_1_SLOT_9, 21562,  @TYPE_SPELL),
+
+# Resurrection 2006
+(     @DARK_IRON_DWARF, @PRIEST,      @ACTION_BAR_1_SLOT_0, 2006,  @TYPE_SPELL),
+
+# Fireblood 265221 Racial
+(     @DARK_IRON_DWARF, @PRIEST,  @ACTION_BAR_1_SLOT_MINUS, 265221,  @TYPE_SPELL),
+
+# Dark Iron Core Hound 271646 Account Level Mount 1048
+(     @DARK_IRON_DWARF, @PRIEST, @ACTION_BAR_1_SLOT_EQUALS, 271646,  @TYPE_SPELL),
+
+# Shadow Word: Pain 589
+(             @VULPERA, @PRIEST,      @ACTION_BAR_1_SLOT_1, 589,  @TYPE_SPELL),
+
+# Mind Blast 8092
+(             @VULPERA, @PRIEST,      @ACTION_BAR_1_SLOT_2, 8092,  @TYPE_SPELL),
+
+# Smite 585
+(             @VULPERA, @PRIEST,      @ACTION_BAR_1_SLOT_3, 585,  @TYPE_SPELL),
+
+# Power Word: Shield 17
+(             @VULPERA, @PRIEST,      @ACTION_BAR_1_SLOT_4, 17,  @TYPE_SPELL),
+
+# Flash Heal 2061
+(             @VULPERA, @PRIEST,      @ACTION_BAR_1_SLOT_5, 2061,  @TYPE_SPELL),
+
+# Psychic Scream 8122
+(             @VULPERA, @PRIEST,      @ACTION_BAR_1_SLOT_6, 8122,  @TYPE_SPELL),
+
+# Fade 586
+(             @VULPERA, @PRIEST,      @ACTION_BAR_1_SLOT_7, 586,  @TYPE_SPELL),
+
+# Desperate Prayer 19236
+(             @VULPERA, @PRIEST,      @ACTION_BAR_1_SLOT_8, 19236,  @TYPE_SPELL),
+
+# Power Word: Fortitude 21562
+(             @VULPERA, @PRIEST,      @ACTION_BAR_1_SLOT_9, 21562,  @TYPE_SPELL),
+
+# Resurrection 2006
+(             @VULPERA, @PRIEST,      @ACTION_BAR_1_SLOT_0, 2006,  @TYPE_SPELL),
+
+# Bag of Tricks 312411 Racial
+(             @VULPERA, @PRIEST,  @ACTION_BAR_1_SLOT_MINUS, 312411,  @TYPE_SPELL),
+
+# Caravan Hyena 306423 Account Level Mount 306423 
+(             @VULPERA, @PRIEST, @ACTION_BAR_1_SLOT_EQUALS, 306423,  @TYPE_SPELL),
+
+# Shadow Word: Pain 589
+(          @MAGHAR_ORC, @PRIEST,      @ACTION_BAR_1_SLOT_1, 589,  @TYPE_SPELL),
+
+# Mind Blast 8092
+(          @MAGHAR_ORC, @PRIEST,      @ACTION_BAR_1_SLOT_2, 8092,  @TYPE_SPELL),
+
+# Smite 585
+(          @MAGHAR_ORC, @PRIEST,      @ACTION_BAR_1_SLOT_3, 585,  @TYPE_SPELL),
+
+# Power Word: Shield 17
+(          @MAGHAR_ORC, @PRIEST,      @ACTION_BAR_1_SLOT_4, 17,  @TYPE_SPELL),
+
+# Flash Heal 2061
+(          @MAGHAR_ORC, @PRIEST,      @ACTION_BAR_1_SLOT_5, 2061,  @TYPE_SPELL),
+
+# Psychic Scream 8122
+(          @MAGHAR_ORC, @PRIEST,      @ACTION_BAR_1_SLOT_6, 8122,  @TYPE_SPELL),
+
+# Fade 586
+(          @MAGHAR_ORC, @PRIEST,      @ACTION_BAR_1_SLOT_7, 586,  @TYPE_SPELL),
+
+# Desperate Prayer 19236
+(          @MAGHAR_ORC, @PRIEST,      @ACTION_BAR_1_SLOT_8, 19236,  @TYPE_SPELL),
+
+# Power Word: Fortitude 21562
+(          @MAGHAR_ORC, @PRIEST,      @ACTION_BAR_1_SLOT_9, 21562,  @TYPE_SPELL),
+
+# Resurrection 2006
+(          @MAGHAR_ORC, @PRIEST,      @ACTION_BAR_1_SLOT_0, 2006,  @TYPE_SPELL),
+
+# Ancestral Call 274738 Racial
+(          @MAGHAR_ORC, @PRIEST,  @ACTION_BAR_1_SLOT_MINUS, 274738,  @TYPE_SPELL),
+
+# Mag'har Direwolf 267274 Account Level Mount 1044
+(          @MAGHAR_ORC, @PRIEST, @ACTION_BAR_1_SLOT_EQUALS, 267274,  @TYPE_SPELL),
+
+# Shadow Word: Pain 589
+(          @MECHAGNOME, @PRIEST,      @ACTION_BAR_1_SLOT_1, 589,  @TYPE_SPELL),
+
+# Mind Blast 8092
+(          @MECHAGNOME, @PRIEST,      @ACTION_BAR_1_SLOT_2, 8092,  @TYPE_SPELL),
+
+# Smite 585
+(          @MECHAGNOME, @PRIEST,      @ACTION_BAR_1_SLOT_3, 585,  @TYPE_SPELL),
+
+# Power Word: Shield 17
+(          @MECHAGNOME, @PRIEST,      @ACTION_BAR_1_SLOT_4, 17,  @TYPE_SPELL),
+
+# Flash Heal 2061
+(          @MECHAGNOME, @PRIEST,      @ACTION_BAR_1_SLOT_5, 2061,  @TYPE_SPELL),
+
+# Psychic Scream 8122
+(          @MECHAGNOME, @PRIEST,      @ACTION_BAR_1_SLOT_6, 8122,  @TYPE_SPELL),
+
+# Fade 586
+(          @MECHAGNOME, @PRIEST,      @ACTION_BAR_1_SLOT_7, 586,  @TYPE_SPELL),
+
+# Desperate Prayer 19236
+(          @MECHAGNOME, @PRIEST,      @ACTION_BAR_1_SLOT_8, 19236,  @TYPE_SPELL),
+
+# Power Word: Fortitude 21562
+(          @MECHAGNOME, @PRIEST,      @ACTION_BAR_1_SLOT_9, 21562,  @TYPE_SPELL),
+
+# Resurrection 2006
+(          @MECHAGNOME, @PRIEST,      @ACTION_BAR_1_SLOT_0, 2006,  @TYPE_SPELL),
+
+# Hyper Organic Light Originator 312924 Racial
+(          @MECHAGNOME, @PRIEST,  @ACTION_BAR_1_SLOT_MINUS, 312924,  @TYPE_SPELL),
+
+# Mechagon Mechanostrider 305592 Account Level Mount 305592
+(          @MECHAGNOME, @PRIEST, @ACTION_BAR_1_SLOT_EQUALS, 305592,  @TYPE_SPELL),
+
+# Death Knight ########################################################################################################################################################################################
+
+# Rune Strike 316239
+(               @RACE_HUMAN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(               @RACE_HUMAN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(               @RACE_HUMAN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(               @RACE_HUMAN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(               @RACE_HUMAN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(               @RACE_HUMAN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Will to Survive 59752 Racial
+(               @RACE_HUMAN, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 59752,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(                 @RACE_ORC, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(                 @RACE_ORC, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(                 @RACE_ORC, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(                 @RACE_ORC, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(                 @RACE_ORC, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(                 @RACE_ORC, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Blood Fury 20572 Racial
+(                 @RACE_ORC, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 20572,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(               @RACE_DWARF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(               @RACE_DWARF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(               @RACE_DWARF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(               @RACE_DWARF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(               @RACE_DWARF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(               @RACE_DWARF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Stoneform 20594 Racial
+(               @RACE_DWARF, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 20594,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(           @RACE_NIGHT_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(           @RACE_NIGHT_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(           @RACE_NIGHT_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(           @RACE_NIGHT_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(           @RACE_NIGHT_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(           @RACE_NIGHT_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Shadowmeld 58984 Racial
+(           @RACE_NIGHT_ELF, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 58984,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(              @RACE_UNDEAD, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(              @RACE_UNDEAD, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(              @RACE_UNDEAD, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(              @RACE_UNDEAD, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(              @RACE_UNDEAD, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(              @RACE_UNDEAD, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Will of the Forsaken 7744 Racial
+(              @RACE_UNDEAD, @DEATH_KNIGHT,  @ACTION_BAR_1_SLOT_MINUS, 7744,  @TYPE_SPELL),
+
+# Cannibalize 20577 Racial
+(              @RACE_UNDEAD, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 20577,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(              @RACE_TAUREN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(              @RACE_TAUREN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(              @RACE_TAUREN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(              @RACE_TAUREN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(              @RACE_TAUREN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(              @RACE_TAUREN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# War Stomp 20549 Racial
+(              @RACE_TAUREN, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS,            @RACE_TAUREN_RACIAL_WAR_STOMP,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(               @RACE_GNOME, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(               @RACE_GNOME, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(               @RACE_GNOME, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(               @RACE_GNOME, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(               @RACE_GNOME, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(               @RACE_GNOME, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Escape Artist 20589 Racial 
+(               @RACE_GNOME, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS,            @RACE_TAUREN_RACIAL_WAR_STOMP,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(               @TROLL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(               @TROLL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(               @TROLL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(               @TROLL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(               @TROLL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(               @TROLL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Berserking Racial 26297 Racial 
+(               @TROLL, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS,            @TROLL_RACIAL_BERSERKING,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(              @GOBLIN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(              @GOBLIN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(              @GOBLIN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(              @GOBLIN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(              @GOBLIN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(              @GOBLIN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Rocket Jump 69070 Racial 
+(              @GOBLIN, @DEATH_KNIGHT,  @ACTION_BAR_1_SLOT_MINUS,          @GOBLIN_RACIAL_ROCKET_JUMP,  @TYPE_SPELL),
+
+# Rocket Barrage 69041 Racial 
+(              @GOBLIN, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS,       @GOBLIN_RACIAL_ROCKET_BARRAGE,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(           @BLOOD_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(           @BLOOD_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(           @BLOOD_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(           @BLOOD_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(           @BLOOD_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(           @BLOOD_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Arcane Torrent 50613 Racial 
+(           @BLOOD_ELF, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 50613,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(             @DRAENEI, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(             @DRAENEI, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(             @DRAENEI, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(             @DRAENEI, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(             @DRAENEI, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(             @DRAENEI, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Gift of the Naaru 59545 Racial 
+(             @DRAENEI, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 59545,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(              @WORGEN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(              @WORGEN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(              @WORGEN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(              @WORGEN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(              @WORGEN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(              @WORGEN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Darkflight 68992 Racial 
+(              @WORGEN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_0, 68992,  @TYPE_SPELL),
+
+# Two Forms 68996 Racial 
+(              @WORGEN, @DEATH_KNIGHT,  @ACTION_BAR_1_SLOT_MINUS, 68996,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(    @PANDAREN_NEUTRAL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(    @PANDAREN_NEUTRAL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(    @PANDAREN_NEUTRAL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(    @PANDAREN_NEUTRAL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(    @PANDAREN_NEUTRAL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(    @PANDAREN_NEUTRAL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Runeforging 53428
+(    @PANDAREN_NEUTRAL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_7, 53428,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(    @PANDAREN_NEUTRAL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Acherus Deathcharger 48778 Account Level Mount
+(    @PANDAREN_NEUTRAL, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 48778,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(   @PANDAREN_ALLIANCE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(   @PANDAREN_ALLIANCE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(   @PANDAREN_ALLIANCE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(   @PANDAREN_ALLIANCE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(   @PANDAREN_ALLIANCE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(   @PANDAREN_ALLIANCE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Runeforging 53428
+(   @PANDAREN_ALLIANCE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_7, 53428,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(   @PANDAREN_ALLIANCE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Acherus Deathcharger 48778 Account Level Mount
+(   @PANDAREN_ALLIANCE, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 48778,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(      @PANDAREN_HORDE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(      @PANDAREN_HORDE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(      @PANDAREN_HORDE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(      @PANDAREN_HORDE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(      @PANDAREN_HORDE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(      @PANDAREN_HORDE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Runeforging 53428
+(      @PANDAREN_HORDE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_7, 53428,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(      @PANDAREN_HORDE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Acherus Deathcharger 48778 Account Level Mount
+(      @PANDAREN_HORDE, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 48778,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(          @NIGHTBORNE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(          @NIGHTBORNE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(          @NIGHTBORNE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(          @NIGHTBORNE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(          @NIGHTBORNE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(          @NIGHTBORNE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Runeforging 53428
+(          @NIGHTBORNE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_7, 53428,  @TYPE_SPELL),
+
+# Arcane Pulse 260364 Racial 
+(          @NIGHTBORNE, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_0, 260364,  @TYPE_SPELL),
+
+# Acherus Deathcharger 48778 Account Level Mount
+(          @NIGHTBORNE, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 48778,  @TYPE_SPELL),
+
+# Rune Strike 316239
+( @HIGHMOUNTAIN_TAUREN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+( @HIGHMOUNTAIN_TAUREN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+( @HIGHMOUNTAIN_TAUREN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+( @HIGHMOUNTAIN_TAUREN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+( @HIGHMOUNTAIN_TAUREN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+( @HIGHMOUNTAIN_TAUREN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Runeforging 53428
+( @HIGHMOUNTAIN_TAUREN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_7, 53428,  @TYPE_SPELL),
+
+# Bull Rush 255654 Racial 
+( @HIGHMOUNTAIN_TAUREN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_0, 255654,  @TYPE_SPELL),
+
+# Acherus Deathcharger 48778 Account Level Mount
+( @HIGHMOUNTAIN_TAUREN, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 48778,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(            @VOID_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(            @VOID_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(            @VOID_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(            @VOID_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(            @VOID_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(            @VOID_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Runeforging 53428
+(            @VOID_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_7, 53428,  @TYPE_SPELL),
+
+# Spatial Rift 256948 Racial 
+(            @VOID_ELF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_0, 256948,  @TYPE_SPELL),
+
+# Acherus Deathcharger 48778 Account Level Mount
+(            @VOID_ELF, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 48778,  @TYPE_SPELL),
+
+# Rune Strike 316239
+( @LIGHTFORGED_DRAENEI, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+( @LIGHTFORGED_DRAENEI, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+( @LIGHTFORGED_DRAENEI, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+( @LIGHTFORGED_DRAENEI, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+( @LIGHTFORGED_DRAENEI, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+( @LIGHTFORGED_DRAENEI, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Runeforging 53428
+( @LIGHTFORGED_DRAENEI, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_7, 53428,  @TYPE_SPELL),
+
+# Light's Judgement 255647 Racial 
+( @LIGHTFORGED_DRAENEI, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_0, 255647,  @TYPE_SPELL),
+
+# Acherus Deathcharger 48778 Account Level Mount
+( @LIGHTFORGED_DRAENEI, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 48778,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(     @ZANDALARI_TROLL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(     @ZANDALARI_TROLL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(     @ZANDALARI_TROLL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(     @ZANDALARI_TROLL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(     @ZANDALARI_TROLL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(     @ZANDALARI_TROLL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Runeforging 53428
+(     @ZANDALARI_TROLL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_7, 53428,  @TYPE_SPELL),
+
+# Embrace of the Loa 292752 Racial 
+(     @ZANDALARI_TROLL, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_0, 292752,  @TYPE_SPELL),
+
+# Acherus Deathcharger 48778 Account Level Mount
+(     @ZANDALARI_TROLL, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 48778,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(           @KUL_TIRAN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(           @KUL_TIRAN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(           @KUL_TIRAN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(           @KUL_TIRAN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(           @KUL_TIRAN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(           @KUL_TIRAN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Runeforging 53428
+(           @KUL_TIRAN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_7, 53428,  @TYPE_SPELL),
+
+# Haymaker 287712 Racial 
+(           @KUL_TIRAN, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_0, 287712,  @TYPE_SPELL),
+
+# Acherus Deathcharger 48778 Account Level Mount
+(           @KUL_TIRAN, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 48778,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(     @DARK_IRON_DWARF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(     @DARK_IRON_DWARF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(     @DARK_IRON_DWARF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(     @DARK_IRON_DWARF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(     @DARK_IRON_DWARF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(     @DARK_IRON_DWARF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Runeforging 53428
+(     @DARK_IRON_DWARF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_7, 53428,  @TYPE_SPELL),
+
+# Fireblood 265221 Racial 
+(     @DARK_IRON_DWARF, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_0, 265221,  @TYPE_SPELL),
+
+# Acherus Deathcharger 48778 Account Level Mount
+(     @DARK_IRON_DWARF, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 48778,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(             @VULPERA, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(             @VULPERA, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(             @VULPERA, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(             @VULPERA, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(             @VULPERA, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(             @VULPERA, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Runeforging 53428
+(             @VULPERA, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_7, 53428,  @TYPE_SPELL),
+
+# Bag of Tricks 312411 Racial 
+(             @VULPERA, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_0, 312411,  @TYPE_SPELL),
+
+# Acherus Deathcharger 48778 Account Level Mount
+(             @VULPERA, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 48778,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(          @MAGHAR_ORC, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(          @MAGHAR_ORC, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(          @MAGHAR_ORC, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(          @MAGHAR_ORC, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(          @MAGHAR_ORC, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(          @MAGHAR_ORC, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Runeforging 53428
+(          @MAGHAR_ORC, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_7, 53428,  @TYPE_SPELL),
+
+# Ancestral Call 274738 Racial 
+(          @MAGHAR_ORC, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_0, 274738,  @TYPE_SPELL),
+
+# Acherus Deathcharger 48778 Account Level Mount
+(          @MAGHAR_ORC, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 48778,  @TYPE_SPELL),
+
+# Rune Strike 316239
+(          @MECHAGNOME, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_1, 316239,  @TYPE_SPELL),
+
+# Death Coil 47541
+(          @MECHAGNOME, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_2, 47541,  @TYPE_SPELL),
+
+# Death Strike 49998
+(          @MECHAGNOME, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_3, 49998,  @TYPE_SPELL),
+
+# Death and Decay 43265
+(          @MECHAGNOME, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_4, 43265,  @TYPE_SPELL),
+
+# Mind Freeze 47528
+(          @MECHAGNOME, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_5, 47528,  @TYPE_SPELL),
+
+# Death Grip 49576
+(          @MECHAGNOME, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_6, 49576,  @TYPE_SPELL),
+
+# Runeforging 53428
+(          @MECHAGNOME, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_7, 53428,  @TYPE_SPELL),
+
+#  Hyper Organic Light Originator 312924 Racial 
+(          @MECHAGNOME, @DEATH_KNIGHT,      @ACTION_BAR_1_SLOT_0, 312924,  @TYPE_SPELL),
+
+# Acherus Deathcharger 48778 Account Level Mount
+(          @MECHAGNOME, @DEATH_KNIGHT, @ACTION_BAR_1_SLOT_EQUALS, 48778,  @TYPE_SPELL),
+
+# Shaman ##############################################################################################################################################################################################
+
+# Lightning Bolt 188196
+(                 @RACE_ORC, @SHAMAN,      @ACTION_BAR_1_SLOT_1, 188196,  @TYPE_SPELL),
+
+# Blood Fury 20572 Racial
+(                 @RACE_ORC, @SHAMAN,      @ACTION_BAR_1_SLOT_0, 20572,  @TYPE_SPELL),
+
+# Lightning Bolt 188196
+(               @RACE_DWARF, @SHAMAN,      @ACTION_BAR_1_SLOT_1, 188196,  @TYPE_SPELL),
+
+# Stoneform 20594 Racial
+(               @RACE_DWARF, @SHAMAN,      @ACTION_BAR_1_SLOT_0, 20594,  @TYPE_SPELL),
+
+# Lightning Bolt 188196
+(              @RACE_TAUREN, @SHAMAN,      @ACTION_BAR_1_SLOT_1, 188196,  @TYPE_SPELL),
+
+# War Stomp 20549
+(              @RACE_TAUREN, @SHAMAN,      @ACTION_BAR_1_SLOT_0,            @RACE_TAUREN_RACIAL_WAR_STOMP,  @TYPE_SPELL),
+
+# Lightning Bolt 188196
+(               @TROLL, @SHAMAN,      @ACTION_BAR_1_SLOT_1, 188196,  @TYPE_SPELL),
+
+# Berserking 26297 Racial
+(               @TROLL, @SHAMAN,      @ACTION_BAR_1_SLOT_0,            @TROLL_RACIAL_BERSERKING,  @TYPE_SPELL),
+
+# Lightning Bolt 188196
+(              @GOBLIN, @SHAMAN,      @ACTION_BAR_1_SLOT_1, 188196,  @TYPE_SPELL),
+
+# Rocket Jump 69070 Racial
+(              @GOBLIN, @SHAMAN,      @ACTION_BAR_1_SLOT_0,          @GOBLIN_RACIAL_ROCKET_JUMP,  @TYPE_SPELL),
+
+# Rocket Barrage 69041 Racial
+(              @GOBLIN, @SHAMAN,  @ACTION_BAR_1_SLOT_MINUS,       @GOBLIN_RACIAL_ROCKET_BARRAGE,  @TYPE_SPELL),
+
+# Lightning Bolt 188196
+(             @DRAENEI, @SHAMAN,      @ACTION_BAR_1_SLOT_1, 188196,  @TYPE_SPELL),
+
+# Gift of the Naaru 28880 Racial
+(             @DRAENEI, @SHAMAN,      @ACTION_BAR_1_SLOT_0,   @DRAENEI_RACIAL_GIFT_OF_THE_NAARU,  @TYPE_SPELL),
+
+# 88163 Attack
+# (    @PANDAREN_NEUTRAL, @SHAMAN,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Lightning Bolt 188196
+(    @PANDAREN_NEUTRAL, @SHAMAN,      @ACTION_BAR_1_SLOT_1, 188196,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(    @PANDAREN_NEUTRAL, @SHAMAN,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Sugarcane Stalk 77272 Item
+(    @PANDAREN_NEUTRAL, @SHAMAN, @ACTION_BAR_1_SLOT_EQUALS, 77272,   @TYPE_ITEM),
+
+# 88163 Attack
+# (   @PANDAREN_ALLIANCE, @SHAMAN,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Lightning Bolt 188196
+(   @PANDAREN_ALLIANCE, @SHAMAN,      @ACTION_BAR_1_SLOT_1, 188196,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(   @PANDAREN_ALLIANCE, @SHAMAN,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Sugarcane Stalk 77272 Item
+(   @PANDAREN_ALLIANCE, @SHAMAN, @ACTION_BAR_1_SLOT_EQUALS, 77272,   @TYPE_ITEM),
+
+# 88163 Attack
+# (      @PANDAREN_HORDE, @SHAMAN,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Lightning Bolt 188196
+(      @PANDAREN_HORDE, @SHAMAN,      @ACTION_BAR_1_SLOT_1, 188196,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(      @PANDAREN_HORDE, @SHAMAN,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Sugarcane Stalk 77272 Item
+(      @PANDAREN_HORDE, @SHAMAN, @ACTION_BAR_1_SLOT_EQUALS, 77272,   @TYPE_ITEM),
+
+# Flame Shock 188389
+( @HIGHMOUNTAIN_TAUREN, @SHAMAN,      @ACTION_BAR_1_SLOT_1, 188389,  @TYPE_SPELL),
+
+# Lightning Bolt 188196
+( @HIGHMOUNTAIN_TAUREN, @SHAMAN,      @ACTION_BAR_1_SLOT_2, 188196,  @TYPE_SPELL),
+
+# Primal Strike 73899
+( @HIGHMOUNTAIN_TAUREN, @SHAMAN,      @ACTION_BAR_1_SLOT_3, 73899,  @TYPE_SPELL),
+
+# Flametongue Weapon 318038
+( @HIGHMOUNTAIN_TAUREN, @SHAMAN,      @ACTION_BAR_1_SLOT_4, 318038,  @TYPE_SPELL),
+
+# Lightning Shield 192106
+( @HIGHMOUNTAIN_TAUREN, @SHAMAN,      @ACTION_BAR_1_SLOT_5, 192106,  @TYPE_SPELL),
+
+# Healing Surge 8004
+( @HIGHMOUNTAIN_TAUREN, @SHAMAN,      @ACTION_BAR_1_SLOT_6, 8004,  @TYPE_SPELL),
+
+# Earthbind Totem 2484
+( @HIGHMOUNTAIN_TAUREN, @SHAMAN,      @ACTION_BAR_1_SLOT_7, 2484,  @TYPE_SPELL),
+
+# Ghost Wolf 2645
+( @HIGHMOUNTAIN_TAUREN, @SHAMAN,      @ACTION_BAR_1_SLOT_8, 2645,  @TYPE_SPELL),
+
+# Bull Rush 255654 Racial
+( @HIGHMOUNTAIN_TAUREN, @SHAMAN,      @ACTION_BAR_1_SLOT_0, 255654,  @TYPE_SPELL),
+
+# Highmountain Thunderhoof 258060 Account Level Mount 1007
+( @HIGHMOUNTAIN_TAUREN, @SHAMAN, @ACTION_BAR_1_SLOT_EQUALS, 258060,  @TYPE_SPELL),
+
+# Flame Shock 188389
+(     @ZANDALARI_TROLL, @SHAMAN,      @ACTION_BAR_1_SLOT_1, 188389,  @TYPE_SPELL),
+
+# Lightning Bolt 188196
+(     @ZANDALARI_TROLL, @SHAMAN,      @ACTION_BAR_1_SLOT_2, 188196,  @TYPE_SPELL),
+
+# Primal Strike 73899
+(     @ZANDALARI_TROLL, @SHAMAN,      @ACTION_BAR_1_SLOT_3, 73899,  @TYPE_SPELL),
+
+# Flametongue Weapon 318038
+(     @ZANDALARI_TROLL, @SHAMAN,      @ACTION_BAR_1_SLOT_4, 318038,  @TYPE_SPELL),
+
+# Lightning Shield 192106
+(     @ZANDALARI_TROLL, @SHAMAN,      @ACTION_BAR_1_SLOT_5, 192106,  @TYPE_SPELL),
+
+# Healing Surge 8004
+(     @ZANDALARI_TROLL, @SHAMAN,      @ACTION_BAR_1_SLOT_6, 8004,  @TYPE_SPELL),
+
+# Earthbind Totem 2484
+(     @ZANDALARI_TROLL, @SHAMAN,      @ACTION_BAR_1_SLOT_7, 2484,  @TYPE_SPELL),
+
+# Ghost Wolf 2645
+(     @ZANDALARI_TROLL, @SHAMAN,      @ACTION_BAR_1_SLOT_8, 2645,  @TYPE_SPELL),
+
+# Embrace of the Loa 292752 Racial
+(     @ZANDALARI_TROLL, @SHAMAN,  @ACTION_BAR_1_SLOT_MINUS, 292752,  @TYPE_SPELL),
+
+# Zandalari Direhorn 263707 Account Level Mount 1038
+(     @ZANDALARI_TROLL, @SHAMAN, @ACTION_BAR_1_SLOT_EQUALS, 263707,  @TYPE_SPELL),
+
+# Flame Shock 188389
+(           @KUL_TIRAN, @SHAMAN,      @ACTION_BAR_1_SLOT_1, 188389,  @TYPE_SPELL),
+
+# Lightning Bolt 188196
+(           @KUL_TIRAN, @SHAMAN,      @ACTION_BAR_1_SLOT_2, 188196,  @TYPE_SPELL),
+
+# Primal Strike 73899
+(           @KUL_TIRAN, @SHAMAN,      @ACTION_BAR_1_SLOT_3, 73899,  @TYPE_SPELL),
+
+# Flametongue Weapon 318038
+(           @KUL_TIRAN, @SHAMAN,      @ACTION_BAR_1_SLOT_4, 318038,  @TYPE_SPELL),
+
+# Lightning Shield 192106
+(           @KUL_TIRAN, @SHAMAN,      @ACTION_BAR_1_SLOT_5, 192106,  @TYPE_SPELL),
+
+# Healing Surge 8004
+(           @KUL_TIRAN, @SHAMAN,      @ACTION_BAR_1_SLOT_6, 8004,  @TYPE_SPELL),
+
+# Earthbind Totem 2484
+(           @KUL_TIRAN, @SHAMAN,      @ACTION_BAR_1_SLOT_7, 2484,  @TYPE_SPELL),
+
+# Ghost Wolf 2645
+(           @KUL_TIRAN, @SHAMAN,      @ACTION_BAR_1_SLOT_8, 2645,  @TYPE_SPELL),
+
+# Haymaker 287712 Racial
+(           @KUL_TIRAN, @SHAMAN,  @ACTION_BAR_1_SLOT_MINUS, 287712,  @TYPE_SPELL),
+
+# Kul Tiran Charger 282682 Account Level Mount 1198
+(           @KUL_TIRAN, @SHAMAN, @ACTION_BAR_1_SLOT_EQUALS, 282682,  @TYPE_SPELL),
+
+# Flame Shock 188389
+(     @DARK_IRON_DWARF, @SHAMAN,      @ACTION_BAR_1_SLOT_1, 188389,  @TYPE_SPELL),
+
+# Lightning Bolt 188196
+(     @DARK_IRON_DWARF, @SHAMAN,      @ACTION_BAR_1_SLOT_2, 188196,  @TYPE_SPELL),
+
+# Primal Strike 73899
+(     @DARK_IRON_DWARF, @SHAMAN,      @ACTION_BAR_1_SLOT_3, 73899,  @TYPE_SPELL),
+
+# Flametongue Weapon 318038
+(     @DARK_IRON_DWARF, @SHAMAN,      @ACTION_BAR_1_SLOT_4, 318038,  @TYPE_SPELL),
+
+# Lightning Shield 192106
+(     @DARK_IRON_DWARF, @SHAMAN,      @ACTION_BAR_1_SLOT_5, 192106,  @TYPE_SPELL),
+
+# Healing Surge 8004
+(     @DARK_IRON_DWARF, @SHAMAN,      @ACTION_BAR_1_SLOT_6, 8004,  @TYPE_SPELL),
+
+# Earthbind Totem 2484
+(     @DARK_IRON_DWARF, @SHAMAN,      @ACTION_BAR_1_SLOT_7, 2484,  @TYPE_SPELL),
+
+# Ghost Wolf 2645
+(     @DARK_IRON_DWARF, @SHAMAN,      @ACTION_BAR_1_SLOT_8, 2645,  @TYPE_SPELL),
+
+# Fireblood 265221 Racial
+(     @DARK_IRON_DWARF, @SHAMAN,  @ACTION_BAR_1_SLOT_MINUS, 265221,  @TYPE_SPELL),
+
+# Dark Iron Core Hound 271646 Account Level Mount 1048
+(     @DARK_IRON_DWARF, @SHAMAN, @ACTION_BAR_1_SLOT_EQUALS, 271646,  @TYPE_SPELL),
+
+# Flame Shock 188389
+(             @VULPERA, @SHAMAN,      @ACTION_BAR_1_SLOT_1, 188389,  @TYPE_SPELL),
+
+# Lightning Bolt 188196
+(             @VULPERA, @SHAMAN,      @ACTION_BAR_1_SLOT_2, 188196,  @TYPE_SPELL),
+
+# Primal Strike 73899
+(             @VULPERA, @SHAMAN,      @ACTION_BAR_1_SLOT_3, 73899,  @TYPE_SPELL),
+
+# Flametongue Weapon 318038
+(             @VULPERA, @SHAMAN,      @ACTION_BAR_1_SLOT_4, 318038,  @TYPE_SPELL),
+
+# Lightning Shield 192106
+(             @VULPERA, @SHAMAN,      @ACTION_BAR_1_SLOT_5, 192106,  @TYPE_SPELL),
+
+# Healing Surge 8004
+(             @VULPERA, @SHAMAN,      @ACTION_BAR_1_SLOT_6, 8004,  @TYPE_SPELL),
+
+# Earthbind Totem 2484
+(             @VULPERA, @SHAMAN,      @ACTION_BAR_1_SLOT_7, 2484,  @TYPE_SPELL),
+
+# Ghost Wolf 2645
+(             @VULPERA, @SHAMAN,      @ACTION_BAR_1_SLOT_8, 2645,  @TYPE_SPELL),
+
+# Bag of Tricks 312411 Racial
+(             @VULPERA, @SHAMAN,  @ACTION_BAR_1_SLOT_MINUS, 312411,  @TYPE_SPELL),
+
+# Caravan Hyena 306423 Account Level Mount 306423 
+(             @VULPERA, @SHAMAN, @ACTION_BAR_1_SLOT_EQUALS, 306423,  @TYPE_SPELL),
+
+# Flame Shock 188389
+(          @MAGHAR_ORC, @SHAMAN,      @ACTION_BAR_1_SLOT_1, 188389,  @TYPE_SPELL),
+
+# Lightning Bolt 188196
+(          @MAGHAR_ORC, @SHAMAN,      @ACTION_BAR_1_SLOT_2, 188196,  @TYPE_SPELL),
+
+# Primal Strike 73899
+(          @MAGHAR_ORC, @SHAMAN,      @ACTION_BAR_1_SLOT_3, 73899,  @TYPE_SPELL),
+
+# Flametongue Weapon 318038
+(          @MAGHAR_ORC, @SHAMAN,      @ACTION_BAR_1_SLOT_4, 318038,  @TYPE_SPELL),
+
+# Lightning Shield 192106
+(          @MAGHAR_ORC, @SHAMAN,      @ACTION_BAR_1_SLOT_5, 192106,  @TYPE_SPELL),
+
+# Healing Surge 8004
+(          @MAGHAR_ORC, @SHAMAN,      @ACTION_BAR_1_SLOT_6, 8004,  @TYPE_SPELL),
+
+# Earthbind Totem 2484
+(          @MAGHAR_ORC, @SHAMAN,      @ACTION_BAR_1_SLOT_7, 2484,  @TYPE_SPELL),
+
+# Ghost Wolf 2645
+(          @MAGHAR_ORC, @SHAMAN,      @ACTION_BAR_1_SLOT_8, 2645,  @TYPE_SPELL),
+
+# Ancestral Call 274738 Racial
+(          @MAGHAR_ORC, @SHAMAN,  @ACTION_BAR_1_SLOT_MINUS, 274738,  @TYPE_SPELL),
+
+# Mag'har Direwolf 267274 Account Level Mount 1044
+(          @MAGHAR_ORC, @SHAMAN, @ACTION_BAR_1_SLOT_EQUALS, 267274,  @TYPE_SPELL),
+
+# Mage ################################################################################################################################################################################################
+
+# Frostbolt 116
+(               @RACE_HUMAN, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Will to Survive 59752 Racial
+(               @RACE_HUMAN, @MAGE,      @ACTION_BAR_1_SLOT_0, 59752,  @TYPE_SPELL),
+
+# Frostbolt 116
+(                 @RACE_ORC, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Blood Fury 20572 Racial
+(                 @RACE_ORC, @MAGE,      @ACTION_BAR_1_SLOT_0, 20572,  @TYPE_SPELL),
+
+# Frostbolt 116
+(               @RACE_DWARF, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Stoneform 20594 Racial
+(               @RACE_DWARF, @MAGE,      @ACTION_BAR_1_SLOT_0, 20594,  @TYPE_SPELL),
+
+# Frostbolt 116
+(           @RACE_NIGHT_ELF, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Shadowmeld 58984 Racial
+(           @RACE_NIGHT_ELF, @MAGE,      @ACTION_BAR_1_SLOT_0, 58984,  @TYPE_SPELL),
+
+# Frostbolt 116
+(              @RACE_UNDEAD, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Will of the Forsaken 7744 Racial
+(              @RACE_UNDEAD, @MAGE,      @ACTION_BAR_1_SLOT_9, 7744,  @TYPE_SPELL),
+
+# Cannibalize 20577 Racial
+(              @RACE_UNDEAD, @MAGE,      @ACTION_BAR_1_SLOT_0, 20577,  @TYPE_SPELL),
+
+# Frostbolt 116
+(               @RACE_GNOME, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Escape Artist 20589 Racial
+(               @RACE_GNOME, @MAGE,      @ACTION_BAR_1_SLOT_0,            @RACE_TAUREN_RACIAL_WAR_STOMP,  @TYPE_SPELL),
+
+# Frostbolt 116
+(               @TROLL, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Berserking 26297 Racial
+(               @TROLL, @MAGE,      @ACTION_BAR_1_SLOT_0,            @TROLL_RACIAL_BERSERKING,  @TYPE_SPELL),
+
+# Frostbolt 116
+(              @GOBLIN, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Rocket Jump 69070 Racial
+(              @GOBLIN, @MAGE,      @ACTION_BAR_1_SLOT_0,          @GOBLIN_RACIAL_ROCKET_JUMP,  @TYPE_SPELL),
+
+# Rocket Barrage 69041 Racial
+(              @GOBLIN, @MAGE,  @ACTION_BAR_1_SLOT_MINUS,       @GOBLIN_RACIAL_ROCKET_BARRAGE,  @TYPE_SPELL),
+
+# Frostbolt 116
+(           @BLOOD_ELF, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Arcane Torrent 69179 Racial
+(           @BLOOD_ELF, @MAGE,      @ACTION_BAR_1_SLOT_0,    @BLOOD_ELF_RACIAL_ARCANE_TORRENT,  @TYPE_SPELL),
+
+# Frostbolt 116
+(             @DRAENEI, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Gift of the Naaru 28880 Racial
+(             @DRAENEI, @MAGE,      @ACTION_BAR_1_SLOT_0,   @DRAENEI_RACIAL_GIFT_OF_THE_NAARU,  @TYPE_SPELL),
+
+# Frostbolt 116
+(              @WORGEN, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# 88163 Attack
+# (    @PANDAREN_NEUTRAL, @MAGE,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Frostbolt 116
+(    @PANDAREN_NEUTRAL, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(    @PANDAREN_NEUTRAL, @MAGE,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Bamboo Shoot 77264 Item
+(    @PANDAREN_NEUTRAL, @MAGE, @ACTION_BAR_1_SLOT_EQUALS, 77264,   @TYPE_ITEM),
+
+# 88163 Attack
+# (   @PANDAREN_ALLIANCE, @MAGE,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Frostbolt 116
+(   @PANDAREN_ALLIANCE, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(   @PANDAREN_ALLIANCE, @MAGE,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Bamboo Shoot 77264 Item
+(   @PANDAREN_ALLIANCE, @MAGE, @ACTION_BAR_1_SLOT_EQUALS, 77264,   @TYPE_ITEM),
+
+# 88163 Attack
+# (      @PANDAREN_HORDE, @MAGE,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Frostbolt 116
+(      @PANDAREN_HORDE, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(      @PANDAREN_HORDE, @MAGE,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Bamboo Shoot 77264 Item
+(      @PANDAREN_HORDE, @MAGE, @ACTION_BAR_1_SLOT_EQUALS, 77264,   @TYPE_ITEM),
+
+# Frostbolt 116
+(          @NIGHTBORNE, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Fire Blast 319836
+(          @NIGHTBORNE, @MAGE,      @ACTION_BAR_1_SLOT_2, 319836,  @TYPE_SPELL),
+
+# Arcane Explosion 1449
+(          @NIGHTBORNE, @MAGE,      @ACTION_BAR_1_SLOT_3, 1449,  @TYPE_SPELL),
+
+# Blink 1953
+(          @NIGHTBORNE, @MAGE,      @ACTION_BAR_1_SLOT_4, 1953,  @TYPE_SPELL),
+
+# Frost Nova 122
+(          @NIGHTBORNE, @MAGE,      @ACTION_BAR_1_SLOT_5, 122,  @TYPE_SPELL),
+
+# Polymorph 118
+(          @NIGHTBORNE, @MAGE,      @ACTION_BAR_1_SLOT_6, 118,  @TYPE_SPELL),
+
+# Counterspell 2139
+(          @NIGHTBORNE, @MAGE,      @ACTION_BAR_1_SLOT_7, 2139,  @TYPE_SPELL),
+
+# Arcane Intellect 1459
+(          @NIGHTBORNE, @MAGE,      @ACTION_BAR_1_SLOT_8, 1459,  @TYPE_SPELL),
+
+# Slow Fall 130
+(          @NIGHTBORNE, @MAGE,      @ACTION_BAR_1_SLOT_9, 130,  @TYPE_SPELL),
+
+# Conjure Refreshment 190336
+(          @NIGHTBORNE, @MAGE,      @ACTION_BAR_1_SLOT_0, 190336,  @TYPE_SPELL),
+
+# Arcane Pulse 260364 Racial
+(          @NIGHTBORNE, @MAGE,  @ACTION_BAR_1_SLOT_MINUS, 260364,  @TYPE_SPELL),
+
+# Nightborne Manasaber 258845 Account Level Mount 1008
+(          @NIGHTBORNE, @MAGE, @ACTION_BAR_1_SLOT_EQUALS, 258845,  @TYPE_SPELL),
+
+# Frostbolt 116
+(            @VOID_ELF, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Fire Blast 319836
+(            @VOID_ELF, @MAGE,      @ACTION_BAR_1_SLOT_2, 319836,  @TYPE_SPELL),
+
+# Arcane Explosion 1449
+(            @VOID_ELF, @MAGE,      @ACTION_BAR_1_SLOT_3, 1449,  @TYPE_SPELL),
+
+# Blink 1953
+(            @VOID_ELF, @MAGE,      @ACTION_BAR_1_SLOT_4, 1953,  @TYPE_SPELL),
+
+# Frost Nova 122
+(            @VOID_ELF, @MAGE,      @ACTION_BAR_1_SLOT_5, 122,  @TYPE_SPELL),
+
+# Polymorph 118
+(            @VOID_ELF, @MAGE,      @ACTION_BAR_1_SLOT_6, 118,  @TYPE_SPELL),
+
+# Counterspell 2139
+(            @VOID_ELF, @MAGE,      @ACTION_BAR_1_SLOT_7, 2139,  @TYPE_SPELL),
+
+# Arcane Intellect 1459
+(            @VOID_ELF, @MAGE,      @ACTION_BAR_1_SLOT_8, 1459,  @TYPE_SPELL),
+
+# Slow Fall 130
+(            @VOID_ELF, @MAGE,      @ACTION_BAR_1_SLOT_9, 130,  @TYPE_SPELL),
+
+# Conjure Refreshment 190336
+(            @VOID_ELF, @MAGE,      @ACTION_BAR_1_SLOT_0, 190336,  @TYPE_SPELL),
+
+# Spatial Rift 256948 Racial
+(            @VOID_ELF, @MAGE,  @ACTION_BAR_1_SLOT_MINUS, 256948,  @TYPE_SPELL),
+
+# Starcursed Voidstrider 259202 Account Level Mount 1009
+(            @VOID_ELF, @MAGE, @ACTION_BAR_1_SLOT_EQUALS, 259202,  @TYPE_SPELL),
+
+# Frostbolt 116
+( @LIGHTFORGED_DRAENEI, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Fire Blast 319836
+( @LIGHTFORGED_DRAENEI, @MAGE,      @ACTION_BAR_1_SLOT_2, 319836,  @TYPE_SPELL),
+
+# Arcane Explosion 1449
+( @LIGHTFORGED_DRAENEI, @MAGE,      @ACTION_BAR_1_SLOT_3, 1449,  @TYPE_SPELL),
+
+# Blink 1953
+( @LIGHTFORGED_DRAENEI, @MAGE,      @ACTION_BAR_1_SLOT_4, 1953,  @TYPE_SPELL),
+
+# Frost Nova 122
+( @LIGHTFORGED_DRAENEI, @MAGE,      @ACTION_BAR_1_SLOT_5, 122,  @TYPE_SPELL),
+
+# Polymorph 118
+( @LIGHTFORGED_DRAENEI, @MAGE,      @ACTION_BAR_1_SLOT_6, 118,  @TYPE_SPELL),
+
+# Counterspell 2139
+( @LIGHTFORGED_DRAENEI, @MAGE,      @ACTION_BAR_1_SLOT_7, 2139,  @TYPE_SPELL),
+
+# Arcane Intellect 1459
+( @LIGHTFORGED_DRAENEI, @MAGE,      @ACTION_BAR_1_SLOT_8, 1459,  @TYPE_SPELL),
+
+# Slow Fall 130
+( @LIGHTFORGED_DRAENEI, @MAGE,      @ACTION_BAR_1_SLOT_9, 130,  @TYPE_SPELL),
+
+# Conjure Refreshment 190336
+( @LIGHTFORGED_DRAENEI, @MAGE,      @ACTION_BAR_1_SLOT_0, 190336,  @TYPE_SPELL),
+
+# Light's Judgement 255647 Racial
+( @LIGHTFORGED_DRAENEI, @MAGE,  @ACTION_BAR_1_SLOT_MINUS, 255647,  @TYPE_SPELL),
+
+# Lightforged Felcrusher 258022 Account Level Mount 1006
+( @LIGHTFORGED_DRAENEI, @MAGE, @ACTION_BAR_1_SLOT_EQUALS, 258022,  @TYPE_SPELL),
+
+# Frostbolt 116
+(     @ZANDALARI_TROLL, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Fire Blast 319836
+(     @ZANDALARI_TROLL, @MAGE,      @ACTION_BAR_1_SLOT_2, 319836,  @TYPE_SPELL),
+
+# Arcane Explosion 1449
+(     @ZANDALARI_TROLL, @MAGE,      @ACTION_BAR_1_SLOT_3, 1449,  @TYPE_SPELL),
+
+# Blink 1953
+(     @ZANDALARI_TROLL, @MAGE,      @ACTION_BAR_1_SLOT_4, 1953,  @TYPE_SPELL),
+
+# Frost Nova 122
+(     @ZANDALARI_TROLL, @MAGE,      @ACTION_BAR_1_SLOT_5, 122,  @TYPE_SPELL),
+
+# Polymorph 118
+(     @ZANDALARI_TROLL, @MAGE,      @ACTION_BAR_1_SLOT_6, 118,  @TYPE_SPELL),
+
+# Counterspell 2139
+(     @ZANDALARI_TROLL, @MAGE,      @ACTION_BAR_1_SLOT_7, 2139,  @TYPE_SPELL),
+
+# Arcane Intellect 1459
+(     @ZANDALARI_TROLL, @MAGE,      @ACTION_BAR_1_SLOT_8, 1459,  @TYPE_SPELL),
+
+# Slow Fall 130
+(     @ZANDALARI_TROLL, @MAGE,      @ACTION_BAR_1_SLOT_9, 130,  @TYPE_SPELL),
+
+# Conjure Refreshment 190336
+(     @ZANDALARI_TROLL, @MAGE,      @ACTION_BAR_1_SLOT_0, 190336,  @TYPE_SPELL),
+
+# Embrace of the Loa 292752 Racial
+(     @ZANDALARI_TROLL, @MAGE,  @ACTION_BAR_1_SLOT_MINUS, 292752,  @TYPE_SPELL),
+
+# Zandalari Direhorn 263707 Account Level Mount 1038
+(     @ZANDALARI_TROLL, @MAGE, @ACTION_BAR_1_SLOT_EQUALS, 263707,  @TYPE_SPELL),
+
+# Frostbolt 116
+(           @KUL_TIRAN, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Fire Blast 319836
+(           @KUL_TIRAN, @MAGE,      @ACTION_BAR_1_SLOT_2, 319836,  @TYPE_SPELL),
+
+# Arcane Explosion 1449
+(           @KUL_TIRAN, @MAGE,      @ACTION_BAR_1_SLOT_3, 1449,  @TYPE_SPELL),
+
+# Blink 1953
+(           @KUL_TIRAN, @MAGE,      @ACTION_BAR_1_SLOT_4, 1953,  @TYPE_SPELL),
+
+# Frost Nova 122
+(           @KUL_TIRAN, @MAGE,      @ACTION_BAR_1_SLOT_5, 122,  @TYPE_SPELL),
+
+# Polymorph 118
+(           @KUL_TIRAN, @MAGE,      @ACTION_BAR_1_SLOT_6, 118,  @TYPE_SPELL),
+
+# Counterspell 2139
+(           @KUL_TIRAN, @MAGE,      @ACTION_BAR_1_SLOT_7, 2139,  @TYPE_SPELL),
+
+# Arcane Intellect 1459
+(           @KUL_TIRAN, @MAGE,      @ACTION_BAR_1_SLOT_8, 1459,  @TYPE_SPELL),
+
+# Slow Fall 130
+(           @KUL_TIRAN, @MAGE,      @ACTION_BAR_1_SLOT_9, 130,  @TYPE_SPELL),
+
+# Conjure Refreshment 190336
+(           @KUL_TIRAN, @MAGE,      @ACTION_BAR_1_SLOT_0, 190336,  @TYPE_SPELL),
+
+# Haymaker 287712 Racial
+(           @KUL_TIRAN, @MAGE,  @ACTION_BAR_1_SLOT_MINUS, 287712,  @TYPE_SPELL),
+
+# Kul Tiran Charger 282682 Account Level Mount 1198
+(           @KUL_TIRAN, @MAGE, @ACTION_BAR_1_SLOT_EQUALS, 282682,  @TYPE_SPELL),
+
+# Frostbolt 116
+(     @DARK_IRON_DWARF, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Fire Blast 319836
+(     @DARK_IRON_DWARF, @MAGE,      @ACTION_BAR_1_SLOT_2, 319836,  @TYPE_SPELL),
+
+# Arcane Explosion 1449
+(     @DARK_IRON_DWARF, @MAGE,      @ACTION_BAR_1_SLOT_3, 1449,  @TYPE_SPELL),
+
+# Blink 1953
+(     @DARK_IRON_DWARF, @MAGE,      @ACTION_BAR_1_SLOT_4, 1953,  @TYPE_SPELL),
+
+# Frost Nova 122
+(     @DARK_IRON_DWARF, @MAGE,      @ACTION_BAR_1_SLOT_5, 122,  @TYPE_SPELL),
+
+# Polymorph 118
+(     @DARK_IRON_DWARF, @MAGE,      @ACTION_BAR_1_SLOT_6, 118,  @TYPE_SPELL),
+
+# Counterspell 2139
+(     @DARK_IRON_DWARF, @MAGE,      @ACTION_BAR_1_SLOT_7, 2139,  @TYPE_SPELL),
+
+# Arcane Intellect 1459
+(     @DARK_IRON_DWARF, @MAGE,      @ACTION_BAR_1_SLOT_8, 1459,  @TYPE_SPELL),
+
+# Slow Fall 130
+(     @DARK_IRON_DWARF, @MAGE,      @ACTION_BAR_1_SLOT_9, 130,  @TYPE_SPELL),
+
+# Conjure Refreshment 190336
+(     @DARK_IRON_DWARF, @MAGE,      @ACTION_BAR_1_SLOT_0, 190336,  @TYPE_SPELL),
+
+# Fireblood 265221 Racial
+(     @DARK_IRON_DWARF, @MAGE,  @ACTION_BAR_1_SLOT_MINUS, 265221,  @TYPE_SPELL),
+
+# Dark Iron Core Hound 271646 Account Level Mount 1048
+(     @DARK_IRON_DWARF, @MAGE, @ACTION_BAR_1_SLOT_EQUALS, 271646,  @TYPE_SPELL),
+
+# Frostbolt 116
+(             @VULPERA, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Fire Blast 319836
+(             @VULPERA, @MAGE,      @ACTION_BAR_1_SLOT_2, 319836,  @TYPE_SPELL),
+
+# Arcane Explosion 1449
+(             @VULPERA, @MAGE,      @ACTION_BAR_1_SLOT_3, 1449,  @TYPE_SPELL),
+
+# Blink 1953
+(             @VULPERA, @MAGE,      @ACTION_BAR_1_SLOT_4, 1953,  @TYPE_SPELL),
+
+# Frost Nova 122
+(             @VULPERA, @MAGE,      @ACTION_BAR_1_SLOT_5, 122,  @TYPE_SPELL),
+
+# Polymorph 118
+(             @VULPERA, @MAGE,      @ACTION_BAR_1_SLOT_6, 118,  @TYPE_SPELL),
+
+# Counterspell 2139
+(             @VULPERA, @MAGE,      @ACTION_BAR_1_SLOT_7, 2139,  @TYPE_SPELL),
+
+# Arcane Intellect 1459
+(             @VULPERA, @MAGE,      @ACTION_BAR_1_SLOT_8, 1459,  @TYPE_SPELL),
+
+# Slow Fall 130
+(             @VULPERA, @MAGE,      @ACTION_BAR_1_SLOT_9, 130,  @TYPE_SPELL),
+
+# Conjure Refreshment 190336
+(             @VULPERA, @MAGE,      @ACTION_BAR_1_SLOT_0, 190336,  @TYPE_SPELL),
+
+# Bag of Tricks 312411 Racial
+(             @VULPERA, @MAGE,  @ACTION_BAR_1_SLOT_MINUS, 312411,  @TYPE_SPELL),
+
+# Caravan Hyena 306423 Account Level Mount 306423 
+(             @VULPERA, @MAGE, @ACTION_BAR_1_SLOT_EQUALS, 306423,  @TYPE_SPELL),
+
+# Frostbolt 116
+(          @MAGHAR_ORC, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Fire Blast 319836
+(          @MAGHAR_ORC, @MAGE,      @ACTION_BAR_1_SLOT_2, 319836,  @TYPE_SPELL),
+
+# Arcane Explosion 1449
+(          @MAGHAR_ORC, @MAGE,      @ACTION_BAR_1_SLOT_3, 1449,  @TYPE_SPELL),
+
+# Blink 1953
+(          @MAGHAR_ORC, @MAGE,      @ACTION_BAR_1_SLOT_4, 1953,  @TYPE_SPELL),
+
+# Frost Nova 122
+(          @MAGHAR_ORC, @MAGE,      @ACTION_BAR_1_SLOT_5, 122,  @TYPE_SPELL),
+
+# Polymorph 118
+(          @MAGHAR_ORC, @MAGE,      @ACTION_BAR_1_SLOT_6, 118,  @TYPE_SPELL),
+
+# Counterspell 2139
+(          @MAGHAR_ORC, @MAGE,      @ACTION_BAR_1_SLOT_7, 2139,  @TYPE_SPELL),
+
+# Arcane Intellect 1459
+(          @MAGHAR_ORC, @MAGE,      @ACTION_BAR_1_SLOT_8, 1459,  @TYPE_SPELL),
+
+# Slow Fall 130
+(          @MAGHAR_ORC, @MAGE,      @ACTION_BAR_1_SLOT_9, 130,  @TYPE_SPELL),
+
+# Conjure Refreshment 190336
+(          @MAGHAR_ORC, @MAGE,      @ACTION_BAR_1_SLOT_0, 190336,  @TYPE_SPELL),
+
+# Ancestral Call 274738 Racial
+(          @MAGHAR_ORC, @MAGE,  @ACTION_BAR_1_SLOT_MINUS, 274738,  @TYPE_SPELL),
+
+# Mag'har Direwolf 267274 Account Level Mount 1044
+(          @MAGHAR_ORC, @MAGE, @ACTION_BAR_1_SLOT_EQUALS, 267274,  @TYPE_SPELL),
+
+# Frostbolt 116
+(          @MECHAGNOME, @MAGE,      @ACTION_BAR_1_SLOT_1, 116,  @TYPE_SPELL),
+
+# Fire Blast 319836
+(          @MECHAGNOME, @MAGE,      @ACTION_BAR_1_SLOT_2, 319836,  @TYPE_SPELL),
+
+# Arcane Explosion 1449
+(          @MECHAGNOME, @MAGE,      @ACTION_BAR_1_SLOT_3, 1449,  @TYPE_SPELL),
+
+# Blink 1953
+(          @MECHAGNOME, @MAGE,      @ACTION_BAR_1_SLOT_4, 1953,  @TYPE_SPELL),
+
+# Frost Nova 122
+(          @MECHAGNOME, @MAGE,      @ACTION_BAR_1_SLOT_5, 122,  @TYPE_SPELL),
+
+# Polymorph 118
+(          @MECHAGNOME, @MAGE,      @ACTION_BAR_1_SLOT_6, 118,  @TYPE_SPELL),
+
+# Counterspell 2139
+(          @MECHAGNOME, @MAGE,      @ACTION_BAR_1_SLOT_7, 2139,  @TYPE_SPELL),
+
+# Arcane Intellect 1459
+(          @MECHAGNOME, @MAGE,      @ACTION_BAR_1_SLOT_8, 1459,  @TYPE_SPELL),
+
+# Slow Fall 130
+(          @MECHAGNOME, @MAGE,      @ACTION_BAR_1_SLOT_9, 130,  @TYPE_SPELL),
+
+# Conjure Refreshment 190336
+(          @MECHAGNOME, @MAGE,      @ACTION_BAR_1_SLOT_0, 190336,  @TYPE_SPELL),
+
+# Hyper Organic Light Originator 312924 Racial
+(          @MECHAGNOME, @MAGE,  @ACTION_BAR_1_SLOT_MINUS, 312924,  @TYPE_SPELL),
+
+# Mechagon Mechanostrider 305592 Account Level Mount 305592
+(          @MECHAGNOME, @MAGE, @ACTION_BAR_1_SLOT_EQUALS, 305592,  @TYPE_SPELL),
+
+# Warlock #############################################################################################################################################################################################
+
+# Shadow Bolt 686
+(               @RACE_HUMAN, @WARLOCK,      @ACTION_BAR_1_SLOT_1, 686,  @TYPE_SPELL),
+
+# Will to Survive 59752 Racial
+(               @RACE_HUMAN, @WARLOCK,      @ACTION_BAR_1_SLOT_0, 59752,  @TYPE_SPELL),
+
+# Shadow Bolt 686
+(                 @RACE_ORC, @WARLOCK,      @ACTION_BAR_1_SLOT_1, 686,  @TYPE_SPELL),
+
+# Blood Fury 20572 Racial
+(                 @RACE_ORC, @WARLOCK,      @ACTION_BAR_1_SLOT_0, 20572,  @TYPE_SPELL),
+
+# Shadow Bolt 686
+(               @RACE_DWARF, @WARLOCK,      @ACTION_BAR_1_SLOT_1, 686,  @TYPE_SPELL),
+
+# Stoneform 20594 Racial
+(               @RACE_DWARF, @WARLOCK,      @ACTION_BAR_1_SLOT_0, 20594,  @TYPE_SPELL),
+
+# Shadow Bolt 686
+(              @RACE_UNDEAD, @WARLOCK,      @ACTION_BAR_1_SLOT_1, 686,  @TYPE_SPELL),
+
+# Will of the Forsaken 7744 Racial
+(              @RACE_UNDEAD, @WARLOCK,      @ACTION_BAR_1_SLOT_9, 7744,  @TYPE_SPELL),
+
+# Cannibalize 20577 Racial
+(              @RACE_UNDEAD, @WARLOCK,      @ACTION_BAR_1_SLOT_0, 20577,  @TYPE_SPELL),
+
+# Shadow Bolt 686
+(               @RACE_GNOME, @WARLOCK,      @ACTION_BAR_1_SLOT_1, 686,  @TYPE_SPELL),
+
+# Escape Artist 20589 Racial
+(               @RACE_GNOME, @WARLOCK,      @ACTION_BAR_1_SLOT_0,            @RACE_TAUREN_RACIAL_WAR_STOMP,  @TYPE_SPELL),
+
+# Shadow Bolt 686
+(               @TROLL, @WARLOCK,      @ACTION_BAR_1_SLOT_1, 686,  @TYPE_SPELL),
+
+# Berserking 26297 Racial
+(               @TROLL, @WARLOCK,      @ACTION_BAR_1_SLOT_0,            @TROLL_RACIAL_BERSERKING,  @TYPE_SPELL),
+
+# Shadow Bolt 686
+(              @GOBLIN, @WARLOCK,      @ACTION_BAR_1_SLOT_1, 686,  @TYPE_SPELL),
+
+# Rocket Jump 69070 Racial
+(              @GOBLIN, @WARLOCK,      @ACTION_BAR_1_SLOT_0,          @GOBLIN_RACIAL_ROCKET_JUMP,  @TYPE_SPELL),
+
+# Rocket Barrage 69041 Racial
+(              @GOBLIN, @WARLOCK,  @ACTION_BAR_1_SLOT_MINUS,       @GOBLIN_RACIAL_ROCKET_BARRAGE,  @TYPE_SPELL),
+
+# Shadow Bolt 686
+(           @BLOOD_ELF, @WARLOCK,      @ACTION_BAR_1_SLOT_1, 686,  @TYPE_SPELL),
+
+# Arcane Torrent 69179 Racial
+(           @BLOOD_ELF, @WARLOCK,      @ACTION_BAR_1_SLOT_0,    @BLOOD_ELF_RACIAL_ARCANE_TORRENT,  @TYPE_SPELL),
+
+# Shadow Bolt 686
+(              @WORGEN, @WARLOCK,      @ACTION_BAR_1_SLOT_1, 686,  @TYPE_SPELL),
+
+# Corruption 172
+(          @NIGHTBORNE, @WARLOCK,      @ACTION_BAR_1_SLOT_1, 172,  @TYPE_SPELL),
+
+# Shadow Bolt 232670
+(          @NIGHTBORNE, @WARLOCK,      @ACTION_BAR_1_SLOT_2, 232670,  @TYPE_SPELL),
+
+# Drain Life 234153
+(          @NIGHTBORNE, @WARLOCK,      @ACTION_BAR_1_SLOT_3, 234153,  @TYPE_SPELL),
+
+# Curse of Weakness 702
+(          @NIGHTBORNE, @WARLOCK,      @ACTION_BAR_1_SLOT_4, 702,  @TYPE_SPELL),
+
+# Unending Resolve 104773
+(          @NIGHTBORNE, @WARLOCK,      @ACTION_BAR_1_SLOT_5, 104773,  @TYPE_SPELL),
+
+# Fear 5782
+(          @NIGHTBORNE, @WARLOCK,      @ACTION_BAR_1_SLOT_6, 5782,  @TYPE_SPELL),
+
+# Health Funnel 755
+(          @NIGHTBORNE, @WARLOCK,      @ACTION_BAR_1_SLOT_7, 755,  @TYPE_SPELL),
+
+# Create Healthstone 6201
+(          @NIGHTBORNE, @WARLOCK,      @ACTION_BAR_1_SLOT_8, 6201,  @TYPE_SPELL),
+
+# Summon Demon
+(          @NIGHTBORNE, @WARLOCK,      @ACTION_BAR_1_SLOT_9,  @ACTION_BAR_1_SLOT_MINUS, @TYPE_ACTION),
+
+# Arcane Pulse 260364 Racial
+(          @NIGHTBORNE, @WARLOCK,  @ACTION_BAR_1_SLOT_MINUS, 260364,  @TYPE_SPELL),
+
+# Nightborne Manasaber 258845 Account Level Mount 1008
+(          @NIGHTBORNE, @WARLOCK, @ACTION_BAR_1_SLOT_EQUALS, 258845,  @TYPE_SPELL),
+
+# Corruption 172
+(            @VOID_ELF, @WARLOCK,      @ACTION_BAR_1_SLOT_1, 172,  @TYPE_SPELL),
+
+# Shadow Bolt 232670
+(            @VOID_ELF, @WARLOCK,      @ACTION_BAR_1_SLOT_2, 232670,  @TYPE_SPELL),
+
+# Drain Life 234153
+(            @VOID_ELF, @WARLOCK,      @ACTION_BAR_1_SLOT_3, 234153,  @TYPE_SPELL),
+
+# Curse of Weakness 702
+(            @VOID_ELF, @WARLOCK,      @ACTION_BAR_1_SLOT_4, 702,  @TYPE_SPELL),
+
+# Unending Resolve 104773
+(            @VOID_ELF, @WARLOCK,      @ACTION_BAR_1_SLOT_5, 104773,  @TYPE_SPELL),
+
+# Fear 5782
+(            @VOID_ELF, @WARLOCK,      @ACTION_BAR_1_SLOT_6, 5782,  @TYPE_SPELL),
+
+# Health Funnel 755
+(            @VOID_ELF, @WARLOCK,      @ACTION_BAR_1_SLOT_7, 755,  @TYPE_SPELL),
+
+# Create Healthstone 6201
+(            @VOID_ELF, @WARLOCK,      @ACTION_BAR_1_SLOT_8, 6201,  @TYPE_SPELL),
+
+# Summon Demon
+(            @VOID_ELF, @WARLOCK,      @ACTION_BAR_1_SLOT_9,  @ACTION_BAR_1_SLOT_MINUS, @TYPE_ACTION),
+
+# Spatial Rift 256948 Racial
+(            @VOID_ELF, @WARLOCK,  @ACTION_BAR_1_SLOT_MINUS, 256948,  @TYPE_SPELL),
+
+# Starcursed Voidstrider 259202 Account Level Mount 1009
+(            @VOID_ELF, @WARLOCK, @ACTION_BAR_1_SLOT_EQUALS, 259202,  @TYPE_SPELL),
+
+# Corruption 172
+(     @DARK_IRON_DWARF, @WARLOCK,      @ACTION_BAR_1_SLOT_1, 172,  @TYPE_SPELL),
+
+# Shadow Bolt 232670
+(     @DARK_IRON_DWARF, @WARLOCK,      @ACTION_BAR_1_SLOT_2, 232670,  @TYPE_SPELL),
+
+# Drain Life 234153
+(     @DARK_IRON_DWARF, @WARLOCK,      @ACTION_BAR_1_SLOT_3, 234153,  @TYPE_SPELL),
+
+# Curse of Weakness 702
+(     @DARK_IRON_DWARF, @WARLOCK,      @ACTION_BAR_1_SLOT_4, 702,  @TYPE_SPELL),
+
+# Unending Resolve 104773
+(     @DARK_IRON_DWARF, @WARLOCK,      @ACTION_BAR_1_SLOT_5, 104773,  @TYPE_SPELL),
+
+# Fear 5782
+(     @DARK_IRON_DWARF, @WARLOCK,      @ACTION_BAR_1_SLOT_6, 5782,  @TYPE_SPELL),
+
+# Health Funnel 755
+(     @DARK_IRON_DWARF, @WARLOCK,      @ACTION_BAR_1_SLOT_7, 755,  @TYPE_SPELL),
+
+# Create Healthstone 6201
+(     @DARK_IRON_DWARF, @WARLOCK,      @ACTION_BAR_1_SLOT_8, 6201,  @TYPE_SPELL),
+
+# Summon Demon
+(     @DARK_IRON_DWARF, @WARLOCK,      @ACTION_BAR_1_SLOT_9,  @ACTION_BAR_1_SLOT_MINUS, @TYPE_ACTION),
+
+# Fireblood 265221 Racial
+(     @DARK_IRON_DWARF, @WARLOCK,  @ACTION_BAR_1_SLOT_MINUS, 265221,  @TYPE_SPELL),
+
+# Dark Iron Core Hound 271646 Account Level Mount 1048
+(     @DARK_IRON_DWARF, @WARLOCK, @ACTION_BAR_1_SLOT_EQUALS, 271646,  @TYPE_SPELL),
+
+# Corruption 172
+(             @VULPERA, @WARLOCK,      @ACTION_BAR_1_SLOT_1, 172,  @TYPE_SPELL),
+
+# Shadow Bolt 232670
+(             @VULPERA, @WARLOCK,      @ACTION_BAR_1_SLOT_2, 232670,  @TYPE_SPELL),
+
+# Drain Life 234153
+(             @VULPERA, @WARLOCK,      @ACTION_BAR_1_SLOT_3, 234153,  @TYPE_SPELL),
+
+# Curse of Weakness 702
+(             @VULPERA, @WARLOCK,      @ACTION_BAR_1_SLOT_4, 702,  @TYPE_SPELL),
+
+# Unending Resolve 104773
+(             @VULPERA, @WARLOCK,      @ACTION_BAR_1_SLOT_5, 104773,  @TYPE_SPELL),
+
+# Fear 5782
+(             @VULPERA, @WARLOCK,      @ACTION_BAR_1_SLOT_6, 5782,  @TYPE_SPELL),
+
+# Health Funnel 755
+(             @VULPERA, @WARLOCK,      @ACTION_BAR_1_SLOT_7, 755,  @TYPE_SPELL),
+
+# Create Healthstone 6201
+(             @VULPERA, @WARLOCK,      @ACTION_BAR_1_SLOT_8, 6201,  @TYPE_SPELL),
+
+# Summon Demon
+(             @VULPERA, @WARLOCK,      @ACTION_BAR_1_SLOT_9,  @ACTION_BAR_1_SLOT_MINUS, @TYPE_ACTION),
+
+# Bag of Tricks 312411 Racial
+(             @VULPERA, @WARLOCK,  @ACTION_BAR_1_SLOT_MINUS, 312411,  @TYPE_SPELL),
+
+# Caravan Hyena 306423 Account Level Mount 306423 
+(             @VULPERA, @WARLOCK, @ACTION_BAR_1_SLOT_EQUALS, 306423,  @TYPE_SPELL),
+
+# Corruption 172
+(          @MECHAGNOME, @WARLOCK,      @ACTION_BAR_1_SLOT_1, 172,  @TYPE_SPELL),
+
+# Shadow Bolt 232670
+(          @MECHAGNOME, @WARLOCK,      @ACTION_BAR_1_SLOT_2, 232670,  @TYPE_SPELL),
+
+# Drain Life 234153
+(          @MECHAGNOME, @WARLOCK,      @ACTION_BAR_1_SLOT_3, 234153,  @TYPE_SPELL),
+
+# Curse of Weakness 702
+(          @MECHAGNOME, @WARLOCK,      @ACTION_BAR_1_SLOT_4, 702,  @TYPE_SPELL),
+
+# Unending Resolve 104773
+(          @MECHAGNOME, @WARLOCK,      @ACTION_BAR_1_SLOT_5, 104773,  @TYPE_SPELL),
+
+# Fear 5782
+(          @MECHAGNOME, @WARLOCK,      @ACTION_BAR_1_SLOT_6, 5782,  @TYPE_SPELL),
+
+# Health Funnel 755
+(          @MECHAGNOME, @WARLOCK,      @ACTION_BAR_1_SLOT_7, 755,  @TYPE_SPELL),
+
+# Create Healthstone 6201
+(          @MECHAGNOME, @WARLOCK,      @ACTION_BAR_1_SLOT_8, 6201,  @TYPE_SPELL),
+
+# Summon Demon
+(          @MECHAGNOME, @WARLOCK,      @ACTION_BAR_1_SLOT_9,  @ACTION_BAR_1_SLOT_MINUS, @TYPE_ACTION),
+
+# Hyper Organic Light Originator 312924 Racial
+(          @MECHAGNOME, @WARLOCK,  @ACTION_BAR_1_SLOT_MINUS, 312924,  @TYPE_SPELL),
+
+# Mechagon Mechanostrider 305592 Account Level Mount 305592
+(          @MECHAGNOME, @WARLOCK, @ACTION_BAR_1_SLOT_EQUALS, 305592,  @TYPE_SPELL),
+
+# Monk ################################################################################################################################################################################################
+
+# Tiger Palm 100780
+(               @RACE_HUMAN, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Will to Survive 59752 Racial
+(               @RACE_HUMAN, @MONK,      @ACTION_BAR_1_SLOT_0, 59752,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(                 @RACE_ORC, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Blood Fury 20572 Racial
+(                 @RACE_ORC, @MONK,      @ACTION_BAR_1_SLOT_0, 20572,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(               @RACE_DWARF, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Stoneform 20594 Racial
+(               @RACE_DWARF, @MONK,      @ACTION_BAR_1_SLOT_0, 20594,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(           @RACE_NIGHT_ELF, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Shadowmeld 58984 Racial
+(           @RACE_NIGHT_ELF, @MONK,      @ACTION_BAR_1_SLOT_0, 58984,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(              @RACE_UNDEAD, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Will of the Forsaken 7744 Racial
+(              @RACE_UNDEAD, @MONK,      @ACTION_BAR_1_SLOT_9, 7744,  @TYPE_SPELL),
+
+# Cannibalize 20577 Racial
+(              @RACE_UNDEAD, @MONK,      @ACTION_BAR_1_SLOT_0, 20577,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(              @RACE_TAUREN, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# War Stomp 20549
+(              @RACE_TAUREN, @MONK,      @ACTION_BAR_1_SLOT_0,            @RACE_TAUREN_RACIAL_WAR_STOMP,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(               @RACE_GNOME, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Escape Artist 20589 Racial
+(               @RACE_GNOME, @MONK,      @ACTION_BAR_1_SLOT_0,            @RACE_TAUREN_RACIAL_WAR_STOMP,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(               @TROLL, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Berserking 26297 Racial
+(               @TROLL, @MONK,      @ACTION_BAR_1_SLOT_0,            @TROLL_RACIAL_BERSERKING,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(           @BLOOD_ELF, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Arcane Torrent 69179 Racial
+(           @BLOOD_ELF, @MONK,      @ACTION_BAR_1_SLOT_0,    @BLOOD_ELF_RACIAL_ARCANE_TORRENT,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(             @DRAENEI, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Gift of the Naaru 28880 Racial
+(             @DRAENEI, @MONK,      @ACTION_BAR_1_SLOT_0,   @DRAENEI_RACIAL_GIFT_OF_THE_NAARU,  @TYPE_SPELL),
+
+# 88163 Attack
+# (    @PANDAREN_NEUTRAL, @MONK,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(    @PANDAREN_NEUTRAL, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(    @PANDAREN_NEUTRAL, @MONK,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Sugarcane Stalk 77272 Item
+(    @PANDAREN_NEUTRAL, @MONK, @ACTION_BAR_1_SLOT_EQUALS, 77272,   @TYPE_ITEM),
+
+# 88163 Attack
+# (   @PANDAREN_ALLIANCE, @MONK,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(   @PANDAREN_ALLIANCE, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(   @PANDAREN_ALLIANCE, @MONK,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Sugarcane Stalk 77272 Item
+(   @PANDAREN_ALLIANCE, @MONK, @ACTION_BAR_1_SLOT_EQUALS, 77272,   @TYPE_ITEM),
+
+# 88163 Attack
+# (      @PANDAREN_HORDE, @MONK,      @ACTION_BAR_1_SLOT_1,                     @GENERIC_ATTACK,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(      @PANDAREN_HORDE, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Quaking Palm 107079 Racial
+(      @PANDAREN_HORDE, @MONK,      @ACTION_BAR_1_SLOT_0,       @PANDAREN_RACIAL_QUAKING_PALM,  @TYPE_SPELL),
+
+# Small Sugarcane Stalk 77272 Item
+(      @PANDAREN_HORDE, @MONK, @ACTION_BAR_1_SLOT_EQUALS, 77272,   @TYPE_ITEM),
+
+# Tiger Palm 100780
+(          @NIGHTBORNE, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Blackout Kick 100784
+(          @NIGHTBORNE, @MONK,      @ACTION_BAR_1_SLOT_2, 100784,  @TYPE_SPELL),
+
+# Expel Harm 322101
+(          @NIGHTBORNE, @MONK,      @ACTION_BAR_1_SLOT_3, 322101,  @TYPE_SPELL),
+
+# Spinning Crane Kick 101546
+(          @NIGHTBORNE, @MONK,      @ACTION_BAR_1_SLOT_4, 101546,  @TYPE_SPELL),
+
+# Touch of Death 322109
+(          @NIGHTBORNE, @MONK,      @ACTION_BAR_1_SLOT_5, 322109,  @TYPE_SPELL),
+
+# Crackling Jade Lightning 117952
+(          @NIGHTBORNE, @MONK,      @ACTION_BAR_1_SLOT_6, 117952,  @TYPE_SPELL),
+
+# Roll 109132
+(          @NIGHTBORNE, @MONK,      @ACTION_BAR_1_SLOT_7, 109132,  @TYPE_SPELL),
+
+# Vivify 116670
+(          @NIGHTBORNE, @MONK,      @ACTION_BAR_1_SLOT_8, 116670,  @TYPE_SPELL),
+
+# Leg Sweep 119381
+(          @NIGHTBORNE, @MONK,      @ACTION_BAR_1_SLOT_9, 116670,  @TYPE_SPELL),
+
+# Arcane Pulse 260364 Racial
+(          @NIGHTBORNE, @MONK,  @ACTION_BAR_1_SLOT_MINUS, 260364,  @TYPE_SPELL),
+
+# Nightborne Manasaber 258845 Account Level Mount 1008
+(          @NIGHTBORNE, @MONK, @ACTION_BAR_1_SLOT_EQUALS, 258845,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+( @HIGHMOUNTAIN_TAUREN, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Blackout Kick 100784
+( @HIGHMOUNTAIN_TAUREN, @MONK,      @ACTION_BAR_1_SLOT_2, 100784,  @TYPE_SPELL),
+
+# Expel Harm 322101
+( @HIGHMOUNTAIN_TAUREN, @MONK,      @ACTION_BAR_1_SLOT_3, 322101,  @TYPE_SPELL),
+
+# Spinning Crane Kick 101546
+( @HIGHMOUNTAIN_TAUREN, @MONK,      @ACTION_BAR_1_SLOT_4, 101546,  @TYPE_SPELL),
+
+# Touch of Death 322109
+( @HIGHMOUNTAIN_TAUREN, @MONK,      @ACTION_BAR_1_SLOT_5, 322109,  @TYPE_SPELL),
+
+# Crackling Jade Lightning 117952
+( @HIGHMOUNTAIN_TAUREN, @MONK,      @ACTION_BAR_1_SLOT_6, 117952,  @TYPE_SPELL),
+
+# Roll 109132
+( @HIGHMOUNTAIN_TAUREN, @MONK,      @ACTION_BAR_1_SLOT_7, 109132,  @TYPE_SPELL),
+
+# Vivify 116670
+( @HIGHMOUNTAIN_TAUREN, @MONK,      @ACTION_BAR_1_SLOT_8, 116670,  @TYPE_SPELL),
+
+# Leg Sweep 119381
+( @HIGHMOUNTAIN_TAUREN, @MONK,      @ACTION_BAR_1_SLOT_9, 116670,  @TYPE_SPELL),
+
+# Bull Rush 255654 Racial
+( @HIGHMOUNTAIN_TAUREN, @MONK,  @ACTION_BAR_1_SLOT_MINUS, 255654,  @TYPE_SPELL),
+
+# Highmountain Thunderhoof 258060 Account Level Mount 1007
+( @HIGHMOUNTAIN_TAUREN, @MONK, @ACTION_BAR_1_SLOT_EQUALS, 258060,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(            @VOID_ELF, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Blackout Kick 100784
+(            @VOID_ELF, @MONK,      @ACTION_BAR_1_SLOT_2, 100784,  @TYPE_SPELL),
+
+# Expel Harm 322101
+(            @VOID_ELF, @MONK,      @ACTION_BAR_1_SLOT_3, 322101,  @TYPE_SPELL),
+
+# Spinning Crane Kick 101546
+(            @VOID_ELF, @MONK,      @ACTION_BAR_1_SLOT_4, 101546,  @TYPE_SPELL),
+
+# Touch of Death 322109
+(            @VOID_ELF, @MONK,      @ACTION_BAR_1_SLOT_5, 322109,  @TYPE_SPELL),
+
+# Crackling Jade Lightning 117952
+(            @VOID_ELF, @MONK,      @ACTION_BAR_1_SLOT_6, 117952,  @TYPE_SPELL),
+
+# Roll 109132
+(            @VOID_ELF, @MONK,      @ACTION_BAR_1_SLOT_7, 109132,  @TYPE_SPELL),
+
+# Vivify 116670
+(            @VOID_ELF, @MONK,      @ACTION_BAR_1_SLOT_8, 116670,  @TYPE_SPELL),
+
+# Leg Sweep 119381
+(            @VOID_ELF, @MONK,      @ACTION_BAR_1_SLOT_9, 116670,  @TYPE_SPELL),
+
+# Spatial Rift 256948 Racial
+(            @VOID_ELF, @MONK,  @ACTION_BAR_1_SLOT_MINUS, 256948,  @TYPE_SPELL),
+
+# Starcursed Voidstrider 259202 Account Level Mount 1009
+(            @VOID_ELF, @MONK, @ACTION_BAR_1_SLOT_EQUALS, 259202,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(     @ZANDALARI_TROLL, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Blackout Kick 100784
+(     @ZANDALARI_TROLL, @MONK,      @ACTION_BAR_1_SLOT_2, 100784,  @TYPE_SPELL),
+
+# Expel Harm 322101
+(     @ZANDALARI_TROLL, @MONK,      @ACTION_BAR_1_SLOT_3, 322101,  @TYPE_SPELL),
+
+# Spinning Crane Kick 101546
+(     @ZANDALARI_TROLL, @MONK,      @ACTION_BAR_1_SLOT_4, 101546,  @TYPE_SPELL),
+
+# Touch of Death 322109
+(     @ZANDALARI_TROLL, @MONK,      @ACTION_BAR_1_SLOT_5, 322109,  @TYPE_SPELL),
+
+# Crackling Jade Lightning 117952
+(     @ZANDALARI_TROLL, @MONK,      @ACTION_BAR_1_SLOT_6, 117952,  @TYPE_SPELL),
+
+# Roll 109132
+(     @ZANDALARI_TROLL, @MONK,      @ACTION_BAR_1_SLOT_7, 109132,  @TYPE_SPELL),
+
+# Vivify 116670
+(     @ZANDALARI_TROLL, @MONK,      @ACTION_BAR_1_SLOT_8, 116670,  @TYPE_SPELL),
+
+# Leg Sweep 119381
+(     @ZANDALARI_TROLL, @MONK,      @ACTION_BAR_1_SLOT_9, 116670,  @TYPE_SPELL),
+
+# Embrace of the Loa 292752 Racial
+(     @ZANDALARI_TROLL, @MONK,  @ACTION_BAR_1_SLOT_MINUS, 292752,  @TYPE_SPELL),
+
+# Zandalari Direhorn 263707 Account Level Mount 1038
+(     @ZANDALARI_TROLL, @MONK, @ACTION_BAR_1_SLOT_EQUALS, 263707,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(           @KUL_TIRAN, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Blackout Kick 100784
+(           @KUL_TIRAN, @MONK,      @ACTION_BAR_1_SLOT_2, 100784,  @TYPE_SPELL),
+
+# Expel Harm 322101
+(           @KUL_TIRAN, @MONK,      @ACTION_BAR_1_SLOT_3, 322101,  @TYPE_SPELL),
+
+# Spinning Crane Kick 101546
+(           @KUL_TIRAN, @MONK,      @ACTION_BAR_1_SLOT_4, 101546,  @TYPE_SPELL),
+
+# Touch of Death 322109
+(           @KUL_TIRAN, @MONK,      @ACTION_BAR_1_SLOT_5, 322109,  @TYPE_SPELL),
+
+# Crackling Jade Lightning 117952
+(           @KUL_TIRAN, @MONK,      @ACTION_BAR_1_SLOT_6, 117952,  @TYPE_SPELL),
+
+# Roll 109132
+(           @KUL_TIRAN, @MONK,      @ACTION_BAR_1_SLOT_7, 109132,  @TYPE_SPELL),
+
+# Vivify 116670
+(           @KUL_TIRAN, @MONK,      @ACTION_BAR_1_SLOT_8, 116670,  @TYPE_SPELL),
+
+# Leg Sweep 119381
+(           @KUL_TIRAN, @MONK,      @ACTION_BAR_1_SLOT_9, 116670,  @TYPE_SPELL),
+
+# Haymaker 287712 Racial
+(           @KUL_TIRAN, @MONK,  @ACTION_BAR_1_SLOT_MINUS, 287712,  @TYPE_SPELL),
+
+# Kul Tiran Charger 282682 Account Level Mount 1198
+(           @KUL_TIRAN, @MONK, @ACTION_BAR_1_SLOT_EQUALS, 282682,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(     @DARK_IRON_DWARF, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Blackout Kick 100784
+(     @DARK_IRON_DWARF, @MONK,      @ACTION_BAR_1_SLOT_2, 100784,  @TYPE_SPELL),
+
+# Expel Harm 322101
+(     @DARK_IRON_DWARF, @MONK,      @ACTION_BAR_1_SLOT_3, 322101,  @TYPE_SPELL),
+
+# Spinning Crane Kick 101546
+(     @DARK_IRON_DWARF, @MONK,      @ACTION_BAR_1_SLOT_4, 101546,  @TYPE_SPELL),
+
+# Touch of Death 322109
+(     @DARK_IRON_DWARF, @MONK,      @ACTION_BAR_1_SLOT_5, 322109,  @TYPE_SPELL),
+
+# Crackling Jade Lightning 117952
+(     @DARK_IRON_DWARF, @MONK,      @ACTION_BAR_1_SLOT_6, 117952,  @TYPE_SPELL),
+
+# Roll 109132
+(     @DARK_IRON_DWARF, @MONK,      @ACTION_BAR_1_SLOT_7, 109132,  @TYPE_SPELL),
+
+# Vivify 116670
+(     @DARK_IRON_DWARF, @MONK,      @ACTION_BAR_1_SLOT_8, 116670,  @TYPE_SPELL),
+
+# Leg Sweep 119381
+(     @DARK_IRON_DWARF, @MONK,      @ACTION_BAR_1_SLOT_9, 116670,  @TYPE_SPELL),
+
+# Fireblood 265221 Racial
+(     @DARK_IRON_DWARF, @MONK,  @ACTION_BAR_1_SLOT_MINUS, 265221,  @TYPE_SPELL),
+
+# Dark Iron Core Hound 271646 Account Level Mount 1048
+(     @DARK_IRON_DWARF, @MONK, @ACTION_BAR_1_SLOT_EQUALS, 271646,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(             @VULPERA, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Blackout Kick 100784
+(             @VULPERA, @MONK,      @ACTION_BAR_1_SLOT_2, 100784,  @TYPE_SPELL),
+
+# Expel Harm 322101
+(             @VULPERA, @MONK,      @ACTION_BAR_1_SLOT_3, 322101,  @TYPE_SPELL),
+
+# Spinning Crane Kick 101546
+(             @VULPERA, @MONK,      @ACTION_BAR_1_SLOT_4, 101546,  @TYPE_SPELL),
+
+# Touch of Death 322109
+(             @VULPERA, @MONK,      @ACTION_BAR_1_SLOT_5, 322109,  @TYPE_SPELL),
+
+# Crackling Jade Lightning 117952
+(             @VULPERA, @MONK,      @ACTION_BAR_1_SLOT_6, 117952,  @TYPE_SPELL),
+
+# Roll 109132
+(             @VULPERA, @MONK,      @ACTION_BAR_1_SLOT_7, 109132,  @TYPE_SPELL),
+
+# Vivify 116670
+(             @VULPERA, @MONK,      @ACTION_BAR_1_SLOT_8, 116670,  @TYPE_SPELL),
+
+# Leg Sweep 119381
+(             @VULPERA, @MONK,      @ACTION_BAR_1_SLOT_9, 116670,  @TYPE_SPELL),
+
+# Bag of Tricks 312411 Racial
+(             @VULPERA, @MONK,  @ACTION_BAR_1_SLOT_MINUS, 312411,  @TYPE_SPELL),
+
+# Caravan Hyena 306423 Account Level Mount 306423 
+(             @VULPERA, @MONK, @ACTION_BAR_1_SLOT_EQUALS, 306423,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(          @MAGHAR_ORC, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Blackout Kick 100784
+(          @MAGHAR_ORC, @MONK,      @ACTION_BAR_1_SLOT_2, 100784,  @TYPE_SPELL),
+
+# Expel Harm 322101
+(          @MAGHAR_ORC, @MONK,      @ACTION_BAR_1_SLOT_3, 322101,  @TYPE_SPELL),
+
+# Spinning Crane Kick 101546
+(          @MAGHAR_ORC, @MONK,      @ACTION_BAR_1_SLOT_4, 101546,  @TYPE_SPELL),
+
+# Touch of Death 322109
+(          @MAGHAR_ORC, @MONK,      @ACTION_BAR_1_SLOT_5, 322109,  @TYPE_SPELL),
+
+# Crackling Jade Lightning 117952
+(          @MAGHAR_ORC, @MONK,      @ACTION_BAR_1_SLOT_6, 117952,  @TYPE_SPELL),
+
+# Roll 109132
+(          @MAGHAR_ORC, @MONK,      @ACTION_BAR_1_SLOT_7, 109132,  @TYPE_SPELL),
+
+# Vivify 116670
+(          @MAGHAR_ORC, @MONK,      @ACTION_BAR_1_SLOT_8, 116670,  @TYPE_SPELL),
+
+# Leg Sweep 119381
+(          @MAGHAR_ORC, @MONK,      @ACTION_BAR_1_SLOT_9, 116670,  @TYPE_SPELL),
+
+# Ancestral Call 274738 Racial
+(          @MAGHAR_ORC, @MONK,  @ACTION_BAR_1_SLOT_MINUS, 274738,  @TYPE_SPELL),
+
+# Mag'har Direwolf 267274 Account Level Mount 1044
+(          @MAGHAR_ORC, @MONK, @ACTION_BAR_1_SLOT_EQUALS, 267274,  @TYPE_SPELL),
+
+# Tiger Palm 100780
+(          @MECHAGNOME, @MONK,      @ACTION_BAR_1_SLOT_1, 100780,  @TYPE_SPELL),
+
+# Blackout Kick 100784
+(          @MECHAGNOME, @MONK,      @ACTION_BAR_1_SLOT_2, 100784,  @TYPE_SPELL),
+
+# Expel Harm 322101
+(          @MECHAGNOME, @MONK,      @ACTION_BAR_1_SLOT_3, 322101,  @TYPE_SPELL),
+
+# Spinning Crane Kick 101546
+(          @MECHAGNOME, @MONK,      @ACTION_BAR_1_SLOT_4, 101546,  @TYPE_SPELL),
+
+# Touch of Death 322109
+(          @MECHAGNOME, @MONK,      @ACTION_BAR_1_SLOT_5, 322109,  @TYPE_SPELL),
+
+# Crackling Jade Lightning 117952
+(          @MECHAGNOME, @MONK,      @ACTION_BAR_1_SLOT_6, 117952,  @TYPE_SPELL),
+
+# Roll 109132
+(          @MECHAGNOME, @MONK,      @ACTION_BAR_1_SLOT_7, 109132,  @TYPE_SPELL),
+
+# Vivify 116670
+(          @MECHAGNOME, @MONK,      @ACTION_BAR_1_SLOT_8, 116670,  @TYPE_SPELL),
+
+# Leg Sweep 119381
+(          @MECHAGNOME, @MONK,      @ACTION_BAR_1_SLOT_9, 116670,  @TYPE_SPELL),
+
+# Hyper Organic Light Originator 312924 Racial
+(          @MECHAGNOME, @MONK,  @ACTION_BAR_1_SLOT_MINUS, 312924,  @TYPE_SPELL),
+
+# Mechagon Mechanostrider 305592 Account Level Mount 305592
+(          @MECHAGNOME, @MONK, @ACTION_BAR_1_SLOT_EQUALS, 305592,  @TYPE_SPELL),
+
+# Druid ###############################################################################################################################################################################################
+
+# Wrath 5176
+(           @RACE_NIGHT_ELF, @DRUID,      @ACTION_BAR_1_SLOT_1, 5176,  @TYPE_SPELL),
+
+# Shadowmeld 58984 Racial
+(           @RACE_NIGHT_ELF, @DRUID,      @ACTION_BAR_1_SLOT_0, 58984,  @TYPE_SPELL),
+
+# Wrath 5176
+(              @RACE_TAUREN, @DRUID,      @ACTION_BAR_1_SLOT_1, 5176,  @TYPE_SPELL),
+
+# War Stomp 20549
+(              @RACE_TAUREN, @DRUID,      @ACTION_BAR_1_SLOT_0,            @RACE_TAUREN_RACIAL_WAR_STOMP,  @TYPE_SPELL),
+
+# Wrath 5176
+(               @TROLL, @DRUID,      @ACTION_BAR_1_SLOT_1, 5176,  @TYPE_SPELL),
+
+# Berserking 26297 Racial
+(               @TROLL, @DRUID,      @ACTION_BAR_1_SLOT_0,            @TROLL_RACIAL_BERSERKING,  @TYPE_SPELL),
+
+# Wrath 5176
+(              @WORGEN, @DRUID,      @ACTION_BAR_1_SLOT_1, 5176,  @TYPE_SPELL),
+
+# Moonfire 8921
+( @HIGHMOUNTAIN_TAUREN, @DRUID,      @ACTION_BAR_1_SLOT_1, 8921,  @TYPE_SPELL),
+
+# Wrath 5176
+( @HIGHMOUNTAIN_TAUREN, @DRUID,      @ACTION_BAR_1_SLOT_2, 5176,  @TYPE_SPELL),
+
+# Entangling Roots 339
+( @HIGHMOUNTAIN_TAUREN, @DRUID,      @ACTION_BAR_1_SLOT_3, 339,  @TYPE_SPELL),
+
+# Dash 1850
+( @HIGHMOUNTAIN_TAUREN, @DRUID,      @ACTION_BAR_1_SLOT_4, 1850,  @TYPE_SPELL),
+
+# Regrowth 8936
+( @HIGHMOUNTAIN_TAUREN, @DRUID,      @ACTION_BAR_1_SLOT_5, 8936,  @TYPE_SPELL),
+
+# Bull Rush 255654 Racial
+( @HIGHMOUNTAIN_TAUREN, @DRUID,  @ACTION_BAR_1_SLOT_MINUS, 255654,  @TYPE_SPELL),
+
+# Highmountain Thunderhoof 258060 Account Level Mount 1007
+( @HIGHMOUNTAIN_TAUREN, @DRUID, @ACTION_BAR_1_SLOT_EQUALS, 258060,  @TYPE_SPELL),
+
+# Bear Form 5487 --
+# -----------------
+
+# Mangle 33917 Bear Form
+( @HIGHMOUNTAIN_TAUREN, @DRUID, 96, 33917,  @TYPE_SPELL),
+
+# Cat Form 768 --
+# ---------------
+
+# Shred 5221 Cat Form
+( @HIGHMOUNTAIN_TAUREN, @DRUID, 72, 5221,  @TYPE_SPELL),
+
+# Ferocious Bite 22568 Cat Form
+( @HIGHMOUNTAIN_TAUREN, @DRUID, 73, 22568,  @TYPE_SPELL),
+
+# Travel Form 783 / Moonkin Form 24858 --
+# ---------------------------------------
+
+# Moonfire 8921
+( @HIGHMOUNTAIN_TAUREN, @DRUID, 108, 8921,  @TYPE_SPELL),
+
+# Wrath 5176
+( @HIGHMOUNTAIN_TAUREN, @DRUID, 109, 5176,  @TYPE_SPELL),
+
+# Entangling Roots 339
+( @HIGHMOUNTAIN_TAUREN, @DRUID, 110, 339,  @TYPE_SPELL),
+
+# Dash 1850
+( @HIGHMOUNTAIN_TAUREN, @DRUID, 111, 1850,  @TYPE_SPELL),
+
+# Regrowth 8936
+( @HIGHMOUNTAIN_TAUREN, @DRUID, 112, 8936,  @TYPE_SPELL),
+
+# Bull Rush 255654 Racial
+( @HIGHMOUNTAIN_TAUREN, @DRUID, 117, 255654,  @TYPE_SPELL),
+
+# Highmountain Thunderhoof 258060 Account Level Mount 1007
+( @HIGHMOUNTAIN_TAUREN, @DRUID, 118, 258060,  @TYPE_SPELL),
+
+# Moonfire 8921
+(     @ZANDALARI_TROLL, @DRUID,      @ACTION_BAR_1_SLOT_1, 8921,  @TYPE_SPELL),
+
+# Wrath 5176
+(     @ZANDALARI_TROLL, @DRUID,      @ACTION_BAR_1_SLOT_2, 5176,  @TYPE_SPELL),
+
+# Entangling Roots 339
+(     @ZANDALARI_TROLL, @DRUID,      @ACTION_BAR_1_SLOT_3, 339,  @TYPE_SPELL),
+
+# Dash 1850
+(     @ZANDALARI_TROLL, @DRUID,      @ACTION_BAR_1_SLOT_4, 1850,  @TYPE_SPELL),
+
+# Regrowth 8936
+(     @ZANDALARI_TROLL, @DRUID,      @ACTION_BAR_1_SLOT_5, 8936,  @TYPE_SPELL),
+
+# Embrace of the Loa 292752 Racial
+(     @ZANDALARI_TROLL, @DRUID,  @ACTION_BAR_1_SLOT_MINUS, 292752,  @TYPE_SPELL),
+
+# Zandalari Direhorn 263707 Account Level Mount 1038
+(     @ZANDALARI_TROLL, @DRUID, @ACTION_BAR_1_SLOT_EQUALS, 263707,  @TYPE_SPELL),
+
+# Embrace of Pa'ku 292361 On Create
+
+# Bear Form 5487 --
+# -----------------
+
+# Mangle 33917 Bear Form
+(     @ZANDALARI_TROLL, @DRUID, 96, 33917,  @TYPE_SPELL),
+
+# Cat Form 768 --
+# ---------------
+
+# Shred 5221 Cat Form
+(     @ZANDALARI_TROLL, @DRUID, 72, 5221,  @TYPE_SPELL),
+
+# Ferocious Bite 22568 Cat Form
+(     @ZANDALARI_TROLL, @DRUID, 73, 22568,  @TYPE_SPELL),
+
+# Travel Form 783 / Moonkin Form 24858 --
+# ---------------------------------------
+
+# Moonfire 8921
+(     @ZANDALARI_TROLL, @DRUID, 108, 8921,  @TYPE_SPELL),
+
+# Wrath 5176
+(     @ZANDALARI_TROLL, @DRUID, 109, 5176,  @TYPE_SPELL),
+
+# Entangling Roots 339
+(     @ZANDALARI_TROLL, @DRUID, 110, 339,  @TYPE_SPELL),
+
+# Dash 1850
+(     @ZANDALARI_TROLL, @DRUID, 111, 1850,  @TYPE_SPELL),
+
+# Regrowth 8936
+(     @ZANDALARI_TROLL, @DRUID, 112, 8936,  @TYPE_SPELL),
+
+# Embrace of the Loa 292752 Racial
+(     @ZANDALARI_TROLL, @DRUID, 117, 292752,  @TYPE_SPELL),
+
+# Zandalari Direhorn 263707 Account Level Mount 1038
+(     @ZANDALARI_TROLL, @DRUID, 118, 263707,  @TYPE_SPELL),
+
+# Moonfire 8921
+(           @KUL_TIRAN, @DRUID,      @ACTION_BAR_1_SLOT_1, 8921,  @TYPE_SPELL),
+
+# Wrath 5176
+(           @KUL_TIRAN, @DRUID,      @ACTION_BAR_1_SLOT_2, 5176,  @TYPE_SPELL),
+
+# Entangling Roots 339
+(           @KUL_TIRAN, @DRUID,      @ACTION_BAR_1_SLOT_3, 339,  @TYPE_SPELL),
+
+# Dash 1850
+(           @KUL_TIRAN, @DRUID,      @ACTION_BAR_1_SLOT_4, 1850,  @TYPE_SPELL),
+
+# Regrowth 8936
+(           @KUL_TIRAN, @DRUID,      @ACTION_BAR_1_SLOT_5, 8936,  @TYPE_SPELL),
+
+# Haymaker 287712 Racial
+(           @KUL_TIRAN, @DRUID,  @ACTION_BAR_1_SLOT_MINUS, 287712,  @TYPE_SPELL),
+
+# Kul Tiran Charger 282682 Account Level Mount 1198
+(           @KUL_TIRAN, @DRUID, @ACTION_BAR_1_SLOT_EQUALS, 282682,  @TYPE_SPELL),
+
+# Bear Form 5487 --
+# -----------------
+
+# Mangle 33917 Bear Form
+(           @KUL_TIRAN, @DRUID, 96, 33917,  @TYPE_SPELL),
+
+# Cat Form 768 --
+# ---------------
+
+# Shred 5221 Cat Form
+(           @KUL_TIRAN, @DRUID, 72, 5221,  @TYPE_SPELL),
+
+# Ferocious Bite 22568 Cat Form
+(           @KUL_TIRAN, @DRUID, 73, 22568,  @TYPE_SPELL),
+
+# Travel Form 783 / Moonkin Form 24858 --
+# ---------------------------------------
+
+# Moonfire 8921
+(           @KUL_TIRAN, @DRUID, 108, 8921,  @TYPE_SPELL),
+
+# Wrath 5176
+(           @KUL_TIRAN, @DRUID, 109, 5176,  @TYPE_SPELL),
+
+# Entangling Roots 339
+(           @KUL_TIRAN, @DRUID, 110, 339,  @TYPE_SPELL),
+
+# Dash 1850
+(           @KUL_TIRAN, @DRUID, 111, 1850,  @TYPE_SPELL),
+
+# Regrowth 8936
+(           @KUL_TIRAN, @DRUID, 112, 8936,  @TYPE_SPELL),
+
+# Haymaker 287712 Racial
+(           @KUL_TIRAN, @DRUID, 117, 287712,  @TYPE_SPELL),
+
+# Kul Tiran Charger 282682 Account Level Mount 1198
+(           @KUL_TIRAN, @DRUID, 118, 282682,  @TYPE_SPELL),
+
+# Demon Hunter ########################################################################################################################################################################################
+
+# Fel Rush 344865
+(           @RACE_NIGHT_ELF, @DEMON_HUNTER,      @ACTION_BAR_1_SLOT_1, 344865,  @TYPE_SPELL),
+
+# Demon's Bite 344859
+(           @RACE_NIGHT_ELF, @DEMON_HUNTER,      @ACTION_BAR_1_SLOT_2, 344859,  @TYPE_SPELL),
+
+# Chaos Strike 344862
+(           @RACE_NIGHT_ELF, @DEMON_HUNTER,      @ACTION_BAR_1_SLOT_3, 344862,  @TYPE_SPELL),
+
+# Shadowmeld 58984 Racial
+(           @RACE_NIGHT_ELF, @DEMON_HUNTER,      @ACTION_BAR_1_SLOT_0, 58984,  @TYPE_SPELL),
+
+# Spectral Sight 188501
+(           @RACE_NIGHT_ELF, @DEMON_HUNTER,  @ACTION_BAR_1_SLOT_MINUS, 188501,  @TYPE_SPELL),
+
+# Felsaber 200175 Account Level Mount 780
+(           @RACE_NIGHT_ELF, @DEMON_HUNTER, @ACTION_BAR_1_SLOT_EQUALS, 200175,  @TYPE_SPELL),
+
+# Fel Rush 344865
+(           @BLOOD_ELF, @DEMON_HUNTER,      @ACTION_BAR_1_SLOT_1, 344865,  @TYPE_SPELL),
+
+# Demon's Bite 344859
+(           @BLOOD_ELF, @DEMON_HUNTER,      @ACTION_BAR_1_SLOT_2, 344859,  @TYPE_SPELL),
+
+# Chaos Strike 344862
+(           @BLOOD_ELF, @DEMON_HUNTER,      @ACTION_BAR_1_SLOT_3, 344862,  @TYPE_SPELL),
+
+# Arcane Torrent 69179 Racial
+(           @BLOOD_ELF, @DEMON_HUNTER,      @ACTION_BAR_1_SLOT_0,    @BLOOD_ELF_RACIAL_ARCANE_TORRENT,  @TYPE_SPELL),
+
+# Spectral Sight 188501
+(           @BLOOD_ELF, @DEMON_HUNTER,  @ACTION_BAR_1_SLOT_MINUS, 188501,  @TYPE_SPELL),
+
+# Felsaber 200175 Account Level Mount 780
+(           @BLOOD_ELF, @DEMON_HUNTER, @ACTION_BAR_1_SLOT_EQUALS, 200175,  @TYPE_SPELL),
+# Evoker ##############################################################################################################################################################################################
+(   @DRACTHYR_ALLIANCE,       @EVOKER,      @ACTION_BAR_1_SLOT_1,              @DRACTHYR_LIVING_FLAME,  @TYPE_SPELL), # 361469 Living Flame (Red)
+(   @DRACTHYR_ALLIANCE,       @EVOKER,      @ACTION_BAR_1_SLOT_2,              @DRACTHYR_AZURE_STRIKE,  @TYPE_SPELL), # 362969 Azure Strike (Blue)
+(   @DRACTHYR_ALLIANCE,       @EVOKER,      @ACTION_BAR_1_SLOT_3,        @DRACTHYR_RACIAL_WING_BUFFET,  @TYPE_SPELL), # 357214 Wing Buffet (Racial)
+(   @DRACTHYR_ALLIANCE,       @EVOKER,      @ACTION_BAR_1_SLOT_4,         @DRACTHYR_RACIAL_TAIL_SWIPE,  @TYPE_SPELL), # 368970 Tail Swipe (Racial)
+(   @DRACTHYR_ALLIANCE,       @EVOKER,  @ACTION_BAR_1_SLOT_MINUS,              @DRACTHYR_RACIAL_GLIDE,  @TYPE_SPELL), # 358733 Glide (Racial)
+(      @DRACTHYR_HORDE,       @EVOKER,      @ACTION_BAR_1_SLOT_1,              @DRACTHYR_LIVING_FLAME,  @TYPE_SPELL), # 361469 Living Flame (Red)
+(      @DRACTHYR_HORDE,       @EVOKER,      @ACTION_BAR_1_SLOT_2,              @DRACTHYR_AZURE_STRIKE,  @TYPE_SPELL), # 362969 Azure Strike (Blue)
+(      @DRACTHYR_HORDE,       @EVOKER,      @ACTION_BAR_1_SLOT_3,        @DRACTHYR_RACIAL_WING_BUFFET,  @TYPE_SPELL), # 357214 Wing Buffet (Racial)
+(      @DRACTHYR_HORDE,       @EVOKER,      @ACTION_BAR_1_SLOT_4,         @DRACTHYR_RACIAL_TAIL_SWIPE,  @TYPE_SPELL), # 368970 Tail Swipe (Racial)
+(      @DRACTHYR_HORDE,       @EVOKER,  @ACTION_BAR_1_SLOT_MINUS,              @DRACTHYR_RACIAL_GLIDE,  @TYPE_SPELL); # 358733 Glide (Racial)

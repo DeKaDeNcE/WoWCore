@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="..\..\default.props" />
+
+    <PropertyGroup>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Framework\Framework.csproj" />
+    </ItemGroup>
+
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+        <Exec Condition="$([MSBuild]::IsOSPlatform('Windows'))" Command="git log --pretty=format:&quot;public static partial class Global { public static string GetCommitHash() { return \&quot;%25%25h\&quot;; } }&quot; -n 1 &gt; &quot;$(ProjectDir)Globals\CurrentCommitHash.cs&quot; || exit /B 0" />
+        <Exec Condition="$([MSBuild]::IsOSPlatform('Windows'))" Command="git log --pretty=format:&quot;public static partial class Global { public static string GetCommitDate() { return \&quot;%25%25cd\&quot;; } }&quot; -n 1 &gt; &quot;$(ProjectDir)Globals\CurrentCommitDate.cs&quot; || exit /B 0" />
+        <Exec Condition="$([MSBuild]::IsOSPlatform('Windows'))" Command="for /F %25%25G in ('git rev-list --count HEAD') do @echo public static partial class Global { public static int GetCommitRevision() { return %25%25G; } } &gt; &quot;$(ProjectDir)Globals\CurrentCommitRevision.cs&quot; || exit /B 0" />
+        <Exec Condition="$([MSBuild]::IsOSUnixLike())" Command="git log --pretty=format:&quot;public static partial class Global { public static string GetCommitHash() { return \&quot;%25h\&quot;; } }&quot; -n 1 &gt; &quot;$(ProjectDir)Globals\CurrentCommitHash.cs&quot; || exit 0" />
+        <Exec Condition="$([MSBuild]::IsOSUnixLike())" Command="git log --pretty=format:&quot;public static partial class Global { public static string GetCommitDate() { return \&quot;%25cd\&quot;; } }&quot; -n 1 &gt; &quot;$(ProjectDir)Globals\CurrentCommitDate.cs&quot;|| exit 0" />
+        <Exec Condition="$([MSBuild]::IsOSUnixLike())" Command="git rev-list --count HEAD | awk '/.*/ {printf &quot;public static partial class Global { public static int GetCommitRevision() { return %25s; } }&quot;,$1}' &gt; &quot;$(ProjectDir)Globals\CurrentCommitRevision.cs&quot; || exit 0" />
+    </Target>
+</Project>

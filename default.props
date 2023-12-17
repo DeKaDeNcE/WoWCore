@@ -1,0 +1,21 @@
+<Project>
+    <PropertyGroup>
+        <OutputPath>../../Build/$(Configuration)/</OutputPath>
+        <TargetFramework>net7.0</TargetFramework>
+        <Platforms>win-x64;linux-x64;mac-x64</Platforms>
+        <RuntimeIdentifiers>win-x64;linux-x64;osx-x64</RuntimeIdentifiers>
+        <RuntimeIdentifier Condition="$([MSBuild]::IsOSPlatform('Windows'))">win-x64</RuntimeIdentifier>
+        <RuntimeIdentifier Condition="$([MSBuild]::IsOSPlatform('Linux'))">linux-x64</RuntimeIdentifier>
+        <RuntimeIdentifier Condition="$([MSBuild]::IsOSPlatform('OSX'))">osx-x64</RuntimeIdentifier>
+        <SelfContained>True</SelfContained>
+        <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+        <AppendTargetFrameworkToOutputPath>False</AppendTargetFrameworkToOutputPath>
+        <NoWarn Condition="'$(Configuration)|$(Platform)' == 'Debug|linux-x64'">1701;1702;CS8981;CS0649;IL2121</NoWarn>
+        <NoWarn Condition="'$(Configuration)|$(Platform)' == 'Debug|mac-x64'">1701;1702;CS8981;CS0649;IL2121</NoWarn>
+        <NoWarn Condition="'$(Configuration)|$(Platform)' == 'Debug|win-x64'">1701;1702;CS8981;CS0649;IL2121</NoWarn>
+        <NoWarn Condition="'$(Configuration)|$(Platform)' == 'Release|linux-x64'">1701;1702;CS8981;CS0649;IL2121</NoWarn>
+        <NoWarn Condition="'$(Configuration)|$(Platform)' == 'Release|mac-x64'">1701;1702;CS8981;CS0649;IL2121</NoWarn>
+        <NoWarn Condition="'$(Configuration)|$(Platform)' == 'Release|win-x64'">1701;1702;CS8981;CS0649;IL2121</NoWarn>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+</Project>
