@@ -2,31 +2,18 @@
 // Copyright (c) DeKaDeNcE <https://github.com/DeKaDeNcE/WoWCore> All rights reserved.
 // Licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE file in the project root for full license information.
 
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
+
 using System;
 using System.Reflection;
+using System.Threading;
 
-public class Singleton<T> where T : class
+public abstract class Singleton<T> where T : class
 {
-    private static volatile T instance;
-    private static object syncRoot = new();
+    public bool Initialized => instance.IsValueCreated;
 
-    public static T Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                lock (syncRoot)
-                {
-                    if (instance == null)
-                    {
-                        ConstructorInfo constructorInfo = typeof(T).GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null);
-                        instance = (T)constructorInfo.Invoke(new object[0]);
-                    }
-                }
-            }
+    public static T Instance => instance.Value;
 
-            return instance;
-        }
-    }
+    private static readonly Lazy<T> instance = new(() => (T)typeof(T).GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance)[0].Invoke([]));
 }

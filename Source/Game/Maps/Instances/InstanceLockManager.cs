@@ -21,7 +21,7 @@ namespace Game.Maps
         Dictionary<uint, SharedInstanceLockData> _instanceLockDataById = new();
         bool _unloading;
 
-        InstanceLockManager() { }
+        private InstanceLockManager() { }
 
         public void Load()
         {

@@ -14,7 +14,7 @@ namespace Game.Loots
 {
     public class LootItemStorage : Singleton<LootItemStorage>
     {
-        LootItemStorage() { }
+        private LootItemStorage() { }
 
         public void LoadStorageFromDB()
         {

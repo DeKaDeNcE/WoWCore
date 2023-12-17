@@ -17,7 +17,7 @@ namespace Game.Cache
         Dictionary<ObjectGuid, CharacterCacheEntry> _characterCacheStore = new();
         Dictionary<string, CharacterCacheEntry> _characterCacheByNameStore = new();
 
-        CharacterCache() { }
+        private CharacterCache() { }
 
         public void LoadCharacterCacheStorage()
         {

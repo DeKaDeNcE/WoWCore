@@ -14,7 +14,7 @@ namespace Game.Garrisons
 {
     public class GarrisonManager : Singleton<GarrisonManager>
     {
-        GarrisonManager() { }
+        private GarrisonManager() { }
 
         public void Initialize()
         {

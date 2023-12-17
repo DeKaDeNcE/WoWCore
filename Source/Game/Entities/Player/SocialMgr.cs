@@ -16,10 +16,10 @@ namespace Game.Entities
     {
         Dictionary<ObjectGuid, PlayerSocial> _socialMap = new();
 
-        SocialManager() { }
-
         public const int FriendLimit = 50;
         public const int IgnoreLimit = 50;
+
+        private SocialManager() { }
 
         public static void GetFriendInfo(Player player, ObjectGuid friendGUID, FriendInfo friendInfo)
         {

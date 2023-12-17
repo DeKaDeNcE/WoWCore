@@ -14,7 +14,7 @@ namespace Game
 {
     public sealed class GuildManager : Singleton<GuildManager>
     {
-        GuildManager() { }
+        private GuildManager() { }
 
         public void AddGuild(Guild guild)
         {

@@ -19,7 +19,7 @@ namespace Game.AI
     {
         MultiMap<int, SmartScriptHolder>[] _eventMap = new MultiMap<int, SmartScriptHolder>[(int)SmartScriptType.Max];
 
-        SmartAIManager()
+        private SmartAIManager()
         {
             for (byte i = 0; i < (int)SmartScriptType.Max; i++)
                 _eventMap[i] = new MultiMap<int, SmartScriptHolder>();

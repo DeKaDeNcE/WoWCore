@@ -26,7 +26,7 @@ namespace Game
 {
     public sealed class ObjectManager : Singleton<ObjectManager>
     {
-        ObjectManager() { }
+        private ObjectManager() { }
 
         //Static Methods
         public static bool NormalizePlayerName(ref string name)

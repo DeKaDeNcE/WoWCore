@@ -18,7 +18,7 @@ public class ObjectAccessor : Singleton<ObjectAccessor>
 
     public Dictionary<ObjectGuid, Player> _players = new();
 
-    ObjectAccessor() { }
+    private ObjectAccessor() { }
 
     public WorldObject GetWorldObject(WorldObject p, ObjectGuid guid)
     {

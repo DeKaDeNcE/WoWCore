@@ -1088,7 +1088,7 @@ namespace Game.Achievements
         Dictionary<uint, AchievementRewardLocale> _achievementRewardLocales = new();
         Dictionary<uint, uint> _achievementScripts = new();
 
-        AchievementGlobalMgr() { }
+        private AchievementGlobalMgr() { }
 
         public List<AchievementRecord> GetAchievementByReferencedId(uint id)
         {

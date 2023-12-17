@@ -20,7 +20,7 @@ namespace Game.Entities
 {
     public sealed class SpellManager : Singleton<SpellManager>
     {
-        SpellManager()
+        private SpellManager()
         {
             Assembly currentAsm = Assembly.GetExecutingAssembly();
             foreach (var type in currentAsm.GetTypes())

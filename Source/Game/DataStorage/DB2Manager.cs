@@ -17,7 +17,7 @@ namespace Game.DataStorage
 
     public class DB2Manager : Singleton<DB2Manager>
     {
-        DB2Manager()
+        private DB2Manager()
         {
             for (uint i = 0; i < (int)Class.Max; ++i)
             {
@@ -1031,7 +1031,7 @@ namespace Game.DataStorage
 
             return contentTuningId;
         }
-        
+
         public ContentTuningLevels? GetContentTuningData(uint contentTuningId, uint redirectFlag, bool forItem = false)
         {
             ContentTuningRecord contentTuning = ContentTuningStorage.LookupByKey(GetRedirectedContentTuningId(contentTuningId, redirectFlag));
@@ -1075,7 +1075,7 @@ namespace Game.DataStorage
         {
             return _contentTuningLabels.Contains((contentTuningId, label));
         }
-        
+
         public string GetCreatureFamilyPetName(CreatureFamily petfamily, Locale locale)
         {
             if (petfamily == CreatureFamily.None)

@@ -10,7 +10,7 @@ namespace Game.DataStorage
 {
     public class CharacterTemplateDataStorage : Singleton<CharacterTemplateDataStorage>
     {
-        CharacterTemplateDataStorage() { }
+        private CharacterTemplateDataStorage() { }
 
         public void LoadCharacterTemplates()
         {

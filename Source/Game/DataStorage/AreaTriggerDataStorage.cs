@@ -13,7 +13,7 @@ namespace Game.DataStorage
 {
     public class AreaTriggerDataStorage : Singleton<AreaTriggerDataStorage>
     {
-        AreaTriggerDataStorage() { }
+        private AreaTriggerDataStorage() { }
 
         public void LoadAreaTriggerTemplates()
         {

@@ -19,7 +19,7 @@ namespace Game
 {
     public sealed class CreatureTextManager : Singleton<CreatureTextManager>
     {
-        CreatureTextManager() { }
+        private CreatureTextManager() { }
 
         public void LoadCreatureTexts()
         {

@@ -13,7 +13,7 @@ namespace Game.PvP
 {
     public class OutdoorPvPManager : Singleton<OutdoorPvPManager>
     {
-        OutdoorPvPManager() { }
+        private OutdoorPvPManager() { }
 
         public void InitOutdoorPvP()
         {

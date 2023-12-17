@@ -29,7 +29,7 @@ namespace Game.Scripting
     // Manages registration, loading, and execution of Scripts.
     public class ScriptManager : Singleton<ScriptManager>
     {
-        ScriptManager() { }
+        private ScriptManager() { }
 
         //Initialization
         public void Initialize()

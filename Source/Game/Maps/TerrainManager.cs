@@ -20,7 +20,7 @@ namespace Game.Maps
         // parent map links
         MultiMap<uint, uint> _parentMapData = new();
 
-        TerrainManager() { }
+        private TerrainManager() { }
 
         public void InitializeParentMapData(MultiMap<uint, uint> mapData)
         {

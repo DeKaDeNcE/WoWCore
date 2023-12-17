@@ -17,7 +17,7 @@ namespace Game
         Dictionary<uint, byte[]> _checkResults = new();
         List<ushort>[] _pools = new List<ushort>[(int)WardenCheckCategory.Max];
 
-        WardenCheckManager()
+        private WardenCheckManager()
         {
             for (var i = 0; i < (int)WardenCheckCategory.Max; ++i)
                 _pools[i] = new();

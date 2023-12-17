@@ -20,7 +20,7 @@ namespace Game
 {
     public sealed class ConditionManager : Singleton<ConditionManager>
     {
-        ConditionManager() { }
+        private ConditionManager() { }
 
         public GridMapTypeMask GetSearcherTypeMaskForConditionList(List<Condition> conditions)
         {

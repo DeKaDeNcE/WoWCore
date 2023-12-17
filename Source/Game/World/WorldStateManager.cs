@@ -22,7 +22,7 @@ namespace Game
         Dictionary<int, int> _realmWorldStateValues = new();
         Dictionary<int, Dictionary<int, int>> _worldStatesByMap = new();
 
-        WorldStateManager() { }
+        private WorldStateManager() { }
 
         public void LoadFromDB()
         {

@@ -14,7 +14,7 @@ namespace Game.Scenarios
 {
     public class ScenarioManager : Singleton<ScenarioManager>
     {
-        ScenarioManager() { }
+        private ScenarioManager() { }
 
         public InstanceScenario CreateInstanceScenario(InstanceMap map, int team)
         {

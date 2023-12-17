@@ -16,7 +16,7 @@ namespace Game
 {
     public class GameEventManager : Singleton<GameEventManager>
     {
-        GameEventManager() { }
+        private GameEventManager() { }
 
         bool CheckOneGameEvent(ushort entry)
         {

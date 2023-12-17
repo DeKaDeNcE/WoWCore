@@ -28,7 +28,7 @@ namespace Game.Collision
 
     public class VMapManager : Singleton<VMapManager>
     {
-        VMapManager() { }
+        private VMapManager() { }
 
         public static string VMapPath = Global.WorldMgr.GetDataPath() + Path.DirectorySeparatorChar + "vmaps" + Path.DirectorySeparatorChar;
 

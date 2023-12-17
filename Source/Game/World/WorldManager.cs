@@ -38,7 +38,7 @@ namespace Game
         public const string NextOldCalendarEventDeletionTimeVarId = "NextOldCalendarEventDeletionTime";
         public const string NextGuildWeeklyResetTimeVarId = "NextGuildWeeklyResetTime";
 
-        WorldManager()
+        private WorldManager()
         {
             foreach (WorldTimers timer in Enum.GetValues(typeof(WorldTimers)))
                 m_timers[timer] = new IntervalTimer();

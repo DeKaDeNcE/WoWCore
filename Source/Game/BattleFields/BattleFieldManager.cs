@@ -16,7 +16,7 @@ namespace Game.BattleFields
         static uint[] BattlefieldIdToZoneId = { 0, 4197, 5095 }; // imitate World_PVP_Area.db2
         static uint[] BattlefieldIdToScriptId = { 0, 0, 0 };
 
-        BattleFieldManager() { }
+        private BattleFieldManager() { }
 
         public void InitBattlefield()
         {

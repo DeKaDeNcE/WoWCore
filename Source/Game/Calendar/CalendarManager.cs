@@ -17,7 +17,7 @@ namespace Game
 {
     public class CalendarManager : Singleton<CalendarManager>
     {
-        CalendarManager()
+        private CalendarManager()
         {
             _events = new List<CalendarEvent>();
             _invites = new MultiMap<ulong,CalendarInvite>();

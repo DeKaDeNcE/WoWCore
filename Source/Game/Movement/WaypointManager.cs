@@ -10,7 +10,7 @@ namespace Game
 {
     public sealed class WaypointManager : Singleton<WaypointManager>
     {
-        WaypointManager() { }
+        private WaypointManager() { }
 
         public void Load()
         {

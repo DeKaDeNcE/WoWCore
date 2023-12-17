@@ -16,7 +16,7 @@ namespace Game.Maps
 {
     public class TransportManager : Singleton<TransportManager>
     {
-        TransportManager() { }
+        private TransportManager() { }
 
         void Unload()
         {

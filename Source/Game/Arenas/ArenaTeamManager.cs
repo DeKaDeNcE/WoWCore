@@ -10,7 +10,7 @@ namespace Game.Arenas
 {
     public class ArenaTeamManager : Singleton<ArenaTeamManager>
     {
-        ArenaTeamManager()
+        private ArenaTeamManager()
         {
             NextArenaTeamId = 1;
         }

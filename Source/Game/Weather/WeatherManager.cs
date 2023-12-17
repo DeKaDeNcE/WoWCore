@@ -11,7 +11,7 @@ namespace Game
 {
     public class WeatherManager : Singleton<WeatherManager>
     {
-        WeatherManager() { }
+        private WeatherManager() { }
 
         public void LoadWeatherData()
         {

@@ -19,7 +19,7 @@ namespace Game.Entities
 {
     public class MapManager : Singleton<MapManager>
     {
-        MapManager()
+        private MapManager()
         {
             i_gridCleanUpDelay = WorldConfig.GetUIntValue(WorldCfg.IntervalGridClean);
             i_timer.SetInterval(WorldConfig.GetIntValue(WorldCfg.IntervalMapUpdate));

@@ -10,7 +10,7 @@ namespace Game.DataStorage
 {
     public class ConversationDataStorage : Singleton<ConversationDataStorage>
     {
-        ConversationDataStorage() { }
+        private ConversationDataStorage() { }
 
         public void LoadConversationTemplates()
         {

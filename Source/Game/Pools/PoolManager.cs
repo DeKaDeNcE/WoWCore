@@ -14,7 +14,7 @@ namespace Game
 {
     public class PoolManager : Singleton<PoolManager>
     {
-        PoolManager() { }
+        private PoolManager() { }
 
         public void Initialize()
         {

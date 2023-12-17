@@ -14,7 +14,7 @@ namespace Game
 {
     public class DisableManager : Singleton<DisableManager>
     {
-        DisableManager() { }
+        private DisableManager() { }
 
         public class DisableData
         {

@@ -17,7 +17,7 @@ namespace Game.Services
     {
         ConcurrentDictionary<(uint ServiceHash, uint MethodId), WorldServiceHandler> serviceHandlers;
 
-        WorldServiceManager()
+        private WorldServiceManager()
         {
             serviceHandlers = new ConcurrentDictionary<(uint ServiceHash, uint MethodId), WorldServiceHandler>();
 

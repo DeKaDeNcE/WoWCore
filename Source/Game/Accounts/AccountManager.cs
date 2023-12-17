@@ -20,7 +20,7 @@ namespace Game
         readonly Dictionary<uint, RBACPermission> _permissions = new();
         readonly MultiMap<byte, uint> _defaultPermissions = new();
 
-        AccountManager() { }
+        private AccountManager() { }
 
         public AccountOpResult CreateAccount(string username, string password, string email = "", uint bnetAccountId = 0, byte bnetIndex = 0)
         {

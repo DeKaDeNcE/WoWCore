@@ -3659,7 +3659,7 @@ namespace Game.Achievements
         MultiMap<CriteriaStartEvent, Criteria> _criteriasByTimedType = new();
         MultiMap<int, Criteria>[] _criteriasByFailEvent = new MultiMap<int, Criteria>[(int)CriteriaFailEvent.Max];
 
-        CriteriaManager()
+        private CriteriaManager()
         {
             for (var i = 0; i < (int)CriteriaType.Count; ++i)
             {

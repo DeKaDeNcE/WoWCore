@@ -19,7 +19,7 @@ namespace Game.DungeonFinding
 {
     public class LFGManager : Singleton<LFGManager>
     {
-        LFGManager()
+        private LFGManager()
         {
             m_lfgProposalId = 1;
             m_options = (LfgOptions)ConfigMgr.GetDefaultValue("DungeonFinder.OptionsMask", 1);

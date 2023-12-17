@@ -16,7 +16,7 @@ using Framework.Serialization;
 
 public class RealmManager : Singleton<RealmManager>
 {
-    RealmManager() { }
+    private RealmManager() { }
 
     public void Initialize(int updateInterval)
     {

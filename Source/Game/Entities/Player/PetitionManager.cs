@@ -13,7 +13,7 @@ namespace Game.Entities
     {
         Dictionary<ObjectGuid, Petition> _petitionStorage = new();
 
-        PetitionManager() { }
+        private PetitionManager() { }
 
         public void LoadPetitions()
         {

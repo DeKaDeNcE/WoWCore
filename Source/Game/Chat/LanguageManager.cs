@@ -17,7 +17,7 @@ namespace Game.Chat
         MultiMap<uint, LanguageDesc> _langsMap = new();
         MultiMap<Tuple<uint, byte>, string> _wordsMap = new();
 
-        LanguageManager() { }
+        private LanguageManager() { }
 
         public void LoadSpellEffectLanguage(SpellEffectRecord spellEffect)
         {

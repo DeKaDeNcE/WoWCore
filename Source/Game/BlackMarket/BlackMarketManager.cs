@@ -13,7 +13,7 @@ namespace Game.BlackMarket
 {
     public class BlackMarketManager : Singleton<BlackMarketManager>
     {
-        BlackMarketManager() { }
+        private BlackMarketManager() { }
 
         public void LoadTemplates()
         {

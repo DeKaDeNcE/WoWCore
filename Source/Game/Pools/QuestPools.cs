@@ -15,7 +15,7 @@ namespace Game
         List<QuestPool> _monthlyPools = new();
         Dictionary<uint, QuestPool> _poolLookup = new(); // questId -> pool
 
-        QuestPoolManager() { }
+        private QuestPoolManager() { }
 
         public static void RegeneratePool(QuestPool pool)
         {

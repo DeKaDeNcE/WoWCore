@@ -12,10 +12,10 @@ namespace Game
 {
     public class MMapManager : Singleton<MMapManager>
     {
-        MMapManager() { }
-
         const string MAP_FILE_NAME_FORMAT = "{0}/mmaps/{1:D4}.mmap";
         const string TILE_FILE_NAME_FORMAT = "{0}/mmaps/{1:D4}{2:D2}{3:D2}.mmtile";
+
+        private MMapManager() { }
 
         public void Initialize(MultiMap<uint, uint> mapData)
         {

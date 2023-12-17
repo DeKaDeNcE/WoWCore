@@ -35,7 +35,7 @@ namespace Game
         Dictionary<ObjectGuid, PlayerThrottleObject> _playerThrottleObjects = new();
         DateTime _playerThrottleObjectsCleanupTime;
 
-        AuctionManager()
+        private AuctionManager()
         {
             mHordeAuctions = new AuctionHouseObject(6);
             mAllianceAuctions = new AuctionHouseObject(2);

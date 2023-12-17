@@ -17,7 +17,7 @@ namespace Game.BattleGrounds
 {
     public class BattlegroundManager : Singleton<BattlegroundManager>
     {
-        BattlegroundManager()
+        private BattlegroundManager()
         {
             m_NextRatedArenaUpdate = WorldConfig.GetUIntValue(WorldCfg.ArenaRatedUpdateTimer);
         }

@@ -11,7 +11,7 @@ namespace Game.Groups
 {
     public class GroupManager : Singleton<GroupManager>
     {
-        GroupManager()
+        private GroupManager()
         {
             NextGroupDbStoreId = 1;
             NextGroupId = 1;

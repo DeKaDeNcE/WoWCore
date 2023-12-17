@@ -13,7 +13,7 @@ namespace Game.SupportSystem
 {
     public class SupportManager : Singleton<SupportManager>
     {
-        SupportManager() { }
+        private SupportManager() { }
 
         public void Initialize()
         {
