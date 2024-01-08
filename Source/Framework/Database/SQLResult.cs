@@ -6,9 +6,9 @@ using System;
 using System.Runtime.CompilerServices;
 using MySqlConnector;
 
-namespace Framework.Database
-{
-    public class SQLResult
+namespace Framework.Database;
+
+    public class SQLResult : IDisposable
     {
         MySqlDataReader _reader;
 
@@ -17,12 +17,18 @@ namespace Framework.Database
         public SQLResult(MySqlDataReader reader)
         {
             _reader = reader;
-            NextRow();
+
+            if (!NextRow())
+                Dispose();
         }
 
-        ~SQLResult()
+        public void Dispose()
         {
-            _reader = null;
+            if (_reader != null)
+            {
+                _reader.Close();
+                _reader = null;
+            }
         }
 
         public T Read<T>(int column)
@@ -168,4 +174,3 @@ namespace Framework.Database
             return _currentRow[column] == DBNull.Value;
         }
     }
-}

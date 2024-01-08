@@ -6,9 +6,9 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace Framework.Database
-{
-    public class SQLQueryHolder<T>
+namespace Framework.Database;
+
+    public class SQLQueryHolder<T> : IDisposable
     {
         public Dictionary<T, PreparedStatement> m_queries = new();
         Dictionary<T, SQLResult> _results = new();
@@ -34,6 +34,12 @@ namespace Framework.Database
                 return new SQLResult();
 
             return _results[index];
+        }
+
+        public void Dispose()
+        {
+            foreach (var res in _results.Values)
+                res.Dispose();
         }
     }
 
@@ -89,4 +95,3 @@ namespace Framework.Database
             return false;
         }
     }
-}
